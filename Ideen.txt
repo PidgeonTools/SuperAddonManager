@@ -1,0 +1,4 @@
+1.: Get Blender Addons Path.
+2.: Iterate through all folders and look for version_info.json
+3.: Open version info.json, make a request to update_endpoint, compare the version numbers.
+4.: Download and install all Auto-Download Addons and display the download URL's for non Auto-Download Addons
