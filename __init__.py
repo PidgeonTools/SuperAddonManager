@@ -22,12 +22,12 @@
 import bpy
 
 bl_info = {
-    "name": "Central Addon Updater",
+    "name": "Super Addon Manager (SAM)",
     "author": "Blender Defender",
     "version": (0, 0, 0),
     "blender": (2, 83, 0),
-    "location": "Preferences > Addons > Central Addon Updater",
-    "description": "A central Updater for all your Addons",
+    "location": "Preferences > Addons > Super Addon Manager",
+    "description": "A central Updater for all of your Addons",
     "warning": "",
     "wiki_url": "https://github.com/BlenderDefender/central_addon_updater",
     "tracker_url": "https://github.com/BlenderDefender/central_addon_updater/issues",
