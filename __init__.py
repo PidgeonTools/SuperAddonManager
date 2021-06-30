@@ -29,12 +29,10 @@ bl_info = {
     "location": "Preferences > Addons > Super Addon Manager",
     "description": "A central Updater for all of your Addons",
     "warning": "",
-    "wiki_url": "https://github.com/BlenderDefender/central_addon_updater",
-    "tracker_url": "https://github.com/BlenderDefender/central_addon_updater/issues",
+    "wiki_url": "https://github.com/BlenderDefender/SuperAddonManager",
+    "tracker_url": "https://github.com/BlenderDefender/SuperAddonManager/issues",
     "category": "System"
 }
-
-
 
 
 def register():
