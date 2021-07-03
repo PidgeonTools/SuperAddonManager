@@ -1,7 +1,8 @@
 1.: Get Blender Addons Path. --> PerferencesFilePaths.script_directory//addons or from bpy.utils.script_paths()
-2.: Iterate through all folders and look for version_info.json
-3.: Open version info.json, make a request to update_endpoint, compare the version numbers.
-4.: Download and install all Auto-Download Addons and display the download URL's for non Auto-Download Addons
+2.: CHECK FOR SuperAddonManager Update!
+3.: Iterate through all folders and look for version_info.json
+4.: Open version info.json, make a request to update_endpoint, compare the version numbers.
+5.: Download and install all Auto-Download Addons and display the download URL's for non Auto-Download Addons
 
 
 Auto Issue Report:
