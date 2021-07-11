@@ -31,6 +31,7 @@ bl_info = {
     "warning": "",
     "wiki_url": "https://github.com/BlenderDefender/SuperAddonManager",
     "tracker_url": "https://github.com/BlenderDefender/SuperAddonManager/issues",
+    "endpoint_url": "https://raw.githubusercontent.com/BlenderDefender/BlenderDefender/updater_endpoints/SUPERADDONMANAGER.json",
     "category": "System"
 }
 
