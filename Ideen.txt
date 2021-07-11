@@ -21,9 +21,11 @@ Optional for developers:
     C.preferences.addons --> Check that SuperAddonManager isn't installed AND enabled yet
 
 
-Schema Versions in the JSON files
+Schema Versions in the JSON file(s)
 
 Minimum and Maximum Blender version --> Maybe a Maximum Blender version is not necessary, since addons, that are actively developed should always work with the latest Blender version. This would make a maximum version obsolete.
 Then a minimum Blender version would be enough to not update the Addon on older Blender Versions.
 
 Maybe save backup copies (of the addons) for (a) downgrade option(s)
+
+Try to read the version_info out of bl_info  --> Can be done via sys.modules[module].bl_info
