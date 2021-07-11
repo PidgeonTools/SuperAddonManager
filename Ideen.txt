@@ -1,4 +1,4 @@
-1.: Get Blender Addons Path. --> PerferencesFilePaths.script_directory//addons or from bpy.utils.script_paths()
+1.: Get Blender Addons Path. --> PreferencesFilePaths.script_directory//addons or from bpy.utils.script_paths()
 2.: CHECK FOR SuperAddonManager Update!
 3.: Iterate through all folders and look for version_info.json
 4.: Open version info.json, make a request to update_endpoint, compare the version numbers.
