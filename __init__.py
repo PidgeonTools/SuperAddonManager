@@ -21,6 +21,9 @@
 
 import bpy
 
+from . import operators
+from . import prefs
+
 bl_info = {
     "name": "Super Addon Manager (SAM)",
     "author": "Blender Defender",
@@ -37,8 +40,10 @@ bl_info = {
 
 
 def register():
-    print(bpy.utils.script_path_user())
+    operators.register()
+    prefs.register()
 
 
 def unregister():
-    pass
+    operators.unregister()
+    prefs.unregister()
