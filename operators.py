@@ -1,8 +1,11 @@
 import bpy
 from bpy.props import (
     StringProperty,
+    IntProperty
 )
 from bpy.types import Operator
+from bpy_extras.io_utils import ImportHelper
+
 
 import os
 from os import path as p
@@ -14,6 +17,7 @@ import requests
 import sys
 
 from . import prefs
+from .functions.payloadgen import generate_report
 
 
 class SUPERADDONMANAGER_OT_check_for_updates(Operator):
@@ -254,11 +258,46 @@ class SUPERADDONMANAGER_OT_update_all(Operator):
         return {'FINISHED'}
 
 
+class SUPERADDONMANAGER_OT_generate_issue_report(Operator, ImportHelper):
+    """Generate and save an issue report or feature request."""
+    bl_idname = "superaddonmanager.generate_issue_report"
+    bl_label = "Generate Issue Report"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    filter_glob: StringProperty(default='*.filterall', options={'HIDDEN'})
+    addon_name: StringProperty()
+    addon_index: IntProperty()
+
+    def execute(self, context):
+        report_data = prefs.unavailable_addons.pop(self.addon_index)
+
+        dirpath = self.filepath
+        while not p.isdir(self.filepath):
+            dirpath = p.dirname(dirpath)
+
+        # TODO: Proper file formatting.
+        filename = f"{self.addon_name}-{report_data[0]}.odt"
+        filepath = p.join(dirpath, filename)
+
+        with open(filepath, "w+") as f:
+            f.write(generate_report(report_data))
+
+        # TODO: Open directory after writing the issue report.
+
+        return {'FINISHED'}
+
+    def draw(self, context):
+        layout = self.layout
+
+        layout.label(text="Choose a directory for the detailed issue report.")
+
+
 classes = (
     SUPERADDONMANAGER_OT_check_for_updates,
     SUPERADDONMANAGER_OT_automatic_update,
     SUPERADDONMANAGER_OT_manual_update,
-    SUPERADDONMANAGER_OT_update_all
+    SUPERADDONMANAGER_OT_update_all,
+    SUPERADDONMANAGER_OT_generate_issue_report
 )
 
 

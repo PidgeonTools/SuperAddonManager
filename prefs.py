@@ -42,11 +42,16 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         if len(unavailable_addons) > 0:
             layout.label(
                 text=f"{len(unavailable_addons)} errors occured when checking for Updates:", icon="ERROR")
-        for addon in unavailable_addons:  # Layout all issues.
+        # Layout all issues.
+        for index, addon in enumerate(unavailable_addons):
             row = layout.row()
             row.label(text=p.basename(addon[1]))
             row.label(text=f"Error Code: {addon[0]}")
-            row.label(text="Get detailed issue report Operator - TODO")
+
+            op = row.operator(
+                "superaddonmanager.generate_issue_report", text="More details")
+            op.addon_name = p.basename(addon[1])
+            op.addon_index = index
 
 
 classes = (
