@@ -236,10 +236,29 @@ class SUPERADDONMANAGER_OT_manual_update(Operator):
         return {'FINISHED'}
 
 
+class SUPERADDONMANAGER_OT_update_all(Operator):
+    """Update all addons, that have updates available."""
+    bl_idname = "superaddonmanager.update_all"
+    bl_label = "Update All"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    # TODO: Progress bar!
+    def execute(self, context):
+        for addon in prefs.updates:
+            if addon[1]:
+                bpy.ops.superaddonmanager.automatic_update(
+                    addon_path=addon[0], download_url=addon[2])
+            else:
+                bpy.ops.superaddonmanager.manual_update(download_url=addon[2])
+
+        return {'FINISHED'}
+
+
 classes = (
     SUPERADDONMANAGER_OT_check_for_updates,
     SUPERADDONMANAGER_OT_automatic_update,
-    SUPERADDONMANAGER_OT_manual_update
+    SUPERADDONMANAGER_OT_manual_update,
+    SUPERADDONMANAGER_OT_update_all
 )
 
 

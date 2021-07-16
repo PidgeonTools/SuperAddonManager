@@ -22,8 +22,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
         # Layout the "Update All"-Operator when at least two addons have updates.
         if len(updates) > 1:
-            # TODO: Update all: Support manual update!
-            layout.label(text="Update all Operator - TODO")
+            layout.operator("superaddonmanager.update_all")
 
         # Layout all Addons that can be Updated one by one.
         for addon in updates:
