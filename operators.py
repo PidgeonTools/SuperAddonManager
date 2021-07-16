@@ -2,6 +2,7 @@ import bpy
 from bpy.props import (
     StringProperty,
 )
+from bpy.types import Operator
 
 import os
 from os import path as p
@@ -15,7 +16,7 @@ import sys
 from . import prefs
 
 
-class SUPERADDONMANAGER_OT_check_for_updates(bpy.types.Operator):
+class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     """Iterates through all installed Addons and checks for Updates"""
     bl_idname = "superaddonmanager.check_for_updates"
     bl_label = "Check for Updates"
@@ -206,7 +207,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(bpy.types.Operator):
 
 
 # TODO: Automatic Update.
-class SUPERADDONMANAGER_OT_automatic_update(bpy.types.Operator):
+class SUPERADDONMANAGER_OT_automatic_update(Operator):
     """Update the addon automatically"""
     bl_idname = "superaddonmanager.automatic_update"
     bl_label = "Update"
@@ -221,7 +222,7 @@ class SUPERADDONMANAGER_OT_automatic_update(bpy.types.Operator):
         return {'FINISHED'}
 
 
-class SUPERADDONMANAGER_OT_manual_update(bpy.types.Operator):
+class SUPERADDONMANAGER_OT_manual_update(Operator):
     """Update the addon manually"""
     bl_idname = "superaddonmanager.manual_update"
     bl_label = "Update"
