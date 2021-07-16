@@ -191,6 +191,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(bpy.types.Operator):
                 self.updates.append(
                     [addon_path, automatic_download, download_url, display_name])
 
+                return  # No need to further compare the versions.
+
 
 # TODO: Automatic Update.
 class SUPERADDONMANAGER_OT_automatic_update(bpy.types.Operator):
