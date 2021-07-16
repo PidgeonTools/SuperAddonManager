@@ -125,6 +125,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(bpy.types.Operator):
             self.unavailable_addons.append(
                 ["bl_info_invalid_version", addon_path, addon_bl_info["version"]])
             return  # Critical Error
+        except IndexError:
+            return  # TODO: Check, if this always happens, when there's no version in bl_info
 
         # Assign the version from the endpoint to the variable new_version.
         try:
@@ -137,12 +139,21 @@ class SUPERADDONMANAGER_OT_check_for_updates(bpy.types.Operator):
             self.unavailable_addons.append(
                 ["endpoint_data_invalid_version", addon_path, endpoint_url, endpoint_data["version"]])
             return  # Critical Error
+        except IndexError:
+            return  # TODO: Check, if this always happens, when there's no version in bl_info
 
         # Try to compare the versions specified in bl_info and the endpoint.
         self.compare_versions(addon_path, current_version,
                               new_version, addon_bl_info, endpoint_data)
 
+    # Format a given version array into a tuple of integers.
     def format_versions(self, version_array):
+        # Abort, if the version array is shorter than three items.
+        if len(version_array) < 3:
+            raise IndexError
+
+        # Only Integers, Floats and String Numbers (e. g. "1")
+        # should be converted to integers.
         allowed_types = [int, float, str]
 
         version = []
