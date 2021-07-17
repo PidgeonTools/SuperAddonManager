@@ -1,0 +1,9 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.undefined {
+    color: rgb(255, 0, 0);
+    font-family: 'Courier New', Courier, monospace;
+    font-style: italic;
+}

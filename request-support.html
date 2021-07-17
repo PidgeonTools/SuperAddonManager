@@ -3,11 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>CHANGE ME</title>
+
+    <script src="request-support.js"></script>
+    <script>changeHead()</script>
+
+    <title>undefined</title>
+
+    <link rel="stylesheet" href="request-support.css">
 </head>
 
-<body>
-
+<body onload="changeBody()">
+    <h1>Issue with your addon <span class="addon_name"><span class="undefined">undefined</span></span>
+    </h1>
+    <p>Super Addon Manager can't check for Updates for your addon
+        <span class="addon_name"><span class="undefined">undefined</span></span>.
+    </p>
+    <h2>What's the problem?</h2>
+    <p class="issue_description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam velit nam odit magnam
+        ut quas ab, nihil expedita, sint nulla ducimus vitae laboriosam. Rerum dolorum atque, eaque tenetur odit
+        accusantium.</p>
+    <h2>What can you do to make it work?</h2>
+    <p id="what_to_do">It looks like the developer has to fix this problem. Please report an Issue to the developer. You
+        can use our automatically generated text if you want to, but you should first check a few things:</p>
+    <form>
+        <input type="checkbox" id="cb1">
+        <label for="cb1">Super Addon Manager is up to date.</label><br>
+        <input type="checkbox" id="cb2">
+        <label for="cb2"><span class="addon_name"><span class="undefined">undefined</span></span> is up to
+            date.</label><br>
+        <input type="checkbox" id="cb3">
+        <label for="cb3">The issue hasn't been reported already.</label>
+        <!-- <input type="checkbox" id="cb4">
+        <label for="cb4"></label> -->
+    </form>
 </body>
 
 </html>
