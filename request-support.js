@@ -21,7 +21,7 @@
     // === Functions ===
     // Update the title of the page
     function updateTitle() {
-        document.title = addonName + " - Error checking for updates";
+        document.title = `${addonName} - Error checking for updates`;
     }
 
     // Add the name of the Addon into the page
