@@ -192,7 +192,7 @@ def generate_report(data):
     url_params = {"issue_type": data["issue_type"],
                   "addon_name": data["addon_name"],
                   "os_name": platform.system(),
-                  #   "blender_version": bpy.app.version_string,
+                  "blender_version": "2.83.16",  # bpy.app.version_string,
                   "addon_version": addon_version
                   }
 
