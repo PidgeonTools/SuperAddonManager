@@ -13,6 +13,7 @@ from os import path as p
 import json
 
 import requests
+from requests.models import MissingSchema
 
 import sys
 
@@ -20,6 +21,7 @@ from . import prefs
 from .functions.payloadgen import generate_report
 
 
+# TODO: Replace Addon Path with Addon name! Pass bl_info as Error Argument!
 class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     """Iterates through all installed Addons and checks for Updates"""
     bl_idname = "superaddonmanager.check_for_updates"
@@ -72,7 +74,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 continue
 
             self.unavailable_addons.append(
-                ["single_file", addon_path, len(self.all_addons)])
+                {"issue_type": "sam_not_supported", "addon_path": addon_path, "addon_count": len(self.all_addons)})
 
         # Sort the lists of updates and unavailable addons to be ordered less random.
         self.updates.sort(key=lambda x: x[1], reverse=True)
@@ -95,20 +97,21 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_url = addon_bl_info["endpoint_url"]
         except KeyError:
             self.unavailable_addons.append(
-                ["sam_not_supported", addon_path, len(self.all_addons)])
+                {"issue_type": "sam_not_supported", "addon_path": addon_path, "addon_count": len(self.all_addons)})
             return  # Special Error
 
         # Try to get data from the endpoint.
         try:
             endpoint_data = requests.get(endpoint_url).text
-
-        except TimeoutError:  # No Internet connection.
+        except MissingSchema:  # The URL is invalid.
             self.unavailable_addons.append(
-                ["endpoint_offline", addon_path, endpoint_url])
+                {"issue_type": "url_invalid", "addon_path": addon_path, "endpoint_url": endpoint_url})
             return  # Critical Error
-        except:  # Any other exception. Most likely, the URL is invalid.
+        # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
+        except Exception as e:  # TODO: Bring in the Exception Message.
+            print(e)
             self.unavailable_addons.append(
-                ["url_invalid", addon_path, endpoint_url])
+                {"issue_type": "endpoint_offline", "addon_path": addon_path, "endpoint_url": endpoint_url})
             return  # Critical Error
 
         # Try to convert the data to be helpful for the program.
@@ -116,7 +119,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = json.loads(endpoint_data)
         except json.decoder.JSONDecodeError:
             self.unavailable_addons.append(
-                ["invalid_endpoint", addon_path, endpoint_url])
+                {"issue_type": "invalid_endpoint", "addon_path": addon_path, "endpoint_url": endpoint_url})
             return  # Critical Error
 
         # Assign the version from bl_info to the variable current_version.
@@ -124,11 +127,11 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             current_version = self.format_versions(addon_bl_info["version"])
         except KeyError:
             self.unavailable_addons.append(
-                ["bl_info_no_version", addon_path])
+                {"issue_type": "bl_info_no_version", "addon_path": addon_path})
             return  # Critical Error
         except ValueError:
             self.unavailable_addons.append(
-                ["bl_info_invalid_version", addon_path, addon_bl_info["version"]])
+                {"issue_type": "bl_info_invalid_version", "addon_path": addon_path, "version": addon_bl_info["version"]})
             return  # Critical Error
         except IndexError:
             return  # TODO: Check, if this always happens, when there's no version in bl_info
@@ -138,11 +141,11 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             new_version = self.format_versions(endpoint_data["version"])
         except KeyError:
             self.unavailable_addons.append(
-                ["endpoint_data_no_version", addon_path, endpoint_url])
+                {"issue_type": "endpoint_data_no_version", "addon_path": addon_path, "endpoint_url": endpoint_url})
             return  # Critical Error
         except ValueError:
             self.unavailable_addons.append(
-                ["endpoint_data_invalid_version", addon_path, endpoint_url, endpoint_data["version"]])
+                {"issue_type": "endpoint_data_invalid_version", "addon_path": addon_path, "endpoint_url": endpoint_url, "version": endpoint_data["version"]})
             return  # Critical Error
         except IndexError:
             return  # TODO: Check, if this always happens, when there's no version in bl_info
@@ -185,22 +188,23 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 try:
                     automatic_download = endpoint_data["automatic_download"]
                 except KeyError:
-                    self.unavailable_addons.append(
-                        ["endpoint_data_no_download_method", addon_path, version_info["endpoint_url"]])
+                    # self.unavailable_addons.append(
+                    #     ["endpoint_data_no_download_method", addon_path, version_info["endpoint_url"]])
                     automatic_download = False  # Non critical Error.
 
                 try:
                     download_url = endpoint_data["download_url"]
                 except KeyError:
                     self.unavailable_addons.append(
-                        ["endpoint_data_no_download_url", addon_path, version_info["endpoint_url"]])
+                        {"issue_type": "endpoint_data_no_download_url", "addon_path": addon_path, "endpoint_url": version_info["endpoint_url"]})
                     return  # Critical Error
 
                 try:
                     display_name = version_info["name"]
                 except KeyError:
-                    self.unavailable_addons.append(
-                        ["bl_info_no_name", addon_path])  # Non critical Error.
+                    # self.unavailable_addons.append(
+                    #     ["bl_info_no_name", addon_path])  # Non critical Error.
+                    # TODO: Implement a function, that manipulates the basename in a way, that it looks fine.
                     display_name = p.basename(addon_path)
 
                 # Add the Addon to one of the Update Arrays
@@ -275,14 +279,12 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator, ImportHelper):
         while not p.isdir(self.filepath):
             dirpath = p.dirname(dirpath)
 
-        # TODO: Proper file formatting.
+        # TODO: Don't save any file to the hard drive. Open a webpage with all parameters passed in it instead.
         filename = f"{self.addon_name}-{report_data[0]}.odt"
         filepath = p.join(dirpath, filename)
 
         with open(filepath, "w+") as f:
             f.write(generate_report(report_data))
-
-        # TODO: Open directory after writing the issue report.
 
         return {'FINISHED'}
 
