@@ -35,8 +35,8 @@
 
     // Generates the issue text
     function updateIssueText() {
-        const unchecked = "[ ]";
-        const checked = "[x]";
+        const unchecked = "- [ ]";
+        const checked = "- [x]";
 
         const addonManagerUpdated = checklistAddonManagerUpdatedCheckbox.checked ? checked : unchecked;
         const addonUpdated = checklistAddonUpdatedCheckbox.checked ? checked : unchecked;
