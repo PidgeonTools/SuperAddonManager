@@ -145,7 +145,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             return  # Critical Error
         except ValueError:
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_data_invalid_version", "addon_path": addon_path, "endpoint_url": endpoint_url, "version": endpoint_data["version"]})
+                {"issue_type": "endpoint_data_invalid_version", "addon_path": addon_path, "endpoint_url": endpoint_url, "endpoint_version": endpoint_data["version"]})
             return  # Critical Error
         except IndexError:
             return  # TODO: Check, if this always happens, when there's no version in bl_info
@@ -179,8 +179,9 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
             # Check if the current version is newer than the endpoint version.
             if current_version[i] > new_version[i]:
+                # TODO: Is this issue really necessary?
                 self.unavailable_addons.append(
-                    ["current_version_greater", addon_path, version_info["endpoint_url"], new_version, current_version])
+                    {"issue_type": "current_version_greater", "addon_path": addon_path, "endpoint_url": version_info["endpoint_url"], "endpoint_version": new_version})
                 return  # Addon can't be updated
 
             # Check if the endpoint version is newer than the current version
