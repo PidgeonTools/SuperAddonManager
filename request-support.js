@@ -2,7 +2,8 @@
 (function initialise() {
     const urlParameters = new URLSearchParams(window.location.search);
     let addonName = urlParameters.get("addon_name");
-    let issueType = urlParameters.get("issue_type")
+    let issueType = urlParameters.get("issue_type");
+    let trackerURL = urlParameters.get("tracker_url");
 
     if (!addonName) {
         console.warn("Could not find addon name in search parameters");
@@ -11,6 +12,10 @@
 
     if (!issueType){
         issueType = "sam_not_supported"
+    }
+
+    if (trackerURL) {
+        document.getElementById("issue_page").innerHTML = `<a href="${trackerURL}">developer's website.</a>`;
     }
 
     // === Page elements ===
