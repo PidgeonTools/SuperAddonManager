@@ -11,7 +11,7 @@ import urllib.parse
 # ----- Critical Issues -------------------------------------------------------
 
 # No version is specified in the bl_info.
-def bl_info_no_version(folder_path):
+def bl_info_no_version():
     payload = f"""
     Title:
     Super Addon Manager: No Current Version specified
@@ -25,7 +25,7 @@ def bl_info_no_version(folder_path):
 
 
 # An invalid version is specified in the bl_info.
-def bl_info_invalid_version(folder_path, bl_info_version):
+def bl_info_invalid_version(bl_info_version):
     payload = f"""
     Title:
     Super Addon Manager: Invalid Current Version
@@ -39,7 +39,7 @@ def bl_info_invalid_version(folder_path, bl_info_version):
 
 
 # The Endpoint is offline.
-def endpoint_offline(folder_path, endpoint_url):
+def endpoint_offline():
     payload = f"""
     Title:
     Super Addon Manager: Endpoint URL can't be reached
@@ -53,7 +53,7 @@ def endpoint_offline(folder_path, endpoint_url):
 
 
 # An invalid Endpoint URL is specified in the bl_info.
-def url_invalid(folder_path, endpoint_url):
+def url_invalid(endpoint_url):
     payload = f"""
     Title:
     Super Addon Manager: Invalid Endpoint URL
@@ -67,7 +67,7 @@ def url_invalid(folder_path, endpoint_url):
 
 
 # The Endpoint is not in the JSON format.
-def invalid_endpoint(folder_path, endpoint_url):
+def invalid_endpoint(endpoint_url):
     payload = f"""
     Title:
     Super Addon Manager: Invalid Endpoint
@@ -80,7 +80,7 @@ def invalid_endpoint(folder_path, endpoint_url):
 
 
 # No version is specified in the Endpoint.
-def endpoint_data_no_version(folder_path, endpoint_url):
+def endpoint_data_no_version(endpoint_url):
     payload = f"""
     Title:
     Super Addon Manager: No Version specified (JSON Endpoint)
@@ -92,7 +92,7 @@ def endpoint_data_no_version(folder_path, endpoint_url):
 
 
 # An invalid version is specified in the bl_info.
-def endpoint_data_invalid_version(folder_path, endpoint_url, endpoint_version):
+def endpoint_data_invalid_version(endpoint_url, endpoint_version):
     payload = f"""
     Title:
     Super Addon Manager: Invalid New Version
@@ -107,7 +107,7 @@ def endpoint_data_invalid_version(folder_path, endpoint_url, endpoint_version):
 # The current version is greater than the version specified in the Endpoint.
 
 
-def current_version_greater(folder_path, endpoint_url, endpoint_version, current_version):
+def current_version_greater(endpoint_url, endpoint_version, current_version):
     payload = f"""
     Title:
     Super Addon Manager: Current Version is greater
@@ -123,7 +123,7 @@ def current_version_greater(folder_path, endpoint_url, endpoint_version, current
 
 
 # The URL Endpoint doesn't contain a download URL.
-def endpoint_data_no_download_url(folder_path, endpoint_url):
+def endpoint_data_no_download_url(endpoint_url):
     payload = f"""
     Title:
     Super Addon Manager: No Download URL (JSON Endpoint)
@@ -143,7 +143,7 @@ def endpoint_data_no_download_url(folder_path, endpoint_url):
 
 # The URL Endpoint doesn't specify a download method.
 # Therefore, the default mode (Manual Download) is applied.
-def endpoint_data_no_download_method(folder_path, endpoint_url):
+def endpoint_data_no_download_method(endpoint_url):
     payload = f"""
     Title:
     Super Addon Manager: No Download Method (JSON Endpoint)
@@ -163,7 +163,6 @@ def endpoint_data_no_download_method(folder_path, endpoint_url):
 # The version info file doesn't specify a display Name.
 # Therefore, the Folder name is shown.
 def bl_info_no_name(folder_path):
-    folder_name = p.basename(folder_path).replace("-master", "").capitalize()
     payload = f"""
     Title:
     Super Addon Manager: No Addon Name specified
@@ -234,3 +233,5 @@ if __name__ == "__main__":
                              "addon_name": "Test Addon", "bl_info": bl_info})
 
     print(issue)
+
+    # folder_name = p.basename(folder_path).replace("-master", "").capitalize()  # --> Extract a good looking addon name from a folder name.
