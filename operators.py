@@ -92,7 +92,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
         # Sort the lists of updates and unavailable addons to be ordered less random.
         self.updates.sort(key=lambda x: x[1], reverse=True)
-        self.unavailable_addons.sort(key=lambda x: x[0], reverse=True)
+        self.unavailable_addons.sort(
+            key=lambda x: x["issue_type"], reverse=True)
 
         # Send both lists to the preferences.
         prefs.updates = self.updates
