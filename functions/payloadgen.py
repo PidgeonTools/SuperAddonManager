@@ -1,6 +1,4 @@
-# import bpy
-
-from os import path as p
+import bpy
 
 import platform
 
@@ -9,34 +7,6 @@ import urllib.parse
 
 
 # ----- Critical Issues -------------------------------------------------------
-
-# No version is specified in the bl_info.
-def bl_info_no_version():
-    payload = f"""
-    Title:
-    Super Addon Manager: No Current Version specified
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: In the bl_info dictionary, a parameter called 'version' should be set. This parameter isn't specified, or it's misspelled. Without this parameter, Super Addon Manager can't work. (More details: https://github.com/BlenderDefender/SuperAddonManager/wiki/troubleshooting ) Thank you for having a look at this :)"
-
-    """
-    return payload.replace("    ", "")
-
-
-# An invalid version is specified in the bl_info.
-def bl_info_invalid_version(bl_info_version):
-    payload = f"""
-    Title:
-    Super Addon Manager: Invalid Current Version
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: In the bl_info dictionary, a parameter called 'version' should be set. This parameter is set to an invalid datatype ({bl_info_version}), so Super Addon Manager can't check for new versions. Thank you for having a look at this :)
-
-    """
-    return payload.replace("    ", "")
-
 
 # The Endpoint is offline.
 def endpoint_offline():
