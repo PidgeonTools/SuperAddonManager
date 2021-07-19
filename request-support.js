@@ -56,7 +56,9 @@
         const addonUpdated = checklistAddonUpdatedCheckbox.checked ? checked : unchecked;
         const issueReported = checklistIssueReportedCheckbox.checked ? checked : unchecked;
 
-        const intro = `Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation:`;
+        const intro = `
+**Describe the bug**
+Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation:`;
         const outro = `
 Thank you for having a look at this :)
 
