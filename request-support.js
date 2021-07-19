@@ -5,6 +5,7 @@
     let issueType = urlParameters.get("issue_type");
     let trackerURL = urlParameters.get("tracker_url");
 
+    // === System Information ===
     let systemOS = urlParameters.get("os_name");
     let systemBlenderVersion = urlParameters.get("blender_version")
     let systemAddonVersion = urlParameters.get("addon_version")
@@ -20,6 +21,11 @@
 
     if (trackerURL) {
         document.getElementById("issue_page").innerHTML = `<a href="${trackerURL}">developer's website.</a>`;
+    }
+
+    // === Issue Specific Variables ===
+    if (["url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"].includes(issueType)){
+        var endpointURL = urlParameters.get("endpoint_url");  // TODO: Which Variable Type should I use?
     }
 
     // === Page elements ===
@@ -87,6 +93,15 @@ ${intro}
 In the bl_info dictionary, a parameter called 'version' should be set. This parameter is not set, misspelled or contains an invalid datatype (Only integers, floats and numbers in strings can be converted to integers), so Super Addon Manager can't check for new versions. More details: https://github.com/BlenderDefender/SuperAddonManager/wiki/troubleshooting
 
 ${outro}`
+                break;
+            case "url_invalid":
+                text = `
+${intro}
+
+In the bl_info dictionary, a parameter called 'update_endpoint' should be set. This parameter is set to an invalid URL (${endpointURL}), so Super Addon Manager can't check for new versions.
+
+${outro}
+`
                 break;
             default:
                 text = `
