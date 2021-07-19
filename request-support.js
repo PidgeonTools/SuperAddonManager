@@ -24,6 +24,10 @@
     }
 
     // === Issue Specific Variables ===
+    if (issueType == "sam_not_supported"){
+        let threshold = 15
+        var addonCount = urlParameters.get("addon_count") >= threshold ? urlParameters.get("addon_count") : "multiple";
+    }
     if (["url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"].includes(issueType)){
         var endpointURL = urlParameters.get("endpoint_url");  // TODO: Which Variable Type should I use?
     }
@@ -106,18 +110,11 @@ ${outro}
             default:
                 text = `
 **Is your feature request related to a problem? Please describe.**
-After using Blender for a while now (including your addon ${addonName}),
-I've noticed that addon maintenance is a mess. I have multiple addons
-installed, and I'm not able to keep track of new versions for all of them. I'm
-using the Super Addon Manager by Blender Defender (https://github.com/BlenderDefender/SuperAddonManager)
-to do the task of updating ALL of my Addons from a SINGLE PLACE, but it relies
-on addon developers enabling support for it.
+After using Blender for a while now (including your addon ${addonName}), I've noticed that addon maintenance is a mess. I have ${addonCount} addons installed, and I'm not able to keep track of new versions for all of them. I'm using the Super Addon Manager by Blender Defender (https://github.com/BlenderDefender/SuperAddonManager) to do the task of updating ALL of my Addons from a SINGLE PLACE, but it relies on addon developers enabling support for it.
 
 **Describe the solution you'd like**
-It would be great if you could activate support for it. Doing so is easy, 100%
-risk-free (no code added to your addon), and platform-independent. You can find
-a detailed description for enabling support for Super Addon Manager in the
-documentation: https://github.com/BlenderDefender/SuperAddonManager/wiki/implementation/
+It would be great if you could activate support for it. Doing so is easy, 100% risk-free (no code added to your addon), and platform-independent. You can find a detailed description for enabling support for Super Addon Manager in the documentation: https://github.com/BlenderDefender/SuperAddonManager/wiki/implementation/
+
 ${outro}`;
                 break;
         }
