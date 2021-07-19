@@ -158,7 +158,7 @@ def generate_report(data):
     if issue_type in ["single_file", "sam_not_supported"]:
         addon_count = data["addon_count"]
 
-    if issue_type in ["endpoint_offline", "url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"]:
+    if issue_type in ["url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"]:
         url_params["endpoint_url"] = data["endpoint_url"]
 
     if issue_type in ["endpoint_data_invalid_version", "current_version_greater"]:
