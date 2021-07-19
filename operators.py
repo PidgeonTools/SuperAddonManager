@@ -120,7 +120,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = requests.get(endpoint_url).text
         except MissingSchema:  # The URL is invalid.
             self.unavailable_addons.append(
-                {"issue_type": "url_invalid", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
+                {"issue_type": "url_invalid", "addon_name": self.addon_name, "bl_info": addon_bl_info, "endpoint_url": endpoint_url})
             return  # Critical Error
         # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
         except Exception as e:  # TODO: Bring in the Exception Message.

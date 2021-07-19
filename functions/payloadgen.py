@@ -22,20 +22,6 @@ def endpoint_offline():
     return payload.replace("    ", "")
 
 
-# An invalid Endpoint URL is specified in the bl_info.
-def url_invalid(endpoint_url):
-    payload = f"""
-    Title:
-    Super Addon Manager: Invalid Endpoint URL
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: In the bl_info dictionary, a parameter called 'endpoint_url' should be set. This parameter is set to an invalid URL ({endpoint_url}), so Super Addon Manager can't check for new versions. Thank you for having a look at this :)
-
-    """
-    return payload.replace("    ", "")
-
-
 # The Endpoint is not in the JSON format.
 def invalid_endpoint(endpoint_url):
     payload = f"""
@@ -196,9 +182,7 @@ if __name__ == "__main__":
         "category": "General"
     }
 
-    issue = generate_report({"issue_type": "bl_info_version_problems",
-                             "addon_name": "Test Addon", "bl_info": bl_info})
+    issue = generate_report({"issue_type": "url_invalid",
+                             "addon_name": "Test Addon", "bl_info": bl_info, "endpoint_url": "test"})
 
     print(issue)
-
-    # folder_name = p.basename(folder_path).replace("-master", "").capitalize()  # --> Extract a good looking addon name from a folder name.
