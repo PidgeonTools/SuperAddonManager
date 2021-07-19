@@ -156,7 +156,7 @@ def generate_report(data):
     issue_type = data["issue_type"]
 
     addon_version = "Unknown"
-    if not issue_type in ["bl_info_no_version", "bl_info_invalid_version"]:
+    if not issue_type in ["bl_info_version_problems"]:
         addon_version = ".".join(map(str, data["bl_info"]["version"]))
 
     url_params = {"issue_type": data["issue_type"],
@@ -171,9 +171,6 @@ def generate_report(data):
 
     if issue_type in ["single_file", "sam_not_supported"]:
         addon_count = data["addon_count"]
-
-    if issue_type == "bl_info_invalid_version":
-        url_params["bl_info_version"] = data["version"]
 
     if issue_type in ["endpoint_offline", "url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"]:
         url_params["endpoint_url"] = data["endpoint_url"]
@@ -199,7 +196,7 @@ if __name__ == "__main__":
         "category": "General"
     }
 
-    issue = generate_report({"issue_type": "bl_info_no_version",
+    issue = generate_report({"issue_type": "bl_info_version_problems",
                              "addon_name": "Test Addon", "bl_info": bl_info})
 
     print(issue)
