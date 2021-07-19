@@ -69,12 +69,26 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         for i in self.enabled_addons:
             addon_path = i
 
+            if "name" in sys.modules[p.basename(addon_path)].bl_info:
+                self.addon_name = sys.modules[p.basename(
+                    addon_path)].bl_info["name"]
+            else:
+                replace = (("-master", ""),
+                           ("-main", ""),
+                           ("-", " "),
+                           ("_", " "))
+                # Extract a good looking addon name from a folder name.
+                addon_name = p.basename(addon_path)
+                for replace_obj, replace_with in replace:
+                    addon_name = addon_name.replace(replace_obj, replace_with)
+                self.addon_name = addon_name.capitalize()
+
             if p.isdir(addon_path):
                 self.check_update(addon_path)
                 continue
 
             self.unavailable_addons.append(
-                {"issue_type": "sam_not_supported", "addon_path": addon_path, "addon_count": len(self.all_addons)})
+                {"issue_type": "sam_not_supported", "addon_name": self.addon_name, "addon_count": len(self.all_addons)})
 
         # Sort the lists of updates and unavailable addons to be ordered less random.
         self.updates.sort(key=lambda x: x[1], reverse=True)
@@ -97,7 +111,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_url = addon_bl_info["endpoint_url"]
         except KeyError:
             self.unavailable_addons.append(
-                {"issue_type": "sam_not_supported", "addon_path": addon_path, "addon_count": len(self.all_addons)})
+                {"issue_type": "sam_not_supported", "addon_name": self.addon_name, "addon_count": len(self.all_addons)})
             return  # Special Error
 
         # Try to get data from the endpoint.
@@ -105,13 +119,13 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = requests.get(endpoint_url).text
         except MissingSchema:  # The URL is invalid.
             self.unavailable_addons.append(
-                {"issue_type": "url_invalid", "addon_path": addon_path, "endpoint_url": endpoint_url})
+                {"issue_type": "url_invalid", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
             return  # Critical Error
         # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
         except Exception as e:  # TODO: Bring in the Exception Message.
             print(e)
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_offline", "addon_path": addon_path, "endpoint_url": endpoint_url})
+                {"issue_type": "endpoint_offline", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
             return  # Critical Error
 
         # Try to convert the data to be helpful for the program.
@@ -119,7 +133,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = json.loads(endpoint_data)
         except json.decoder.JSONDecodeError:
             self.unavailable_addons.append(
-                {"issue_type": "invalid_endpoint", "addon_path": addon_path, "endpoint_url": endpoint_url})
+                {"issue_type": "invalid_endpoint", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
             return  # Critical Error
 
         # Assign the version from bl_info to the variable current_version.
@@ -127,11 +141,11 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             current_version = self.format_versions(addon_bl_info["version"])
         except KeyError:
             self.unavailable_addons.append(
-                {"issue_type": "bl_info_no_version", "addon_path": addon_path})
+                {"issue_type": "bl_info_version_problems", "addon_name": self.addon_name, "bl_info": addon_bl_info})
             return  # Critical Error
-        except ValueError:
+        except ValueError:  # TODO: Merge these Errors!
             self.unavailable_addons.append(
-                {"issue_type": "bl_info_invalid_version", "addon_path": addon_path, "version": addon_bl_info["version"]})
+                {"issue_type": "bl_info_version_problems", "addon_name": self.addon_name, "bl_info": addon_bl_info})
             return  # Critical Error
         except IndexError:
             return  # TODO: Check, if this always happens, when there's no version in bl_info
@@ -141,11 +155,11 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             new_version = self.format_versions(endpoint_data["version"])
         except KeyError:
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_data_no_version", "addon_path": addon_path, "endpoint_url": endpoint_url})
+                {"issue_type": "endpoint_data_no_version", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
             return  # Critical Error
         except ValueError:
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_data_invalid_version", "addon_path": addon_path, "endpoint_url": endpoint_url, "endpoint_version": endpoint_data["version"]})
+                {"issue_type": "endpoint_data_invalid_version", "addon_name": self.addon_name, "endpoint_url": endpoint_url, "endpoint_version": endpoint_data["version"]})
             return  # Critical Error
         except IndexError:
             return  # TODO: Check, if this always happens, when there's no version in bl_info
@@ -181,7 +195,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             if current_version[i] > new_version[i]:
                 # TODO: Is this issue really necessary?
                 self.unavailable_addons.append(
-                    {"issue_type": "current_version_greater", "addon_path": addon_path, "endpoint_url": version_info["endpoint_url"], "endpoint_version": new_version})
+                    {"issue_type": "current_version_greater", "addon_name": self.addon_name, "endpoint_url": version_info["endpoint_url"], "endpoint_version": new_version})
                 return  # Addon can't be updated
 
             # Check if the endpoint version is newer than the current version
@@ -197,20 +211,12 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                     download_url = endpoint_data["download_url"]
                 except KeyError:
                     self.unavailable_addons.append(
-                        {"issue_type": "endpoint_data_no_download_url", "addon_path": addon_path, "endpoint_url": version_info["endpoint_url"]})
+                        {"issue_type": "endpoint_data_no_download_url", "addon_name": self.addon_name, "endpoint_url": version_info["endpoint_url"]})
                     return  # Critical Error
-
-                try:
-                    display_name = version_info["name"]
-                except KeyError:
-                    # self.unavailable_addons.append(
-                    #     ["bl_info_no_name", addon_path])  # Non critical Error.
-                    # TODO: Implement a function, that manipulates the basename in a way, that it looks fine.
-                    display_name = p.basename(addon_path)
 
                 # Add the Addon to one of the Update Arrays
                 self.updates.append(
-                    [addon_path, automatic_download, download_url, display_name])
+                    [addon_path, automatic_download, download_url, self.addon_name])
 
                 return  # No need to further compare the versions.
 
