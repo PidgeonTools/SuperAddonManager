@@ -45,12 +45,12 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         # Layout all issues.
         for index, addon in enumerate(unavailable_addons):
             row = layout.row()
-            row.label(text=p.basename(addon[1]))
-            row.label(text=f"Error Code: {addon[0]}")
+            row.label(text=addon["addon_name"])
+            row.label(text=f"Error Code: {addon['issue_type']}")
 
             op = row.operator(
                 "superaddonmanager.generate_issue_report", text="More details")
-            op.addon_name = p.basename(addon[1])
+            op.addon_name = addon["addon_name"]
             op.addon_index = index
 
 
