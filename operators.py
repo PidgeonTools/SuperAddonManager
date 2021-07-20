@@ -198,11 +198,10 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             version.append(int(i))
         return tuple(version)
 
-        for i in range(3):
-            # Check if both versions are the same.
-            if current_version[i] == new_version[i]:
-                continue
     def compare_versions(self, addon_path, current_version, new_version, addon_bl_info, endpoint_data):
+        # Check, if both versions are the same.
+        if current_version == new_version:
+            return  # Addon is up to date.
 
         for i in range(3):
             # Check if the current version is newer than the endpoint version.
