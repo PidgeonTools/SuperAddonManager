@@ -68,8 +68,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         # Iterate through all directories and files in the Addons Folders.
         # Add single files to the list of addons that can't be updated by SAM.
         # Folders are sent to self.check_update() for the actual update check.
-        for i in self.enabled_addons:
-            addon_path = i
+        for addon_path in self.enabled_addons:
 
             if "name" in sys.modules[p.basename(addon_path)].bl_info:
                 self.addon_name = sys.modules[p.basename(
