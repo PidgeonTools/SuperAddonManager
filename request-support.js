@@ -26,7 +26,7 @@
         let threshold = 15
         addonCount = urlParameters.get("addon_count") >= threshold ? urlParameters.get("addon_count") : "multiple";
     }
-    if (["url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"].includes(issueType)){
+    if (["url_invalid", "invalid_endpoint", "endpoint_invalid_schema"].includes(issueType)){
         endpointURL = urlParameters.get("endpoint_url");  // TODO: Which Variable Type should I use?
     }
 
@@ -122,6 +122,15 @@ ${outro}
 ${intro}
 
 The endpoint found under ${endpointURL} is not in the JSON format, so Super Addon Manager can't check for new versions.
+
+${outro}
+                `;
+                break;
+                case "endpoint_invalid_schema":
+                    text = `
+${intro}
+
+The endpoint found under ${endpointURL} does not match the schema, so Super Addon Manager can't check for new versions. For more details, use our [schema checker.](SCHEMA CHECKER URL)
 
 ${outro}
                 `;
