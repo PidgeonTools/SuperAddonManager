@@ -24,12 +24,14 @@
     }
 
     // === Issue Specific Variables ===
+    let addonCount;
+    let endpointURL;
     if (issueType == "sam_not_supported"){
         let threshold = 15
-        var addonCount = urlParameters.get("addon_count") >= threshold ? urlParameters.get("addon_count") : "multiple";
+        addonCount = urlParameters.get("addon_count") >= threshold ? urlParameters.get("addon_count") : "multiple";
     }
     if (["url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"].includes(issueType)){
-        var endpointURL = urlParameters.get("endpoint_url");  // TODO: Which Variable Type should I use?
+        endpointURL = urlParameters.get("endpoint_url");  // TODO: Which Variable Type should I use?
     }
 
     // === Page elements ===
