@@ -162,11 +162,17 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             new_version = self.format_versions(endpoint_data["version"])
         except KeyError:
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_data_no_version", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
+                {"issue_type": "endpoint_invalid_schema",
+                 "addon_name": self.addon_name,
+                 "bl_info": addon_bl_info,
+                 "endpoint_url": endpoint_url})
             return  # Critical Error
         except ValueError:
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_data_invalid_version", "addon_name": self.addon_name, "endpoint_url": endpoint_url, "endpoint_version": endpoint_data["version"]})
+                {"issue_type": "endpoint_invalid_schema",
+                 "addon_name": self.addon_name,
+                 "bl_info": addon_bl_info,
+                 "endpoint_url": endpoint_url})
             return  # Critical Error
         except IndexError:
             return  # TODO: Check, if this always happens, when there's no version in bl_info
@@ -192,12 +198,13 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             version.append(int(i))
         return tuple(version)
 
-    def compare_versions(self, addon_path, current_version, new_version, version_info, endpoint_data):
         for i in range(3):
             # Check if both versions are the same.
             if current_version[i] == new_version[i]:
                 continue
+    def compare_versions(self, addon_path, current_version, new_version, addon_bl_info, endpoint_data):
 
+        for i in range(3):
             # Check if the current version is newer than the endpoint version.
             if current_version[i] > new_version[i]:
                 # TODO: Is this issue really necessary?
@@ -210,15 +217,16 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 try:
                     automatic_download = endpoint_data["automatic_download"]
                 except KeyError:
-                    # self.unavailable_addons.append(
-                    #     ["endpoint_data_no_download_method", addon_path, version_info["endpoint_url"]])
                     automatic_download = False  # Non critical Error.
 
                 try:
                     download_url = endpoint_data["download_url"]
                 except KeyError:
                     self.unavailable_addons.append(
-                        {"issue_type": "endpoint_data_no_download_url", "addon_name": self.addon_name, "endpoint_url": version_info["endpoint_url"]})
+                        {"issue_type": "endpoint_invalid_schema",
+                         "addon_name": self.addon_name,
+                         "bl_info": addon_bl_info,
+                         "endpoint_url": addon_bl_info["endpoint_url"]})
                     return  # Critical Error
 
                 # Add the Addon to one of the Update Arrays

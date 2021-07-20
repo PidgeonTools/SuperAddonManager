@@ -22,30 +22,6 @@ def endpoint_offline():
     return payload.replace("    ", "")
 
 
-# No version is specified in the Endpoint.
-def endpoint_data_no_version(endpoint_url):
-    payload = f"""
-    Title:
-    Super Addon Manager: No Version specified (JSON Endpoint)
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: In the endpoint, found under this URL: {endpoint_url}, a parameter called 'version' should be specified. This parameter isn't specified, or it's misspelled. Without this parameter, Super Addon Manager can't work. (More details: https://github.com/BlenderDefender/SuperAddonManager/wiki/troubleshooting ) Thank you for having a look at this :)"""
-    return payload.replace("    ", "")
-
-
-# An invalid version is specified in the bl_info.
-def endpoint_data_invalid_version(endpoint_url, endpoint_version):
-    payload = f"""
-    Title:
-    Super Addon Manager: Invalid New Version
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: In the endpoint, found under this URL: {endpoint_url}, a parameter called 'version' should be set. This parameter is set to an invalid datatype ({endpoint_version}), so Super Addon Manager can't check for new versions. Thank you for having a look at this :)
-
-    """
-    return payload.replace("    ", "")
 
 # The current version is greater than the version specified in the Endpoint.
 
@@ -61,44 +37,6 @@ def current_version_greater(endpoint_url, endpoint_version, current_version):
     Unfortunately, something is wrong with the Implementation:
     In the endpoint, found under this URL: {endpoint_url}, the parameter 'version' is set to {endpoint_version}.
     The current version (set in the bl_info dictionary, {current_version}) is newer, therefore Super Addon Manager can't work.
-    Thank you for having a look at this :)"""
-    return payload.replace("    ", "")
-
-
-# The URL Endpoint doesn't contain a download URL.
-def endpoint_data_no_download_url(endpoint_url):
-    payload = f"""
-    Title:
-    Super Addon Manager: No Download URL (JSON Endpoint)
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager.
-    Unfortunately, something is wrong with the Implementation:
-    In the endpoint, found under this URL: {endpoint_url}, a parameter called 'download_url' should be specified.
-    This parameter isn't specified, or it's misspelled.
-    Without this parameter, Super Addon Manager can't work. (More details: https://github.com/BlenderDefender/SuperAddonManager/wiki/troubleshooting )
-    Thank you for having a look at this :)"""
-    return payload.replace("    ", "")
-
-
-# ----- Non-Critical Issues ---------------------------------------------------
-
-# The URL Endpoint doesn't specify a download method.
-# Therefore, the default mode (Manual Download) is applied.
-def endpoint_data_no_download_method(endpoint_url):
-    payload = f"""
-    Title:
-    Super Addon Manager: No Download Method (JSON Endpoint)
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager.
-    Unfortunately, something is wrong with the Implementation:
-    In the endpoint, found under this URL: {endpoint_url}, a parameter called 'automatic_download' should be specified.
-    This parameter isn't specified, or it's misspelled.
-    Without this parameter, the automatic update feature can't work.
-    Super Addon Manager can still work tho, so this issue isn't critical.
     Thank you for having a look at this :)"""
     return payload.replace("    ", "")
 
@@ -126,11 +64,8 @@ def generate_report(data):
     if issue_type in ["sam_not_supported"]:
         url_params["addon_count"] = data["addon_count"]
 
-    if issue_type in ["url_invalid", "invalid_endpoint", "endpoint_data_no_version", "endpoint_data_no_download_url", "endpoint_data_no_download_method", "endpoint_data_invalid_version", "current_version_greater"]:
+    if issue_type in ["url_invalid", "invalid_endpoint", "endpoint_invalid_schema"]:
         url_params["endpoint_url"] = data["endpoint_url"]
-
-    if issue_type in ["endpoint_data_invalid_version", "current_version_greater"]:
-        url_params["endpoint_version"] = data["endpoint_version"]
 
     return base_url + urllib.parse.urlencode(url_params)
 
