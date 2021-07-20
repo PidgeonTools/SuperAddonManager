@@ -77,7 +77,8 @@
 
         const intro = `
 **Describe the bug**
-Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation:`;
+Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation:
+        `;
         const outro = `
 Thank you for having a look at this :)
 
@@ -115,6 +116,15 @@ In the bl_info dictionary, a parameter called 'update_endpoint' should be set. T
 
 ${outro}
 `
+                break;
+            case "invalid_endpoint":
+                text = `
+${intro}
+
+The endpoint found under ${endpointURL} is not in the JSON format, so Super Addon Manager can't check for new versions.
+
+${outro}
+                `;
                 break;
             default:
                 text = `
