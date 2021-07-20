@@ -17,6 +17,8 @@ from requests.models import MissingSchema
 
 import sys
 
+import time
+
 from . import prefs
 from .functions.payloadgen import generate_report
 
@@ -266,29 +268,22 @@ class SUPERADDONMANAGER_OT_update_all(Operator):
         return {'FINISHED'}
 
 
-class SUPERADDONMANAGER_OT_generate_issue_report(Operator, ImportHelper):
+class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
     """Generate and save an issue report or feature request."""
     bl_idname = "superaddonmanager.generate_issue_report"
     bl_label = "Generate Issue Report"
     bl_options = {'REGISTER', 'UNDO'}
 
-    filter_glob: StringProperty(default='*.filterall', options={'HIDDEN'})
-    addon_name: StringProperty()
     addon_index: IntProperty()
 
     def execute(self, context):
-        report_data = prefs.unavailable_addons.pop(self.addon_index)
+        report_data = prefs.unavailable_addons[self.addon_index]
 
-        dirpath = self.filepath
-        while not p.isdir(self.filepath):
-            dirpath = p.dirname(dirpath)
+        bpy.ops.wm.url_open(url=generate_report(report_data))
 
-        # TODO: Don't save any file to the hard drive. Open a webpage with all parameters passed in it instead.
-        filename = f"{self.addon_name}-{report_data[0]}.odt"
-        filepath = p.join(dirpath, filename)
+        # time.sleep(1)  # Should we wait a second before removing the issue?
 
-        with open(filepath, "w+") as f:
-            f.write(generate_report(report_data))
+        prefs.unavailable_addons.pop(self.addon_index)
 
         return {'FINISHED'}
 

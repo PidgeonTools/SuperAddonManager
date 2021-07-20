@@ -50,7 +50,6 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
             op = row.operator(
                 "superaddonmanager.generate_issue_report", text="More details")
-            op.addon_name = addon["addon_name"]
             op.addon_index = index
 
 
