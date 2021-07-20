@@ -102,7 +102,7 @@ ${outro}`
                 text = `
 ${intro}
 
-In the bl_info dictionary, a parameter called 'update_endpoint' should be set. This parameter is set to an invalid URL (${endpointURL}), so Super Addon Manager can't check for new versions.
+In the bl_info dictionary, a parameter called 'update_endpoint' should be set. This parameter is set to an invalid URL ("${endpointURL}"), so Super Addon Manager can't check for new versions.
 
 ${outro}
 `
