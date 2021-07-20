@@ -140,11 +140,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         # Assign the version from bl_info to the variable current_version.
         try:
             current_version = self.format_versions(addon_bl_info["version"])
-        except KeyError:
-            self.unavailable_addons.append(
-                {"issue_type": "bl_info_version_problems", "addon_name": self.addon_name, "bl_info": addon_bl_info})
-            return  # Critical Error
-        except ValueError:  # TODO: Merge these Errors!
+        except (KeyError, ValueError):
             self.unavailable_addons.append(
                 {"issue_type": "bl_info_version_problems", "addon_name": self.addon_name, "bl_info": addon_bl_info})
             return  # Critical Error
