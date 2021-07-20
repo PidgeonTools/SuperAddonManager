@@ -22,19 +22,6 @@ def endpoint_offline():
     return payload.replace("    ", "")
 
 
-# The Endpoint is not in the JSON format.
-def invalid_endpoint(endpoint_url):
-    payload = f"""
-    Title:
-    Super Addon Manager: Invalid Endpoint
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: The endpoint found under {endpoint_url} isn't in the JSON format, so Super Addon Manager can't check for new versions. Thank you for having a look at this :)
-    """
-    return payload.replace("    ", "")
-
-
 # No version is specified in the Endpoint.
 def endpoint_data_no_version(endpoint_url):
     payload = f"""
@@ -123,7 +110,7 @@ def generate_report(data):
     issue_type = data["issue_type"]
 
     addon_version = "Unknown"
-    if not issue_type in ["bl_info_version_problems"]:
+    if issue_type != "bl_info_version_problems" and "version" in data["bl_info"].keys():
         addon_version = ".".join(map(str, data["bl_info"]["version"]))
 
     url_params = {"issue_type": data["issue_type"],

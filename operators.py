@@ -141,7 +141,10 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = json.loads(endpoint_data)
         except json.decoder.JSONDecodeError:
             self.unavailable_addons.append(
-                {"issue_type": "invalid_endpoint", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
+                {"issue_type": "invalid_endpoint",
+                 "addon_name": self.addon_name,
+                 "bl_info": addon_bl_info,
+                 "endpoint_url": endpoint_url})
             return  # Critical Error
 
         # Assign the version from bl_info to the variable current_version.
