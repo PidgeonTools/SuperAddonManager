@@ -269,7 +269,7 @@ class SUPERADDONMANAGER_OT_update_all(Operator):
 
 
 class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
-    """Generate and save an issue report or feature request."""
+    """Generate an issue report or feature request."""
     bl_idname = "superaddonmanager.generate_issue_report"
     bl_label = "Generate Issue Report"
     bl_options = {'REGISTER', 'UNDO'}
