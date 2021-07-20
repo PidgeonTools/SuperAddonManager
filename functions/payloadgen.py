@@ -116,25 +116,6 @@ def endpoint_data_no_download_method(endpoint_url):
     return payload.replace("    ", "")
 
 
-# The version info file doesn't specify a display Name.
-# Therefore, the Folder name is shown.
-def bl_info_no_name(folder_path):
-    payload = f"""
-    Title:
-    Super Addon Manager: No Addon Name specified
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager.
-    Unfortunately, something is wrong with the Implementation:
-    In the bl_info dictionary, a parameter called 'name' should be defined.
-    This parameter isn't specified, or it's misspelled.
-    Without this parameter, both, Super Addon Manager AND Blender can't display a proper name of your addon (Current Display Name: The folder name '{folder_name}').
-    Super Addon Manager can still work tho, so this issue isn't critical.
-    Thank you for having a look at this :)"""
-    return str(payload).replace("    ", "")
-
-
 # ----- Issue Report Generation -----------------------------------------------
 def generate_report(data):
     base_url = "http://localhost:5500/request-support.html?"
