@@ -19,10 +19,6 @@
         issueType = "sam_not_supported"
     }
 
-    if (trackerURL) {
-        document.getElementById("issue_page").innerHTML = `<a href="${trackerURL}">developer's website.</a>`;
-    }
-
     // === Issue Specific Variables ===
     let addonCount;
     let endpointURL;
@@ -35,6 +31,7 @@
     }
 
     // === Page elements ===
+    const issuePage = document.getElementById("issue_page")
     const checklistForm = document.getElementById("checklist_form");
     const checklistAddonManagerUpdatedCheckbox = document.getElementById("checklist_addon_manager_updated");
     const checklistAddonUpdatedCheckbox = document.getElementById("checklist_addon_updated");
@@ -57,6 +54,16 @@
         for (addonNameElement of addonNameElements) {
             addonNameElement.innerHTML = addonName;
         }
+    }
+
+    // Change the elements inside the body tag
+    function updateBody() {
+        if (trackerURL) {
+            issuePage.innerHTML = `<a href="${trackerURL}">developer's website.</a>`;
+        }
+
+        updateAddonName();
+
     }
 
     // Generates the issue text
@@ -153,7 +160,7 @@ ${outro}`;
 
     // === Bootstrap the page ===
     updateTitle();
-    updateAddonName();
+    updateBody();
     updateIssueText();
 
     listenForChanges();
