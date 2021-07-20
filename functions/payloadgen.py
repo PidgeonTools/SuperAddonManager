@@ -32,7 +32,7 @@ def generate_report(data):
     if issue_type != "bl_info_version_problems" and "version" in data["bl_info"].keys():
         addon_version = ".".join(map(str, data["bl_info"]["version"]))
 
-    url_params = {"issue_type": data["issue_type"],
+    url_params = {"issue_type": issue_type,
                   "addon_name": data["addon_name"],
                   "os_name": platform.system(),
                   "blender_version": bpy.app.version_string,
