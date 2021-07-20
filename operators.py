@@ -287,11 +287,6 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
         return {'FINISHED'}
 
-    def draw(self, context):
-        layout = self.layout
-
-        layout.label(text="Choose a directory for the detailed issue report.")
-
 
 classes = (
     SUPERADDONMANAGER_OT_check_for_updates,
