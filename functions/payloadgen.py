@@ -22,25 +22,6 @@ def endpoint_offline():
     return payload.replace("    ", "")
 
 
-
-# The current version is greater than the version specified in the Endpoint.
-
-
-def current_version_greater(endpoint_url, endpoint_version, current_version):
-    payload = f"""
-    Title:
-    Super Addon Manager: Current Version is greater
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager.
-    Unfortunately, something is wrong with the Implementation:
-    In the endpoint, found under this URL: {endpoint_url}, the parameter 'version' is set to {endpoint_version}.
-    The current version (set in the bl_info dictionary, {current_version}) is newer, therefore Super Addon Manager can't work.
-    Thank you for having a look at this :)"""
-    return payload.replace("    ", "")
-
-
 # ----- Issue Report Generation -----------------------------------------------
 def generate_report(data):
     base_url = "http://localhost:5500/request-support.html?"

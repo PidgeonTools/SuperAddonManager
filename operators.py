@@ -207,10 +207,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         for i in range(3):
             # Check if the current version is newer than the endpoint version.
             if current_version[i] > new_version[i]:
-                # TODO: Is this issue really necessary?
-                self.unavailable_addons.append(
-                    {"issue_type": "current_version_greater", "addon_name": self.addon_name, "endpoint_url": version_info["endpoint_url"], "endpoint_version": new_version})
-                return  # Addon can't be updated
+                return  # No addon update available.
 
             # Check if the endpoint version is newer than the current version
             if current_version[i] < new_version[i]:
