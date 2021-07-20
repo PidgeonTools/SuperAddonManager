@@ -90,7 +90,10 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 continue
 
             self.unavailable_addons.append(
-                {"issue_type": "sam_not_supported", "addon_name": self.addon_name, "addon_count": len(self.all_addons)})
+                {"issue_type": "sam_not_supported",
+                 "addon_name": self.addon_name,
+                 "bl_info": sys.modules[p.basename(addon_path)].bl_info,
+                 "addon_count": len(self.all_addons)})
 
         # Sort the lists of updates and unavailable addons to be ordered less random.
         self.updates.sort(key=lambda x: x[1], reverse=True)
@@ -110,12 +113,15 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     def check_update(self, addon_path):
         addon_bl_info = sys.modules[p.basename(addon_path)].bl_info
 
-        try:
-            endpoint_url = addon_bl_info["endpoint_url"]
-        except KeyError:
+        if not "endpoint_url" in addon_bl_info.keys():
             self.unavailable_addons.append(
-                {"issue_type": "sam_not_supported", "addon_name": self.addon_name, "addon_count": len(self.all_addons)})
+                {"issue_type": "sam_not_supported",
+                 "addon_name": self.addon_name,
+                 "bl_info": addon_bl_info,
+                 "addon_count": len(self.all_addons)})
             return  # Special Error
+
+        endpoint_url = addon_bl_info["endpoint_url"]
 
         # Try to get data from the endpoint.
         try:
