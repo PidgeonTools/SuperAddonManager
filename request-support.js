@@ -58,7 +58,7 @@
         const addonNameElements = document.getElementsByClassName("addon_name");
 
         for (addonNameElement of addonNameElements) {
-            addonNameElement.innerHTML = addonName;
+            addonNameElement.innerText = addonName;
         }
     }
 
@@ -71,7 +71,13 @@
     // Change the elements inside the body tag
     function updateBody() {
         if (trackerURL) {
-            issuePage.innerHTML = `<a href="${trackerURL}">developer's website.</a>`;
+            const issuePageLink = document.createElement("a");
+            issuePageLink.target = "_blank"; // open in a new tab/window
+            issuePageLink.rel = "noopener noreferrer"; // prevent malicious code accessing back to this tab
+            issuePageLink.href = trackerURL; // safely assign the href
+            issuePageLink.innerText = issuePage.innerText; // copy the original text from the <span>
+
+            issuePage.parentNode.replaceChild(issuePageLink, issuePage);
         }
 
         updateAddonName();
