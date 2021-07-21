@@ -56,6 +56,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
         # Check for SAM Update. Abort, if an update for SAM is available.
         sam_install_location = p.dirname(__file__)
+        self.addon_name = sys.modules[p.basename(sam_install_location)].bl_info["name"]
         self.check_update(sam_install_location)
         if len(self.updates) > 0:
             prefs.updates = self.updates
