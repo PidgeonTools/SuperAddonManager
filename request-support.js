@@ -22,12 +22,16 @@
     // === Issue Specific Variables ===
     let addonCount;
     let endpointURL;
+    let errorMessage;
     if (issueType == "sam_not_supported"){
         let threshold = 15
         addonCount = urlParameters.get("addon_count") >= threshold ? urlParameters.get("addon_count") : "multiple";
     }
-    if (["url_invalid", "invalid_endpoint", "endpoint_invalid_schema"].includes(issueType)){
-        endpointURL = urlParameters.get("endpoint_url");  // TODO: Which Variable Type should I use?
+    if (["url_invalid", "invalid_endpoint", "endpoint_invalid_schema", "endpoint_offline"].includes(issueType)){
+        endpointURL = urlParameters.get("endpoint_url");
+    }
+    if (issueType == "endpoint_offline") {
+        errorMessage = urlParameters.get("issue_text")
     }
 
     // === Page elements ===
@@ -56,6 +60,30 @@
         }
     }
 
+    function addFormParameter() {
+        if (issueType == "endpoint_offline"){
+            // TODO: Codestyle!
+            // Create a new checkbox.
+            const checklistInternetConnectionCheckedCheckbox = document.createElement("input");
+            checklistInternetConnectionCheckedCheckbox.type = "checkbox";
+            checklistInternetConnectionCheckedCheckbox.id = "checkbox_internet_connection_checked";
+
+            checklistForm.appendChild(checklistInternetConnectionCheckedCheckbox);
+
+            // Create a label for the newly created checkbox.
+            const checklistInternetConnectionCheckedLabel = document.createElement("label");
+            checklistInternetConnectionCheckedLabel.setAttribute("for", "checkbox_internet_connection_checked");
+            checklistInternetConnectionCheckedLabel.innerHTML = "There's no problem with your internet connection.";
+
+            checklistForm.appendChild(checklistInternetConnectionCheckedLabel);
+
+            // Create a line break.
+            checklistForm.appendChild(document.createElement("br"));
+
+
+        }
+    }
+
     // Change the elements inside the body tag
     function updateBody() {
         if (trackerURL) {
@@ -63,6 +91,7 @@
         }
 
         updateAddonName();
+        addFormParameter();
 
     }
 
@@ -74,6 +103,11 @@
         const addonManagerUpdated = checklistAddonManagerUpdatedCheckbox.checked ? checked : unchecked;
         const addonUpdated = checklistAddonUpdatedCheckbox.checked ? checked : unchecked;
         const issueReported = checklistIssueReportedCheckbox.checked ? checked : unchecked;
+        let checkedInternet =  "";
+        if (issueType == "endpoint_offline"){  // TODO: Codestyle.
+            let checkboxChecked = document.getElementById("checkbox_internet_connection_checked").checked ? checked : unchecked;
+            checkedInternet = `${checkboxChecked} Checked, that my Internet works.`
+        }
 
         const intro = `
 **Describe the bug**
@@ -86,7 +120,7 @@ Thank you for having a look at this :)
 ${addonManagerUpdated} Super Addon Manager is up to date.
 ${addonUpdated} ${addonName} is up to date.
 ${issueReported} Checked that this issue hasn't been reported already.
-
+${checkedInternet}
 
 **System Information**
 - OS: ${systemOS}
@@ -131,6 +165,15 @@ ${outro}
 ${intro}
 
 The endpoint found under ${endpointURL} does not match the schema, so Super Addon Manager can't check for new versions. For more details, use our [schema checker.](SCHEMA CHECKER URL)
+
+${outro}
+                `;
+                break;
+            case "endpoint_offline":
+                text = `
+${intro}
+
+The specified Endpoint URL ("${endpointURL}") seems to be offline, so Super Addon Manager can't check for new versions. This is the bare error message that I get from Python: ${errorMessage}
 
 ${outro}
                 `;
