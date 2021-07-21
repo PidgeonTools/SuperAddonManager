@@ -19,8 +19,12 @@ import sys
 
 import time
 
+import platform
+
+import urllib
+import urllib.parse
+
 from . import prefs
-from .functions.payloadgen import generate_report
 
 
 class SUPERADDONMANAGER_OT_check_for_updates(Operator):
@@ -287,13 +291,43 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
     def execute(self, context):
         report_data = prefs.unavailable_addons[self.addon_index]
 
-        bpy.ops.wm.url_open(url=generate_report(report_data))
+        bpy.ops.wm.url_open(url=self.generate_report(report_data))
 
-        # time.sleep(1)  # Should we wait a second before removing the issue?
+        # time.sleep(1)  # TODO: Should we wait a second before removing the issue?
 
         prefs.unavailable_addons.pop(self.addon_index)
 
         return {'FINISHED'}
+
+    def generate_report(self, data):
+        base_url = "http://localhost:5500/request-support.html?"
+
+        issue_type = data["issue_type"]
+
+        addon_version = "Unknown"
+        if issue_type != "bl_info_version_problems" and "version" in data["bl_info"].keys():
+            addon_version = ".".join(map(str, data["bl_info"]["version"]))
+
+        url_params = {"issue_type": issue_type,
+                      "addon_name": data["addon_name"],
+                      "os_name": platform.system(),
+                      "blender_version": bpy.app.version_string,
+                      "addon_version": addon_version
+                      }
+
+        if "tracker_url" in data["bl_info"].keys():
+            url_params["tracker_url"] = data["bl_info"]["tracker_url"]
+
+        if issue_type in ["sam_not_supported"]:
+            url_params["addon_count"] = data["addon_count"]
+
+        if issue_type in ["url_invalid", "invalid_endpoint", "endpoint_invalid_schema", "endpoint_offline"]:
+            url_params["endpoint_url"] = data["endpoint_url"]
+
+        if issue_type == "endpoint_offline":
+            url_params["issue_text"] = data["issue_text"]
+
+        return base_url + urllib.parse.urlencode(url_params)
 
 
 classes = (
