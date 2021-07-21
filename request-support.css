@@ -25,3 +25,7 @@ body {
 .issue_text .copy_issue {
     margin-bottom: 0.125rem;
 }
+
+.hide {
+    display: none;
+}
