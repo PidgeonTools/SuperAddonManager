@@ -48,28 +48,18 @@
 
 
     // === Functions ===
-    // Update the title of the page
-    function updateTitle() {
+    function setupPage() {
+        // === Update Title ===
         document.title = `${addonName} - Error checking for updates`;
-    }
 
-    // Add the name of the Addon into the page
-    function updateAddonName() {  // TODO: Should I move this inside updateBody?
+        // === Update addon name ===
         const addonNameElements = document.getElementsByClassName("addon_name");
 
         for (addonNameElement of addonNameElements) {
             addonNameElement.innerText = addonName;
         }
-    }
 
-    function addFormParameter() {
-        if (issueType == "endpoint_offline"){
-            checklistInternetChecked.classList.toggle("hide", false);
-        }
-    }
-
-    // Change the elements inside the body tag
-    function updateBody() {
+        // === Add tracker URL ===
         if (trackerURL) {
             const issuePageLink = document.createElement("a");
             issuePageLink.target = "_blank"; // open in a new tab/window
@@ -80,9 +70,13 @@
             issuePage.parentNode.replaceChild(issuePageLink, issuePage);
         }
 
-        updateAddonName();
-        addFormParameter();
+        // === Show the hidden Form Parameter ===
+        if (issueType == "endpoint_offline"){
+            checklistInternetChecked.classList.toggle("hide", false);
+        }
 
+        // Change the issue text
+        updateIssueText();
     }
 
     // Generates the issue text
@@ -211,9 +205,7 @@ ${outro}
 
 
     // === Bootstrap the page ===
-    updateTitle();
-    updateBody();
-    updateIssueText();
+    setupPage();
 
     listenForChanges();
 })();
