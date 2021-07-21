@@ -112,7 +112,7 @@
         const intro = `
 **Describe the bug**
 Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation:
-        `;
+        `.trim();
         const outro = `
 Thank you for having a look at this :)
 
@@ -139,7 +139,8 @@ ${intro}
 
 In the bl_info dictionary, a parameter called 'version' should be set. This parameter is not set, misspelled or contains an invalid datatype (Only integers, floats and numbers in strings can be converted to integers), so Super Addon Manager can't check for new versions. More details: https://github.com/BlenderDefender/SuperAddonManager/wiki/troubleshooting
 
-${outro}`
+${outro}
+                `;
                 break;
             case "url_invalid":
                 text = `
@@ -148,7 +149,7 @@ ${intro}
 In the bl_info dictionary, a parameter called 'update_endpoint' should be set. This parameter is set to an invalid URL ("${endpointURL}"), so Super Addon Manager can't check for new versions.
 
 ${outro}
-`
+                `;
                 break;
             case "invalid_endpoint":
                 text = `
@@ -159,8 +160,8 @@ The endpoint found under ${endpointURL} is not in the JSON format, so Super Addo
 ${outro}
                 `;
                 break;
-                case "endpoint_invalid_schema":
-                    text = `
+            case "endpoint_invalid_schema":
+                text = `
 ${intro}
 
 The endpoint found under ${endpointURL} does not match the schema, so Super Addon Manager can't check for new versions. For more details, use our [schema checker.](SCHEMA CHECKER URL)
@@ -185,7 +186,8 @@ After using Blender for a while now (including your addon ${addonName}), I've no
 **Describe the solution you'd like**
 It would be great if you could activate support for it. Doing so is easy, 100% risk-free (no code added to your addon), and platform-independent. You can find a detailed description for enabling support for Super Addon Manager in the documentation: https://github.com/BlenderDefender/SuperAddonManager/wiki/implementation/
 
-${outro}`;
+${outro}
+                `;
                 break;
         }
         issueTextArea.value = text.trim();
