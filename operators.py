@@ -69,7 +69,6 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         # Add single files to the list of addons that can't be updated by SAM.
         # Folders are sent to self.check_update() for the actual update check.
         for addon_path in self.enabled_addons:
-
             if "name" in sys.modules[p.basename(addon_path)].bl_info:
                 self.addon_name = sys.modules[p.basename(
                     addon_path)].bl_info["name"]
@@ -131,9 +130,13 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             return  # Critical Error
         # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
         except Exception as e:  # TODO: Bring in the Exception Message.
-            print(e)
+            print(str(e))
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_offline", "addon_name": self.addon_name, "endpoint_url": endpoint_url})
+                {"issue_type": "endpoint_offline",
+                 "addon_name": self.addon_name,
+                 "bl_info": addon_bl_info,
+                 "issue_text": str(e),
+                 "endpoint_url": endpoint_url})
             return  # Critical Error
 
         # Try to convert the data to be helpful for the program.

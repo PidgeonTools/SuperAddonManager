@@ -6,23 +6,6 @@ import urllib
 import urllib.parse
 
 
-# ----- Critical Issues -------------------------------------------------------
-
-# The Endpoint is offline.
-def endpoint_offline():
-    payload = f"""
-    Title:
-    Super Addon Manager: Endpoint URL can't be reached
-
-    Body:
-    **Describe the bug**
-    Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: The specified Endpoint URL seems to be offline, so Super Addon Manager can't check for new versions. Thank you for having a look at this :)
-
-    """
-    return payload.replace("    ", "")
-
-
-# ----- Issue Report Generation -----------------------------------------------
 def generate_report(data):
     base_url = "http://localhost:5500/request-support.html?"
 
@@ -45,8 +28,11 @@ def generate_report(data):
     if issue_type in ["sam_not_supported"]:
         url_params["addon_count"] = data["addon_count"]
 
-    if issue_type in ["url_invalid", "invalid_endpoint", "endpoint_invalid_schema"]:
+    if issue_type in ["url_invalid", "invalid_endpoint", "endpoint_invalid_schema", "endpoint_offline"]:
         url_params["endpoint_url"] = data["endpoint_url"]
+
+    if issue_type == "endpoint_offline":
+        url_params["issue_text"] = data["issue_text"]
 
     return base_url + urllib.parse.urlencode(url_params)
 
