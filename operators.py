@@ -23,7 +23,6 @@ from . import prefs
 from .functions.payloadgen import generate_report
 
 
-# TODO: Replace Addon Path with Addon name! Pass bl_info as Error Argument!
 class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     """Iterates through all installed Addons and checks for Updates"""
     bl_idname = "superaddonmanager.check_for_updates"
@@ -56,7 +55,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
         # Check for SAM Update. Abort, if an update for SAM is available.
         sam_install_location = p.dirname(__file__)
-        self.addon_name = sys.modules[p.basename(sam_install_location)].bl_info["name"]
+        self.addon_name = sys.modules[p.basename(
+            sam_install_location)].bl_info["name"]
         self.check_update(sam_install_location)
         if len(self.updates) > 0:
             prefs.updates = self.updates
@@ -130,8 +130,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 {"issue_type": "url_invalid", "addon_name": self.addon_name, "bl_info": addon_bl_info, "endpoint_url": endpoint_url})
             return  # Critical Error
         # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
-        except Exception as e:  # TODO: Bring in the Exception Message.
-            print(str(e))
+        except Exception as e:
             self.unavailable_addons.append(
                 {"issue_type": "endpoint_offline",
                  "addon_name": self.addon_name,
@@ -164,14 +163,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         # Assign the version from the endpoint to the variable new_version.
         try:
             new_version = self.format_versions(endpoint_data["version"])
-        except KeyError:
-            self.unavailable_addons.append(
-                {"issue_type": "endpoint_invalid_schema",
-                 "addon_name": self.addon_name,
-                 "bl_info": addon_bl_info,
-                 "endpoint_url": endpoint_url})
-            return  # Critical Error
-        except ValueError:
+        except (KeyError, ValueError):
             self.unavailable_addons.append(
                 {"issue_type": "endpoint_invalid_schema",
                  "addon_name": self.addon_name,
