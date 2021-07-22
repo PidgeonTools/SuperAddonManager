@@ -35,13 +35,16 @@
     }
 
     // === Page elements ===
-    const issuePage = document.getElementById("issue_page")
+    const issueDescription = document.getElementById("issue_description");
+
     const checklistForm = document.getElementById("checklist_form");
     const checklistAddonManagerUpdatedCheckbox = document.getElementById("checklist_addon_manager_updated");
     const checklistAddonUpdatedCheckbox = document.getElementById("checklist_addon_updated");
     const checklistIssueReportedCheckbox = document.getElementById("checklist_issue_reported");
     const checklistInternetChecked = document.getElementById("internet_connection_checked");
     const checklistInternetCheckedCheckbox = document.getElementById("checkbox_internet_connection_checked");
+
+    const issuePage = document.getElementById("issue_page")
 
     const issueTextArea = document.getElementById("issue_text");
     const copyIssueButton = document.getElementById("copy_issue");
@@ -74,6 +77,23 @@
         if (issueType == "endpoint_offline"){
             checklistInternetChecked.classList.toggle("hide", false);
         }
+
+        // === Update the non-developer friendly issue description.
+        let issueDescriptionText;
+        switch (issueType) {
+            case "bl_info_version_problems":
+                issueDescriptionText = `
+Super Addon Manager can't understand the current version, so it can't compare it with the latest version. This means, that Super Addon Manager doesn't know, if there's a new version available and can't display any updates.
+                `;
+                break;
+            // TODO: Add non-developer friendly issue descriptions here.
+            default:
+                issueDescriptionText = `
+Your Addon ${addonName} doesn't support Super Addon Manager and can't be updated automatically. For Super Addon Manager to work, it's necessary that developers enable support for it. The developers of ${addonName} probably don't even know about Super Addon Manager yet, so it's time to tell them.
+                `;
+                break;
+        }
+        issueDescription.innerText = issueDescriptionText.trim();
 
         // Change the issue text
         updateIssueText();
