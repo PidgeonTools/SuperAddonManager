@@ -139,7 +139,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 {"issue_type": "endpoint_offline",
                  "addon_name": self.addon_name,
                  "bl_info": addon_bl_info,
-                 "issue_text": str(e),
+                 "error_message": str(e),
                  "endpoint_url": endpoint_url})
             return  # Critical Error
 
@@ -325,7 +325,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
             url_params["endpoint_url"] = data["endpoint_url"]
 
         if issue_type == "endpoint_offline":
-            url_params["issue_text"] = data["issue_text"]
+            url_params["error_message"] = data["error_message"]
 
         return base_url + urllib.parse.urlencode(url_params)
 
