@@ -31,7 +31,7 @@
         endpointURL = urlParameters.get("endpoint_url");
     }
     if (issueType == "endpoint_offline") {
-        errorMessage = urlParameters.get("issue_text")
+        errorMessage = urlParameters.get("error_message")
     }
 
     // === Page elements ===
