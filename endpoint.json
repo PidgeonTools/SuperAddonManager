@@ -1,11 +1,12 @@
 {
+    "schema_version": 1,
     "version": [
         0,
         0,
-        3
+        0
     ],
     "automatic_download": true,
-    "download_url": "https://github.com/BlenderDefender/blender_pm/archive/refs/tags/1.2.0.zip",
+    "download_url": "",
     "minimum_blender_version": [
         2,
         83,
