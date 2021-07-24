@@ -86,7 +86,27 @@
 Super Addon Manager can't understand the current version, so it can't compare it with the latest version. This means, that Super Addon Manager doesn't know, if there's a new version available and can't display any updates.
                 `;
                 break;
-            // TODO: Add non-developer friendly issue descriptions here.
+            case "url_invalid":
+                // TODO: Add description!
+                issueDescriptionText = `
+To be able to check for updates, the developers of ${addonName} have to provide a link to an online resource (the "Endpoint"), which contains information about new versions (if available). A valid URL looks like this: "https://www.example.com". The URL, that the developer provided, seems to be an invalid URL, it looks like this: "${endpointURL}".
+                `;
+                break;
+            case "invalid_endpoint":
+                // TODO: Add description!
+                issueDescriptionText = `
+                `;
+                break;
+            case "endpoint_invalid_schema":
+                // TODO: Add description!
+                issueDescriptionText = `
+                `;
+                break;
+            case "endpoint_offline":
+                // TODO: Add description!
+                issueDescriptionText = `
+                `;
+                break;
             default:
                 issueDescriptionText = `
 Your Addon ${addonName} doesn't support Super Addon Manager and can't be updated automatically. For Super Addon Manager to work, it's necessary that developers enable support for it. The developers of ${addonName} probably don't even know about Super Addon Manager yet, so it's time to tell them.
