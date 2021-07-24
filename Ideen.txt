@@ -4,11 +4,6 @@
 4.: Read bl_info, make a request to endpoint_url, compare the version numbers.
 5.: Download and install all Auto-Download Addons and display the download URL's for non Auto-Download Addons
 
-Optional for developers:
-    Snippet in the Addon Prefs saying that SuperAddonManager is supported.
-    C.preferences.addons --> Check that SuperAddonManager isn't installed AND enabled yet
-
-
 Minimum Blender version in the JSON Endpoint.
 
 Maybe save backup copies (of the addons) for (a) downgrade option(s)
