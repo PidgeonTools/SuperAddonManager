@@ -1,15 +1,19 @@
 {
     "schema_version": 1,
-    "version": [
-        0,
-        0,
-        0
-    ],
-    "automatic_download": true,
-    "download_url": "",
-    "minimum_blender_version": [
-        2,
-        83,
-        0
+    "versions": [
+        {
+            "version": [
+                0,
+                0,
+                0
+            ],
+            "automatic_download": true,
+            "download_url": "",
+            "minimum_blender_version": [
+                2,
+                83,
+                0
+            ]
+        }
     ]
 }
