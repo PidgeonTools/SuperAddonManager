@@ -293,7 +293,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
         bpy.ops.wm.url_open(url=self.generate_report(report_data))
 
-        # time.sleep(1)  # TODO: Should we wait a second before removing the issue?
+        time.sleep(0.3)
 
         prefs.unavailable_addons.pop(self.addon_index)
 
