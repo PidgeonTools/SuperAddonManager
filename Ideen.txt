@@ -9,3 +9,5 @@ Minimum Blender version in the JSON Endpoint.
 Maybe save backup copies (of the addons) for (a) downgrade option(s)
 
 Manual Download: Offer the possibility of updating an addon from a downloaded ZIP file.
+
+Schema Validation: Try to use a schema validator.
