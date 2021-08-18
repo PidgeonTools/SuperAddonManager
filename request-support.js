@@ -37,6 +37,8 @@
     // === Page elements ===
     const nonDevIssueDescription = document.getElementById("non-dev-friendly-issue-description");
 
+    const whatToDo = document.getElementById("what-to-do");
+
     const checklistForm = document.getElementById("checklist_form");
     const checklistAddonManagerUpdatedCheckbox = document.getElementById("checklist_addon_manager_updated");
     const checklistAddonUpdatedCheckbox = document.getElementById("checklist_addon_updated");
@@ -73,9 +75,15 @@
             issuePage.parentNode.replaceChild(issuePageLink, issuePage);
         }
 
-        // === Show the hidden Form Parameter ===
+        // === Show the hidden Form Parameter and add a sentence to "What can you do to make it work" ===
         if (issueType == "endpoint_offline"){
             checklistInternetChecked.classList.toggle("hide", false);
+            whatToDo.innerHTML = `
+Check, that your internet connection works. Then, try to reach the Endpoint found at <a target="_blank" rel="noopener noreferrer" href="#" id="endpoint_offline_url">#</a>. If you can reach the page, retry to check for updates. If it still doesn't work, or your browser also tells you, that this page can't be reached, it's the developers responsibility to fix this problem. Please report an issue to the developer. You can use our automatically generated text if you want to, but you should first check a few things:
+            `.trim();
+            let endpointOfflineUrl = document.getElementById("endpoint_offline_url");
+            endpointOfflineUrl.innerText = endpointURL;
+            endpointOfflineUrl.href = endpointURL;
         }
 
         // === Update the non-developer friendly issue description. ===
