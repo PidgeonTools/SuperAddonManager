@@ -35,7 +35,7 @@
     }
 
     // === Page elements ===
-    const issueDescription = document.getElementById("issue_description");
+    const nonDevIssueDescription = document.getElementById("non-dev-friendly-issue-description");
 
     const checklistForm = document.getElementById("checklist_form");
     const checklistAddonManagerUpdatedCheckbox = document.getElementById("checklist_addon_manager_updated");
@@ -78,8 +78,11 @@
             checklistInternetChecked.classList.toggle("hide", false);
         }
 
-        // === Update the non-developer friendly issue description.
+        // === Update the non-developer friendly issue description. ===
         let issueDescriptionText;
+        let endpointIntroText = `
+        To be able to check for updates, the developers of ${addonName} have to provide a link to an online resource (the "Endpoint"), which contains information about new versions (if available).
+        `.trim();
         switch (issueType) {
             case "bl_info_version_problems":
                 issueDescriptionText = `
@@ -87,24 +90,23 @@ Super Addon Manager can't understand the current version, so it can't compare it
                 `;
                 break;
             case "url_invalid":
-                // TODO: Add description!
                 issueDescriptionText = `
-To be able to check for updates, the developers of ${addonName} have to provide a link to an online resource (the "Endpoint"), which contains information about new versions (if available). A valid URL looks like this: "https://www.example.com". The URL, that the developer provided, seems to be an invalid URL, it looks like this: "${endpointURL}".
+${endpointIntroText} A valid URL looks like this: "https://www.example.com". The URL that the developer provided seems to be invalid. It looks like this: "${endpointURL}".
                 `;
                 break;
             case "invalid_endpoint":
-                // TODO: Add description!
                 issueDescriptionText = `
+${endpointIntroText} This Endpoint is in a file format that Super Addon Manager can't understand, so Super Addon Manager can't check for updates.
                 `;
                 break;
             case "endpoint_invalid_schema":
-                // TODO: Add description!
                 issueDescriptionText = `
+${endpointIntroText} This Endpoint is missing required information, so Super Addon Manager can't check for updates.
                 `;
                 break;
             case "endpoint_offline":
-                // TODO: Add description!
                 issueDescriptionText = `
+${endpointIntroText} The server of this Endpoint seems to be offline, because it doesn't respond.
                 `;
                 break;
             default:
@@ -113,7 +115,7 @@ Your Addon ${addonName} doesn't support Super Addon Manager and can't be updated
                 `;
                 break;
         }
-        issueDescription.innerText = issueDescriptionText.trim();
+        nonDevIssueDescription.innerText = issueDescriptionText.trim();
 
         // Change the issue text
         updateIssueText();
