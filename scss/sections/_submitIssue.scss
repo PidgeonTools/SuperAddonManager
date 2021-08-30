@@ -1,0 +1,34 @@
+@use "../custom" as *;
+
+.submit-issue {
+  a {
+    text-decoration: none;
+    color: $black;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+      color: $primary;
+    }
+  }
+}
+
+.issue_text {
+  width: 90%;
+  max-width: 50rem;
+}
+
+.issue_text .issue_text_area {
+  font-weight: 300;
+  width: 100%;
+  height: 22.25rem;
+}
+
+.issue_text .issue_label_row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.issue_text .copy_issue {
+  margin-bottom: 0.125rem;
+}
