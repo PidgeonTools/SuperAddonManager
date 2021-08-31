@@ -11117,6 +11117,18 @@ body {
   background-attachment: fixed;
 }
 
+.syntax-string {
+  color: #c28400;
+}
+
+.syntax-number {
+  color: #22b691;
+}
+
+.syntax-keyword {
+  color: #0042bd;
+}
+
 .hide {
   display: none;
 }

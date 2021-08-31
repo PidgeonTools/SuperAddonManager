@@ -1,0 +1,13 @@
+@use "../custom" as *;
+
+.syntax-string {
+  color: $code-string;
+}
+
+.syntax-number {
+  color: $code-number;
+}
+
+.syntax-keyword {
+  color: $code-keyword;
+}
