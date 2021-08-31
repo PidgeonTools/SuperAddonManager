@@ -5,12 +5,8 @@ import { withRouter } from "next/router";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
-const requestSupport = withRouter((props) => {
-  const query = props.router.query;
-
+const SupportPage = ({ query, addonName, issueType }) => {
   // === Issue independent Parameters ===
-  const addonName = query.addon_name ? query.addon_name : "[Your Addon]";
-  const issueType = query.issue_type ? query.issue_type : "sam_not_supported";
   const trackerURL = query.tracker_url;
 
   // === System Information ===
@@ -88,11 +84,6 @@ const requestSupport = withRouter((props) => {
 
   return (
     <>
-      <Header title={addonName + " - Error checking for updates"} />
-
-      {/* NAVBAR SECTION */}
-      <Navbar />
-
       {/* INTRO SECTION */}
       <section className="intro">
         <div className="container">
@@ -274,6 +265,37 @@ const requestSupport = withRouter((props) => {
           </div>
         </div>
       </section>
+    </>
+  );
+};
+
+const NoData = () => {
+  return (
+    <>
+      <div className="mt-5 pt-5">No issue Type selected!</div>
+    </>
+  );
+};
+const requestSupport = withRouter((props) => {
+  const query = props.router.query;
+
+  const addonName = query.addon_name ? query.addon_name : "[Your Addon]";
+  const issueType = query.issue_type;
+
+  return (
+    <>
+      <Header title={addonName + " - Error checking for updates"} />
+      {/* NAVBAR SECTION */}
+      <Navbar />
+      {issueType ? (
+        <SupportPage
+          query={query}
+          addonName={addonName}
+          issueType={issueType}
+        />
+      ) : (
+        <NoData />
+      )}
     </>
   );
 });
