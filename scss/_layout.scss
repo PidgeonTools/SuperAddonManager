@@ -1,0 +1,12 @@
+@use "./custom" as *;
+
+body {
+  background: linear-gradient(
+    200deg,
+    $blue-extreme-light,
+    transparent,
+    transparent,
+    transparent
+  );
+  background-attachment: fixed;
+}
