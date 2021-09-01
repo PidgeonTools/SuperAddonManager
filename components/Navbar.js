@@ -3,11 +3,11 @@ import React from "react";
 const Navbar = () => (
   <nav className="navbar navbar-expand-lg navbar-dark menu shadow fixed-top">
     <div className="container">
-      <a class="navbar-brand" href="#">
+      <a className="navbar-brand" href="#">
         <img src="./images/logo.png" alt="Home" />
       </a>
       <button
-        class="navbar-toggler"
+        className="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNav"
@@ -15,22 +15,25 @@ const Navbar = () => (
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <span class="navbar-toggler-icon"></span>
+        <span className="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="#ABOUT" class="nav-link">
+      <div
+        className="collapse navbar-collapse justify-content-end"
+        id="navbarNav"
+      >
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <a href="#ABOUT" className="nav-link">
               About
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#DOCUMENTATION" class="nav-link">
+          <li className="nav-item">
+            <a href="#DOCUMENTATION" className="nav-link">
               Docs
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#GET" class="nav-link">
+          <li className="nav-item">
+            <a href="#GET" className="nav-link">
               Get Super Addon Manager
             </a>
           </li>
