@@ -55,7 +55,7 @@ marked.use({ renderer });
 
 const Page = ({ content, data }) => (
   <>
-    <Header title={data.title + " · Super Addon Manager Documentation"} />
+    <Header title={data.title + " · Documentation"} />
     <Navbar />
     <div dangerouslySetInnerHTML={{ __html: content }} />
     {/* <div>{content}</div> */}
