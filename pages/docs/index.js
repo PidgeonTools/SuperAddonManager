@@ -8,7 +8,7 @@ import Navbar from "../../components/Navbar";
 
 const Docs = ({ slugs }) => (
   <>
-    <Header title="Super Addon Manager - Documentation" />
+    <Header title="Documentation" />
     <Navbar />
     <div className="container intro">
       {slugs.map((slug) => {
