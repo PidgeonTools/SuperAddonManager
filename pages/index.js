@@ -1,27 +1,14 @@
-import Link from "next/link";
-import fs from "fs";
+import Header from "../components/Header";
+import Navbar from "../components/Navbar";
 
-export default function Home({ slugs }) {
+export default function Home() {
   return (
-    <div className="container">
-      {slugs.map((slug) => {
-        return (
-          <div key={slug}>
-            <Link href={`/blog/${slug}`}>
-              <a>{slug}</a>
-            </Link>
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <Header title="Home" />
+      <Navbar />
+      <div className="intro">
+        <a href="/request-support">Request Support</a>
+      </div>
+    </>
   );
 }
-
-export const getStaticProps = async () => {
-  const files = fs.readdirSync("posts");
-  return {
-    props: {
-      slugs: files.map((filename) => filename.replace(".md", "")),
-    },
-  };
-};
