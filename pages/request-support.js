@@ -6,6 +6,13 @@ import { withRouter } from "next/router";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
+// TODO: Make that work!
+const fetchBlenderVersion = () => {
+  return fetch(
+    "https://raw.githubusercontent.com/BlenderDefender/BlenderDefender/other_endpoints/latest-blender-version.json"
+  );
+};
+
 const SupportPage = ({ query, addonName, issueType }) => {
   // === Page Elements ===
   const [samUpToDate, setSamUpToDate] = useState(false);
@@ -370,6 +377,8 @@ ${outro}
 };
 
 const NoData = () => {
+  const latestBlenderVersion = fetchBlenderVersion();
+  console.log(latestBlenderVersion);
   const issueTypes = [
     "sam_not_supported",
     "bl_info_version_problems",
@@ -515,14 +524,14 @@ const NoData = () => {
               <input
                 type="text"
                 id="blender_version"
-                placeholder="e.g. 2.83.0"
+                placeholder="*"
                 pattern="\d+\.\d+\.\d+"
                 className="form-control"
                 onChange={handleChange}
                 required
               />
               <label htmlFor="blender_version">
-                Blender Version (e.g. 2.93.3)
+                Blender Version (e.g. {latestBlenderVersion})
               </label>
             </div>
             {/* ADDON VERSION */}
