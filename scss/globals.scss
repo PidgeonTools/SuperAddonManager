@@ -1,0 +1,13 @@
+@use "custom";
+@use "layout";
+
+// COMPONENTS
+@use "components/code";
+@use "components/utilities";
+
+// IMPORT THE COMPONENTS
+@use "sections/navbar";
+@use "sections/intro";
+@use "sections/problemDescription";
+@use "sections/whatToDo";
+@use "sections/requestSupportForm";

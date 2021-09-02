@@ -1,0 +1,15 @@
+@use "../custom" as *;
+
+.request-support-form {
+  label {
+    padding-left: 1.4rem;
+  }
+
+  .required {
+    label {
+      &::after {
+        content: "*";
+      }
+    }
+  }
+}

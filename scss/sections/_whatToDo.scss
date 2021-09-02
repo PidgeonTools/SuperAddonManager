@@ -1,0 +1,31 @@
+@use "../custom" as *;
+
+.what-todo {
+  a {
+    color: $primary;
+    font-weight: 600;
+
+    &:hover {
+      color: darken($primary, 20%);
+    }
+  }
+}
+
+.issue_text {
+  .issue_text_area {
+    width: 100%;
+    background-color: $gray-300;
+    padding: 1rem;
+    font-weight: 300;
+    white-space: pre-wrap;
+
+    @include media-breakpoint-down(md) {
+      padding-top: 2.7rem;
+    }
+  }
+
+  .copy_issue {
+    position: absolute;
+    margin: 0.5rem;
+  }
+}

@@ -1,0 +1,101 @@
+@use "../custom" as *;
+
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+code.hljs {
+  padding: 3px 5px;
+}
+.hljs {
+  background: $gray-200;
+  color: $black;
+}
+.xml .hljs-meta {
+  color: silver;
+}
+
+// COMMENT
+.hljs-comment,
+.hljs-quote {
+  color: $code-comment;
+}
+
+// KEYWORD
+.hljs-attribute,
+.hljs-keyword,
+.hljs-literal,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-tag {
+  color: $code-keyword;
+}
+
+// VARIABLE
+.hljs-template-variable,
+.hljs-variable {
+  color: $code-variable;
+}
+
+// STRING
+.hljs-code,
+.hljs-meta .hljs-string,
+.hljs-string {
+  color: $code-string;
+}
+
+// NUMBER
+.hljs-bullet,
+.hljs-number,
+.hljs-symbol,
+.hljs-title {
+  color: $code-number;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title,
+.hljs-params,
+.hljs-title.class_,
+.hljs-type {
+  color: $code-builtin;
+}
+
+// REGEXP
+.hljs-link,
+.hljs-regexp {
+  color: $code-regexp;
+}
+
+.hljs-meta,
+.hljs-section {
+  color: $code-meta;
+}
+
+.hljs-attr {
+  color: #836c28;
+}
+.hljs-subst {
+  color: $black;
+}
+.hljs-formula {
+  background-color: #eee;
+  font-style: italic;
+}
+.hljs-addition {
+  background-color: #baeeba;
+}
+.hljs-deletion {
+  background-color: #ffc8bd;
+}
+.hljs-selector-class,
+.hljs-selector-id {
+  color: #9b703f;
+}
+.hljs-doctag,
+.hljs-strong {
+  font-weight: 700;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
