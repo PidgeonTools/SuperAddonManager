@@ -344,6 +344,8 @@ ${outro}
                 </Link>
               </p>
 
+              {/* TODO: Add issue title here */}
+
               {/* ISSUE TEXT */}
               <div className="issue_text">
                 <div className="d-flex justify-content-end">
@@ -376,7 +378,7 @@ const NoData = () => {
     "invalid_endpoint",
     "endpoint_invalid_schema",
   ];
-  const operatingSystems = ["Windows", "Linux", "MacOS", "Other"];
+  const operatingSystems = ["Windows", "Linux", "macOS", "Other"];
   const baseURL = "http://localhost:3000/request-support?";
 
   const [formData, setFormData] = useState({});
