@@ -4,9 +4,8 @@
   "private": true,
   "homepage": ".",
   "scripts": {
-    "compile:sass": "sass --watch scss:styles",
-    "compile:react": "next build",
     "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "export": "next export"
@@ -14,6 +13,9 @@
   "dependencies": {
     "autoprefixer": "^10.3.3",
     "bootstrap": "^5.1.0",
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.2.0",
+    "marked": "^3.0.2",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
