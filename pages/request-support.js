@@ -420,8 +420,8 @@ const NoData = () => {
             <div className="row">
               <h1>Request support for your addon</h1>
               <p>
-                We have processed your data and we've set up a page for you,
-                that explains, what you can do about your issue.
+                We have processed your data and set up a page for you, that
+                explains, what you can do about your issue.
               </p>
               <a className="btn btn-outline-primary" href={redirectURI}>
                 Take me there!
@@ -555,7 +555,7 @@ const NoData = () => {
                   onChange={handleChange}
                   required
                 />
-                <label for="addon_count">
+                <label htmlFor="addon_count">
                   Estimated Number of installed Addons
                 </label>
               </div>
@@ -591,7 +591,7 @@ const NoData = () => {
                   placeholder="Error Message"
                   id="error_message"
                 ></textarea>
-                <label for="error_message">Error Message</label>
+                <label htmlFor="error_message">Error Message</label>
               </div>
             ) : (
               ""

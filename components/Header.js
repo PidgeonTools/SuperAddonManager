@@ -5,7 +5,6 @@ const Header = ({ title }) => (
   <Head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="./bootstrap/bootstrap.bundle.min.js"></script>
 
     <title>{title + " · Super Addon Manager"}</title>
     <link
