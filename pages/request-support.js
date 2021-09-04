@@ -457,7 +457,7 @@ const NoData = () => {
             }}
           >
             {/* ISSUE TYPE */}
-            <div className="col-6 form-floating mb-3 required">
+            <div className="col-12 col-lg-6 form-floating mb-3 required">
               <select
                 className="form-select"
                 id="issue_type"
@@ -479,7 +479,7 @@ const NoData = () => {
               </label>
             </div>
             {/* ADDON NAME */}
-            <div className="col-6 form-floating mb-3 required">
+            <div className="col-12 col-lg-6 form-floating mb-3 required">
               <input
                 type="text"
                 id="addon_name"
@@ -493,7 +493,7 @@ const NoData = () => {
 
             {/* === SYSTEM INFORMATION === */}
             {/* OS */}
-            <div className="col-6 form-floating mb-3 required">
+            <div className="col-12 col-lg-6 form-floating mb-3 required">
               <select
                 className="form-select"
                 id="os_name"
@@ -513,7 +513,7 @@ const NoData = () => {
               <label htmlFor="os_name">Operating System</label>
             </div>
             {/* BLENDER VERSION */}
-            <div className="col-3 form-floating mb-3 required">
+            <div className="col-12 col-md-6 col-lg-3 form-floating mb-3 required">
               <input
                 type="text"
                 id="blender_version"
@@ -528,7 +528,7 @@ const NoData = () => {
               </label>
             </div>
             {/* ADDON VERSION */}
-            <div className="col-3 form-floating mb-3 required">
+            <div className="col-12 col-md-6 col-lg-3 form-floating mb-3 required">
               <input
                 type="text"
                 id="addon_version"
