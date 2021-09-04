@@ -381,7 +381,7 @@ const NoData = () => {
     "endpoint_invalid_schema",
   ];
   const operatingSystems = ["Windows", "Linux", "macOS", "Other"];
-  const baseURL = "/request-support?";
+  const baseURL = "/request-support";
 
   const [formData, setFormData] = useState({});
   const router = useRouter();
@@ -394,19 +394,13 @@ const NoData = () => {
     });
   };
 
-  const handleSubmit = () => {
-    const redirectURI =
-      baseURL +
-      Object.keys(formData)
-        .map(
-          (key) =>
-            `${encodeURIComponent(key)}=${encodeURIComponent(formData[key])}`
-        )
-        .join("&");
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    router.push(redirectURI);
-
-    return;
+    router.push({
+      pathname: baseURL,
+      query: formData,
+    });
   };
 
   return (
