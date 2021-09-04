@@ -1,15 +1,15 @@
 import React from "react";
-import { withRouter, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 // Components
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { NoData, SupportPage } from "../components/request-support";
 
-const requestSupport = withRouter((props) => {
-  const query = props.router.query;
+const RequestSupport = () => {
+  const { query } = useRouter();
 
-  const addonName = query.addon_name ? query.addon_name : "[Your Addon]";
+  const addonName = query.addon_name ?? "[Your Addon]";
   const issueType = query.issue_type;
 
   return (
@@ -27,6 +27,6 @@ const requestSupport = withRouter((props) => {
       )}
     </>
   );
-});
+};
 
-export default requestSupport;
+export default RequestSupport;
