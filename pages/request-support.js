@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { withRouter } from "next/router";
+import { withRouter, useRouter } from "next/router";
 
 // Components
 import Navbar from "../components/Navbar";
@@ -381,11 +381,10 @@ const NoData = () => {
     "endpoint_invalid_schema",
   ];
   const operatingSystems = ["Windows", "Linux", "macOS", "Other"];
-  const baseURL = "http://localhost:3000/request-support?";
+  const baseURL = "/request-support?";
 
   const [formData, setFormData] = useState({});
-  const [submitStatus, setSubmitStatus] = useState(false);
-  const [redirectURI, setRedirectURI] = useState(baseURL);
+  const router = useRouter();
 
   const handleChange = (e) => {
     setFormData({
@@ -395,42 +394,21 @@ const NoData = () => {
     });
   };
 
-  const calcRedirectURI = () => {
-    setRedirectURI(() => {
-      return (
-        baseURL +
-        Object.keys(formData)
-          .map(
-            (key) =>
-              `${encodeURIComponent(key)}=${encodeURIComponent(formData[key])}`
-          )
-          .join("&")
-      );
-    });
-    console;
+  const handleSubmit = () => {
+    const redirectURI =
+      baseURL +
+      Object.keys(formData)
+        .map(
+          (key) =>
+            `${encodeURIComponent(key)}=${encodeURIComponent(formData[key])}`
+        )
+        .join("&");
+
+    router.push(redirectURI);
+
     return;
   };
 
-  if (submitStatus)
-    return (
-      <>
-        {/* INTRO SECTION */}
-        <section className="intro">
-          <div className="container">
-            <div className="row">
-              <h1>Request support for your addon</h1>
-              <p>
-                We have processed your data and set up a page for you, that
-                explains, what you can do about your issue.
-              </p>
-              <a className="btn btn-outline-primary" href={redirectURI}>
-                Take me there!
-              </a>
-            </div>
-          </div>
-        </section>
-      </>
-    );
   return (
     <>
       {/* INTRO SECTION */}
@@ -449,13 +427,7 @@ const NoData = () => {
       {/* REQUEST SUPPORT */}
       <section className="request-support-form">
         <div className="container">
-          <form
-            className="row"
-            onSubmit={() => {
-              setSubmitStatus(true);
-              calcRedirectURI();
-            }}
-          >
+          <form className="row" onSubmit={handleSubmit}>
             {/* ISSUE TYPE */}
             <div className="col-12 col-lg-6 form-floating mb-3 required">
               <select
