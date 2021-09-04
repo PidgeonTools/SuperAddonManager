@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { CopyToClipboard } from "react-copy-to-clipboard"
 
 export const SupportPage = ({ query, addonName, issueType }) => {
   // === Page Elements ===
@@ -8,7 +9,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   const [noDuplicate, setNoDuplicate] = useState(false);
   const [internetWorks, setInternetWorks] = useState(false);
 
-  const [copyButtonText, setCopyButtonText] = useState("Copy");
+  const [copied, setCopied] = useState(false);
   const [issueTextArea, setIssueTextArea] = useState("");
 
   // === Issue independent Parameters ===
@@ -175,15 +176,12 @@ ${outro}
     return;
   }, [samUpToDate, addonUpToDate, noDuplicate, internetWorks]);
 
-  // === Copy the generated issue text ===
-  const copyIssueText = () => {
-    navigator.clipboard.writeText(issueTextArea);
-
-    let restore = copyButtonText;
-    setCopyButtonText("Copied!");
+  // === Show the user the generated issue text has been copied ===
+  const onCopyIssueText = () => {
+    setCopied(true);
 
     setTimeout(() => {
-      setCopyButtonText(restore);
+      setCopied(false);
     }, 3 * 1000);
   };
 
@@ -344,13 +342,17 @@ ${outro}
               {/* ISSUE TEXT */}
               <div className="issue_text">
                 <div className="d-flex justify-content-end">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-secondary copy_issue"
-                    onClick={copyIssueText}
+                  <CopyToClipboard
+                    text={issueTextArea}
+                    onCopy={onCopyIssueText}
                   >
-                    {copyButtonText}
-                  </button>
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-secondary copy_issue"
+                    >
+                      {copied ? "Copied!" : "Copy"}
+                    </button>
+                  </CopyToClipboard>
                 </div>
                 <div id="issue_text" className="issue_text_area">
                   {issueTextArea}
