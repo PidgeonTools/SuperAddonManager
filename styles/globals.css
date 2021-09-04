@@ -11238,6 +11238,10 @@ code.hljs {
   height: 100%;
 }
 
+.problem-description {
+  overflow-wrap: break-word;
+}
+
 .what-todo a {
   color: #46c3db;
   font-weight: 600;
