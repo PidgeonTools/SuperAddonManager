@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { CopyToClipboard } from "react-copy-to-clipboard"
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
   // === Page Elements ===
@@ -9,7 +9,8 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   const [noDuplicate, setNoDuplicate] = useState(false);
   const [internetWorks, setInternetWorks] = useState(false);
 
-  const [copied, setCopied] = useState(false);
+  const [textCopied, setTextCopied] = useState(false);
+  const [titleCopied, setTitleCopied] = useState(false);
   const [issueTextArea, setIssueTextArea] = useState("");
 
   // === Issue independent Parameters ===
@@ -86,6 +87,29 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       break;
   }
   issueDescriptionText = issueDescriptionText.trim();
+
+  // === Update the issue title Area ===
+  let issueTitleArea;
+  switch (issueType) {
+    case "bl_info_version_problems":
+      issueTitleArea = `Super Addon Manager: Problems with the Current Version`;
+      break;
+    case "url_invalid":
+      issueTitleArea = `Super Addon Manager: Invalid Endpoint URL`;
+      break;
+    case "invalid_endpoint":
+      issueTitleArea = `Super Addon Manager: Invalid Endpoint`;
+      break;
+    case "endpoint_invalid_schema":
+      issueTitleArea = `Super Addon Manager: Endpoint doesn't match the schema`;
+      break;
+    case "endpoint_offline":
+      issueTitleArea = `Super Addon Manager: Endpoint URL can't be reached`;
+      break;
+    default:
+      issueTitleArea = `Super Addon Manager Support for ${addonName}`;
+      break;
+  }
 
   // === Update the issue text Area ===
   useEffect(() => {
@@ -177,11 +201,11 @@ ${outro}
   }, [samUpToDate, addonUpToDate, noDuplicate, internetWorks]);
 
   // === Show the user the generated issue text has been copied ===
-  const onCopyIssueText = () => {
-    setCopied(true);
+  const onCopyIssueText = (callback) => {
+    callback(true);
 
     setTimeout(() => {
-      setCopied(false);
+      callback(false);
     }, 3 * 1000);
   };
 
@@ -226,9 +250,9 @@ ${outro}
                 </a>
                 . If you can reach the page, retry to check for updates. If it
                 still doesn't work, or your browser also tells you that this
-                page can't be reached, it's the developer's responsibility to fix
-                this problem. Please report an issue to the developer. You can
-                use our automatically generated text if you want to, but you
+                page can't be reached, it's the developer's responsibility to
+                fix this problem. Please report an issue to the developer. You
+                can use our automatically generated text if you want to, but you
                 should first check a few things:
               </p>
             ) : (
@@ -335,20 +359,40 @@ ${outro}
                 </Link>
               </p>
 
-              {/* TODO: Add issue title here */}
-
-              {/* ISSUE TEXT */}
-              <div className="issue_text">
+              {/* ISSUE TITLE */}
+              <div>Title:</div>
+              <div className="issue_text mb-4">
                 <div className="d-flex justify-content-end">
                   <CopyToClipboard
-                    text={issueTextArea}
-                    onCopy={onCopyIssueText}
+                    text={issueTitleArea}
+                    onCopy={() => onCopyIssueText(setTitleCopied)}
                   >
                     <button
                       type="button"
                       className="btn btn-sm btn-outline-secondary copy_issue"
                     >
-                      {copied ? "Copied!" : "Copy"}
+                      {titleCopied ? "Copied!" : "Copy"}
+                    </button>
+                  </CopyToClipboard>
+                </div>
+                <div id="issue_text" className="issue_text_area">
+                  {issueTitleArea}
+                </div>
+              </div>
+
+              {/* ISSUE TEXT */}
+              <div>Issue Text:</div>
+              <div className="issue_text mb-4">
+                <div className="d-flex justify-content-end">
+                  <CopyToClipboard
+                    text={issueTextArea}
+                    onCopy={() => onCopyIssueText(setTextCopied)}
+                  >
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-secondary copy_issue"
+                    >
+                      {textCopied ? "Copied!" : "Copy"}
                     </button>
                   </CopyToClipboard>
                 </div>
