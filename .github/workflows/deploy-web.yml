@@ -30,8 +30,8 @@ jobs:
     - name: Install Packages 📦
       run: npm ci
     
-    - name: Compile Styles 
-      run: npm run compile:react
+    - name: Compile Styles 💯
+      run: npm run compile:sass
     
     - name: Compile React 🧪
       run: npm run compile:react
