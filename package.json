@@ -4,11 +4,12 @@
   "private": true,
   "homepage": ".",
   "scripts": {
-    "compile:sass": "sass --watch scss:styles",
-    "compile:react": "next build && next export",
-    "dev": "next dev",
+    "dev:sass": "sass --watch scss:styles",
+    "dev:react": "next dev",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "compile:sass": "sass scss:styles",
+    "compile:react": "next build && next export"
   },
   "dependencies": {
     "autoprefixer": "^10.3.3",
