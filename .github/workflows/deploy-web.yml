@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
         
     - name: Install Packages 📦
-    - run: npm ci
+      run: npm ci
     
     - name: Compile Styles 
       run: npm run compile:react
