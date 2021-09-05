@@ -26,7 +26,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        
+    - name: Install Packages 📦
     - run: npm ci
+    
+    - name: Compile Styles 
+      run: npm run compile:react
     
     - name: Compile React 🧪
       run: npm run compile:react
