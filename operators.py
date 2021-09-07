@@ -300,7 +300,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         return {'FINISHED'}
 
     def generate_report(self, data):
-        base_url = "http://localhost:5500/request-support.html?"
+        base_url = "http://localhost:3000/request-support?"
 
         issue_type = data["issue_type"]
 
