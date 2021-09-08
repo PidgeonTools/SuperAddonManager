@@ -27,14 +27,15 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         # Layout all Addons that can be Updated one by one.
         for addon in updates:
             row = layout.row()
-            row.label(text=addon[3])
-            if addon[1]:  # Check, if the Addon supports Auto-Update.
+            row.label(text=addon["addon_name"])
+            # Check, if the Addon supports Auto-Update.
+            if addon["allow_automatic_download"]:
                 op = row.operator("superaddonmanager.automatic_update")
-                op.addon_path = addon[0]
+                op.addon_path = addon["addon_path"]
             else:
                 op = row.operator("superaddonmanager.manual_update",
                                   text="Go to the downloads page.")
-            op.download_url = addon[2]
+            op.download_url = addon["download_url"]
             # TODO: Exchange the operator after Updating --> Maybe with another list - Updated_Addons
 
         # Show a warning, that some addons couldn't be properly updated,
