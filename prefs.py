@@ -1,8 +1,15 @@
 import bpy
 from bpy.types import AddonPreferences
+from bpy.props import (
+    FloatProperty
+)
 
 from os import path as p
 
+# These variables are necessary for the update checking progress bar.
+addons_total = 0
+addon_index = 0
+checking_for_updates = False
 
 # Create the lists for addons, that either have available updates
 # or addons, that have issues and can't be updated.
@@ -14,11 +21,29 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
     """Preferences of Super Addon Manager."""
     bl_idname = __package__
 
+    update_check_percent_complete: FloatProperty(
+        name="%",
+        description="Percentage addons checked for updates",
+        subtype='PERCENTAGE',
+        min=0,
+        max=100,
+        options=set(),  # Not animatable!
+        get=(lambda self: 0 if addons_total ==
+             0 else 100 * addon_index / addons_total),
+        set=(lambda self, value: None),
+    )
+
     def draw(self, context):
         layout = self.layout
 
-        # Check for Updates Operator.
-        layout.operator("superaddonmanager.check_for_updates")
+        if checking_for_updates:
+            # Checking for updates progress bar.
+            layout.label(
+                text=f"Checking for updates: {addon_index}/{addons_total}", icon='INFO')
+            layout.prop(self, "update_check_percent_complete")
+        else:
+            # Check for Updates Operator.
+            layout.operator("superaddonmanager.check_for_updates")
 
         # Layout the "Update All"-Operator when at least two addons have updates.
         if len(updates) > 1:

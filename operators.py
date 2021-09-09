@@ -39,6 +39,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     def execute(self, context):
         self.updates = []
         self.unavailable_addons = []
+        prefs.addon_index = 0
 
         # Set the paths to all possible addon install locations.
         default_addons_path = p.join(bpy.utils.script_path_user(),
@@ -65,7 +66,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         self.addon_name = sys.modules[p.basename(
             sam_install_location)].bl_info["name"]
         self.check_update(sam_install_location)
-        if len(self.updates) > 0:
+
+        if self.updates:
             prefs.updates = self.updates
             prefs.unavailable_addons = self.unavailable_addons
             return {'FINISHED'}
@@ -73,44 +75,81 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         # Reset list of unavailable Addons to avoid duplicate issues (with SAM)
         self.unavailable_addons = []
 
-        # Iterate through all directories and files in the Addons Folders.
-        # Add single files to the list of addons that can't be updated by SAM.
-        # Folders are sent to self.check_update() for the actual update check.
-        for addon_path in self.enabled_addons:
-            if "name" in sys.modules[p.basename(addon_path)].bl_info:
-                self.addon_name = sys.modules[p.basename(
-                    addon_path)].bl_info["name"]
-            else:
-                replace = (("-master", ""),
-                           ("-main", ""),
-                           ("-", " "),
-                           ("_", " "))
-                # Extract a good looking addon name from a folder name.
-                addon_name = p.basename(addon_path)
-                for replace_obj, replace_with in replace:
-                    addon_name = addon_name.replace(replace_obj, replace_with)
-                self.addon_name = addon_name.capitalize()
+        # Setup the modal operation.
+        prefs.addons_total = len(self.enabled_addons)
+        prefs.checking_for_updates = True
+        self._timer = context.window_manager.event_timer_add(
+            0.01, window=context.window)
+        context.window_manager.modal_handler_add(self)
+
+        return {'RUNNING_MODAL'}
+
+    # Iterate through all directories and files in the Addons Folders.
+    # Add single files to the list of addons that can't be updated by SAM.
+    # Folders are sent to self.check_update() for the actual update check.
+    def modal(self, context, event):
+        if event.type == "TIMER":
+            if prefs.addon_index >= prefs.addons_total:
+                # Sort the lists of updates and unavailable addons to be ordered less random.
+                self.updates.sort(
+                    key=lambda x: x["allow_automatic_download"], reverse=True)
+                self.unavailable_addons.sort(
+                    key=lambda x: x["issue_type"], reverse=True)
+
+                # Send both lists to the preferences.
+                prefs.updates = self.updates
+                prefs.unavailable_addons = self.unavailable_addons
+
+                context.window_manager.event_timer_remove(self._timer)
+                prefs.checking_for_updates = False
+
+                self._redraw()
+
+                return {'FINISHED'}
+
+            addon_path = self.enabled_addons[prefs.addon_index]
+            prefs.addon_index += 1
+
+            self._get_addon_name(addon_path)
 
             if p.isdir(addon_path):
                 self.check_update(addon_path)
-                continue
+
+                self._redraw()
+
+                return {"RUNNING_MODAL"}
 
             self.unavailable_addons.append(
                 {"issue_type": "sam_not_supported",
-                 "addon_name": self.addon_name,
-                 "bl_info": sys.modules[p.basename(addon_path)].bl_info,
-                 "addon_count": len(self.all_addons)})
+                    "addon_name": self.addon_name,
+                    "bl_info": sys.modules[p.basename(addon_path)].bl_info,
+                    "addon_count": len(self.all_addons)})
 
-        # Sort the lists of updates and unavailable addons to be ordered less random.
-        self.updates.sort(
-            key=lambda x: x["allow_automatic_download"], reverse=True)
-        self.unavailable_addons.sort(
-            key=lambda x: x["issue_type"], reverse=True)
+        return {"RUNNING_MODAL"}
 
-        # Send both lists to the preferences.
-        prefs.updates = self.updates
-        prefs.unavailable_addons = self.unavailable_addons
-        return {'FINISHED'}
+    def _redraw(self):
+        # ATTENTION: This is not officially supported! See: https://docs.blender.org/api/current/info_gotcha.html
+        try:
+            bpy.ops.wm.redraw_timer(
+                type='DRAW_WIN_SWAP', iterations=1)
+        except Exception:
+            pass
+
+    # Get the name of the addon, that is beeing checked currently.
+    def _get_addon_name(self, addon_path):
+        if "name" in sys.modules[p.basename(addon_path)].bl_info:
+            self.addon_name = sys.modules[p.basename(
+                addon_path)].bl_info["name"]
+        else:
+            replace = (("-master", ""),
+                       ("-main", ""),
+                       ("-", " "),
+                       ("_", " "))
+            # Extract a good looking addon name from a folder name.
+            addon_name = p.basename(addon_path)
+            for replace_obj, replace_with in replace:
+                addon_name = addon_name.replace(replace_obj, replace_with)
+            self.addon_name = addon_name.capitalize()
 
     # Check the given Addons "bl_info" for information about the current
     # version and the URL for a version check. If "endpoint_url"
