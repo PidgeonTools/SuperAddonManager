@@ -1,7 +1,8 @@
 import bpy
 from bpy.props import (
     StringProperty,
-    IntProperty
+    IntProperty,
+    BoolProperty
 )
 from bpy.types import Operator
 from bpy_extras.io_utils import ImportHelper
@@ -28,6 +29,10 @@ from . import prefs
 from .objects.update_check import (
     UpdateCheck_v1_0_0
 )
+from .functions.json_functions import (
+    encode_json,
+    decode_json
+)
 
 
 class SUPERADDONMANAGER_OT_check_for_updates(Operator):
@@ -36,7 +41,11 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     bl_label = "Check for Updates"
     bl_options = {'REGISTER', 'UNDO'}
 
+    is_background_check: BoolProperty(default=False)
+
     def execute(self, context):
+        self.report({"INFO"}, "SAM is checking for updates!")
+
         self.updates = []
         self.unavailable_addons = []
         prefs.addon_index = 0
@@ -75,6 +84,9 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         if self.updates:
             prefs.updates = self.updates
             prefs.unavailable_addons = self.unavailable_addons
+
+            if self.is_background_check:
+                bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
             return {'FINISHED'}
 
         # Reset list of unavailable Addons to avoid duplicate issues (with SAM)
@@ -109,6 +121,17 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 prefs.checking_for_updates = False
 
                 self._redraw()
+
+                path = p.join(p.dirname(__file__), "updater_status.json")
+                d = decode_json(path)
+                d["last_check"] = int(time.time())
+                encode_json(d, path)
+
+                something_happened = bool(
+                    self.unavailable_addons) or bool(self.updates)
+                is_background_check = self.is_background_check
+                if is_background_check and something_happened:
+                    bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
 
                 return {'FINISHED'}
 
@@ -235,6 +258,29 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                                  "addon_name": self.addon_name})
 
 
+class SUPERADDONMANAGER_OT_update_info(Operator):
+    """When a background check found updates or errors, this popup message shows up and notifies the user about that."""
+    bl_idname = "superaddonmanager.update_info"
+    bl_label = "Update Information"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context):
+        bpy.ops.preferences.addon_show(module=__package__)
+        return {"FINISHED"}
+
+    def invoke(self, context, event):
+        return context.window_manager.invoke_props_dialog(self)
+
+    def draw(self, context):
+        layout = self.layout
+
+        layout.label(text="Super Addon Manager just checked for updates:")
+        layout.label(
+            text=f"{len(prefs.updates)} updates found.", icon="SHADERFX")
+        layout.label(
+            text=f"{len(prefs.unavailable_addons)} errors occured.", icon="ERROR")
+
+
 # TODO: Automatic Update.
 class SUPERADDONMANAGER_OT_automatic_update(Operator):
     """Update the addon automatically"""
@@ -335,6 +381,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
 classes = (
     SUPERADDONMANAGER_OT_check_for_updates,
+    SUPERADDONMANAGER_OT_update_info,
     SUPERADDONMANAGER_OT_automatic_update,
     SUPERADDONMANAGER_OT_manual_update,
     SUPERADDONMANAGER_OT_update_all,

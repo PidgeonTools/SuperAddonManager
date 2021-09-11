@@ -23,6 +23,7 @@ import bpy
 
 from . import operators
 from . import prefs
+from .functions import handler_functions
 
 bl_info = {
     "name": "Super Addon Manager (SAM)",
@@ -41,6 +42,7 @@ bl_info = {
 modules = (
     operators,
     prefs,
+    handler_functions
 )
 
 
