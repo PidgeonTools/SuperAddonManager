@@ -38,12 +38,17 @@ bl_info = {
     "category": "System"
 }
 
+modules = (
+    operators,
+    prefs,
+)
+
 
 def register():
-    operators.register()
-    prefs.register()
+    for mod in modules:
+        mod.register()
 
 
 def unregister():
-    operators.unregister()
-    prefs.unregister()
+    for mod in modules:
+        mod.unregister()
