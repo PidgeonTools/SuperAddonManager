@@ -58,8 +58,13 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                                     for i in os.listdir(custom_addons_path)])
 
         # Filter by enabled Addons.
-        self.enabled_addons = [
-            a for a in self.all_addons if p.basename(a) in context.preferences.addons]
+        self.enabled_addons = []
+        for addon in self.all_addons:
+            if p.isfile(addon):  # Take care of single-file addons.
+                addon = addon.replace(".py", "")
+
+            if p.basename(addon) in context.preferences.addons:
+                self.enabled_addons.append(addon)
 
         # Check for SAM Update. Abort, if an update for SAM is available.
         sam_install_location = p.dirname(__file__)
