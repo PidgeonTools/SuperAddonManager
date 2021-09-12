@@ -13,6 +13,9 @@ from os import path as p
 from .functions.json_functions import (
     decode_json
 )
+from .functions.main_functions import (
+    filter_search
+)
 
 # These variables are necessary for the update checking progress bar.
 addons_total = 0
@@ -126,12 +129,20 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
     # Layout all issues.
     def layout_issues(self, context, layout):
+        info_row = layout.row()
+        # Distribute the label and the search box properly.
+        info_row.alignment = "LEFT"
+        info_row.scale_x = 5
+
         # Display a message, that there were issues while checking for updates.
-        layout.label(
-            text=f"{len(unavailable_addons)} errors occured when checking for Updates:", icon="ERROR")
+        info_row.label(
+            text=f"{len(unavailable_addons)} errors occured when checking for Updates", icon="ERROR")
+
+        info_row.prop(context.scene, "error_search_term",
+                      icon="VIEWZOOM", text="")
 
         prev_error = None
-        for index, addon in enumerate(unavailable_addons):
+        for index, addon in enumerate(filter(lambda el: filter_search(el, context.scene.error_search_term), unavailable_addons)):
             if addon["issue_type"] != prev_error:
                 # Change the previous error to be the current error code.
                 prev_error = addon["issue_type"]

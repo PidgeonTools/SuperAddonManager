@@ -6,8 +6,10 @@ from os import path as p
 import time
 
 from .json_functions import (
-    encode_json,
     decode_json
+)
+from .register_functions import (
+    register_props
 )
 
 
@@ -25,6 +27,8 @@ def startup_setup(*args):
 
     if prefs.auto_check_for_updates and time.time() - d["last_check"] > check_interval:
         bpy.ops.superaddonmanager.check_for_updates(is_background_check=True)
+
+    register_props()
 
 
 def register():
