@@ -113,6 +113,14 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 self.unavailable_addons.sort(
                     key=lambda x: x["issue_type"], reverse=True)
 
+                # Add properties to the current scene that can be used
+                # to expand/collapse the different error code sections in the preferences.
+                for error in self.unavailable_addons:
+                    error_code = error["issue_type"]
+                    if not hasattr(context.scene, error_code):
+                        setattr(bpy.types.Scene, error_code,
+                                BoolProperty(default=True))
+
                 # Send both lists to the preferences.
                 prefs.updates = self.updates
                 prefs.unavailable_addons = self.unavailable_addons

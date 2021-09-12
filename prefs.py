@@ -74,8 +74,18 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         default=True,
     )
 
+    dev_icon: IntProperty(max=10, min=0)
+    dev_heading_distance: IntProperty(default=40)
+    dev_distance_left: IntProperty(default=280)
+    dev__items_distance: IntProperty(default=45)
+
     def draw(self, context):
         layout = self.layout
+
+        layout.prop(self, "dev_icon")
+        layout.prop(self, "dev_distance_left")
+        layout.prop(self, "dev_heading_distance")
+        layout.prop(self, "dev__items_distance")
 
         if checking_for_updates:
             # Checking for updates progress bar.
@@ -110,19 +120,49 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         # Show a warning, that some addons couldn't be properly updated,
         # if at least one addon ran into any kind of issue.
         if len(unavailable_addons) > 0:
-            layout.label(
-                text=f"{len(unavailable_addons)} errors occured when checking for Updates:", icon="ERROR")
-        # Layout all issues.
-        for index, addon in enumerate(unavailable_addons):
-            row = layout.row()
-            row.label(text=addon["addon_name"])
-            row.label(text=f"Error Code: {addon['issue_type']}")
-
-            op = row.operator(
-                "superaddonmanager.generate_issue_report", text="More details")
-            op.addon_index = index
+            self.layout_issues(context, layout)
 
         self.draw_settings(layout)
+
+    # Layout all issues.
+    def layout_issues(self, context, layout):
+        # Display a message, that there were issues while checking for updates.
+        layout.label(
+            text=f"{len(unavailable_addons)} errors occured when checking for Updates:", icon="ERROR")
+
+        prev_error = None
+        for index, addon in enumerate(unavailable_addons):
+            if addon["issue_type"] != prev_error:
+                # Change the previous error to be the current error code.
+                prev_error = addon["issue_type"]
+                icon = "TRIA_DOWN" if getattr(
+                    context.scene, prev_error) else "TRIA_RIGHT"
+
+                # Start a new section for a new error code.
+                container = layout.column()
+                expand = container.row(align=True)
+                expand.emboss = "NONE"
+                expand.alignment = "LEFT"
+                expand.prop(context.scene, prev_error,
+                            text=f"{self.convert_error_message(prev_error)} (Error Code: {prev_error})", icon=icon)
+
+                container.separator(factor=self.dev_heading_distance / 100)
+
+            # Display the error codes, if the area is expanded.
+            if getattr(context.scene, prev_error):
+                row = container.row()
+                row.separator(factor=self.dev_distance_left / 100)
+                row.label(text=addon["addon_name"])
+
+                icons = ["INFO", "HELP", "URL", "RESTRICT_SELECT_OFF", "FAKE_USER_ON",
+                         "SHADERFX", "QUESTION", "WORLD", "CHECKMARK", "SCRIPT", "ERROR"]
+
+                icon = icons[self.dev_icon]
+
+                op = row.operator(
+                    "superaddonmanager.generate_issue_report", text="Request Support", icon=icon)
+                op.addon_index = index
+                container.separator(factor=self.dev__items_distance / 100)
 
     def draw_settings(self, layout):
         path = p.join(p.dirname(__file__), "updater_status.json")
@@ -141,6 +181,12 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         last_check = time.localtime(decode_json(path)['last_check'])
         props.label(
             text=f"Last update check: {time.strftime('%A, %d/%m/%Y %H:%M', last_check)}")
+
+    def convert_error_message(self, msg):
+        string = ""
+        for i in msg.split("_"):
+            string += i.capitalize() + " "
+        return string
 
 
 classes = (
