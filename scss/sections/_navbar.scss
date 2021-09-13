@@ -4,11 +4,11 @@
 .bg-menu {
   @include gradient;
 
-  li {
+  .navbar-nav .nav-item {
     padding: 0 0.5rem;
 
-    a {
-      color: $white !important;
+    .nav-link {
+      color: $white;
       font-weight: 600;
     }
   }

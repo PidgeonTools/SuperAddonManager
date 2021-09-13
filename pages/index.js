@@ -7,9 +7,9 @@ export default function Home() {
     <>
       <Header title="Home" />
       <Navbar />
-      <div className="intro">
+      <div className="container intro">
         <Link href="/request-support">
-          <a>Request Support</a>
+          Request Support
         </Link>
       </div>
     </>

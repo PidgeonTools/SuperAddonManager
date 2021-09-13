@@ -11,10 +11,16 @@ const SiteNavbar = () => (
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse id="navbarNav" className="justify-content-end">
-          <Nav>
-            <Nav.Link href="#ABOUT">About</Nav.Link>
-            <Nav.Link href="/docs">Docs</Nav.Link>
-            <Nav.Link href="#GET">Get Super Addon Manager</Nav.Link>
+          <Nav as="ul">
+            <Nav.Item as="li">
+              <Nav.Link href="#ABOUT">About</Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li">
+              <Nav.Link href="/docs">Docs</Nav.Link>
+            </Nav.Item>
+            <Nav.Item as="li">
+              <Nav.Link href="#GET">Get Super Addon Manager</Nav.Link>
+            </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>
