@@ -145,7 +145,7 @@ export const NoData = () => {
             {/* ADDON COUNT */}
             {formData.issue_type == "sam_not_supported" ? (
               <Row>
-                <Col lg={6} className="mb-3">
+                <Col lg={12} className="mb-3">
                   <FloatingLabel
                     controlId="addon_count"
                     label="Estimated Number of installed Addons"
