@@ -46,4 +46,4 @@ $font-family-sans-serif: "Cabin", system-ui, -apple-system, "Segoe UI", Roboto,
   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 
 // IMPORT BOOTSTRAP 5
-@import "../node_modules/bootstrap/scss/bootstrap.scss";
+@import "~bootstrap/scss/bootstrap";

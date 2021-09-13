@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { Button, Col, Container, FloatingLabel, Form, Row } from "react-bootstrap";
 
 export const NoData = () => {
   const LATEST_BLENDER_VERSION = "2.93.4";
@@ -39,127 +40,131 @@ export const NoData = () => {
     <>
       {/* INTRO SECTION */}
       <section className="intro">
-        <div className="container">
-          <div className="row">
+        <Container>
+          <Row>
             <h1>Request support for your addon</h1>
             <p>
               Fill in the Form with all necessary data to get support, if Super
               Addon Manager doesn't work with your addon.
             </p>
-          </div>
-        </div>
+          </Row>
+        </Container>
       </section>
 
       {/* REQUEST SUPPORT */}
       <section className="request-support-form">
-        <div className="container">
-          <form className="row" onSubmit={handleSubmit}>
-            {/* ISSUE TYPE */}
-            <div className="col-12 col-lg-6 form-floating mb-3 required">
-              <select
-                className="form-select"
-                id="issue_type"
-                defaultValue=""
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>
-                  Select an Option
-                </option>
-                {issueTypes.map((el) => (
-                  <option key={el} value={el}>
-                    {el}
-                  </option>
-                ))}
-              </select>
-              <label htmlFor="issue_type" className="form-label">
-                Issue Type / Error Code
-              </label>
-            </div>
-            {/* ADDON NAME */}
-            <div className="col-12 col-lg-6 form-floating mb-3 required">
-              <input
-                type="text"
-                id="addon_name"
-                className="form-control"
-                placeholder="Super Project Manager"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="addon_name">Addon Name</label>
-            </div>
+        <Form onSubmit={handleSubmit}>
+          <Container>
+            <Row>
+              {/* ISSUE TYPE */}
+              <Col lg={4} className="mb-3">
+                <FloatingLabel controlId="issue_type" label="Issue Type / Error Code">
+                  <Form.Select
+                    defaultValue=""
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Select an Option
+                    </option>
+                    {issueTypes.map((el) => (
+                      <option key={el} value={el}>
+                        {el}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </FloatingLabel>
+              </Col>
+              {/* ADDON NAME */}
+              <Col lg={8} className="mb-3">
+                <FloatingLabel controlId="addon_name" label="Addon Name">
+                  <Form.Control
+                    type="text"
+                    placeholder="Super Project Manager"
+                    onChange={handleChange}
+                    required
+                  />
+                </FloatingLabel>
+              </Col>
+            </Row>
 
             {/* === SYSTEM INFORMATION === */}
-            {/* OS */}
-            <div className="col-12 col-lg-6 form-floating mb-3 required">
-              <select
-                className="form-select"
-                id="os_name"
-                defaultValue=""
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>
-                  Select an Option
-                </option>
-                {operatingSystems.map((el) => (
-                  <option key={el} value={el}>
-                    {el}
-                  </option>
-                ))}
-              </select>
-              <label htmlFor="os_name">Operating System</label>
-            </div>
-            {/* BLENDER VERSION */}
-            <div className="col-12 col-md-6 col-lg-3 form-floating mb-3 required">
-              <input
-                type="text"
-                id="blender_version"
-                placeholder="*"
-                pattern="\d+\.\d+\.\d+"
-                className="form-control"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="blender_version">
-                Blender Version (e.g. {LATEST_BLENDER_VERSION})
-              </label>
-            </div>
-            {/* ADDON VERSION */}
-            <div className="col-12 col-md-6 col-lg-3 form-floating mb-3 required">
-              <input
-                type="text"
-                id="addon_version"
-                placeholder="*"
-                pattern="\d+\.\d+\.\d+"
-                className="form-control"
-                onChange={handleChange}
-                required
-              />
-              <label htmlFor="addon_version">
-                Addon Version (e.g. {LATEST_SPM_VERSION})
-              </label>
-            </div>
+            <Row>
+              {/* OS */}
+              <Col lg={4} className="mb-3">
+                <FloatingLabel controlId="os_name" label="Operating System">
+                  <Form.Select
+                    defaultValue=""
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="" disabled>
+                      Select an Option
+                    </option>
+                    {operatingSystems.map((el) => (
+                      <option key={el} value={el}>
+                        {el}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </FloatingLabel>
+              </Col>
+              {/* BLENDER VERSION */}
+              <Col lg={4} md={6} className="mb-3">
+                <FloatingLabel
+                  controlId="blender_version"
+                  label={`Blender Version (e.g. ${LATEST_BLENDER_VERSION})`}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder={LATEST_BLENDER_VERSION}
+                    pattern="\d+\.\d+\.\d+"
+                    onChange={handleChange}
+                    required
+                  />
+                </FloatingLabel>
+              </Col>
+              {/* ADDON VERSION */}
+              <Col lg={4} md={6} className="mb-3">
+                <FloatingLabel
+                  controlId="addon_version"
+                  label={`Addon Version (e.g. ${LATEST_SPM_VERSION})`}
+                >
+                  <Form.Control
+                    type="text"
+                    placeholder={LATEST_SPM_VERSION}
+                    pattern="\d+\.\d+\.\d+"
+                    onChange={handleChange}
+                    required
+                  />
+                </FloatingLabel>
+              </Col>
+            </Row>
 
-            {/* === ISSUE DEPENDENT PARAMETERS === */}
+            {/* === ISSUE-DEPENDENT PARAMETERS === */}
             {/* ADDON COUNT */}
             {formData.issue_type == "sam_not_supported" ? (
-              <div className="form-floating mb-3 required">
-                <input
-                  type="number"
-                  id="addon_count"
-                  className="form-control"
-                  placeholder="42"
-                  onChange={handleChange}
-                  required
-                />
-                <label htmlFor="addon_count">
-                  Estimated Number of installed Addons
-                </label>
-              </div>
+              <Row>
+                <Col lg={6} className="mb-3">
+                  <FloatingLabel
+                    controlId="addon_count"
+                    label="Estimated Number of installed Addons"
+                  >
+                    <Form.Control
+                      type="number"
+                      min="1"
+                      max="9000"
+                      placeholder="42"
+                      onChange={handleChange}
+                      required
+                    />
+                  </FloatingLabel>
+                </Col>
+              </Row>
             ) : (
-              ""
+              null
             )}
+
             {/* ENDPOINT URL */}
             {[
               "url_invalid",
@@ -167,53 +172,67 @@ export const NoData = () => {
               "endpoint_invalid_schema",
               "endpoint_offline",
             ].includes(formData.issue_type) ? (
-              <div className="form-floating mb-3">
-                <input
-                  type="text"
-                  id="endpoint_url"
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder="https://github.com/BlenderDefender/SuperProjectManager"
-                />
-                <label htmlFor="endpoint_url">Endpoint URL</label>
-              </div>
+              <Row>
+                <Col className="mb-3">
+                  <FloatingLabel
+                    controlId="endpoint_url"
+                    label="Endpoint URL"
+                  >
+                    <Form.Control
+                      type="text"
+                      onChange={handleChange}
+                      placeholder="https://github.com/BlenderDefender/SuperProjectManager"
+                    />
+                  </FloatingLabel>
+                </Col>
+              </Row>
             ) : (
-              ""
+              null
             )}
+
             {/* ERROR MESSAGE */}
             {formData.issue_type == "endpoint_offline" ? (
-              <div className="form-floating mb-3">
-                <textarea
-                  className="form-control"
-                  onChange={handleChange}
-                  placeholder="Error Message"
-                  id="error_message"
-                ></textarea>
-                <label htmlFor="error_message">Error Message</label>
-              </div>
+              <Row>
+                <Col className="mb-3">
+                  <FloatingLabel
+                    controlId="error_message"
+                    label="Error Message"
+                  >
+                    <Form.Control
+                      as="textarea"
+                      onChange={handleChange}
+                      placeholder="Error Message"
+                    />
+                  </FloatingLabel>
+                </Col>
+              </Row>
             ) : (
-              ""
+              null
             )}
             {/* TRACKER URL */}
-            <div className="form-floating mb-3">
-              <input
-                type="text"
-                id="tracker_url"
-                className="form-control"
-                onChange={handleChange}
-                placeholder="https://github.com/BlenderDefender/SuperProjectManager"
-                pattern="(https?://)?.+\..+"
-              />
-              <label htmlFor="tracker_url">Tracker URL</label>
-            </div>
+            <Row>
+              <Col className="mb-3">
+                <FloatingLabel
+                  controlId="tracker_url"
+                  label="Tracker URL"
+                >
+                  <Form.Control
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="https://github.com/BlenderDefender/SuperProjectManager"
+                    pattern="(https?://)?.+\..+"
+                  />
+                </FloatingLabel>
+              </Col>
+            </Row>
 
             <div className="d-grid col-12">
-              <button className="btn btn-primary" type="submit">
+              <Button variant="primary" type="submit">
                 Request Support
-              </button>
+              </Button>
             </div>
-          </form>
-        </div>
+          </Container>
+        </Form>
       </section>
     </>
   );

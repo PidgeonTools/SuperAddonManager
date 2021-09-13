@@ -4,12 +4,10 @@
   "private": true,
   "homepage": ".",
   "scripts": {
-    "dev:sass": "sass --watch scss:styles",
-    "dev:react": "next dev",
+    "dev": "next dev",
     "start": "next start",
     "lint": "next lint",
-    "compile:sass": "sass scss:styles",
-    "compile:react": "next build && next export"
+    "build": "next build && next export"
   },
   "dependencies": {
     "autoprefixer": "^10.3.3",
@@ -19,6 +17,7 @@
     "marked": "^3.0.2",
     "next": "11.1.2",
     "react": "17.0.2",
+    "react-bootstrap": "2.0.0-beta.6",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "17.0.2",
     "sass": "^1.38.2"

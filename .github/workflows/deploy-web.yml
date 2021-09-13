@@ -30,11 +30,8 @@ jobs:
     - name: Install Packages 📦
       run: npm ci
     
-    - name: Compile Styles 💯
-      run: npm run compile:sass
-    
     - name: Compile React 🧪
-      run: npm run compile:react
+      run: npm run build
 
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.5

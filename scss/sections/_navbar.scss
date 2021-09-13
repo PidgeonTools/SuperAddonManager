@@ -1,7 +1,7 @@
 @use "../custom" as *;
 @use "../components/mixins.scss" as *;
 
-.menu {
+.bg-menu {
   @include gradient;
 
   li {
