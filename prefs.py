@@ -87,7 +87,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         update=expand_all,
     )
 
-    dev_icon: IntProperty(max=10, min=0)
+    dev_icon: IntProperty(max=5, min=0)
     dev_heading_distance: IntProperty(default=40)
     dev_distance_left: IntProperty(default=280)
     dev__items_distance: IntProperty(default=45)
@@ -174,8 +174,8 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 row.separator(factor=self.dev_distance_left / 100)
                 row.label(text=addon["addon_name"])
 
-                icons = ["INFO", "HELP", "URL", "RESTRICT_SELECT_OFF", "FAKE_USER_ON",
-                         "SHADERFX", "QUESTION", "WORLD", "CHECKMARK", "SCRIPT", "ERROR"]
+                icons = ["INFO", "HELP", "URL",
+                         "RESTRICT_SELECT_OFF", "FAKE_USER_ON", "QUESTION"]
 
                 icon = icons[self.dev_icon]
 
