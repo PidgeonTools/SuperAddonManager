@@ -20,6 +20,8 @@ def startup_setup(*args):
     check_interval = prefs.check_interval_months * 2678400 + prefs.check_interval_days * \
         86400 + prefs.check_interval_hours * 3600 + prefs.check_interval_minutes * 60
 
+    prefs.error_search_term = ""
+
     d = decode_json(path)
     if d is not None:
         if prefs.auto_check_for_updates and time.time() - d["last_check"] > check_interval:
