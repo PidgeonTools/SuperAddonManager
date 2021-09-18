@@ -1,9 +1,10 @@
 import bpy
 from bpy.types import AddonPreferences
 from bpy.props import (
+    BoolProperty,
     FloatProperty,
     IntProperty,
-    BoolProperty
+    StringProperty
 )
 
 import time
@@ -14,8 +15,10 @@ from .functions.json_functions import (
     decode_json
 )
 from .functions.main_functions import (
+    expand_all,
     filter_search
 )
+from .issue_types import all_issue_types
 
 # These variables are necessary for the update checking progress bar.
 addons_total = 0
@@ -26,6 +29,7 @@ checking_for_updates = False
 # or addons, that have issues and can't be updated.
 updates = []
 unavailable_addons = []
+expanded_categories = {issue_type: False for issue_type in all_issue_types}
 
 
 class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
@@ -48,33 +52,39 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         name='Months',
         description="Number of months between checking for updates",
         default=0,
-        min=0
+        min=0,
     )
     check_interval_days: IntProperty(
         name='Days',
         description="Number of days between checking for updates",
         default=7,
         min=0,
-        max=31
+        max=31,
     )
     check_interval_hours: IntProperty(
         name='Hours',
         description="Number of hours between checking for updates",
         default=0,
         min=0,
-        max=23
+        max=23,
     )
     check_interval_minutes: IntProperty(
         name='Minutes',
         description="Number of minutes between checking for updates",
         default=0,
         min=0,
-        max=59
+        max=59,
     )
     auto_check_for_updates: BoolProperty(
         name="Automatically check for updates",
         description=f"If enabled, Super Addon Manager automatically checks for updates using a custum interval.",
         default=True,
+    )
+    error_search_term: StringProperty(
+        name="Search addon",
+        description="Search for an addon in the error list.",
+        options={"TEXTEDIT_UPDATE"},
+        update=expand_all,
     )
 
     dev_icon: IntProperty(max=10, min=0)
@@ -138,29 +148,28 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         info_row.label(
             text=f"{len(unavailable_addons)} errors occured when checking for Updates", icon="ERROR")
 
-        info_row.prop(context.scene, "error_search_term",
-                      icon="VIEWZOOM", text="")
+        info_row.prop(self, "error_search_term", icon="VIEWZOOM", text="")
 
         prev_error = None
-        for index, addon in enumerate(filter(lambda el: filter_search(el, context.scene.error_search_term), unavailable_addons)):
+        for index, addon in enumerate(filter(lambda el: filter_search(el, self.error_search_term), unavailable_addons)):
             if addon["issue_type"] != prev_error:
                 # Change the previous error to be the current error code.
                 prev_error = addon["issue_type"]
-                icon = "TRIA_DOWN" if getattr(
-                    context.scene, prev_error) else "TRIA_RIGHT"
+                icon = "TRIA_DOWN" if getattr(self,
+                    prev_error) else "TRIA_RIGHT"
 
                 # Start a new section for a new error code.
                 container = layout.column()
                 expand = container.row(align=True)
                 expand.emboss = "NONE"
                 expand.alignment = "LEFT"
-                expand.prop(context.scene, prev_error,
+                expand.prop(self, prev_error,
                             text=f"{self.convert_error_message(prev_error)} (Error Code: {prev_error})", icon=icon)
 
                 container.separator(factor=self.dev_heading_distance / 100)
 
             # Display the error codes, if the area is expanded.
-            if getattr(context.scene, prev_error):
+            if getattr(self, prev_error):
                 row = container.row()
                 row.separator(factor=self.dev_distance_left / 100)
                 row.label(text=addon["addon_name"])
@@ -189,9 +198,11 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
             time_props.prop(self, "check_interval_hours")
             time_props.prop(self, "check_interval_minutes")
 
-        last_check = time.localtime(decode_json(path)['last_check'])
-        props.label(
-            text=f"Last update check: {time.strftime('%A, %d/%m/%Y %H:%M', last_check)}")
+        d = decode_json(path)
+        if d is not None:
+            last_check = time.localtime(d['last_check'])
+            props.label(
+                text=f"Last update check: {time.strftime('%A, %d/%m/%Y %H:%M', last_check)}")
 
     def convert_error_message(self, msg):
         string = ""
@@ -205,7 +216,35 @@ classes = (
 )
 
 
+def add_issue_types_to_prefs():
+    if '__annotations__' not in SUPERADDONMANAGER_APT_preferences.__dict__:
+        setattr(SUPERADDONMANAGER_APT_preferences, '__annotations__', {})
+
+    def make_fns(issue_type: str):
+        ''' Capture the issue_type in a closure and generate some functions that
+        proxy the get/set from expanded_categories for that issue_type '''
+        def get_expanded(self):
+            return expanded_categories[issue_type]
+
+        def set_expanded(self, value: bool):
+            expanded_categories[issue_type] = value
+
+        return get_expanded, set_expanded
+
+    for issue_type in all_issue_types:
+        # Define a property+annotation that proxies each issue_type from expanded_categories
+        get_expanded, set_expanded = make_fns(issue_type)
+
+        setattr(SUPERADDONMANAGER_APT_preferences, issue_type, False)
+        SUPERADDONMANAGER_APT_preferences.__annotations__[
+            issue_type] = BoolProperty(default=False,
+                                       get=get_expanded,
+                                       set=set_expanded)
+
+
 def register():
+    add_issue_types_to_prefs()
+
     for cls in classes:
         bpy.utils.register_class(cls)
 

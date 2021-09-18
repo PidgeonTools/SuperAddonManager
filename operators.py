@@ -1,3 +1,11 @@
+from .issue_types import (
+    BL_INFO_VERSION_PROBLEMS,
+    ENDPOINT_INVALID_SCHEMA,
+    ENDPOINT_OFFLINE,
+    INVALID_ENDPOINT,
+    SAM_NOT_SUPPORTED,
+    URL_INVALID
+)
 import bpy
 from bpy.props import (
     StringProperty,
@@ -43,11 +51,16 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
     is_background_check: BoolProperty(default=False)
 
+    # This is a latch. If the timer runs and this is False, it will start
+    # checking the next addon at self.enabled_addons[prefs.addon_index]
+    is_updating: bool = False
+
     def execute(self, context):
         self.report({"INFO"}, "SAM is checking for updates!")
 
         self.updates = []
         self.unavailable_addons = []
+        self.is_updating = False
         prefs.addon_index = 0
 
         # Set the paths to all possible addon install locations.
@@ -106,60 +119,53 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # Folders are sent to self.check_update() for the actual update check.
     def modal(self, context, event):
         if event.type == "TIMER":
-            if prefs.addon_index >= prefs.addons_total:
-                # Sort the lists of updates and unavailable addons to be ordered less random.
-                self.updates.sort(
-                    key=lambda x: x["allow_automatic_download"], reverse=True)
-                self.unavailable_addons.sort(
-                    key=lambda x: x["issue_type"], reverse=True)
+            if not self.is_updating:
+                if prefs.addon_index >= prefs.addons_total:
+                    # Sort the lists of updates and unavailable addons to be ordered less random.
+                    self.updates.sort(
+                        key=lambda x: x["allow_automatic_download"], reverse=True)
+                    self.unavailable_addons.sort(
+                        key=lambda x: x["issue_type"], reverse=True)
 
-                # Add properties to the current scene that can be used
-                # to expand/collapse the different error code sections in the preferences.
-                for error in self.unavailable_addons:
-                    error_code = error["issue_type"]
-                    if not hasattr(context.scene, error_code):
-                        setattr(bpy.types.Scene, error_code,
-                                BoolProperty(default=True))
+                    # Send both lists to the preferences.
+                    prefs.updates = self.updates
+                    prefs.unavailable_addons = self.unavailable_addons
 
-                # Send both lists to the preferences.
-                prefs.updates = self.updates
-                prefs.unavailable_addons = self.unavailable_addons
+                    context.window_manager.event_timer_remove(self._timer)
+                    prefs.checking_for_updates = False
 
-                context.window_manager.event_timer_remove(self._timer)
-                prefs.checking_for_updates = False
+                    self._redraw()
 
-                self._redraw()
+                    path = p.join(p.dirname(__file__), "updater_status.json")
+                    d = decode_json(path)
+                    d = {} if d is None else d
+                    d["last_check"] = int(time.time())
+                    encode_json(d, path)
 
-                path = p.join(p.dirname(__file__), "updater_status.json")
-                d = decode_json(path)
-                d["last_check"] = int(time.time())
-                encode_json(d, path)
+                    something_happened = bool(
+                        self.unavailable_addons) or bool(self.updates)
+                    is_background_check = self.is_background_check
+                    if is_background_check and something_happened:
+                        bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
 
-                something_happened = bool(
-                    self.unavailable_addons) or bool(self.updates)
-                is_background_check = self.is_background_check
-                if is_background_check and something_happened:
-                    bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
+                    return {'FINISHED'}
 
-                return {'FINISHED'}
+                addon_path = self.enabled_addons[prefs.addon_index]
+                prefs.addon_index += 1
 
-            addon_path = self.enabled_addons[prefs.addon_index]
-            prefs.addon_index += 1
+                self._get_addon_name(addon_path)
 
-            self._get_addon_name(addon_path)
+                if p.isdir(addon_path):
+                    self.check_update(addon_path)
 
-            if p.isdir(addon_path):
-                self.check_update(addon_path)
+                    self._redraw()
 
-                self._redraw()
-
-                return {"RUNNING_MODAL"}
-
-            self.unavailable_addons.append(
-                {"issue_type": "sam_not_supported",
-                    "addon_name": self.addon_name,
-                    "bl_info": sys.modules[p.basename(addon_path)].bl_info,
-                    "addon_count": len(self.all_addons)})
+                else:
+                    self.unavailable_addons.append(
+                        {"issue_type": SAM_NOT_SUPPORTED,
+                            "addon_name": self.addon_name,
+                            "bl_info": sys.modules[p.basename(addon_path)].bl_info,
+                            "addon_count": len(self.all_addons)})
 
         return {"RUNNING_MODAL"}
 
@@ -193,14 +199,18 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # is unavailable or some information in "bl_info" is corrupt, the addon
     # is added to self.unavailable_addons (Addons that can't be updated)
     def check_update(self, addon_path):
+        self.is_updating = True  # Lock the latch
+
         addon_bl_info = sys.modules[p.basename(addon_path)].bl_info
 
         if not "endpoint_url" in addon_bl_info.keys():
             self.unavailable_addons.append(
-                {"issue_type": "sam_not_supported",
+                {"issue_type": SAM_NOT_SUPPORTED,
                  "addon_name": self.addon_name,
                  "bl_info": addon_bl_info,
                  "addon_count": len(self.all_addons)})
+
+            self.is_updating = False  # Open the latch
             return  # Special Error
 
         endpoint_url = addon_bl_info["endpoint_url"]
@@ -210,16 +220,24 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = requests.get(endpoint_url).text
         except MissingSchema:  # The URL is invalid.
             self.unavailable_addons.append(
-                {"issue_type": "url_invalid", "addon_name": self.addon_name, "bl_info": addon_bl_info, "endpoint_url": endpoint_url})
+                {"issue_type": URL_INVALID,
+                 "addon_name": self.addon_name,
+                 "bl_info": addon_bl_info,
+                 "endpoint_url": endpoint_url})
+
+            self.is_updating = False  # Open the latch
             return  # Critical Error
+
         # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
         except Exception as e:
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_offline",
+                {"issue_type": ENDPOINT_OFFLINE,
                  "addon_name": self.addon_name,
                  "bl_info": addon_bl_info,
                  "error_message": str(e),
                  "endpoint_url": endpoint_url})
+
+            self.is_updating = False  # Open the latch
             return  # Critical Error
 
         # Try to convert the data to be helpful for the program.
@@ -227,18 +245,22 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = json.loads(endpoint_data)
         except json.decoder.JSONDecodeError:
             self.unavailable_addons.append(
-                {"issue_type": "invalid_endpoint",
+                {"issue_type": INVALID_ENDPOINT,
                  "addon_name": self.addon_name,
                  "bl_info": addon_bl_info,
                  "endpoint_url": endpoint_url})
+
+            self.is_updating = False  # Open the latch
             return  # Critical Error
 
         if not "schema_version" in endpoint_data.keys():
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_invalid_schema",
+                {"issue_type": ENDPOINT_INVALID_SCHEMA,
                  "addon_name": self.addon_name,
                  "bl_info": addon_bl_info,
                  "endpoint_url": endpoint_url})
+
+            self.is_updating = False  # Open the latch
             return  # Critical Error
 
         # Check the schema of the endpoint data.
@@ -247,15 +269,19 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 endpoint_data, self.addon_name, addon_bl_info, endpoint_url)
         else:
             self.unavailable_addons.append(
-                {"issue_type": "endpoint_invalid_schema",
+                {"issue_type": ENDPOINT_INVALID_SCHEMA,
                  "addon_name": self.addon_name,
                  "bl_info": addon_bl_info,
                  "endpoint_url": endpoint_url})
+
+            self.is_updating = False  # Open the latch
             return  # Critical Error
 
         # Handle any error that occured inside the update check.
         if update_check.error:
             self.unavailable_addons.append(update_check.error_data)
+
+            self.is_updating = False  # Open the latch
             return  # Critical Error
 
         # Add the Addon to one of the Update Arrays.
@@ -264,6 +290,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                                  "allow_automatic_download": update_check.automatic_download,
                                  "download_url": update_check.download_url,
                                  "addon_name": self.addon_name})
+
+        self.is_updating = False  # Open the latch
 
 
 class SUPERADDONMANAGER_OT_update_info(Operator):
@@ -362,7 +390,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         issue_type = data["issue_type"]
 
         addon_version = "Unknown"
-        if issue_type != "bl_info_version_problems" and "version" in data["bl_info"].keys():
+        if issue_type != BL_INFO_VERSION_PROBLEMS and "version" in data["bl_info"].keys():
             addon_version = ".".join(map(str, data["bl_info"]["version"]))
 
         url_params = {"issue_type": issue_type,
@@ -375,13 +403,13 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         if "tracker_url" in data["bl_info"].keys():
             url_params["tracker_url"] = data["bl_info"]["tracker_url"]
 
-        if issue_type in ["sam_not_supported"]:
+        if issue_type in [SAM_NOT_SUPPORTED]:
             url_params["addon_count"] = data["addon_count"]
 
-        if issue_type in ["url_invalid", "invalid_endpoint", "endpoint_invalid_schema", "endpoint_offline"]:
+        if issue_type in [URL_INVALID, INVALID_ENDPOINT, ENDPOINT_INVALID_SCHEMA, ENDPOINT_OFFLINE]:
             url_params["endpoint_url"] = data["endpoint_url"]
 
-        if issue_type == "endpoint_offline":
+        if issue_type == ENDPOINT_OFFLINE:
             url_params["error_message"] = data["error_message"]
 
         return base_url + urllib.parse.urlencode(url_params)

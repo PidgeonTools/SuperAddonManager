@@ -1,4 +1,8 @@
 import bpy
+from ..issue_types import (
+    BL_INFO_VERSION_PROBLEMS,
+    ENDPOINT_INVALID_SCHEMA
+)
 
 
 class UpdateCheck_v1_0_0:
@@ -17,12 +21,12 @@ class UpdateCheck_v1_0_0:
         try:
             self.current_version = self.pad_tuple(bl_info["version"])
         except (KeyError, ValueError, TypeError):
-            self._set_error(issue_type="bl_info_version_problems")
+            self._set_error(issue_type=BL_INFO_VERSION_PROBLEMS)
             return  # Critical Error
 
         # Make sure that there is a list of addon versions.
         if not "versions" in data.keys():
-            self._set_error(issue_type="endpoint_invalid_schema",
+            self._set_error(issue_type=ENDPOINT_INVALID_SCHEMA,
                             endpoint_url=endpoint_url)
             return  # Critical Error
 
@@ -33,7 +37,7 @@ class UpdateCheck_v1_0_0:
         try:
             self.pad_version_list()
         except (KeyError, ValueError, TypeError):
-            self._set_error(issue_type="endpoint_invalid_schema",
+            self._set_error(issue_type=ENDPOINT_INVALID_SCHEMA,
                             endpoint_url=endpoint_url)
             return  # Critical Error
 
@@ -57,7 +61,7 @@ class UpdateCheck_v1_0_0:
                 self.download_url = latest_compatible_version["download_url"]
             else:
                 self._set_error(
-                    issue_type="endpoint_invalid_schema", endpoint_url=endpoint_url)
+                    issue_type=ENDPOINT_INVALID_SCHEMA, endpoint_url=endpoint_url)
 
     # Format all version lists inside self.versions to be a tuple of three integers.
     def pad_version_list(self):

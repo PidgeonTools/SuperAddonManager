@@ -8,9 +8,6 @@ import time
 from .json_functions import (
     decode_json
 )
-from .register_functions import (
-    register_props
-)
 
 
 @persistent
@@ -24,11 +21,9 @@ def startup_setup(*args):
         86400 + prefs.check_interval_hours * 3600 + prefs.check_interval_minutes * 60
 
     d = decode_json(path)
-
-    if prefs.auto_check_for_updates and time.time() - d["last_check"] > check_interval:
-        bpy.ops.superaddonmanager.check_for_updates(is_background_check=True)
-
-    register_props()
+    if d is not None:
+        if prefs.auto_check_for_updates and time.time() - d["last_check"] > check_interval:
+            bpy.ops.superaddonmanager.check_for_updates(is_background_check=True)
 
 
 def register():

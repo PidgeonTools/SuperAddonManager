@@ -2,9 +2,12 @@ import json
 
 
 def decode_json(path):
-    with open(path) as f:
-        j = json.load(f)
-    return j
+    try:
+        with open(path) as f:
+            j = json.load(f)
+        return j
+    except FileNotFoundError:
+        return None
 
 
 def encode_json(j, path):

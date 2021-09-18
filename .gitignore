@@ -18,6 +18,12 @@ __pycache__/
 # production
 /build
 
+# runtime artefacts
+updater_status.json
+
+# development settings
+.vscode
+
 # misc
 .DS_Store
 *.pem
