@@ -20,6 +20,10 @@ from .functions.main_functions import (
 )
 from .issue_types import all_issue_types
 
+HEADING_DISTANCE = 40
+DISTANCE_LEFT = 280
+ITEMS_DISTANCE = 45
+
 # These variables are necessary for the update checking progress bar.
 addons_total = 0
 addon_index = 0
@@ -29,7 +33,8 @@ checking_for_updates = False
 # or addons, that have issues and can't be updated.
 updates = []
 unavailable_addons = []
-expanded_categories = {issue_type: False for issue_type in all_issue_types}
+expanded_categories = {issue_type: True for issue_type in all_issue_types}
+filtered_categories = {issue_type: False for issue_type in all_issue_types}
 
 
 class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
@@ -87,18 +92,12 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         update=expand_all,
     )
 
-    dev_icon: IntProperty(max=5, min=0)
-    dev_heading_distance: IntProperty(default=40)
-    dev_distance_left: IntProperty(default=280)
-    dev__items_distance: IntProperty(default=45)
+    dev_icon: IntProperty(max=3, min=0)
 
     def draw(self, context):
         layout = self.layout
 
-        layout.prop(self, "dev_icon")
-        layout.prop(self, "dev_distance_left")
-        layout.prop(self, "dev_heading_distance")
-        layout.prop(self, "dev__items_distance")
+        # layout.prop(self, "dev_icon")  # TODO: Decide on an icon.
 
         if checking_for_updates:
             # Checking for updates progress bar.
@@ -156,7 +155,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 # Change the previous error to be the current error code.
                 prev_error = addon["issue_type"]
                 icon = "TRIA_DOWN" if getattr(self,
-                    prev_error) else "TRIA_RIGHT"
+                                              prev_error) else "TRIA_RIGHT"
 
                 # Start a new section for a new error code.
                 container = layout.column()
@@ -166,23 +165,22 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 expand.prop(self, prev_error,
                             text=f"{self.convert_error_message(prev_error)} (Error Code: {prev_error})", icon=icon)
 
-                container.separator(factor=self.dev_heading_distance / 100)
+                container.separator(factor=HEADING_DISTANCE / 100)
 
             # Display the error codes, if the area is expanded.
             if getattr(self, prev_error):
                 row = container.row()
-                row.separator(factor=self.dev_distance_left / 100)
+                row.separator(factor=DISTANCE_LEFT / 100)
                 row.label(text=addon["addon_name"])
 
-                icons = ["INFO", "HELP", "URL",
-                         "RESTRICT_SELECT_OFF", "FAKE_USER_ON", "QUESTION"]
+                icons = ["URL", "INFO", "HELP", "QUESTION"]
 
                 icon = icons[self.dev_icon]
 
                 op = row.operator(
                     "superaddonmanager.generate_issue_report", text="Request Support", icon=icon)
                 op.addon_index = index
-                container.separator(factor=self.dev__items_distance / 100)
+                container.separator(factor=ITEMS_DISTANCE / 100)
 
     def draw_settings(self, layout):
         path = p.join(p.dirname(__file__), "updater_status.json")
@@ -223,8 +221,9 @@ def add_issue_types_to_prefs():
     def make_fns(issue_type: str):
         ''' Capture the issue_type in a closure and generate some functions that
         proxy the get/set from expanded_categories for that issue_type '''
+
         def get_expanded(self):
-            return expanded_categories[issue_type]
+            return expanded_categories[issue_type] or filtered_categories[issue_type]
 
         def set_expanded(self, value: bool):
             expanded_categories[issue_type] = value
@@ -235,9 +234,9 @@ def add_issue_types_to_prefs():
         # Define a property+annotation that proxies each issue_type from expanded_categories
         get_expanded, set_expanded = make_fns(issue_type)
 
-        setattr(SUPERADDONMANAGER_APT_preferences, issue_type, False)
+        setattr(SUPERADDONMANAGER_APT_preferences, issue_type, True)
         SUPERADDONMANAGER_APT_preferences.__annotations__[
-            issue_type] = BoolProperty(default=False,
+            issue_type] = BoolProperty(default=True,
                                        get=get_expanded,
                                        set=set_expanded)
 
