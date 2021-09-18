@@ -18,7 +18,12 @@ from .functions.main_functions import (
     expand_all,
     filter_search
 )
-from .issue_types import all_issue_types
+from .issue_types import (
+    BL_INFO_VERSION_PROBLEMS,
+    SAM_NOT_SUPPORTED,
+    URL_INVALID,
+    all_issue_types
+)
 
 HEADING_DISTANCE = 40
 DISTANCE_LEFT = 280
@@ -203,9 +208,17 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 text=f"Last update check: {time.strftime('%A, %d/%m/%Y %H:%M', last_check)}")
 
     def convert_error_message(self, msg):
-        string = ""
-        for i in msg.split("_"):
-            string += i.capitalize() + " "
+        error_code_labels = {
+            SAM_NOT_SUPPORTED: "Super Addon Manager is not supported",
+            BL_INFO_VERSION_PROBLEMS: "Problems with the current addon version",
+            URL_INVALID: "URL Invalid",
+        }
+        if msg in error_code_labels.keys():
+            string = error_code_labels[msg]
+        else:
+            string = ""
+            for i in msg.split("_"):
+                string += i.capitalize() + " "
         return string
 
 
