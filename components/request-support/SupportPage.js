@@ -370,6 +370,7 @@ ${outro}
                     <button
                       type="button"
                       className="btn btn-sm btn-outline-secondary copy_issue"
+                      disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
                     >
                       {titleCopied ? "Copied!" : "Copy"}
                     </button>
@@ -391,6 +392,7 @@ ${outro}
                     <button
                       type="button"
                       className="btn btn-sm btn-outline-secondary copy_issue"
+                      disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
                     >
                       {textCopied ? "Copied!" : "Copy"}
                     </button>
