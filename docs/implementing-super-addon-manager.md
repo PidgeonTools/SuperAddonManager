@@ -7,7 +7,7 @@ title: Implementing Super Addon Manager
 
 # Implementing Super Addon Manager
 
-Because of its simplicity and risk-free nature ( =no code added to your addon), Super Addon Manager is the ideal solution if you wish to support automated checking of your addons for updates. This step-by-step guide will show you how to implement Super Addon Manager support in your addon. Side Note: If you offer a paid version of your addon, please consider paying me a percentage of your earnings (1% or higher) to help keep this project alive. On BlenderMarket, you can add me (TODO: BlenderMarket name) as a collaborator to pay me automatically.
+Because of its simplicity and risk-free nature (= no code added to your addon), Super Addon Manager is the ideal solution if you wish to support automated checking of your addons for updates. This step-by-step guide will show you how to implement Super Addon Manager support in your addon. Side Note: If you offer a paid version of your addon, please consider paying me a percentage of your earnings (1% or higher) to help keep this project alive. On BlenderMarket, you can add me (TODO: BlenderMarket name) as a collaborator to pay me automatically.
 
 </div>
 </div>
@@ -78,7 +78,6 @@ bl_info = {
 <div class="container">
 <div class="row mt-3">
 
-
 # Showing, that you support Super Addon Manager:
 
 Enabling support for Super Addon Manager is only half of the rent: People can only keep your addon up to date automatically, if they are using Super Addon Manager. There's multiple ways to remind them to get Super Addon Manager:
@@ -87,10 +86,11 @@ Enabling support for Super Addon Manager is only half of the rent: People can on
 
 ### Links on your description pages:
 
-Obviously, the easiest way to show, that you Support Super Addon Manager, is to add a short text with a link in your addon description or README. You can use something like this:
+Obviously, the easiest way to show, that you support Super Addon Manager, is to add a short text with a link in your addon description or README. You can use something like this:
 
 ```markdown
 # Addon Updates:
+
 This addon can be updated automatically with Super Addon Manager. Learn more on their site: https//TODO
 ```
 
