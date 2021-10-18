@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { Button, Col, Container, FloatingLabel, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  FloatingLabel,
+  Form,
+  Row,
+} from "react-bootstrap";
+
+const data = require("../../public/data/request-support.json");
 
 export const NoData = () => {
-  const LATEST_BLENDER_VERSION = "2.93.4";
-  const LATEST_SPM_VERSION = "1.3.1";
   const issueTypes = [
     "sam_not_supported",
     "bl_info_version_problems",
@@ -58,12 +65,11 @@ export const NoData = () => {
             <Row>
               {/* ISSUE TYPE */}
               <Col lg={4} className="mb-3">
-                <FloatingLabel controlId="issue_type" label="Issue Type / Error Code">
-                  <Form.Select
-                    defaultValue=""
-                    onChange={handleChange}
-                    required
-                  >
+                <FloatingLabel
+                  controlId="issue_type"
+                  label="Issue Type / Error Code"
+                >
+                  <Form.Select defaultValue="" onChange={handleChange} required>
                     <option value="" disabled>
                       Select an Option
                     </option>
@@ -93,11 +99,7 @@ export const NoData = () => {
               {/* OS */}
               <Col lg={4} className="mb-3">
                 <FloatingLabel controlId="os_name" label="Operating System">
-                  <Form.Select
-                    defaultValue=""
-                    onChange={handleChange}
-                    required
-                  >
+                  <Form.Select defaultValue="" onChange={handleChange} required>
                     <option value="" disabled>
                       Select an Option
                     </option>
@@ -113,11 +115,11 @@ export const NoData = () => {
               <Col lg={4} md={6} className="mb-3">
                 <FloatingLabel
                   controlId="blender_version"
-                  label={`Blender Version (e.g. ${LATEST_BLENDER_VERSION})`}
+                  label={`Blender Version (e.g. ${data.latestBlenderVersion})`}
                 >
                   <Form.Control
                     type="text"
-                    placeholder={LATEST_BLENDER_VERSION}
+                    placeholder={data.latestBlenderVersion}
                     pattern="\d+\.\d+\.\d+"
                     onChange={handleChange}
                     required
@@ -128,11 +130,11 @@ export const NoData = () => {
               <Col lg={4} md={6} className="mb-3">
                 <FloatingLabel
                   controlId="addon_version"
-                  label={`Addon Version (e.g. ${LATEST_SPM_VERSION})`}
+                  label={`Addon Version (e.g. ${data.latestSPMVersion})`}
                 >
                   <Form.Control
                     type="text"
-                    placeholder={LATEST_SPM_VERSION}
+                    placeholder={data.latestSPMVersion}
                     pattern="\d+\.\d+\.\d+"
                     onChange={handleChange}
                     required
@@ -161,9 +163,7 @@ export const NoData = () => {
                   </FloatingLabel>
                 </Col>
               </Row>
-            ) : (
-              null
-            )}
+            ) : null}
 
             {/* ENDPOINT URL */}
             {[
@@ -174,10 +174,7 @@ export const NoData = () => {
             ].includes(formData.issue_type) ? (
               <Row>
                 <Col className="mb-3">
-                  <FloatingLabel
-                    controlId="endpoint_url"
-                    label="Endpoint URL"
-                  >
+                  <FloatingLabel controlId="endpoint_url" label="Endpoint URL">
                     <Form.Control
                       type="text"
                       onChange={handleChange}
@@ -186,9 +183,7 @@ export const NoData = () => {
                   </FloatingLabel>
                 </Col>
               </Row>
-            ) : (
-              null
-            )}
+            ) : null}
 
             {/* ERROR MESSAGE */}
             {formData.issue_type == "endpoint_offline" ? (
@@ -206,16 +201,11 @@ export const NoData = () => {
                   </FloatingLabel>
                 </Col>
               </Row>
-            ) : (
-              null
-            )}
+            ) : null}
             {/* TRACKER URL */}
             <Row>
               <Col className="mb-3">
-                <FloatingLabel
-                  controlId="tracker_url"
-                  label="Tracker URL"
-                >
+                <FloatingLabel controlId="tracker_url" label="Tracker URL">
                   <Form.Control
                     type="text"
                     onChange={handleChange}
