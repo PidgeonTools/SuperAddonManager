@@ -2,15 +2,21 @@
 ![GitHub](https://img.shields.io/github/license/BlenderDefender/SuperAddonManager?color=green&style=for-the-badge)
 [![GitHub issues](https://img.shields.io/github/issues/BlenderDefender/SuperAddonManager?style=for-the-badge)](https://github.com/BlenderDefender/SuperAddonManager/issues)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/BlenderDefender/SuperAddonManager?style=for-the-badge)
+
 # Super Addon Manager
+
 <!-- Add a description -->
 
 ## Upcoming Version:
-<!-- We've just hit another update. No features are planned so far. [Change this!](https://github.com/BlenderDefender/SuperAddonManager/issues/new/choose) -->
+
+<!-- CHANGELOG -->
+- First Step: Check for updates and handle Errors.
+<!-- CHANGELOG -->
 
 ## System requirements:
-| **OS** | **Blender** |
-| ------------- | ------------- |
-| OSX | Testing, please give feedback if it works for you. |
-| Windows | Blender 2.83+ |
-| Linux | Blender 2.83+ |
+
+| **OS**  | **Blender**                                        |
+| ------- | -------------------------------------------------- |
+| OSX     | Testing, please give feedback if it works for you. |
+| Windows | Blender 2.83+                                      |
+| Linux   | Blender 2.83+                                      |
