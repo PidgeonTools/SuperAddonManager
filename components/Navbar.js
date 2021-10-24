@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+
+// Bootstrap
 import { Container, Nav, Navbar } from "react-bootstrap";
 
 const SiteNavbar = () => (

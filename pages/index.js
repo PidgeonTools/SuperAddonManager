@@ -1,14 +1,18 @@
+import Link from "next/link";
+
+// Bootstrap
+import { Container, Nav } from "react-bootstrap";
+
+// Components
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
-import Link from "next/link";
-import { Nav } from "react-bootstrap";
 
 export default function Home() {
   return (
     <>
       <Header title="Home" />
       <Navbar />
-      <div className="container intro">
+      <Container className="intro">
         <Nav as="ul" className="flex-column">
           <Nav.Item as="li">
             <Nav.Link as={Link} href="/request-support">
@@ -21,7 +25,7 @@ export default function Home() {
             </Nav.Link>
           </Nav.Item>
         </Nav>
-      </div>
+      </Container>
     </>
   );
 }

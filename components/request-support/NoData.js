@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+
+// Bootstrap
 import {
   Button,
   Col,
@@ -214,11 +216,11 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
               </Col>
             </Row>
 
-            <div className="d-grid col-12">
+            <Col className="d-grid">
               <Button variant="primary" type="submit">
                 Request Support
               </Button>
-            </div>
+            </Col>
           </Container>
         </Form>
       </section>
