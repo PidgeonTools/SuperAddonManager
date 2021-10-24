@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+
+// Bootstrap
+import { Container, Row } from "react-bootstrap";
+
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
@@ -213,31 +217,31 @@ ${outro}
     <>
       {/* INTRO SECTION */}
       <section className="intro">
-        <div className="container">
-          <div className="row">
-            <h1 className="">Issue with your addon {addonName}</h1>
+        <Container>
+          <Row>
+            <h1>Issue with your addon {addonName}</h1>
             <p>
               Super Addon Manager can't check for updates for your addon{" "}
               {addonName}.
             </p>
-          </div>
-        </div>
+          </Row>
+        </Container>
       </section>
 
       {/* NON DEVELOPER FRIENDLY ISSUE DESCRIPTION */}
       <section className="problem-description">
-        <div className="container">
-          <div className="row mt-3 mb-3">
+        <Container>
+          <Row className="mt-3 mb-3">
             <h2>What's the problem?</h2>
             <p>{issueDescriptionText}</p>
-          </div>
-        </div>
+          </Row>
+        </Container>
       </section>
 
       {/* WHAT TO DO SECTION */}
       <section className="what-todo">
-        <div className="container">
-          <div className="row mt-3 mb-3">
+        <Container>
+          <Row className="mt-3 mb-3">
             {/* HEADING */}
             <h2>What can you do to make it work?</h2>
             {/* TEXT */}
@@ -334,7 +338,7 @@ ${outro}
             </form>
 
             {/* SUBMIT ISSUE */}
-            <div className="row mt-3 mb-3">
+            <Row className="mt-3 mb-3">
               {/* HEADING */}
               <h3>Submit an issue</h3>
               <p>
@@ -402,9 +406,9 @@ ${outro}
                   {issueTextArea}
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+            </Row>
+          </Row>
+        </Container>
       </section>
     </>
   );
