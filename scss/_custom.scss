@@ -29,7 +29,9 @@ $code-meta: #c28b00;
 
 // Theme Colors
 $primary: $blue-light;
+$primary-text: $white; // Color, that works for text on a background with the color of $primary
 $secondary: $blue-dark;
+$secondary-text: $white; // Color, that works for text on a background with the color of $secondary
 
 // ACCORDION OVERRIDES
 $accordion-padding-x: 1.4rem;
