@@ -9,9 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 
-const data = require("../../public/data/request-support.json");
-
-export const NoData = () => {
+export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
   const issueTypes = [
     "sam_not_supported",
     "bl_info_version_problems",
@@ -115,11 +113,11 @@ export const NoData = () => {
               <Col lg={4} md={6} className="mb-3">
                 <FloatingLabel
                   controlId="blender_version"
-                  label={`Blender Version (e.g. ${data.latestBlenderVersion})`}
+                  label={`Blender Version (e.g. ${latestBlenderVersion})`}
                 >
                   <Form.Control
                     type="text"
-                    placeholder={data.latestBlenderVersion}
+                    placeholder={latestBlenderVersion}
                     pattern="\d+\.\d+\.\d+"
                     onChange={handleChange}
                     required
@@ -130,11 +128,11 @@ export const NoData = () => {
               <Col lg={4} md={6} className="mb-3">
                 <FloatingLabel
                   controlId="addon_version"
-                  label={`Addon Version (e.g. ${data.latestSPMVersion})`}
+                  label={`Addon Version (e.g. ${latestSPMVersion})`}
                 >
                   <Form.Control
                     type="text"
-                    placeholder={data.latestSPMVersion}
+                    placeholder={latestSPMVersion}
                     pattern="\d+\.\d+\.\d+"
                     onChange={handleChange}
                     required
