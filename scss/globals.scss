@@ -4,6 +4,7 @@
 // COMPONENTS
 @use "components/code";
 @use "components/utilities";
+@use "components/inputs";
 
 // IMPORT THE SECTION COMPONENTS
 @use "sections/navbar";
@@ -16,3 +17,4 @@
 
 // Download Page
 @use "sections/download/download";
+@use "sections/download/thanks";
