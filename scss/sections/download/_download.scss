@@ -1,0 +1,47 @@
+@use "../../custom" as *;
+@use "../../components/mixins" as *;
+
+.download-box {
+  @include gradient;
+
+  h1 {
+    color: $primary-text;
+    font-size: 4rem;
+    font-weight: 600;
+    word-spacing: 100vw;
+    user-select: none;
+  }
+
+  button {
+    max-width: 14.7rem;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+
+  ul {
+    color: $primary-text;
+    font-size: 1.4rem;
+    user-select: none;
+  }
+}
+
+.supported-addons-box {
+  background-color: $white;
+
+  h2 {
+    font-weight: 500;
+    padding-bottom: 1rem;
+  }
+
+  &--addon {
+    font-size: 1.2rem;
+
+    margin-bottom: 0.5rem;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

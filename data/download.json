@@ -1,0 +1,62 @@
+{
+    "productComparisons": [
+    {
+        "price": 0,
+        "description": "Nothing. Use Super Addon Manager for free"
+    },
+    {
+        "price": 2,
+        "description": "A little Hamburger"
+    },
+    {
+        "price": 5,
+        "description": "A medium iced tea"
+    },
+    {
+        "price": 20,
+        "description": "Some cheap headphones"
+    },
+    {
+        "price": 50,
+        "description": "A warm jacket"
+    },
+    {
+        "price": 100,
+        "description": "A gaming headset"
+    },
+    {
+        "price": 500,
+        "description": "A robotic mop"
+    },
+    {
+        "price": 749,
+        "description": "A robotic mop"
+    },
+    {
+        "price": 750,
+        "description": "Kevins rent"
+    },
+    {
+        "price": 751,
+        "description": "A medium graphics card for Blender"
+    },
+    {
+        "price": 1000,
+        "description": "A medium graphics card for Blender"
+    },
+    {
+        "price": 2000,
+        "description": "A flight from Berlin to Sydney (one way)"
+    },
+    {
+        "price": 5000,
+        "description": "A flight from Berlin to Sydney (two ways)"
+    },
+    {
+        "price": 9999,
+        "description": "An extremely high-power PC setup"
+    }
+],
+    "downloadLink": "https://github.com/BlenderDefender/SuperAddonManager/archive/refs/heads/master.zip"
+
+}
