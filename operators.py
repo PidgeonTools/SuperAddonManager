@@ -179,14 +179,23 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
     # Get the name of the addon, that is beeing checked currently.
     def _get_addon_name(self, addon_path):
+        # Handle the case that the addon is not in sys.modules
+        if not p.basename(addon_path) in sys.modules:
+            print(
+                f"WARNING: Unknown error with {addon_path}: Addon not in sys.modules")
+            self.addon_name = ""
+            return  # Unknown Error
+
+        # Try to get the addon name from bl_info.
         if "name" in sys.modules[p.basename(addon_path)].bl_info:
             self.addon_name = sys.modules[p.basename(
                 addon_path)].bl_info["name"]
-        else:
+        else:  # Extract the addon name from the folder name.
             replace = (("-master", ""),
                        ("-main", ""),
                        ("-", " "),
                        ("_", " "))
+
             # Extract a good looking addon name from a folder name.
             addon_name = p.basename(addon_path)
             for replace_obj, replace_with in replace:
@@ -200,6 +209,13 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # is added to self.unavailable_addons (Addons that can't be updated)
     def check_update(self, addon_path):
         self.is_updating = True  # Lock the latch
+
+        # Handle the case, that the current addon is not in sys.modules.
+        if not p.basename(addon_path) in sys.modules:
+            print(
+                f"WARNING: Unknown error with {addon_path}: Addon not in sys.modules")
+            self.is_updating = False  # Open the latch
+            return  # Unknown Error
 
         addon_bl_info = sys.modules[p.basename(addon_path)].bl_info
 
