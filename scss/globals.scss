@@ -5,6 +5,7 @@
 @use "components/code";
 @use "components/utilities";
 @use "components/inputs";
+@use "components/forms";
 
 // IMPORT THE SECTION COMPONENTS
 @use "sections/navbar";
@@ -13,7 +14,6 @@
 // Request Support Page
 @use "sections/request-support/problemDescription";
 @use "sections/request-support/whatToDo";
-@use "sections/request-support/requestSupportForm";
 
 // Download Page
 @use "sections/download/download";

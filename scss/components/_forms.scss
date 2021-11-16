@@ -1,6 +1,6 @@
-@use "../../custom" as *;
+@use "../custom" as *;
 
-.request-support-form {
+.form {
   input:required,
   select:required {
     ~ label {

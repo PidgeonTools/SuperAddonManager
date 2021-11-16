@@ -59,7 +59,7 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
       </section>
 
       {/* REQUEST SUPPORT */}
-      <section className="request-support-form">
+      <section className="form">
         <Form onSubmit={handleSubmit}>
           <Container>
             <Row>
