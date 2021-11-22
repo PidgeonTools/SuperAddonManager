@@ -6,6 +6,7 @@ import { Container, Nav } from "react-bootstrap";
 // Components
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
           </Nav.Item>
         </Nav>
       </Container>
+      <Footer />
     </>
   );
 }
