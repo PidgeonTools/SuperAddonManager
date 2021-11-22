@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // Bootstrap
@@ -23,6 +23,7 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
     "endpoint_invalid_schema",
   ];
   const operatingSystems = [OS.WINDOWS, OS.LINUX, OS.MACOS, OS.OTHER];
+  const [operatingSystem, setOperatingSystem] = useState();
   const baseURL = "/request-support";
 
   const [formData, setFormData] = useState({});
@@ -35,6 +36,11 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
       [e.target.id]: e.target.value.trim(),
     });
   };
+
+  useEffect(() => {
+    setOperatingSystem(getOS().display);
+    setFormData({ ...formData, os_name: getOS().display });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,15 +108,18 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
               <Col lg={4} className="mb-3">
                 <FloatingLabel controlId="os_name" label="Operating System">
                   <Form.Select
-                    defaultValue={getOS().value}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      setOperatingSystem(e.target.value);
+                      handleChange(e);
+                    }}
+                    value={operatingSystem}
                     required
                   >
                     <option value="" disabled>
                       Select an Option
                     </option>
                     {operatingSystems.map((el) => (
-                      <option key={el} value={el.value}>
+                      <option key={el} value={el.display}>
                         {el.display}
                       </option>
                     ))}
