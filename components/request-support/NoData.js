@@ -11,6 +11,8 @@ import {
   Row,
 } from "react-bootstrap";
 
+import { getOS, OS } from "../../functions";
+
 export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
   const issueTypes = [
     "sam_not_supported",
@@ -20,7 +22,7 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
     "invalid_endpoint",
     "endpoint_invalid_schema",
   ];
-  const operatingSystems = ["Windows", "Linux", "macOS", "Other"];
+  const operatingSystems = [OS.WINDOWS, OS.LINUX, OS.MACOS, OS.OTHER];
   const baseURL = "/request-support";
 
   const [formData, setFormData] = useState({});
@@ -99,13 +101,17 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
               {/* OS */}
               <Col lg={4} className="mb-3">
                 <FloatingLabel controlId="os_name" label="Operating System">
-                  <Form.Select defaultValue="" onChange={handleChange} required>
+                  <Form.Select
+                    defaultValue={getOS().value}
+                    onChange={handleChange}
+                    required
+                  >
                     <option value="" disabled>
                       Select an Option
                     </option>
                     {operatingSystems.map((el) => (
-                      <option key={el} value={el}>
-                        {el}
+                      <option key={el} value={el.value}>
+                        {el.display}
                       </option>
                     ))}
                   </Form.Select>
