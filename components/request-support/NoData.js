@@ -14,6 +14,9 @@ import {
 import { getOS, OS } from "../../functions";
 
 export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
+  const [formData, setFormData] = useState({});
+
+  // Form Variables
   const issueTypes = [
     "sam_not_supported",
     "bl_info_version_problems",
@@ -24,11 +27,18 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
   ];
   const operatingSystems = [OS.WINDOWS, OS.LINUX, OS.MACOS, OS.OTHER];
   const [operatingSystem, setOperatingSystem] = useState();
+
+  // Router specific variables
+  const router = useRouter();
   const baseURL = "/request-support";
 
-  const [formData, setFormData] = useState({});
-  const router = useRouter();
+  // Set the Operating System at page load.
+  useEffect(() => {
+    setOperatingSystem(getOS().display);
+    setFormData({ ...formData, os_name: getOS().display });
+  }, []);
 
+  // Handle the change of a form component.
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -37,11 +47,7 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
     });
   };
 
-  useEffect(() => {
-    setOperatingSystem(getOS().display);
-    setFormData({ ...formData, os_name: getOS().display });
-  }, []);
-
+  // Handle Submitting the form.
   const handleSubmit = (e) => {
     e.preventDefault();
 
