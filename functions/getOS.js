@@ -6,8 +6,8 @@ export const OS = {
 };
 
 export const getOS = () => {
-  if (navigator.appVersion.indexOf("Win") != -1) return OS.WINDOWS;
-  if (navigator.appVersion.indexOf("Mac") != -1) return OS.MACOS;
-  if (navigator.appVersion.indexOf("Linux") != -1) return OS.LINUX;
+  if (navigator.userAgent.indexOf("Win") != -1) return OS.WINDOWS;
+  if (navigator.userAgent.indexOf("Mac") != -1) return OS.MACOS;
+  if (navigator.userAgent.indexOf("Linux") != -1) return OS.LINUX;
   return OS.OTHER;
 };
