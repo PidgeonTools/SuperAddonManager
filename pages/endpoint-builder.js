@@ -75,7 +75,7 @@ const EndpointBuilderPage = ({ latestBlenderLTSVersion, latestSPMVersion }) => {
       </Container>
 
       {/* ENDPOINT BUILDER */}
-      <section className="form">
+      <section className="form" style={{ marginBottom: "50vh" }}>
         <Container>
           {/* ENDPOINT BUILDER FORM */}
           <Col lg={6}>
