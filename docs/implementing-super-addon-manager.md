@@ -1,5 +1,10 @@
 ---
 title: Implementing Super Addon Manager
+description: A step-by-step guide that shows you how to implement support for Super Addon Manager into your addon.
+for: Developers
+category: Developer Documentation
+category-index: 1
+page-index: 0
 ---
 
 <div class="container intro">

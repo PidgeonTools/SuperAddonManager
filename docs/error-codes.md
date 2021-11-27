@@ -1,5 +1,10 @@
 ---
 title: Error Codes
+description: The full list of Error Codes for Super Addon Manager.
+for: Developers
+category: Error Handling
+category-index: 2
+page-index: 3
 ---
 
 <div class="container intro">
