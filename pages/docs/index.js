@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import fs from "fs";
 
 // Bootstrap
 import { Container } from "react-bootstrap";
@@ -9,16 +8,23 @@ import { Container } from "react-bootstrap";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 
-const Docs = ({ slugs }) => (
+// FILESYSTEM MODULES
+import fs from "fs";
+import path from "path";
+
+// MARKDOWN MODULES
+import matter from "gray-matter";
+
+const Docs = ({ navbarData }) => (
   <>
     <Header title="Documentation" />
     <Navbar />
     <Container className="intro">
-      {slugs.map((slug) => {
+      {navbarData.map((page) => {
         return (
-          <div key={slug}>
-            <Link href={`/docs/${slug}`}>
-              <a>{slug}</a>
+          <div key={page}>
+            <Link href={`/docs/${page.file}`}>
+              <a>{page.title}</a>
             </Link>
           </div>
         );
@@ -29,9 +35,19 @@ const Docs = ({ slugs }) => (
 
 export const getStaticProps = async () => {
   const files = fs.readdirSync("docs");
+  const navbarData = files.map((filename) => {
+    const fileData = fs.readFileSync(path.join("docs", filename)).toString();
+    return { ...matter(fileData).data, file: filename.replace(".md", "") };
+  });
+
+  navbarData.sort((a, b) => {
+    if (a.for === "Users") return -1;
+    return 1;
+  });
+
   return {
     props: {
-      slugs: files.map((filename) => filename.replace(".md", "")),
+      navbarData,
     },
   };
 };

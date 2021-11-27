@@ -7,38 +7,17 @@ category-index: 1
 page-index: 0
 ---
 
-<div class="container intro">
-<div class="row">
-
 # Implementing Super Addon Manager
 
 Because of its simplicity and code-free nature (= no risk of accidentaly breaking your addon), Super Addon Manager is the ideal solution if you wish to support automated checking of your addons for updates. This step-by-step guide will show you how to implement Super Addon Manager support in your addon. Side Note: If you offer a paid version of your addon, please consider paying me a percentage of your earnings (1% or higher) to help keep this project alive. On BlenderMarket, you can add me (TODO: BlenderMarket name) as a collaborator to pay me automatically.
-
-</div>
-</div>
-
-<div class="container">
-<div class="row">
 
 ## Preparation:
 
 If your Addon only consists of one single file, you have to turn it into a folder addon. Just create a new folder (with the same name as the addon) and rename your script into `__init__.py`. This exact filename is very important! After doing this, you're set up for implementing Super Addon Manager.
 
-</div>
-</div>
-
-<div class="container">
-<div class="row">
-
 ## Setting up the endpoint:
 
 <!-- TODO: Add a description on creating endpoint files here, when the endpoint schema is finally fully specified. Add a link to the file creator/updater here. -->
-
-</div>
-</div>
-
-<div class="container">
-<div class="row">
 
 ## Setting up your addon:
 
@@ -76,9 +55,6 @@ bl_info = {
     "endpoint_url": "[URL to your endpoint file]"
 }
 ```
-
-</div>
-</div>
 
 <div class="container">
 <div class="row mt-3">
@@ -119,6 +95,3 @@ If your offering your addon on Gumroad, BlenderMarket or similar pages, you can 
 ## Show it in your branding!
 
 <!-- TODO: Text here. -->
-
-</div>
-</div>

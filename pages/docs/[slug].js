@@ -11,6 +11,7 @@ import marked from "marked";
 // COMPONENTS
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
+import { Container } from "react-bootstrap";
 
 function replaceAll(string, search, replace) {
   return string.split(search).join(replace);
@@ -53,11 +54,39 @@ const renderer = {
 };
 marked.use({ renderer });
 
-const Page = ({ content, data }) => (
+const Page = ({ content, data, navbarData }) => (
   <>
     <Header title={data.title + " · Documentation"} />
     <Navbar />
-    <div dangerouslySetInnerHTML={{ __html: content }} />
+    <div className="docs-container">
+      <aside className="docs-sidebar">
+        <nav class="docs-navbar">
+          <ul>
+            {navbarData.map((pageData, index, array) => {
+              if (
+                index == 0 ||
+                array[index - 1]["category-index"] != pageData["category-index"]
+              ) {
+                return (
+                  <>
+                    <h1 id={pageData.category}>{pageData.category}</h1>
+                    <li id={pageData.title}>
+                      <a href={"/docs/" + pageData.file}>{pageData.title}</a>
+                    </li>
+                  </>
+                );
+              }
+              return (
+                <li id={pageData.title}>
+                  <a href={"/docs/" + pageData.file}>{pageData.title}</a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      </aside>
+      <main dangerouslySetInnerHTML={{ __html: content }} />
+    </div>
     {/* <div>{content}</div> */}
   </>
 );
@@ -78,6 +107,20 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params: { slug } }) => {
+  const files = readdirSync("docs");
+  const navbarData = files.map((filename) => {
+    const fileData = fs.readFileSync(path.join("docs", filename)).toString();
+    return { ...matter(fileData).data, file: filename.replace(".md", "") };
+  });
+
+  navbarData.sort((a, b) => {
+    if (a["category-index"] < b["category-index"]) return -1;
+    if (a["page-index"] < b["page-index"]) return -1;
+    return 1;
+  });
+
+  console.log(navbarData);
+
   const markdownWithMetadata = fs
     .readFileSync(path.join("docs", slug + ".md"))
     .toString();
@@ -90,6 +133,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
     props: {
       content,
       data: parsedMarkdown.data,
+      navbarData,
     },
   };
 };
