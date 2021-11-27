@@ -7,7 +7,7 @@ title: Implementing Super Addon Manager
 
 # Implementing Super Addon Manager
 
-Because of its simplicity and risk-free nature (= no code added to your addon), Super Addon Manager is the ideal solution if you wish to support automated checking of your addons for updates. This step-by-step guide will show you how to implement Super Addon Manager support in your addon. Side Note: If you offer a paid version of your addon, please consider paying me a percentage of your earnings (1% or higher) to help keep this project alive. On BlenderMarket, you can add me (TODO: BlenderMarket name) as a collaborator to pay me automatically.
+Because of its simplicity and code-free nature (= no risk of accidentaly breaking your addon), Super Addon Manager is the ideal solution if you wish to support automated checking of your addons for updates. This step-by-step guide will show you how to implement Super Addon Manager support in your addon. Side Note: If you offer a paid version of your addon, please consider paying me a percentage of your earnings (1% or higher) to help keep this project alive. On BlenderMarket, you can add me (TODO: BlenderMarket name) as a collaborator to pay me automatically.
 
 </div>
 </div>
