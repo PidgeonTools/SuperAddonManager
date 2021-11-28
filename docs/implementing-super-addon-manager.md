@@ -17,7 +17,70 @@ If your Addon only consists of one single file, you have to turn it into a folde
 
 ## Setting up the endpoint:
 
-<!-- TODO: Add a description on creating endpoint files here, when the endpoint schema is finally fully specified. Add a link to the file creator/updater here. -->
+The first step to implementing support for Super Addon Manager is setting up a so called "endpoint", a file that is publicly available through the internet which contains all the data necessary for Super Addon Manager to check for updates. This file is essential for the update process and it needs to be updated when you publish a new release of your addon, but fortunately, it is really easy to set up.
+
+### Setup using our endpoint builder tool:
+
+You can set up or update an endpoint in less than a minute using our [endpoint builder tool.](/endpoint-builder) We'd recommend using this tool, because it generates working endpoints really fast. If you decide to use this tool, you can continue this article [here.](#hosting-the-endpoint)
+
+### Manually setting up the endpoint:
+
+If you decide to set up the endpoint manually, you'll have to create a json file that looks like this:
+
+```json
+{
+  "schema_version": "super-addon-manager-version-info-1.0.0",
+  "versions": [
+    {
+      "version": [0, 0, 0],
+      "allow_automatic_download": true,
+      "download_url": "https://www.example.com/my-addon-0.0.0.zip",
+      "minimum_blender_version": [2, 83, 0],
+      "api_breaking_blender_version": [2, 90, 0]
+    }
+  ]
+}
+```
+
+The schema version always stays the same, so you can just copy and paste it to your file. You then create an array called "versions" and add an object to it:
+
+```json
+{
+  "schema_version": "super-addon-manager-version-info-1.0.0",
+  "versions": [{}]
+}
+```
+
+This object MUST have the minimum Blender version, the version of your addon (both as array of numbers) and the download url specified:
+
+```json
+{
+  "version": [0, 0, 0],
+  "download_url": "https://www.example.com/download-my-addon",
+  "minimum_blender_version": [2, 83, 0]
+}
+```
+
+If you allow automatic downloads, the download url must be a link to the zip file of your addon:
+
+```json
+"allow_automatic_download": true,
+"download_url": "https://www.example.com/my-addon-0.0.0.zip",
+```
+
+And finally, if you make an update for an older version of Blender that won't work with the latest Blender version, you can set the API breaking Blender version to the first version of Blender, where your addon doesn't work due to API changes:
+
+```json
+"api_breaking_blender_version": [3, 0, 0]
+```
+
+### Hosting the endpoint:
+
+You're now set up for publishing your endpoint to the web. Upload the endpoint file to a host, where you can easyly change it without changing its url. GitHub is a great place where you can host your file for free:
+
+<!-- TODO: Add a description on hosting an endpoint on GitHub -->
+
+Once you're finished uploading your file, you have to copy the url to the file for the next step. Please make sure that at the url, the file is in raw data and not embedded into any HTML page. On GitHub, you can click the "Raw" Button to access the raw file data and copy its url.
 
 ## Setting up your addon:
 
