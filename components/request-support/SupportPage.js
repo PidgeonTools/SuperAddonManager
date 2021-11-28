@@ -195,7 +195,7 @@ ${outro}
 After using Blender for a while now (including your addon ${addonName}), I've noticed that addon maintenance is a mess. I have ${addonCount} addons installed, and I'm not able to keep track of new versions for all of them. I'm using the Super Addon Manager by Blender Defender (https://github.com/BlenderDefender/SuperAddonManager) to do the task of updating ALL of my Addons from a SINGLE PLACE, but it relies on addon developers enabling support for it.
 
 **Describe the solution you'd like**
-It would be great if you could activate support for it. Doing so is easy, 100% risk-free (no code added to your addon), and platform-independent. You can find a detailed description for [enabling support for Super Addon Manager](TODO: WIKI URL) in the documentation.
+It would be great if you could activate support for it. Doing so is easy, 100% code-free (no risk of accidentaly breaking your addon), and platform-independent. You can find a detailed description for [enabling support for Super Addon Manager](TODO: WIKI URL) in the documentation.
 ${outro}
         `;
         break;
