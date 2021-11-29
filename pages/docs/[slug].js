@@ -60,7 +60,7 @@ const Page = ({ content, data, navbarData }) => (
     <Navbar />
     <div className="docs-container">
       <aside className="docs-sidebar">
-        <nav class="docs-navbar">
+        <nav className="docs-navbar">
           <ul>
             {navbarData.map((pageData, index, array) => {
               if (
@@ -77,7 +77,7 @@ const Page = ({ content, data, navbarData }) => (
                 );
               }
               return (
-                <li id={pageData.title}>
+                <li key={pageData.title} id={pageData.title}>
                   <a href={"/docs/" + pageData.file}>{pageData.title}</a>
                 </li>
               );
