@@ -2,14 +2,19 @@
 @use "../../components/mixins.scss" as *;
 
 .docs-container {
-  display: grid;
-  grid-template-areas: "sidebar main";
-  gap: 1.5rem;
-  grid-template-columns: 1fr 5fr;
+  @include media-breakpoint-up(lg) {
+    display: grid;
+    grid-template-areas: "sidebar main";
+    gap: 1.5rem;
+    grid-template-columns: 1fr 5fr;
+  }
   margin-top: 7rem;
 }
 
 .docs-sidebar {
+  @include media-breakpoint-down(lg) {
+    display: none;
+  }
   grid-area: sidebar;
 }
 
@@ -21,4 +26,31 @@
   padding-left: 0.25rem;
   margin-left: -0.25rem;
   overflow-y: auto;
+
+  ul {
+    list-style-type: none;
+  }
+
+  &--heading {
+    margin: 0;
+    padding-top: 1rem;
+    font-size: 1rem;
+    color: $black;
+    font-weight: 600;
+  }
+  &--first-element {
+    padding-top: 0;
+  }
+  &--links {
+    color: $gray-700;
+    text-decoration: none;
+    font-size: 0.9rem;
+
+    &:hover {
+      color: $gray-900;
+    }
+  }
+  &--active {
+    color: $gray-900;
+  }
 }

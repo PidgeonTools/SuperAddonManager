@@ -69,16 +69,35 @@ const Page = ({ content, data, navbarData }) => (
               ) {
                 return (
                   <>
-                    <h1 id={pageData.category}>{pageData.category}</h1>
+                    <h1
+                      id={pageData.category}
+                      className={
+                        "docs-navbar--heading " + pageData.categoryClassName
+                      }
+                    >
+                      {pageData.category}
+                    </h1>
                     <li id={pageData.title}>
-                      <a href={"/docs/" + pageData.file}>{pageData.title}</a>
+                      <a
+                        className={
+                          "docs-navbar--links " + pageData.linkClassName
+                        }
+                        href={"/docs/" + pageData.file}
+                      >
+                        {pageData.title}
+                      </a>
                     </li>
                   </>
                 );
               }
               return (
                 <li key={pageData.title} id={pageData.title}>
-                  <a href={"/docs/" + pageData.file}>{pageData.title}</a>
+                  <a
+                    className={"docs-navbar--links " + pageData.linkClassName}
+                    href={"/docs/" + pageData.file}
+                  >
+                    {pageData.title}
+                  </a>
                 </li>
               );
             })}
@@ -109,8 +128,20 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({ params: { slug } }) => {
   const files = readdirSync("docs");
   const navbarData = files.map((filename) => {
+    let categoryClassName = "";
+
+    let linkClassName = "";
+    if (slug + ".md" === filename) {
+      linkClassName = "docs-navbar--active";
+    }
+
     const fileData = fs.readFileSync(path.join("docs", filename)).toString();
-    return { ...matter(fileData).data, file: filename.replace(".md", "") };
+    return {
+      ...matter(fileData).data,
+      file: filename.replace(".md", ""),
+      linkClassName,
+      categoryClassName,
+    };
   });
 
   navbarData.sort((a, b) => {
@@ -118,6 +149,8 @@ export const getStaticProps = async ({ params: { slug } }) => {
     if (a["page-index"] < b["page-index"]) return -1;
     return 1;
   });
+
+  navbarData[0].categoryClassName = "docs-navbar--first-element";
 
   console.log(navbarData);
 
