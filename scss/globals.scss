@@ -6,6 +6,7 @@
 @use "components/utilities";
 @use "components/inputs";
 @use "components/forms";
+@use "components/typist";
 
 // IMPORT THE SECTION COMPONENTS
 @use "sections/navbar";
@@ -15,6 +16,9 @@
 // Request Support Page
 @use "sections/request-support/problemDescription";
 @use "sections/request-support/whatToDo";
+
+// Endpoint Builder Page
+@use "sections/endpoint-builder/helpTexts";
 
 // Download Page
 @use "sections/download/download";

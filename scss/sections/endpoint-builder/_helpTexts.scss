@@ -1,0 +1,16 @@
+@use "../../custom" as *;
+
+.help-text {
+  padding: 0 1.5rem;
+
+  .Typist {
+    margin: 1rem 0;
+    text-align: center;
+    height: 2rem;
+
+    border-radius: 0.2rem;
+    border: 1px solid #ced4da;
+
+    font-size: 1.15rem;
+  }
+}

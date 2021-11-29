@@ -54,7 +54,7 @@ const EndpointBuilderPage = ({ latestBlenderLTSVersion, latestSPMVersion }) => {
         setHelpText(
           <DownloadURL
             allowAutomaticDownload={allowAutomaticDownload}
-            writeText={""}
+            writeText={"https://www.example.com/download-my-addon"}
           />
         );
         console.log(helpText);
@@ -247,7 +247,9 @@ const EndpointBuilderPage = ({ latestBlenderLTSVersion, latestSPMVersion }) => {
               </Form>
             </Col>
             {/* HELP TEXTS */}
-            <Col lg={6}>{helpText}</Col>
+            <Col lg={6} className="help-text">
+              {helpText}
+            </Col>
             {/* <Col lg={6} dangerouslySetInnerHTML={{ __html: helpText }}></Col> */}
           </Row>
         </Container>
