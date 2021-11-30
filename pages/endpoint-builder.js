@@ -42,7 +42,9 @@ const EndpointBuilderPage = ({ latestBlenderLTSVersion, latestSPMVersion }) => {
   });
 
   const [focusedElement, setFocusedElement] = useState();
-  const [helpText, setHelpText] = useState(<></>);
+  const [helpText, setHelpText] = useState(
+    <Version writeText={latestSPMVersion} />
+  );
 
   useEffect(() => {
     switch (focusedElement) {
