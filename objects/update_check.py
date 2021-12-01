@@ -76,10 +76,17 @@ class UpdateCheck_v1_0_0:
                     version["api_breaking_blender_version"])
 
     # Check, if a given version is compatible with the current version of Blender.
-    def _is_compatible_version(self, v):
+    def _is_compatible_version(self, v: dict):
         is_minimum_compatible = self.blender_version >= v["minimum_blender_version"]
 
         if "api_breaking_blender_version" in v.keys():
+            # In case that the API breaking Blender Version was misunderstood,
+            # and set to a Blender Version smaller than the minimum Blender Version,
+            # ignore and remove it from the data.
+            if v["minimum_blender_version"] > v["api_breaking_blender_version"]:
+                v.pop("api_breaking_blender_version")
+                return is_minimum_compatible
+
             return is_minimum_compatible and self.blender_version < v["api_breaking_blender_version"]
 
         return is_minimum_compatible
