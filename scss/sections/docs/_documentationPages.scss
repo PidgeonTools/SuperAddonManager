@@ -11,6 +11,10 @@
   margin-top: 7rem;
 }
 
+main {
+  padding: 0 2rem;
+}
+
 .docs-sidebar {
   @include media-breakpoint-down(lg) {
     display: none;
@@ -53,4 +57,10 @@
   &--active {
     color: $gray-900;
   }
+}
+
+pre code.hljs {
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-width: 100%;
 }
