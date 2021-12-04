@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 // FILESYSTEM MODULES
 import fs, { readdirSync } from "fs";
@@ -59,51 +60,47 @@ const Page = ({ content, data, navbarData }) => (
     <Header title={data.title + " · Documentation"} />
     <Navbar />
     <div className="docs-container">
+      {/* NAVIGATION SIDEBAR */}
       <aside className="docs-sidebar">
         <nav className="docs-navbar">
           <ul>
             {navbarData.map((pageData, index, array) => {
-              if (
+              const categoryHeading =
                 index == 0 ||
-                array[index - 1]["category-index"] != pageData["category-index"]
-              ) {
-                return (
-                  <>
-                    <h1
-                      id={pageData.category}
-                      className={
-                        "docs-navbar--heading " + pageData.categoryClassName
-                      }
-                    >
-                      {pageData.category}
-                    </h1>
-                    <li id={pageData.title}>
+                array[index - 1]["category-index"] !=
+                  pageData["category-index"] ? (
+                  <h1
+                    id={pageData.category}
+                    className={
+                      "docs-navbar--heading " + pageData.categoryClassName
+                    }
+                  >
+                    {pageData.category}
+                  </h1>
+                ) : null;
+              return (
+                <React.Fragment key={pageData.file}>
+                  {categoryHeading}
+                  <li id={pageData.title}>
+                    <Link href={"/docs/" + pageData.file}>
                       <a
                         className={
-                          "docs-navbar--links " + pageData.linkClassName
+                          "docs-navbar--links " +
+                          (pageData.isActive ? "docs-navbar--active" : "")
                         }
-                        href={"/docs/" + pageData.file}
                       >
+                        {pageData.isActive && "» "}
                         {pageData.title}
                       </a>
-                    </li>
-                  </>
-                );
-              }
-              return (
-                <li key={pageData.title} id={pageData.title}>
-                  <a
-                    className={"docs-navbar--links " + pageData.linkClassName}
-                    href={"/docs/" + pageData.file}
-                  >
-                    {pageData.title}
-                  </a>
-                </li>
+                    </Link>
+                  </li>
+                </React.Fragment>
               );
             })}
           </ul>
         </nav>
       </aside>
+      {/* MAIN PAGE CONTENT */}
       <main dangerouslySetInnerHTML={{ __html: content }} />
     </div>
     {/* <div>{content}</div> */}
@@ -141,6 +138,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
       file: filename.replace(".md", ""),
       linkClassName,
       categoryClassName,
+      isActive: slug + ".md" === filename,
     };
   });
 
