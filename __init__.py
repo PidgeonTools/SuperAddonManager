@@ -33,7 +33,7 @@ bl_info = {
     "location": "Preferences > Addons > Super Addon Manager",
     "description": "A central Updater for all of your Addons",
     "warning": "",
-    "wiki_url": "https://github.com/BlenderDefender/SuperAddonManager",
+    "doc_url": "https://github.com/BlenderDefender/SuperAddonManager",
     "tracker_url": "https://github.com/BlenderDefender/SuperAddonManager/issues",
     "endpoint_url": "https://raw.githubusercontent.com/BlenderDefender/BlenderDefender/updater_endpoints/SUPERADDONMANAGER.json",
     "category": "System"
