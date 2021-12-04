@@ -40,12 +40,12 @@ export const Version = ({ writeText }) => {
   // const startDelay = (prevText.length / AVG_READING_SPEED) * 1000 + 400;
   return (
     <>
-      <div>
+      {/* <div>
         Please fill in the version number of the{" "}
         <strong>latest stable release</strong> of your addon. This should match
         the version number that Blender displays in the preferences of your
         addon.
-      </div>
+      </div> */}
       {/* <Typist avgTypingDelay={150} stdTypingDelay={40} startDelay={startDelay}>
         example: {writeText}
       </Typist> */}
