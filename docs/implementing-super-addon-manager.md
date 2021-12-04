@@ -93,7 +93,7 @@ bl_info = {
     "version": (0, 0, 0),
     "blender": (2, 83, 0),
     "description": "The best Blender Addon ever created!",
-    "wiki_url": "[URL to your wiki page]",
+    "doc_url": "[URL to your documentation page]",
     "tracker_url": "[URL to your issue report page]"
 }
 ```
@@ -113,7 +113,7 @@ bl_info = {
     "version": (0, 0, 0),
     "blender": (2, 83, 0),
     "description": "The best Blender Addon ever created!",
-    "wiki_url": "[URL to your wiki page]",
+    "doc_url": "[URL to your documentation page]",
     "tracker_url": "[URL to your issue report page]",
     "endpoint_url": "[URL to your endpoint file]"
 }
