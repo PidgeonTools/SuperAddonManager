@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { NoData, SupportPage } from "../components/request-support";
 
-const RequestSupport = ({ latestBlenderVersion, latestSPMVersion }) => {
+const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const { query } = useRouter();
 
   const addonName = query.addon_name ?? "[Your Addon]";
@@ -24,7 +24,7 @@ const RequestSupport = ({ latestBlenderVersion, latestSPMVersion }) => {
         />
       ) : (
         <NoData
-          latestBlenderVersion={latestBlenderVersion}
+          exampleBlenderVersion={exampleBlenderVersion}
           latestSPMVersion={latestSPMVersion}
         />
       )}
@@ -36,7 +36,7 @@ export const getStaticProps = () => {
   const data = require("../data/request-support.json");
   return {
     props: {
-      latestBlenderVersion: data.latestBlenderVersion,
+      exampleBlenderVersion: data.exampleBlenderVersion,
       latestSPMVersion: data.latestSPMVersion,
     },
   };

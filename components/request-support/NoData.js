@@ -13,7 +13,7 @@ import {
 
 import { getOS, OS } from "../../functions";
 
-export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
+export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const [formData, setFormData] = useState({});
 
   // Form Variables
@@ -136,11 +136,11 @@ export const NoData = ({ latestBlenderVersion, latestSPMVersion }) => {
               <Col lg={4} md={6} className="mb-3">
                 <FloatingLabel
                   controlId="blender_version"
-                  label={`Blender Version (e.g. ${latestBlenderVersion})`}
+                  label={`Blender Version (e.g. ${exampleBlenderVersion})`}
                 >
                   <Form.Control
                     type="text"
-                    placeholder={latestBlenderVersion}
+                    placeholder={exampleBlenderVersion}
                     pattern="\d+\.\d+\.\d+"
                     onChange={handleChange}
                     required

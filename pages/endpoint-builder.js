@@ -27,8 +27,10 @@ const INPUTID = {
   DOWNLOAD_URL: "download_url",
 };
 
-const EndpointBuilderPage = ({ latestBlenderLTSVersion, latestSPMVersion }) => {
-  const [allowAutomaticDownload, setAllowAutomaticDownload] = useState(true);
+const EndpointBuilderPage = ({
+  exampleBlenderLTSVersion,
+  latestSPMVersion,
+}) => {
   const [data, setData] = useState({
     schema_version: "super-addon-manager-version-info-1.0.0",
     versions: [
@@ -62,7 +64,7 @@ const EndpointBuilderPage = ({ latestBlenderLTSVersion, latestSPMVersion }) => {
         console.log(helpText);
         break;
       case INPUTID.MINIMUM_BLENDER_VERSION:
-        setHelpText(<MinBlender writeText={latestBlenderLTSVersion} />);
+        setHelpText(<MinBlender writeText={exampleBlenderLTSVersion} />);
         break;
       case INPUTID.API_BREAKING_BLENDER_VERSION:
         setHelpText(<MaxBlender writeText={"3.0.0"} />);
@@ -205,12 +207,13 @@ const EndpointBuilderPage = ({ latestBlenderLTSVersion, latestSPMVersion }) => {
                     >
                       <Form.Control
                         type="text"
-                        placeholder={latestBlenderLTSVersion}
-                        onChange={(e) => {
-                          updateData(e, ".");
-                        }}
-                        pattern="(\d+\.?){2}\d+"
                         required
+                        value={minimumBlenderVersion}
+                        placeholder={exampleBlenderLTSVersion}
+                        pattern="(\d+\.?){1,2}\d+"
+                        onChange={(e) => {
+                          setMinimumBlenderVersion(String(e.target.value));
+                        }}
                         onFocus={(e) => {
                           setFocusedElement(e.target.id);
                         }}
@@ -264,7 +267,7 @@ export const getStaticProps = () => {
   const data = require("../data/request-support.json");
   return {
     props: {
-      latestBlenderLTSVersion: data.latestBlenderLTSVersion,
+      exampleBlenderLTSVersion: data.exampleBlenderLTSVersion,
       latestSPMVersion: data.latestSPMVersion,
     },
   };
