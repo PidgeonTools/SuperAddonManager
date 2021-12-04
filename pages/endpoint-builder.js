@@ -26,21 +26,25 @@ const INPUTID = {
   API_BREAKING_BLENDER_VERSION: "api_breaking_blender_version",
   DOWNLOAD_URL: "download_url",
 };
+const PAGE_TITLE = "Endpoint JSON Builder";
 
 const EndpointBuilderPage = ({
   exampleBlenderLTSVersion,
   latestSPMVersion,
 }) => {
+  // Form Values
+  const [allowAutomaticDownload, setAllowAutomaticDownload] = useState();
+  const [showApiBreakingBlenderVersion, setShowApiBreakingBlenderVersion] =
+    useState();
+  const [addonVersion, setAddonVersion] = useState();
+  const [downloadUrl, setDownloadUrl] = useState();
+  const [minimumBlenderVersion, setMinimumBlenderVersion] = useState();
+  const [apiBreakingBlenderVersion, setApiBreakingBlenderVersion] = useState();
+
+  // Data
   const [data, setData] = useState({
     schema_version: "super-addon-manager-version-info-1.0.0",
-    versions: [
-      {
-        version: null,
-        allow_automatic_download: true,
-        download_url: "",
-        minimum_blender_version: null,
-      },
-    ],
+    versions: [],
   });
 
   const [focusedElement, setFocusedElement] = useState();
@@ -72,32 +76,45 @@ const EndpointBuilderPage = ({
     }
   }, [focusedElement, allowAutomaticDownload]);
 
-  const updateData = ({ target }, split = null, splitType = Number) => {
-    // Assign the new value to a temporary variable.
-    let newData = target.value;
-
-    // Assign the checked value, if an input is a checkbox.
-    if (target.type == "checkbox") {
-      newData = target.checked;
-    }
-
-    // Split an object into an array, if it should be split.
-    if (split) {
-      newData = target.value.split(split).map(splitType);
-    }
-
-    let tempData = data;
-    tempData.versions[0][target.id] = newData;
-    setData(tempData);
-    console.log(data); // TODO: remove this, when finished debugging.
-  };
-
   const downloadEndpoint = (e) => {
     // Prevent a page reload.
     e.preventDefault();
 
+    let current_version = {};
+
+    current_version.version = addonVersion.split(".").map(Number);
+
+    current_version.allow_automatic_download = allowAutomaticDownload;
+    current_version.download_url = downloadUrl;
+
+    let minBlender = minimumBlenderVersion.split(".").map(Number);
+    if (minBlender[0] < 3 && minBlender[1] < 10) minBlender[1] *= 10;
+    if (minBlender.length < 3) minBlender[2] = 0;
+    current_version.minimum_blender_version = minBlender;
+
+    if (showApiBreakingBlenderVersion) {
+      let apiBreakingBlender = apiBreakingBlenderVersion.split(".").map(Number);
+      if (apiBreakingBlender[0] < 3 && apiBreakingBlender[1] < 10)
+        apiBreakingBlender[1] *= 10;
+      if (apiBreakingBlender.length < 3) apiBreakingBlender[2] = 0;
+
+      if (apiBreakingBlender > minBlender) {
+        current_version.api_breaking_blender_version = apiBreakingBlender;
+      }
+    }
+
+    // Make a local copy of the data and add the current version to it.
+    let downloadData = {
+      schema_version: data.schema_version,
+      versions: [current_version, ...data.versions],
+    };
+
+    console.log(downloadData);
+
     // Create a new file with the contents of the current data.
-    const file = new Blob([JSON.stringify(data)], { type: "text/json" });
+    const file = new Blob([JSON.stringify(downloadData)], {
+      type: "text/json",
+    });
 
     // Create and click a temporary link to download the file.
     const el = document.createElement("a");
@@ -108,14 +125,24 @@ const EndpointBuilderPage = ({
     document.body.removeChild(el);
   };
 
+  // Initialize form content on page load.
+  useEffect(() => {
+    setAllowAutomaticDownload(true);
+    setShowApiBreakingBlenderVersion(false);
+    setAddonVersion("");
+    setDownloadUrl("");
+    setMinimumBlenderVersion("");
+    setApiBreakingBlenderVersion("");
+  }, []);
+
   return (
     <>
-      <Header title="Endpoint Builder" />
+      <Header title={PAGE_TITLE} />
       <Navbar />
 
       {/* INTRO */}
       <Container className="intro">
-        <h1>Endpoint Builder</h1>
+        <h1>{PAGE_TITLE}</h1>
       </Container>
 
       {/* ENDPOINT BUILDER */}
@@ -127,14 +154,13 @@ const EndpointBuilderPage = ({
               <Form onSubmit={downloadEndpoint}>
                 {/* ALLOW AUTOMATIC DOWNLOAD */}
                 <Row>
-                  <Col className="mb-3">
+                  <Col>
                     <div className="form-check">
                       <input
                         type="checkbox"
                         id="allow_automatic_download"
                         className="form-check-input"
                         onChange={(e) => {
-                          updateData(e);
                           setAllowAutomaticDownload(e.target.checked);
                         }}
                         checked={allowAutomaticDownload}
@@ -149,24 +175,49 @@ const EndpointBuilderPage = ({
                   </Col>
                 </Row>
 
+                {/* SHOW API BREAKING BLENDER VERSION */}
+                <Row>
+                  <Col className="mb-3">
+                    <div className="form-check">
+                      <input
+                        type="checkbox"
+                        id="update_for_older_blender_version"
+                        className="form-check-input"
+                        onChange={(e) => {
+                          setShowApiBreakingBlenderVersion(e.target.checked);
+                        }}
+                        checked={showApiBreakingBlenderVersion}
+                      />
+                      <label
+                        htmlFor="update_for_older_blender_version"
+                        className="form-checked-label"
+                      >
+                        This addon has compatibility issues with a newer Blender
+                        version.
+                      </label>
+                    </div>
+                  </Col>
+                </Row>
+
                 {/* ADDON VERSION */}
                 <Row>
                   <Col className="mb-3">
                     <FloatingLabel
                       controlId={INPUTID.VERSION}
-                      label={`Addon Version (e.g. ${latestSPMVersion})`}
+                      label={`Addon Version`}
                     >
                       <Form.Control
                         type="text"
+                        required
+                        value={addonVersion}
                         placeholder={latestSPMVersion}
+                        pattern="(\d+\.?){0,2}\d+"
                         onChange={(e) => {
-                          updateData(e, ".");
+                          setAddonVersion(String(e.target.value));
                         }}
                         onFocus={(e) => {
                           setFocusedElement(e.target.id);
                         }}
-                        pattern="(\d+\.?){0,2}\d+"
-                        required
                         autoFocus
                       />
                     </FloatingLabel>
@@ -182,14 +233,17 @@ const EndpointBuilderPage = ({
                     >
                       <Form.Control
                         type="text"
-                        onChange={updateData}
+                        required
+                        value={downloadUrl}
                         placeholder="https://github.com/BlenderDefender/SuperEasyAnalytics/releases/download/1_2_1/SuperEasyAnalytics.zip"
                         pattern={
                           allowAutomaticDownload
                             ? "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*\\.zip"
                             : "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*"
                         }
-                        required
+                        onChange={(e) => {
+                          setDownloadUrl(e.target.value);
+                        }}
                         onFocus={(e) => {
                           setFocusedElement(e.target.id);
                         }}
@@ -203,7 +257,7 @@ const EndpointBuilderPage = ({
                   <Col className="mb-3">
                     <FloatingLabel
                       controlId={INPUTID.MINIMUM_BLENDER_VERSION}
-                      label={`Minimum Blender Version (e.g. ${latestBlenderLTSVersion})`}
+                      label={`Minimum Blender Version`}
                     >
                       <Form.Control
                         type="text"
@@ -223,30 +277,38 @@ const EndpointBuilderPage = ({
                 </Row>
 
                 {/* API BREAKING BLENDER VERSION */}
-                <Row>
-                  <Col className="mb-3">
-                    <FloatingLabel
-                      controlId={INPUTID.API_BREAKING_BLENDER_VERSION}
-                      label="API breaking Blender Version"
-                    >
-                      <Form.Control
-                        type="text"
-                        placeholder={latestBlenderLTSVersion}
-                        onChange={(e) => {
-                          updateData(e, ".");
-                        }}
-                        pattern="(\d+\.?){2}\d+"
-                        onFocus={(e) => {
-                          setFocusedElement(e.target.id);
-                        }}
-                      />
-                    </FloatingLabel>
-                  </Col>
-                </Row>
+                {showApiBreakingBlenderVersion ? (
+                  <Row>
+                    <Col className="mb-3">
+                      <FloatingLabel
+                        controlId={INPUTID.API_BREAKING_BLENDER_VERSION}
+                        label="Newer Blender version that has compatibility issues"
+                      >
+                        <Form.Control
+                          type="text"
+                          required
+                          value={apiBreakingBlenderVersion}
+                          placeholder={exampleBlenderLTSVersion}
+                          pattern="(\d+\.?){1,2}\d+"
+                          onChange={(e) => {
+                            setApiBreakingBlenderVersion(
+                              String(e.target.value)
+                            );
+                          }}
+                          onFocus={(e) => {
+                            setFocusedElement(e.target.id);
+                          }}
+                        />
+                      </FloatingLabel>
+                    </Col>
+                  </Row>
+                ) : (
+                  ""
+                )}
 
                 <Col className="d-grid">
                   <Button variant="primary" type="submit">
-                    Download Endpoint
+                    Generate Endpoint JSON
                   </Button>
                 </Col>
               </Form>
