@@ -49,29 +49,29 @@ const EndpointBuilderPage = ({
 
   const [focusedElement, setFocusedElement] = useState();
   const [helpText, setHelpText] = useState(
-    <Version writeText={latestSPMVersion} />
+    <Version exampleText={latestSPMVersion} />
   );
 
   useEffect(() => {
     switch (focusedElement) {
       case INPUTID.VERSION:
-        setHelpText(<Version writeText={latestSPMVersion} />);
+        setHelpText(<Version exampleText={latestSPMVersion} />);
         console.log(helpText);
         break;
       case INPUTID.DOWNLOAD_URL:
         setHelpText(
           <DownloadURL
             allowAutomaticDownload={allowAutomaticDownload}
-            writeText={"https://www.example.com/download-my-addon"}
+            exampleText={"https://www.example.com/download-my-addon"}
           />
         );
         console.log(helpText);
         break;
       case INPUTID.MINIMUM_BLENDER_VERSION:
-        setHelpText(<MinBlender writeText={exampleBlenderLTSVersion} />);
+        setHelpText(<MinBlender exampleText={exampleBlenderLTSVersion} />);
         break;
       case INPUTID.API_BREAKING_BLENDER_VERSION:
-        setHelpText(<MaxBlender writeText={"3.0.0"} />);
+        setHelpText(<MaxBlender exampleText={"3.0.0"} />);
         break;
     }
   }, [focusedElement, allowAutomaticDownload]);
