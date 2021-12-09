@@ -96,22 +96,22 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   let issueTitleArea;
   switch (issueType) {
     case "bl_info_version_problems":
-      issueTitleArea = `Super Addon Manager: Problems with the Current Version`;
+      issueTitleArea = `[Super Addon Manager] Problems with the Current Version`;
       break;
     case "url_invalid":
-      issueTitleArea = `Super Addon Manager: Invalid Endpoint URL`;
+      issueTitleArea = `[Super Addon Manager] Invalid Endpoint URL`;
       break;
     case "invalid_endpoint":
-      issueTitleArea = `Super Addon Manager: Invalid Endpoint`;
+      issueTitleArea = `[Super Addon Manager] Invalid Endpoint`;
       break;
     case "endpoint_invalid_schema":
-      issueTitleArea = `Super Addon Manager: Endpoint doesn't match the schema`;
+      issueTitleArea = `[Super Addon Manager] Endpoint doesn't match the schema`;
       break;
     case "endpoint_offline":
-      issueTitleArea = `Super Addon Manager: Endpoint URL can't be reached`;
+      issueTitleArea = `[Super Addon Manager] Endpoint URL can't be reached`;
       break;
     default:
-      issueTitleArea = `Super Addon Manager Support for ${addonName}`;
+      issueTitleArea = `[Super Addon Manager] Support checking ${addonName} for updates`;
       break;
   }
 

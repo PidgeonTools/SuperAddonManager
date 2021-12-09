@@ -18,9 +18,15 @@ This is a list of all Error codes, their status and the issue report template th
 
 ## sam_not_supported
 
+**Special Error**
+
 The bl_info of an Addon doesn't contain an Endpoint URL and/or the addon consists only of a single file.
-Special
-Title: Super Addon Manager Support for {addon_name}
+
+Title:
+
+```md
+[Super Addon Manager] Support checking {addon_name} for updates
+```
 
 Issue Text Template:
 
@@ -34,9 +40,15 @@ It would be great if you could activate support for it. Doing so is easy, 100% c
 
 ## bl_info_version_problems
 
+**Critical Error**
+
 The version set in bl_info either is invalid or doesn't exist.
 
-Title: Super Addon Manager: Problems with the Current Version
+Title:
+
+```md
+[Super Addon Manager] Problems with the Current Version
+```
 
 Issue Text Template:
 
@@ -47,9 +59,15 @@ Thank you for enabling support for the Super Addon Manager. Unfortunately, somet
 
 ## url_invalid
 
+**Critical Error**
+
 The URL Endpoint doesn't exist.
-Critical
-Title: Super Addon Manager: Invalid Endpoint URL
+
+Title:
+
+```md
+[Super Addon Manager] Invalid Endpoint URL
+```
 
 Issue Text Template:
 
@@ -60,9 +78,15 @@ Thank you for enabling support for the Super Addon Manager. Unfortunately, somet
 
 ## endpoint_offline
 
+**Critical Error**
+
 The URL Endpoint doesn't respond. Most likely, this issue occurs because of missing Internet connection.
-Critical
-Title: Super Addon Manager: Endpoint URL can't be reached
+
+Title:
+
+```md
+[Super Addon Manager] Endpoint URL can't be reached
+```
 
 Issue Text Template:
 
@@ -73,9 +97,15 @@ Thank you for enabling support for the Super Addon Manager. Unfortunately, somet
 
 ## invalid_endpoint
 
+**Critical Error**
+
 The URL Endpoint isn't in JSON format.
-Critical
-Title: Super Addon Manager: Invalid Endpoint
+
+Title:
+
+```md
+[Super Addon Manager] Invalid Endpoint
+```
 
 Issue Text Template:
 
@@ -86,9 +116,15 @@ Thank you for enabling support for the Super Addon Manager. Unfortunately, somet
 
 ## endpoint_invalid_schema
 
+**Critical Error**
+
 The URL Endpoint doesn't match the specified schema.
-Critical
-Title: Super Addon Manager: Endpoint doesn't match the schema
+
+Title:
+
+```md
+[Super Addon Manager] Endpoint doesn't match the schema
+```
 
 Issue Text Template:
 
