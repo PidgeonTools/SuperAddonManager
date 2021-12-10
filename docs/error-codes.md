@@ -132,3 +132,22 @@ Issue Text Template:
 **Describe the bug**
 Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: The endpoint found under {endpoint_url} does not match the schema, so Super Addon Manager can't check for new versions. For more details, use our [schema checker.](SCHEMA CHECKER URL) Thank you for having a look at this :)
 ```
+
+## unknown_error
+
+**Special Error**
+
+Any other error that needs to be investigated by us.
+
+Title:
+
+```md
+[{addon_name}] Unknown Error
+```
+
+Issue Text Template:
+
+```md
+**Describe the bug**
+An unknown error occurred with the addon {addon_name}: {error_message}
+```

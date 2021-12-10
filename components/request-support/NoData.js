@@ -24,6 +24,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
     "endpoint_offline",
     "invalid_endpoint",
     "endpoint_invalid_schema",
+    "unknown_error",
   ];
   const operatingSystems = [OS.WINDOWS, OS.LINUX, OS.MACOS, OS.OTHER];
   const [operatingSystem, setOperatingSystem] = useState();
@@ -207,7 +208,9 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
             ) : null}
 
             {/* ERROR MESSAGE */}
-            {formData.issue_type == "endpoint_offline" ? (
+            {["endpoint_offline", "unknown_error"].includes(
+              formData.issue_type
+            ) ? (
               <Row>
                 <Col className="mb-3">
                   <FloatingLabel

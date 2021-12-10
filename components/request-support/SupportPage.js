@@ -18,9 +18,9 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   const [issueTextArea, setIssueTextArea] = useState("");
 
   // === Issue independent Parameters ===
-  let trackerURL = query.tracker_url;
+  const [trackerURL, setTrackerURL] = useState(query.tracker_url);
   if (trackerURL && !trackerURL.match("https?://")) {
-    trackerURL = "https://" + trackerURL;
+    setTrackerURL("https://" + trackerURL);
   }
 
   // === System Information ===
@@ -49,7 +49,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
 
   // Error Message
   let errorMessage;
-  if (issueType == "endpoint_offline") {
+  if (["unknown_error", "endpoint_offline"].includes(issueType)) {
     errorMessage = query.error_message;
   }
 
@@ -84,6 +84,11 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   ${endpointIntroText} The server of this endpoint seems to be offline, because it didn't respond.
       `;
       break;
+    case "unknown_error":
+      issueDescriptionText = `
+We don't know what is causing the issue. All that you can do is reporting the issue to us.
+      `;
+      break;
     default:
       issueDescriptionText = `
   Your Addon ${addonName} doesn't support Super Addon Manager and can't be updated automatically. For Super Addon Manager to work, it's necessary that developers enable support for it. The developers of ${addonName} probably don't even know about Super Addon Manager yet, so it's time to tell them.
@@ -93,28 +98,43 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   issueDescriptionText = issueDescriptionText.trim();
 
   // === Update the issue title Area ===
-  let issueTitleArea;
-  switch (issueType) {
-    case "bl_info_version_problems":
-      issueTitleArea = `[Super Addon Manager] Problems with the Current Version`;
-      break;
-    case "url_invalid":
-      issueTitleArea = `[Super Addon Manager] Invalid Endpoint URL`;
-      break;
-    case "invalid_endpoint":
-      issueTitleArea = `[Super Addon Manager] Invalid Endpoint`;
-      break;
-    case "endpoint_invalid_schema":
-      issueTitleArea = `[Super Addon Manager] Endpoint doesn't match the schema`;
-      break;
-    case "endpoint_offline":
-      issueTitleArea = `[Super Addon Manager] Endpoint URL can't be reached`;
-      break;
-    default:
-      issueTitleArea = `[Super Addon Manager] Support checking ${addonName} for updates`;
-      break;
-  }
-
+  const [issueTitleArea, setIssueTitleArea] = useState();
+  useEffect(() => {
+    switch (issueType) {
+      case "bl_info_version_problems":
+        setIssueTitleArea(
+          `[Super Addon Manager] Problems with the Current Version`
+        );
+        break;
+      case "url_invalid":
+        setIssueTitleArea(`[Super Addon Manager] Invalid Endpoint URL`);
+        break;
+      case "invalid_endpoint":
+        setIssueTitleArea(`[Super Addon Manager] Invalid Endpoint`);
+        break;
+      case "endpoint_invalid_schema":
+        setIssueTitleArea(
+          `[Super Addon Manager] Endpoint doesn't match the schema`
+        );
+        break;
+      case "endpoint_offline":
+        setIssueTitleArea(
+          `[Super Addon Manager] Endpoint URL can't be reached`
+        );
+        break;
+      case "unknown_error":
+        setIssueTitleArea(`[${addonName}] Unknown Error`);
+        setTrackerURL(
+          `https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender&labels=bug&title=[${addonName}]+Unknown+Error`
+        );
+        break;
+      default:
+        setIssueTitleArea(
+          `[Super Addon Manager] Support checking ${addonName} for updates`
+        );
+        break;
+    }
+  }, []);
   // === Update the issue text Area ===
   useEffect(() => {
     const checked = "- [x]";
@@ -128,6 +148,10 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       let checkboxChecked = internetWorks ? checked : unchecked;
       checkedInternet = `${checkboxChecked} Checked that my internet works.`;
     }
+    let checkedAddonUpdated = `${addonUpdated} ${addonName} is up to date.\n`;
+    if (issueType == "unknown_error") {
+      checkedAddonUpdated = "";
+    }
 
     // Intro text, that is the same for all issues
     const intro = `
@@ -140,8 +164,7 @@ Thank you for having a look at this :)
 
 **Steps I have taken**
 ${addonManagerUpdated} Super Addon Manager is up to date.
-${addonUpdated} ${addonName} is up to date.
-${issueReported} Checked that this issue hasn't been reported already.
+${checkedAddonUpdated}${issueReported} Checked that this issue hasn't been reported already.
 ${checkedInternet}
 
 **System Information**
@@ -185,10 +208,28 @@ ${outro}
       case "endpoint_offline":
         text = `
 ${intro}
-The specified endpoint URL ("${endpointURL}") seems to be offline, so Super Addon Manager can't check for new versions. This is the bare error message that I got from Python: ${errorMessage}
+The specified endpoint URL ("${endpointURL}") seems to be offline, so Super Addon Manager can't check for new versions. This is the bare error message that I got from Python:
+
+\`\`\`bash
+${errorMessage}
+\`\`\`
+
 ${outro}
         `;
         break;
+      case "unknown_error":
+        text = `
+**Describe the bug**
+An unknown error occurred with the addon ${addonName}:
+
+\`\`\`bash
+${errorMessage}
+\`\`\`
+
+${outro}
+        `;
+        break;
+
       default:
         text = `
 **Is your feature request related to a problem? Please describe.**
