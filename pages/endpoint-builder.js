@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Bootstrap
-import {
-  Col,
-  Container,
-  FloatingLabel,
-  Form,
-  Row,
-  Button,
-} from "react-bootstrap";
+import { Col, Container, Form, Row, Button } from "react-bootstrap";
 
 // Components
 import Navbar from "../components/Navbar";
@@ -20,12 +13,16 @@ import {
   Version,
 } from "../components/endpoint-builder/HelpTexts";
 
-const INPUTID = {
-  VERSION: "version",
-  MINIMUM_BLENDER_VERSION: "minimum_blender_version",
-  API_BREAKING_BLENDER_VERSION: "api_breaking_blender_version",
-  DOWNLOAD_URL: "download_url",
-};
+import {
+  AddonVersion,
+  ApiBreakingBlenderVersion,
+  DownloadUrl,
+  MinimumBlenderVersion,
+  INPUTID,
+  ShowApiBreakingBlenderVersion,
+  AllowAutomaticDownload,
+} from "../components/endpoint-builder/EndpointBuilderInputs";
+
 const PAGE_TITLE = "Endpoint JSON Builder";
 
 const EndpointBuilderPage = ({
@@ -155,124 +152,74 @@ const EndpointBuilderPage = ({
                 {/* ALLOW AUTOMATIC DOWNLOAD */}
                 <Row>
                   <Col>
-                    <div className="form-check">
-                      <input
-                        type="checkbox"
-                        id="allow_automatic_download"
-                        className="form-check-input"
-                        onChange={(e) => {
-                          setAllowAutomaticDownload(e.target.checked);
-                        }}
-                        checked={allowAutomaticDownload}
-                      />
-                      <label
-                        htmlFor="allow_automatic_download"
-                        className="form-checked-label"
-                      >
-                        Allow Automatic Download
-                      </label>
-                    </div>
+                    <AllowAutomaticDownload
+                      onChange={(e) => {
+                        setAllowAutomaticDownload(e.target.checked);
+                      }}
+                      allowAutomaticDownload={allowAutomaticDownload}
+                    />
                   </Col>
                 </Row>
 
                 {/* SHOW API BREAKING BLENDER VERSION */}
                 <Row>
                   <Col className="mb-3">
-                    <div className="form-check">
-                      <input
-                        type="checkbox"
-                        id="update_for_older_blender_version"
-                        className="form-check-input"
-                        onChange={(e) => {
-                          setShowApiBreakingBlenderVersion(e.target.checked);
-                        }}
-                        checked={showApiBreakingBlenderVersion}
-                      />
-                      <label
-                        htmlFor="update_for_older_blender_version"
-                        className="form-checked-label"
-                      >
-                        This addon has compatibility issues with a newer Blender
-                        version.
-                      </label>
-                    </div>
+                    <ShowApiBreakingBlenderVersion
+                      onChange={(e) => {
+                        setShowApiBreakingBlenderVersion(e.target.checked);
+                      }}
+                      showApiBreakingBlenderVersion={
+                        showApiBreakingBlenderVersion
+                      }
+                    />
                   </Col>
                 </Row>
 
                 {/* ADDON VERSION */}
                 <Row>
                   <Col className="mb-3">
-                    <FloatingLabel
-                      controlId={INPUTID.VERSION}
-                      label={`Addon Version`}
-                    >
-                      <Form.Control
-                        type="text"
-                        required
-                        value={addonVersion}
-                        placeholder={latestSPMVersion}
-                        pattern="(\d+\.?){0,2}\d+"
-                        onChange={(e) => {
-                          setAddonVersion(String(e.target.value));
-                        }}
-                        onFocus={(e) => {
-                          setFocusedElement(e.target.id);
-                        }}
-                        autoFocus
-                      />
-                    </FloatingLabel>
+                    <AddonVersion
+                      addonVersion={addonVersion}
+                      latestSPMVersion={latestSPMVersion}
+                      onChange={(e) => {
+                        setAddonVersion(String(e.target.value));
+                      }}
+                      onFocus={(e) => {
+                        setFocusedElement(e.target.id);
+                      }}
+                    />
                   </Col>
                 </Row>
 
                 {/* DOWNLOAD URL */}
                 <Row>
                   <Col className="mb-3">
-                    <FloatingLabel
-                      controlId={INPUTID.DOWNLOAD_URL}
-                      label="Download URL"
-                    >
-                      <Form.Control
-                        type="text"
-                        required
-                        value={downloadUrl}
-                        placeholder="https://github.com/BlenderDefender/SuperEasyAnalytics/releases/download/1_2_1/SuperEasyAnalytics.zip"
-                        pattern={
-                          allowAutomaticDownload
-                            ? "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*\\.zip"
-                            : "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*"
-                        }
-                        onChange={(e) => {
-                          setDownloadUrl(e.target.value);
-                        }}
-                        onFocus={(e) => {
-                          setFocusedElement(e.target.id);
-                        }}
-                      />
-                    </FloatingLabel>
+                    <DownloadUrl
+                      downloadUrl={downloadUrl}
+                      allowAutomaticDownload={allowAutomaticDownload}
+                      onChange={(e) => {
+                        setDownloadUrl(String(e.target.value));
+                      }}
+                      onFocus={(e) => {
+                        setFocusedElement(e.target.id);
+                      }}
+                    />
                   </Col>
                 </Row>
 
                 {/* MINIMUM BLENDER VERSION */}
                 <Row>
                   <Col className="mb-3">
-                    <FloatingLabel
-                      controlId={INPUTID.MINIMUM_BLENDER_VERSION}
-                      label={`Minimum Blender Version`}
-                    >
-                      <Form.Control
-                        type="text"
-                        required
-                        value={minimumBlenderVersion}
-                        placeholder={exampleBlenderLTSVersion}
-                        pattern="(\d+\.?){1,2}\d+"
-                        onChange={(e) => {
-                          setMinimumBlenderVersion(String(e.target.value));
-                        }}
-                        onFocus={(e) => {
-                          setFocusedElement(e.target.id);
-                        }}
-                      />
-                    </FloatingLabel>
+                    <MinimumBlenderVersion
+                      minimumBlenderVersion={minimumBlenderVersion}
+                      exampleBlenderLTSVersion={exampleBlenderLTSVersion}
+                      onChange={(e) => {
+                        setMinimumBlenderVersion(String(e.target.value));
+                      }}
+                      onFocus={(e) => {
+                        setFocusedElement(e.target.id);
+                      }}
+                    />
                   </Col>
                 </Row>
 
@@ -280,26 +227,16 @@ const EndpointBuilderPage = ({
                 {showApiBreakingBlenderVersion ? (
                   <Row>
                     <Col className="mb-3">
-                      <FloatingLabel
-                        controlId={INPUTID.API_BREAKING_BLENDER_VERSION}
-                        label="Newer Blender version that has compatibility issues"
-                      >
-                        <Form.Control
-                          type="text"
-                          required
-                          value={apiBreakingBlenderVersion}
-                          placeholder={exampleBlenderLTSVersion}
-                          pattern="(\d+\.?){1,2}\d+"
-                          onChange={(e) => {
-                            setApiBreakingBlenderVersion(
-                              String(e.target.value)
-                            );
-                          }}
-                          onFocus={(e) => {
-                            setFocusedElement(e.target.id);
-                          }}
-                        />
-                      </FloatingLabel>
+                      <ApiBreakingBlenderVersion
+                        exampleBlenderLTSVersion={exampleBlenderLTSVersion}
+                        apiBreakingBlenderVersion={apiBreakingBlenderVersion}
+                        onChange={(e) => {
+                          setApiBreakingBlenderVersion(String(e.target.value));
+                        }}
+                        onFocus={(e) => {
+                          setFocusedElement(e.target.id);
+                        }}
+                      />
                     </Col>
                   </Row>
                 ) : (
