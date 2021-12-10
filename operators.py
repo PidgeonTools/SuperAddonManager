@@ -4,7 +4,8 @@ from .issue_types import (
     ENDPOINT_OFFLINE,
     INVALID_ENDPOINT,
     SAM_NOT_SUPPORTED,
-    URL_INVALID
+    URL_INVALID,
+    UNKNOWN_ERROR
 )
 import bpy
 from bpy.props import (
@@ -156,7 +157,14 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 self._get_addon_name(addon_path)
 
                 if p.isdir(addon_path):
-                    self.check_update(addon_path)
+                    try:
+                        self.check_update(addon_path)
+                    except Exception as e:  # Unknown error that needs to be investigated.
+                        self.unavailable_addons.append(
+                            {"issue_type": UNKNOWN_ERROR,
+                             "addon_name": self.addon_name,
+                             "bl_info": sys.modules[p.basename(addon_path)].bl_info,
+                             "error_message": str(e)})
 
                     self._redraw()
 

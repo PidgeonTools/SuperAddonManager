@@ -4,6 +4,7 @@ URL_INVALID = 'url_invalid'
 ENDPOINT_OFFLINE = 'endpoint_offline'
 INVALID_ENDPOINT = 'invalid_endpoint'
 ENDPOINT_INVALID_SCHEMA = 'endpoint_invalid_schema'
+UNKNOWN_ERROR = "unknown_error"
 
 all_issue_types = [
     BL_INFO_VERSION_PROBLEMS,
