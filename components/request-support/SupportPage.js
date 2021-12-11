@@ -4,7 +4,7 @@ import Link from "next/link";
 // Bootstrap
 import { Container, Row } from "react-bootstrap";
 
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import CopyButton from "../CopyButton";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
   // === Page Elements ===
@@ -13,8 +13,6 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   const [noDuplicate, setNoDuplicate] = useState(false);
   const [internetWorks, setInternetWorks] = useState(false);
 
-  const [textCopied, setTextCopied] = useState(false);
-  const [titleCopied, setTitleCopied] = useState(false);
   const [issueTextArea, setIssueTextArea] = useState("");
 
   // === Issue independent Parameters ===
@@ -245,13 +243,6 @@ ${outro}
     return;
   }, [samUpToDate, addonUpToDate, noDuplicate, internetWorks]);
 
-  // === Show the user the generated issue text has been copied ===
-  const onCopyIssueText = (callback) => {
-    callback(true);
-
-    setTimeout(() => {
-      callback(false);
-    }, 3 * 1000);
   };
 
   return (
@@ -423,20 +414,10 @@ ${outro}
               {/* ISSUE TITLE */}
               <div>Title:</div>
               <div className="issue_text mb-4">
-                <div className="d-flex justify-content-end">
-                  <CopyToClipboard
-                    text={issueTitleArea}
-                    onCopy={() => onCopyIssueText(setTitleCopied)}
-                  >
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-outline-secondary copy_issue"
-                      disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
-                    >
-                      {titleCopied ? "Copied!" : "Copy"}
-                    </button>
-                  </CopyToClipboard>
-                </div>
+                <CopyButton
+                  disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
+                  text={issueTitleArea}
+                />
                 <div id="issue_text" className="issue_text_area">
                   {issueTitleArea}
                 </div>
@@ -445,20 +426,10 @@ ${outro}
               {/* ISSUE TEXT */}
               <div>Issue Text:</div>
               <div className="issue_text mb-4">
-                <div className="d-flex justify-content-end">
-                  <CopyToClipboard
-                    text={issueTextArea}
-                    onCopy={() => onCopyIssueText(setTextCopied)}
-                  >
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-outline-secondary copy_issue"
-                      disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
-                    >
-                      {textCopied ? "Copied!" : "Copy"}
-                    </button>
-                  </CopyToClipboard>
-                </div>
+                <CopyButton
+                  text={issueTextArea}
+                  disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
+                />
                 <div id="issue_text" className="issue_text_area">
                   {issueTextArea}
                 </div>

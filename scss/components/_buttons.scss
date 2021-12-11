@@ -1,0 +1,40 @@
+@use "../custom" as *;
+
+.copy_button {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.2rem;
+  margin: 0.5rem;
+
+  border: 1px solid transparent;
+  border-radius: $border-small;
+  border-color: $gray-600;
+
+  background-color: $code-background;
+
+  position: absolute;
+  color: $gray-500;
+
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+
+  &:hover {
+    border-color: tint-color($gray-600, 7%);
+    background-color: tint-color($code-background, 7%);
+    cursor: pointer;
+  }
+
+  &:disabled {
+    border-color: shade-color($gray-600, 25%);
+    background-color: $code-background;
+    color: shade-color($gray-500, 25%);
+    cursor: default;
+  }
+
+  &--copied {
+    color: $success;
+  }
+}
