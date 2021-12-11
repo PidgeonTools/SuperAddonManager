@@ -31,7 +31,7 @@ const CopyButton = ({
         >
           <button
             type="button"
-            className="copy_button"
+            className="copy-button"
             disabled={disabled}
             //   disabled={}
           >
@@ -41,7 +41,7 @@ const CopyButton = ({
                 width="16"
                 height="16"
                 fill="currentColor"
-                class="copy_button--copied"
+                class="copy-button--copied"
                 viewBox="0 0 16 16"
               >
                 <path
