@@ -157,4 +157,4 @@ If your offering your addon on Gumroad, BlenderMarket or similar pages, you can 
 
 ## Show it in your branding!
 
-<!-- TODO: Text here. -->
+If you want to, you can download the [Super Addon Manager Branding Kit](https//TODO) and add the Super Addon Manager Logo according to the rules in the README.md file. If you're unsure, read our [Logo and Branding](https//TODO) page.
