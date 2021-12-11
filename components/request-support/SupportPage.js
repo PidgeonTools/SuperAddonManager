@@ -243,7 +243,6 @@ ${outro}
     return;
   }, [samUpToDate, addonUpToDate, noDuplicate, internetWorks]);
 
-  };
 
   return (
     <>
