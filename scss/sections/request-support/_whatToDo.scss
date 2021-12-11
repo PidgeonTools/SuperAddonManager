@@ -14,7 +14,9 @@
 .issue_text {
   .issue_text_area {
     width: 100%;
-    background-color: $gray-300;
+    background-color: $code-background;
+    border-radius: $border-large;
+    color: $code-default;
     padding: 1rem;
     font-weight: 300;
     white-space: pre-wrap;

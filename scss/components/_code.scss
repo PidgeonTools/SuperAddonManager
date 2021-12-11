@@ -9,8 +9,8 @@ code.hljs {
   padding: 3px 5px;
 }
 .hljs {
-  background: $gray-200;
-  color: $black;
+  background: $code-background;
+  color: $code-default;
 }
 .xml .hljs-meta {
   color: silver;
