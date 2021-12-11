@@ -277,44 +277,46 @@ ${outro}
             {/* HEADING */}
             <h2>What can you do to make it work?</h2>
             {/* TEXT */}
-            {issueType === "endpoint_offline" ? (
-              <>
-                <p>
-                  Check, that your internet connection works. Then, try to reach
-                  the Endpoint found at{" "}
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={endpointURL}
-                  >
-                    {endpointURL}
-                  </a>
-                  . If you can reach the page, retry to check for updates. If it
-                  still doesn't work, or your browser also tells you that this
-                  page can't be reached, it's the developer's responsibility to
-                  fix this problem. If the issue has already been reported, you
-                  can upvote it (for example, with an emoji) if the site
-                  provides such a feature.
-                </p>
-                <p>
-                  You can use our automatically generated text if you want to,
-                  but you should first check a few things:
-                </p>
-              </>
-            ) : (
-              <>
-                <p>
-                  It looks like the developer has to fix this problem. Please
-                  report an issue to the developer. If the issue has already
-                  been reported, you can upvote it (for example, with an emoji)
-                  if the site provides such a feature.
-                </p>
-                <p>
-                  You can use our automatically generated text if you want to,
-                  but you should first check a few things:
-                </p>
-              </>
-            )}
+            <>
+              {issueType === "endpoint_offline" ? (
+                <>
+                  <p>
+                    Check, that your internet connection works. Then, try to
+                    reach the Endpoint found at{" "}
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={endpointURL}
+                    >
+                      {endpointURL}
+                    </a>
+                    . If you can reach the page, retry to check for updates. If
+                    it still doesn't work, or your browser also tells you that
+                    this page can't be reached, it's the developer's
+                    responsibility to fix this problem. If the issue has already
+                    been reported, you can upvote it (for example, with an
+                    emoji) if the site provides such a feature.
+                  </p>
+                  <p>
+                    You can use our automatically generated text if you want to,
+                    but you should first check a few things:
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    It looks like the developer has to fix this problem. Please
+                    report an issue to the developer. If the issue has already
+                    been reported, you can upvote it (for example, with an
+                    emoji) if the site provides such a feature.
+                  </p>
+                  <p>
+                    You can use our automatically generated text if you want to,
+                    but you should first check a few things:
+                  </p>
+                </>
+              )}
+            </>
 
             {/* CHECKLIST */}
             <form className="mb-3">
