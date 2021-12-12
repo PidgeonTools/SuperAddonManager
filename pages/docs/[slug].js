@@ -106,9 +106,11 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
         <>
           {previousArticle ? (
             <Link href={"/docs/" + previousArticle.file}>
-              <div className="docs-navigate-one-page docs-navigate-one-page--prev">
-                <div className="docs-navigate-one-page--static">Previous</div>
-                <div className="docs-navigate-one-page--dynamic">
+              <div className="docs-navigate-one-page docs-navigate-one-page--previous">
+                <div className="docs-navigate-one-page--static-label">
+                  Previous
+                </div>
+                <div className="docs-navigate-one-page--dynamic-label">
                   « {previousArticle.title}
                 </div>
               </div>
@@ -122,8 +124,8 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
           {nextArticle ? (
             <Link href={"/docs/" + nextArticle.file}>
               <div className="docs-navigate-one-page docs-navigate-one-page--next">
-                <div className="docs-navigate-one-page--static">Next</div>
-                <div className="docs-navigate-one-page--dynamic">
+                <div className="docs-navigate-one-page--static-label">Next</div>
+                <div className="docs-navigate-one-page--dynamic-label">
                   {nextArticle.title} »
                 </div>
               </div>

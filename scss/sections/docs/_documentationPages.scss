@@ -71,7 +71,7 @@ main {
     border-color: $secondary;
   }
 
-  &--prev {
+  &--previous {
     text-align: left;
   }
 
@@ -80,11 +80,11 @@ main {
     margin-left: 1rem;
   }
 
-  &--static {
+  &--static-label {
     font-size: 0.9rem;
   }
 
-  &--dynamic {
+  &--dynamic-label {
     color: $secondary;
     font-weight: 800;
   }
