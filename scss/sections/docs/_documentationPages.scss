@@ -59,6 +59,37 @@ main {
   }
 }
 
+.docs-navigate-one-page {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid $gray-300;
+  border-radius: $border-medium;
+  width: 50%;
+
+  cursor: pointer;
+
+  &:hover {
+    border-color: $secondary;
+  }
+
+  &--prev {
+    text-align: left;
+  }
+
+  &--next {
+    text-align: right;
+    margin-left: 1rem;
+  }
+
+  &--static {
+    font-size: 0.9rem;
+  }
+
+  &--dynamic {
+    color: $secondary;
+    font-weight: 800;
+  }
+}
+
 pre code.hljs {
   white-space: pre-wrap;
   overflow-x: auto;

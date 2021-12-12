@@ -40,7 +40,7 @@ const CodeRender = ({ children }) => {
   );
 };
 
-const Page = ({ content, data, navbarData }) => (
+const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
   <>
     <Header title={data.title + " · Documentation"} />
     <Navbar />
@@ -102,6 +102,36 @@ const Page = ({ content, data, navbarData }) => (
         >
           {content}
         </Markdown>
+        {/* PREVIOUS PAGE BUTTON */}
+        <>
+          {previousArticle ? (
+            <Link href={"/docs/" + previousArticle.file}>
+              <div className="docs-navigate-one-page docs-navigate-one-page--prev">
+                <div className="docs-navigate-one-page--static">Previous</div>
+                <div className="docs-navigate-one-page--dynamic">
+                  « {previousArticle.title}
+                </div>
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
+        </>
+        {/* NEXT PAGE BUTTON */}
+        <>
+          {nextArticle ? (
+            <Link href={"/docs/" + nextArticle.file}>
+              <div className="docs-navigate-one-page docs-navigate-one-page--next">
+                <div className="docs-navigate-one-page--static">Next</div>
+                <div className="docs-navigate-one-page--dynamic">
+                  {nextArticle.title} »
+                </div>
+              </div>
+            </Link>
+          ) : (
+            ""
+          )}
+        </>
       </main>
     </div>
   </>
@@ -144,6 +174,19 @@ export const getStaticProps = async ({ params: { slug } }) => {
 
   navbarData[0].categoryClassName = "docs-navbar--first-element";
 
+  // Set the data of the previous and next article for the navigation buttons at the bottom of the page.
+  let previousArticle = null;
+  let nextArticle = null;
+  for (let index = 0; index < navbarData.length; index++) {
+    if (!navbarData[index].isActive) continue;
+    if (index > 0) {
+      previousArticle = navbarData[index - 1];
+    }
+    if (index < navbarData.length - 1) {
+      nextArticle = navbarData[index + 1];
+    }
+  }
+
   // console.log(navbarData);
 
   const markdownWithMetadata = fs
@@ -157,6 +200,8 @@ export const getStaticProps = async ({ params: { slug } }) => {
       content: parsedMarkdown.content,
       data: parsedMarkdown.data,
       navbarData,
+      previousArticle,
+      nextArticle,
     },
   };
 };
