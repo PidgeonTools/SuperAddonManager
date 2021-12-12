@@ -1,45 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { OverlayTrigger, Overlay, Tooltip } from "react-bootstrap";
-
-// ANIMATIONS
-import Typist from "react-typist";
-
-// const CustomizedTypist = ({ exampleText, key = 0 }) => {
-//   const [showText, setShowText] = useState(false);
-
-//   return (
-//     <div
-//       onMouseEnter={() => {
-//         setShowText(true);
-//       }}
-//       onClick={() => {
-//         setShowText(true);
-//       }}
-//       className="typist-container"
-//     >
-//       {showText ? (
-//         <Typist avgTypingDelay={150} stdTypingDelay={40} key={key}>
-//           example: {exampleText}
-//         </Typist>
-//       ) : (
-//         <div className="typist-placeholder">
-//           Hover over me to see an example.
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export const Version = ({ exampleText }) => {
   return (
     <>
-      {/* <div>
-        Please fill in the version number of the{" "}
-        <strong>latest stable release</strong> of your addon. This should match
-        the version number that Blender displays in the preferences of your
-        addon.
-      </div> */}
       <div className="endpoint-form-example-container">{exampleText}</div>
       <div>
         Please note that due to limitations your version number{" "}
