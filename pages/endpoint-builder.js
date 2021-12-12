@@ -187,6 +187,8 @@ const EndpointBuilderPage = ({
                       onFocus={(e) => {
                         setFocusedElement(e.target.id);
                       }}
+                      required
+                      autoFocus
                     />
                   </Col>
                 </Row>
@@ -203,6 +205,7 @@ const EndpointBuilderPage = ({
                       onFocus={(e) => {
                         setFocusedElement(e.target.id);
                       }}
+                      required
                     />
                   </Col>
                 </Row>
@@ -219,6 +222,7 @@ const EndpointBuilderPage = ({
                       onFocus={(e) => {
                         setFocusedElement(e.target.id);
                       }}
+                      required
                     />
                   </Col>
                 </Row>
@@ -236,6 +240,7 @@ const EndpointBuilderPage = ({
                         onFocus={(e) => {
                           setFocusedElement(e.target.id);
                         }}
+                        required
                       />
                     </Col>
                   </Row>

@@ -10,24 +10,16 @@ export const INPUTID = {
   DOWNLOAD_URL: "download_url",
 };
 
-export const AddonVersion = ({
-  addonVersion,
-  latestSPMVersion,
-  onChange,
-  onFocus,
-}) => {
+export const AddonVersion = ({ addonVersion, latestSPMVersion, ...props }) => {
   return (
     <>
       <FloatingLabel controlId={INPUTID.VERSION} label={`Addon Version`}>
         <Form.Control
           type="text"
-          required
           value={addonVersion}
           placeholder={latestSPMVersion}
           pattern="(\d+\.?){0,2}\d+"
-          onChange={onChange}
-          onFocus={onFocus}
-          autoFocus
+          {...props}
         />
       </FloatingLabel>
     </>
@@ -37,15 +29,13 @@ export const AddonVersion = ({
 export const DownloadUrl = ({
   downloadUrl,
   allowAutomaticDownload,
-  onChange,
-  onFocus,
+  ...props
 }) => {
   return (
     <>
       <FloatingLabel controlId={INPUTID.DOWNLOAD_URL} label="Download URL">
         <Form.Control
           type="text"
-          required
           value={downloadUrl}
           placeholder="https://github.com/BlenderDefender/SuperEasyAnalytics/releases/download/1_2_1/SuperEasyAnalytics.zip"
           pattern={
@@ -53,8 +43,7 @@ export const DownloadUrl = ({
               ? "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*\\.zip"
               : "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*"
           }
-          onChange={onChange}
-          onFocus={onFocus}
+          {...props}
         />
       </FloatingLabel>
     </>
@@ -64,8 +53,7 @@ export const DownloadUrl = ({
 export const MinimumBlenderVersion = ({
   minimumBlenderVersion,
   exampleBlenderLTSVersion,
-  onChange,
-  onFocus,
+  ...props
 }) => {
   return (
     <>
@@ -75,12 +63,10 @@ export const MinimumBlenderVersion = ({
       >
         <Form.Control
           type="text"
-          required
           value={minimumBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
           pattern="(\d+\.?){1,2}\d+"
-          onChange={onChange}
-          onFocus={onFocus}
+          {...props}
         />
       </FloatingLabel>
     </>
@@ -90,8 +76,7 @@ export const MinimumBlenderVersion = ({
 export const ApiBreakingBlenderVersion = ({
   apiBreakingBlenderVersion,
   exampleBlenderLTSVersion,
-  onChange,
-  onFocus,
+  ...props
 }) => {
   return (
     <>
@@ -101,12 +86,10 @@ export const ApiBreakingBlenderVersion = ({
       >
         <Form.Control
           type="text"
-          required
           value={apiBreakingBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
           pattern="(\d+\.?){1,2}\d+"
-          onChange={onChange}
-          onFocus={onFocus}
+          {...props}
         />
       </FloatingLabel>
     </>
@@ -115,7 +98,7 @@ export const ApiBreakingBlenderVersion = ({
 
 export const ShowApiBreakingBlenderVersion = ({
   showApiBreakingBlenderVersion,
-  onChange,
+  ...props
 }) => {
   return (
     <>
@@ -124,7 +107,7 @@ export const ShowApiBreakingBlenderVersion = ({
           type="checkbox"
           id="update_for_older_blender_version"
           className="form-check-input"
-          onChange={onChange}
+          {...props}
           checked={showApiBreakingBlenderVersion}
         />
         <label
@@ -140,7 +123,7 @@ export const ShowApiBreakingBlenderVersion = ({
 
 export const AllowAutomaticDownload = ({
   allowAutomaticDownload,
-  onChange,
+  ...props
 }) => {
   return (
     <>
@@ -149,7 +132,7 @@ export const AllowAutomaticDownload = ({
           type="checkbox"
           id="allow_automatic_download"
           className="form-check-input"
-          onChange={onChange}
+          {...props}
           checked={allowAutomaticDownload}
         />
         <label
