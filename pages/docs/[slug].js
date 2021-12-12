@@ -7,53 +7,38 @@ import path from "path";
 
 // MARKDOWN MODULES
 import matter from "gray-matter";
-import marked from "marked";
+import Markdown from "markdown-to-jsx";
+import hljs from "highlight.js";
 
 // COMPONENTS
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
-import { Container } from "react-bootstrap";
+import CopyButton from "../../components/CopyButton";
 
-function replaceAll(string, search, replace) {
-  return string.split(search).join(replace);
-}
+const CodeRender = ({ children }) => {
+  let className = children.props.className;
+  children = children.props.children;
 
-// === Configure marked. ===
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  highlight: function (code, lang) {
-    const hljs = require("highlight.js");
-    const language = hljs.getLanguage(lang) ? lang : "plaintext";
-    return hljs.highlight(code, { language }).value;
-  },
-  langPrefix: "hljs language-", // highlight.js css expects a top-level 'hljs' class.
-  pedantic: false,
-  gfm: true,
-  breaks: false,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false,
-  xhtml: false,
-});
-// Override behaviour for tables (set class names according to class=".+" in the table header)
-const renderer = {
-  table(header, body) {
-    const re = /class=&quot;.+&quot;/;
+  let language = className ?? "lang-plaintext";
+  let hljs_language = language.split("-")[1];
+  hljs_language = hljs.getLanguage(hljs_language) ? hljs_language : "plaintext";
 
-    let tableClass = header.match(re);
-    tableClass = tableClass ? tableClass.toString() : "table";
+  let html_content = hljs.highlight(children, {
+    language: hljs_language,
+  }).value;
 
-    header = header.replace(tableClass, "");
-
-    return `
-    <table ${replaceAll(tableClass, "&quot;", '"')}>
-        ${header}
-        ${body}
-      </table>
-    `;
-  },
+  return (
+    <div>
+      <CopyButton text={children} />
+      <pre>
+        <code
+          className={`hljs ${language}`}
+          dangerouslySetInnerHTML={{ __html: html_content }}
+        ></code>
+      </pre>
+    </div>
+  );
 };
-marked.use({ renderer });
 
 const Page = ({ content, data, navbarData }) => (
   <>
@@ -101,9 +86,24 @@ const Page = ({ content, data, navbarData }) => (
         </nav>
       </aside>
       {/* MAIN PAGE CONTENT */}
-      <main dangerouslySetInnerHTML={{ __html: content }} />
+      <main>
+        {/* PAGE CONTENT */}
+        <Markdown
+          options={{
+            overrides: {
+              pre: {
+                component: CodeRender,
+                props: {
+                  // className: "hljs",
+                },
+              },
+            },
+          }}
+        >
+          {content}
+        </Markdown>
+      </main>
     </div>
-    {/* <div>{content}</div> */}
   </>
 );
 
@@ -150,7 +150,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
 
   navbarData[0].categoryClassName = "docs-navbar--first-element";
 
-  console.log(navbarData);
+  // console.log(navbarData);
 
   const markdownWithMetadata = fs
     .readFileSync(path.join("docs", slug + ".md"))
@@ -158,11 +158,9 @@ export const getStaticProps = async ({ params: { slug } }) => {
 
   const parsedMarkdown = matter(markdownWithMetadata);
 
-  const content = marked(parsedMarkdown.content);
-
   return {
     props: {
-      content,
+      content: parsedMarkdown.content,
       data: parsedMarkdown.data,
       navbarData,
     },
