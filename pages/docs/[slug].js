@@ -127,16 +127,10 @@ export const getStaticProps = async ({ params: { slug } }) => {
   const navbarData = files.map((filename) => {
     let categoryClassName = "";
 
-    let linkClassName = "";
-    if (slug + ".md" === filename) {
-      linkClassName = "docs-navbar--active";
-    }
-
     const fileData = fs.readFileSync(path.join("docs", filename)).toString();
     return {
       ...matter(fileData).data,
       file: filename.replace(".md", ""),
-      linkClassName,
       categoryClassName,
       isActive: slug + ".md" === filename,
     };
