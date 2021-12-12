@@ -167,65 +167,76 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
             {/* === ISSUE-DEPENDENT PARAMETERS === */}
             {/* ADDON COUNT */}
-            {formData.issue_type == "sam_not_supported" ? (
-              <Row>
-                <Col lg={12} className="mb-3">
-                  <FloatingLabel
-                    controlId="addon_count"
-                    label="Estimated Number of installed Addons"
-                  >
-                    <Form.Control
-                      type="number"
-                      min="1"
-                      max="9000"
-                      placeholder="42"
-                      onChange={handleChange}
-                      required
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-            ) : null}
+            <>
+              {formData.issue_type == "sam_not_supported" ? (
+                <Row>
+                  <Col lg={12} className="mb-3">
+                    <FloatingLabel
+                      controlId="addon_count"
+                      label="Estimated Number of installed Addons"
+                    >
+                      <Form.Control
+                        type="number"
+                        min="1"
+                        max="9000"
+                        placeholder="42"
+                        onChange={handleChange}
+                        required
+                      />
+                    </FloatingLabel>
+                  </Col>
+                </Row>
+              ) : null}
+            </>
 
             {/* ENDPOINT URL */}
-            {[
-              "url_invalid",
-              "invalid_endpoint",
-              "endpoint_invalid_schema",
-              "endpoint_offline",
-            ].includes(formData.issue_type) ? (
-              <Row>
-                <Col className="mb-3">
-                  <FloatingLabel controlId="endpoint_url" label="Endpoint URL">
-                    <Form.Control
-                      type="text"
-                      onChange={handleChange}
-                      placeholder="https://github.com/BlenderDefender/SuperProjectManager"
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-            ) : null}
+            <>
+              {[
+                "url_invalid",
+                "invalid_endpoint",
+                "endpoint_invalid_schema",
+                "endpoint_offline",
+              ].includes(formData.issue_type) ? (
+                <Row>
+                  <Col className="mb-3">
+                    <FloatingLabel
+                      controlId="endpoint_url"
+                      label="Endpoint URL"
+                    >
+                      <Form.Control
+                        type="text"
+                        onChange={handleChange}
+                        placeholder="https://github.com/BlenderDefender/SuperProjectManager"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                </Row>
+              ) : null}
+            </>
 
             {/* ERROR MESSAGE */}
-            {["endpoint_offline", "unknown_error"].includes(
-              formData.issue_type
-            ) ? (
-              <Row>
-                <Col className="mb-3">
-                  <FloatingLabel
-                    controlId="error_message"
-                    label="Error Message"
-                  >
-                    <Form.Control
-                      as="textarea"
-                      onChange={handleChange}
-                      placeholder="Error Message"
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-            ) : null}
+            <>
+              {["endpoint_offline", "unknown_error"].includes(
+                formData.issue_type
+              ) ? (
+                <Row>
+                  <Col className="mb-3">
+                    <FloatingLabel
+                      controlId="error_message"
+                      label="Error Message"
+                    >
+                      <Form.Control
+                        as="textarea"
+                        onChange={handleChange}
+                        placeholder="Error Message"
+                        style={{ height: "8rem" }}
+                      />
+                    </FloatingLabel>
+                  </Col>
+                </Row>
+              ) : null}
+            </>
+
             {/* TRACKER URL */}
             <Row>
               <Col className="mb-3">
