@@ -23,16 +23,17 @@ $border-medium: 0.4rem;
 $border-large: 0.6rem;
 
 // Code Colors
+$code-attribute: #b99a3d;
 $code-background: #242424;
-$code-default: #cecece;
-$code-comment: #007400;
-$code-keyword: #2c7ad6;
-$code-variable: #3f6e74;
-$code-string: #d36529;
-$code-number: #798b12;
 $code-builtin: #535353;
-$code-regexp: #0e0eff;
+$code-comment: #007400;
+$code-default: #bdbdbd;
+$code-keyword: #57c0ff;
 $code-meta: #c28b00;
+$code-number: #a9c605;
+$code-link: #0ea5ff;
+$code-string: #f2884d;
+$code-variable: #3f6e74;
 
 // Theme Colors
 $primary: $blue-light;

@@ -61,10 +61,10 @@ code.hljs {
   color: $code-builtin;
 }
 
-// REGEXP
+// Link and Regex
 .hljs-link,
 .hljs-regexp {
-  color: $code-regexp;
+  color: $code-link;
 }
 
 .hljs-meta,
@@ -73,7 +73,7 @@ code.hljs {
 }
 
 .hljs-attr {
-  color: #836c28;
+  color: $code-attribute;
 }
 .hljs-subst {
   color: $black;
