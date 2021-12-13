@@ -29,6 +29,8 @@ const EndpointBuilderPage = ({
   exampleBlenderLTSVersion,
   latestSPMVersion,
 }) => {
+  const [validated, setValidated] = useState(false);
+
   // Form Values
   const [allowAutomaticDownload, setAllowAutomaticDownload] = useState();
   const [showApiBreakingBlenderVersion, setShowApiBreakingBlenderVersion] =
@@ -73,9 +75,17 @@ const EndpointBuilderPage = ({
     }
   }, [focusedElement, allowAutomaticDownload]);
 
-  const downloadEndpoint = (e) => {
+  const handleSubmit = (e) => {
     // Prevent a page reload.
     e.preventDefault();
+    setValidated(true);
+
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+
+      return;
+    }
 
     let current_version = {};
 
@@ -148,7 +158,7 @@ const EndpointBuilderPage = ({
           <Row>
             {/* ENDPOINT BUILDER FORM */}
             <Col lg={6}>
-              <Form onSubmit={downloadEndpoint}>
+              <Form noValidate onSubmit={handleSubmit} validated={validated}>
                 {/* ALLOW AUTOMATIC DOWNLOAD */}
                 <Row>
                   <Col>
