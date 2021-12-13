@@ -6,7 +6,7 @@
 
   h1 {
     color: $primary-text;
-    font-size: 4rem;
+    font-size: $font-size-xxl;
     font-weight: 600;
     word-spacing: 100vw;
     user-select: none;
@@ -16,13 +16,13 @@
     max-width: 14.7rem;
     width: 100%;
     border-radius: $border-medium;
-    font-size: 1.4rem;
+    font-size: $font-size-lg;
     font-weight: 400;
   }
 
   ul {
     color: $primary-text;
-    font-size: 1.4rem;
+    font-size: $font-size-lg;
     user-select: none;
   }
 }
@@ -36,7 +36,7 @@
   }
 
   &--addon {
-    font-size: 1.2rem;
+    font-size: $font-size-md;
 
     margin-bottom: 0.5rem;
 
