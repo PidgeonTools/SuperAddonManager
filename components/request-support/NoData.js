@@ -93,7 +93,12 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   controlId="issue_type"
                   label="Issue Type / Error Code"
                 >
-                  <Form.Select defaultValue="" onChange={handleChange} required>
+                  <Form.Select
+                    defaultValue=""
+                    onChange={handleChange}
+                    required
+                    accessKey="I"
+                  >
                     <option value="" disabled>
                       Select an Option
                     </option>
@@ -113,6 +118,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     placeholder="Super Project Manager"
                     onChange={handleChange}
                     required
+                    accessKey="N"
                   />
                 </FloatingLabel>
               </Col>
@@ -130,6 +136,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     }}
                     value={operatingSystem}
                     required
+                    accessKey="O"
                   >
                     <option value="" disabled>
                       Select an Option
@@ -154,6 +161,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     pattern="\d+\.\d+\.\d+"
                     onChange={handleChange}
                     required
+                    accessKey="B"
                   />
                 </FloatingLabel>
               </Col>
@@ -169,6 +177,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     pattern="\d+\.\d+\.\d+"
                     onChange={handleChange}
                     required
+                    accessKey="A"
                   />
                 </FloatingLabel>
               </Col>
@@ -191,6 +200,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                         placeholder="42"
                         onChange={handleChange}
                         required
+                        accessKey="C"
                       />
                     </FloatingLabel>
                   </Col>
@@ -216,6 +226,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                         type="text"
                         onChange={handleChange}
                         placeholder="https://github.com/BlenderDefender/SuperProjectManager"
+                        accessKey="U"
                       />
                     </FloatingLabel>
                   </Col>
@@ -239,6 +250,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                         onChange={handleChange}
                         placeholder="Error Message"
                         style={{ height: "8rem" }}
+                        accessKey="M"
                       />
                     </FloatingLabel>
                   </Col>
@@ -255,6 +267,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     onChange={handleChange}
                     placeholder="https://github.com/BlenderDefender/SuperProjectManager"
                     pattern="(https?://)?.+\..+"
+                    accessKey="T"
                   />
                 </FloatingLabel>
               </Col>
