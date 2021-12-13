@@ -87,6 +87,8 @@ const EndpointBuilderPage = ({
       return;
     }
 
+    setValidated(false);
+
     let current_version = {};
 
     current_version.version = addonVersion.split(".").map(Number);
@@ -259,7 +261,7 @@ const EndpointBuilderPage = ({
                 )}
 
                 <Col className="d-grid">
-                  <Button variant="primary" type="submit">
+                  <Button variant="primary" type="submit" accessKey="G">
                     Generate Endpoint JSON
                   </Button>
                 </Col>

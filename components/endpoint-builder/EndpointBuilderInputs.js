@@ -19,6 +19,7 @@ export const AddonVersion = ({ addonVersion, latestSPMVersion, ...props }) => {
           value={addonVersion}
           placeholder={latestSPMVersion}
           pattern="(\d+\.?){0,2}\d+"
+          accessKey="A"
           {...props}
         />
       </FloatingLabel>
@@ -43,6 +44,7 @@ export const DownloadUrl = ({
               ? "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*\\.zip"
               : "(https?:\\/\\/)?([a-zA-Z0-9]+\\.)+([a-zA-Z0-9]+)(\\/[\\d\\w\\.\\-]*)*"
           }
+          accessKey="D"
           {...props}
         />
       </FloatingLabel>
@@ -66,6 +68,7 @@ export const MinimumBlenderVersion = ({
           value={minimumBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
           pattern="(\d+\.?){1,2}\d+"
+          accessKey="M"
           {...props}
         />
       </FloatingLabel>
@@ -89,6 +92,7 @@ export const ApiBreakingBlenderVersion = ({
           value={apiBreakingBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
           pattern="(\d+\.?){1,2}\d+"
+          accessKey="B"
           {...props}
         />
       </FloatingLabel>
@@ -107,6 +111,7 @@ export const ShowApiBreakingBlenderVersion = ({
           type="checkbox"
           id="update_for_older_blender_version"
           className="form-check-input"
+          accessKey="C"
           {...props}
           checked={showApiBreakingBlenderVersion}
         />
@@ -132,6 +137,7 @@ export const AllowAutomaticDownload = ({
           type="checkbox"
           id="allow_automatic_download"
           className="form-check-input"
+          accessKey="L"
           {...props}
           checked={allowAutomaticDownload}
         />
