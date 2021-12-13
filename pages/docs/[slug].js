@@ -102,38 +102,43 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
         >
           {content}
         </Markdown>
-        {/* PREVIOUS PAGE BUTTON */}
-        <>
-          {previousArticle ? (
-            <Link href={"/docs/" + previousArticle.file}>
-              <div className="docs-navigate-one-page docs-navigate-one-page--previous">
-                <div className="docs-navigate-one-page--static-label">
-                  Previous
+
+        <div className="d-flex">
+          {/* PREVIOUS PAGE BUTTON */}
+          <>
+            {previousArticle ? (
+              <Link href={"/docs/" + previousArticle.file}>
+                <div className="docs-navigate-one-page docs-navigate-one-page--previous">
+                  <div className="docs-navigate-one-page--static-label">
+                    Previous
+                  </div>
+                  <div className="docs-navigate-one-page--dynamic-label">
+                    « {previousArticle.title}
+                  </div>
                 </div>
-                <div className="docs-navigate-one-page--dynamic-label">
-                  « {previousArticle.title}
+              </Link>
+            ) : (
+              ""
+            )}
+          </>
+          {/* NEXT PAGE BUTTON */}
+          <>
+            {nextArticle ? (
+              <Link href={"/docs/" + nextArticle.file}>
+                <div className="docs-navigate-one-page docs-navigate-one-page--next">
+                  <div className="docs-navigate-one-page--static-label">
+                    Next
+                  </div>
+                  <div className="docs-navigate-one-page--dynamic-label">
+                    {nextArticle.title} »
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ) : (
-            ""
-          )}
-        </>
-        {/* NEXT PAGE BUTTON */}
-        <>
-          {nextArticle ? (
-            <Link href={"/docs/" + nextArticle.file}>
-              <div className="docs-navigate-one-page docs-navigate-one-page--next">
-                <div className="docs-navigate-one-page--static-label">Next</div>
-                <div className="docs-navigate-one-page--dynamic-label">
-                  {nextArticle.title} »
-                </div>
-              </div>
-            </Link>
-          ) : (
-            ""
-          )}
-        </>
+              </Link>
+            ) : (
+              ""
+            )}
+          </>
+        </div>
       </main>
     </div>
   </>
