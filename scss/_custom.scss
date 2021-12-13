@@ -60,5 +60,11 @@ $font-family-sans-serif: "Cabin", system-ui, -apple-system, "Segoe UI", Roboto,
 $component-active-bg: $secondary;
 $form-range-track-bg: $secondary-text;
 
+// FORM VALIDATION OVERRIDES
+$form-feedback-valid-color: #127b0a;
+$form-feedback-invalid-color: #d50e0e;
+// $form-feedback-valid-color: #0a69ce;  // Colorblind Theme
+// $form-feedback-invalid-color: #8c6a11;  // Colorblind Theme
+
 // IMPORT BOOTSTRAP 5
 @import "~bootstrap/scss/bootstrap";

@@ -15,6 +15,7 @@ import { getOS, OS } from "../../functions";
 
 export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const [formData, setFormData] = useState({});
+  const [validated, setValidated] = useState(false);
 
   // Form Variables
   const issueTypes = [
@@ -51,6 +52,14 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
   // Handle Submitting the form.
   const handleSubmit = (e) => {
     e.preventDefault();
+    setValidated(true);
+
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+
+      return;
+    }
 
     router.push({
       pathname: baseURL,
@@ -75,7 +84,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
       {/* REQUEST SUPPORT */}
       <section className="form" style={{ marginBottom: "50vh" }}>
-        <Form onSubmit={handleSubmit}>
+        <Form noValidate onSubmit={handleSubmit} validated={validated}>
           <Container>
             <Row>
               {/* ISSUE TYPE */}
