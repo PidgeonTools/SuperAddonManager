@@ -14,6 +14,15 @@ import hljs from "highlight.js";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 import CopyButton from "../../components/CopyButton";
+import {
+  BlInfoVersionProblems,
+  SamNotSupported,
+  UrlInvalid,
+  EndpointOffline,
+  InvalidEndpoint,
+  EndpointInvalidSchema,
+  UnknownError,
+} from "../../components/request-support/ErrorCodes";
 
 const CodeRender = ({ children }) => {
   let className = children.props.className;
@@ -96,6 +105,27 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
                 props: {
                   // className: "hljs",
                 },
+              },
+              SamNotSupported: {
+                component: SamNotSupported,
+              },
+              BlInfoVersionProblems: {
+                component: BlInfoVersionProblems,
+              },
+              UrlInvalid: {
+                component: UrlInvalid,
+              },
+              EndpointOffline: {
+                component: EndpointOffline,
+              },
+              InvalidEndpoint: {
+                component: InvalidEndpoint,
+              },
+              EndpointInvalidSchema: {
+                component: EndpointInvalidSchema,
+              },
+              UnknownError: {
+                component: UnknownError,
               },
             },
           }}
