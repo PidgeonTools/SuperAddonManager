@@ -146,61 +146,49 @@ ${checkedInternet}
 - Version of ${addonName}: ${systemAddonVersion}
     `.trim();
 
+    let defaultProps = {
+      disabled: !(addonUpToDate && samUpToDate && noDuplicate),
+      outroText: outro,
+    };
+
     switch (issueType) {
       case ERROR_CODES.BL_INFO_VERSION_PROBLEMS:
-        setIssueTextBoxes(
-          <BlInfoVersionProblems
-            disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
-            outroText={outro}
-          />
-        );
+        setIssueTextBoxes(<BlInfoVersionProblems {...defaultProps} />);
         break;
       case ERROR_CODES.URL_INVALID:
         setIssueTextBoxes(
-          <UrlInvalid
-            endpoint_url={endpointURL}
-            disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
-            outroText={outro}
-          />
+          <UrlInvalid {...defaultProps} endpoint_url={endpointURL} />
         );
         break;
       case ERROR_CODES.ENDPOINT_OFFLINE:
         setIssueTextBoxes(
           <EndpointOffline
+            {...defaultProps}
             endpoint_url={endpointURL}
             error_message={errorMessage}
             disabled={
               !(addonUpToDate && samUpToDate && noDuplicate && internetWorks)
             }
-            outroText={outro}
           />
         );
         break;
       case ERROR_CODES.INVALID_ENDPOINT:
         setIssueTextBoxes(
-          <InvalidEndpoint
-            endpoint_url={endpointURL}
-            disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
-            outroText={outro}
-          />
+          <InvalidEndpoint {...defaultProps} endpoint_url={endpointURL} />
         );
         break;
       case ERROR_CODES.ENDPOINT_INVALID_SCHEMA:
         setIssueTextBoxes(
-          <EndpointInvalidSchema
-            endpoint_url={endpointURL}
-            disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
-            outroText={outro}
-          />
+          <EndpointInvalidSchema {...defaultProps} endpoint_url={endpointURL} />
         );
         break;
       case ERROR_CODES.UNKNOWN_ERROR:
         setIssueTextBoxes(
           <UnknownError
+            {...defaultProps}
             addon_name={addonName}
             error_message={errorMessage}
             disabled={!(samUpToDate && noDuplicate)}
-            outroText={outro}
           />
         );
         break;
@@ -208,10 +196,9 @@ ${checkedInternet}
       default:
         setIssueTextBoxes(
           <SamNotSupported
+            {...defaultProps}
             addon_count={addonCount}
             addon_name={addonName}
-            disabled={!(addonUpToDate && samUpToDate && noDuplicate)}
-            outroText={outro}
           />
         );
         break;
