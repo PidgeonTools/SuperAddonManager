@@ -26,9 +26,13 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   const [issueTextBoxes, setIssueTextBoxes] = useState();
 
   // === Issue independent Parameters ===
-  const [trackerURL, setTrackerURL] = useState(query.tracker_url);
-  if (trackerURL && !trackerURL.match("https?://")) {
-    setTrackerURL("https://" + trackerURL);
+  let url = new URL("https://www.ecosia.org/search");
+  url.search = `?q=${addonName} Blender Addon`;
+
+  const [trackerURL, setTrackerURL] = useState(url.toString());
+  if (query.tracker_url) {
+    let protocolPrefix = trackerURL.match("https?://") ? "" : "https://";
+    setTrackerURL(protocolPrefix + trackerURL);
   }
 
   // === System Information ===
@@ -363,17 +367,9 @@ ${checkedInternet}
               <p>
                 Once you have checked the items above, you can copy the
                 following text into a new issue on the{" "}
-                {trackerURL ? (
-                  <a
-                    href={trackerURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    developer's website
-                  </a>
-                ) : (
-                  "developer's website"
-                )}
+                <a href={trackerURL} target="_blank" rel="noopener noreferrer">
+                  developer's website
+                </a>
                 . Unsure how to submit issues on different platforms?{" "}
                 <Link href="/docs/submitting-issues">
                   <a rel="noopener noreferrer" target="_blank">
