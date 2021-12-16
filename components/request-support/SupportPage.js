@@ -29,10 +29,14 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   let url = new URL("https://www.ecosia.org/search");
   url.search = `?q=${addonName} Blender Addon`;
 
-  const [trackerURL, setTrackerURL] = useState(url.toString());
+  let trackerURL = url.toString();
   if (query.tracker_url) {
     let protocolPrefix = trackerURL.match("https?://") ? "" : "https://";
-    setTrackerURL(protocolPrefix + trackerURL);
+    trackerURL = protocolPrefix + query.tracker_url;
+  }
+
+  if (issueType === ERROR_CODES.UNKNOWN_ERROR) {
+    trackerURL = `https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender&labels=bug&title=[${addonName}]+Unknown+Error`;
   }
 
   // === System Information ===
@@ -198,9 +202,6 @@ ${checkedInternet}
             disabled={!(samUpToDate && noDuplicate)}
             outroText={outro}
           />
-        );
-        setTrackerURL(
-          `https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender&labels=bug&title=[${addonName}]+Unknown+Error`
         );
         break;
 
