@@ -281,6 +281,7 @@ ${checkedInternet}
 
             {/* CHECKLIST */}
             <form className="mb-3">
+              {/* SAM UP TO DATE CHECKBOX */}
               <div className="form-check">
                 <input
                   type="checkbox"
@@ -297,22 +298,28 @@ ${checkedInternet}
                 </label>
               </div>
 
-              <div className="form-check">
-                <input
-                  type="checkbox"
-                  id="checklist_addon_updated"
-                  className="form-check-input"
-                  onClick={() => setAddonUpToDate(!addonUpToDate)}
-                  value={addonUpToDate}
-                />
-                <label
-                  htmlFor="checklist_addon_updated"
-                  className="form-checked-label"
-                >
-                  {addonName} is up to date.
-                </label>
-              </div>
+              {/* ADDON UP TO DATE CHECKBOX */}
+              <>
+                {issueType === ERROR_CODES.UNKNOWN_ERROR ? null : (
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      id="checklist_addon_updated"
+                      className="form-check-input"
+                      onClick={() => setAddonUpToDate(!addonUpToDate)}
+                      value={addonUpToDate}
+                    />
+                    <label
+                      htmlFor="checklist_addon_updated"
+                      className="form-checked-label"
+                    >
+                      {addonName} is up to date.
+                    </label>
+                  </div>
+                )}
+              </>
 
+              {/* NO ISSUE DUPLICATE CHECKBOX */}
               <div className="form-check">
                 <input
                   type="checkbox"
@@ -329,23 +336,26 @@ ${checkedInternet}
                 </label>
               </div>
 
-              {issueType === "endpoint_offline" ? (
-                <div className="form-check">
-                  <input
-                    type="checkbox"
-                    id="checkbox_internet_connection_checked"
-                    className="form-check-input"
-                    onClick={() => setInternetWorks(!internetWorks)}
-                    value={internetWorks}
-                  />
-                  <label
-                    htmlFor="checkbox_internet_connection_checked"
-                    className="form-checked-label"
-                  >
-                    There's no problem with your internet connection.
-                  </label>
-                </div>
-              ) : null}
+              {/* INTERNET WORKS CHECKBOX */}
+              <>
+                {issueType === ERROR_CODES.ENDPOINT_OFFLINE ? (
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      id="checkbox_internet_connection_checked"
+                      className="form-check-input"
+                      onClick={() => setInternetWorks(!internetWorks)}
+                      value={internetWorks}
+                    />
+                    <label
+                      htmlFor="checkbox_internet_connection_checked"
+                      className="form-checked-label"
+                    >
+                      There's no problem with your internet connection.
+                    </label>
+                  </div>
+                ) : null}
+              </>
             </form>
 
             {/* SUBMIT ISSUE */}
