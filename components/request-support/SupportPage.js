@@ -71,32 +71,32 @@ export const SupportPage = ({ query, addonName, issueType }) => {
     To be able to check for updates, the developers of ${addonName} have to provide a link to an online resource (the "Endpoint"), which contains information about new versions (if available).
   `.trim();
   switch (issueType) {
-    case "bl_info_version_problems":
+    case ERROR_CODES.BL_INFO_VERSION_PROBLEMS:
       issueDescriptionText = `
   Super Addon Manager can't understand the current version, so it can't compare it with the latest version. This means that Super Addon Manager doesn't know if there's a new version available, and can't display any updates.
       `;
       break;
-    case "url_invalid":
+    case ERROR_CODES.URL_INVALID:
       issueDescriptionText = `
   ${endpointIntroText} A valid URL looks like this: "https://www.example.com". The URL that the developer provided seems to be invalid. It looks like this: "${endpointURL}".
       `;
       break;
-    case "invalid_endpoint":
+    case ERROR_CODES.INVALID_ENDPOINT:
       issueDescriptionText = `
   ${endpointIntroText} This endpoint is in a file format that Super Addon Manager can't understand, so Super Addon Manager can't check for updates.
       `;
       break;
-    case "endpoint_invalid_schema":
+    case ERROR_CODES.ENDPOINT_INVALID_SCHEMA:
       issueDescriptionText = `
   ${endpointIntroText} This endpoint is missing required information, so Super Addon Manager can't check for updates.
       `;
       break;
-    case "endpoint_offline":
+    case ERROR_CODES.ENDPOINT_OFFLINE:
       issueDescriptionText = `
   ${endpointIntroText} The server of this endpoint seems to be offline, because it didn't respond.
       `;
       break;
-    case "unknown_error":
+    case ERROR_CODES.UNKNOWN_ERROR:
       issueDescriptionText = `
 We don't know what is causing the issue. All that you can do is reporting the issue to us.
       `;
