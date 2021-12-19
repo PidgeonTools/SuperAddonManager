@@ -27,7 +27,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
 
   // === Issue independent Parameters ===
   let url = new URL("https://www.ecosia.org/search");
-  url.search = `?q=${addonName} Blender Addon`;
+  url.search = `?q=${addonName} Blender Addon prefer:github`;
 
   let trackerURL = url.toString();
   if (query.tracker_url) {
