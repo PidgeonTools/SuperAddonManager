@@ -1,0 +1,40 @@
+@use "../custom" as *;
+@use "../components/mixins" as *;
+
+.error-404-message {
+  @include gradient;
+  color: $primary-text;
+  line-break: none;
+
+  h1 {
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: $font-size-xxl;
+  }
+
+  a {
+    color: $primary-text;
+
+    &:hover {
+      color: shade-color($primary-text, 10%);
+    }
+  }
+
+  &--text {
+    padding: 0 15%;
+    text-align: center;
+  }
+
+  &--links {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15%;
+    a {
+      color: $black;
+
+      &:hover {
+        color: tint-color($black, 20%);
+      }
+    }
+  }
+}
