@@ -61,9 +61,22 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
       return;
     }
 
+    let BlenderVersion = formData.blender_version.split(".").map(Number);
+    if (BlenderVersion[0] < 3 && BlenderVersion[1] < 10)
+      BlenderVersion[1] *= 10;
+    if (BlenderVersion.length < 3) BlenderVersion[2] = 0;
+    BlenderVersion = BlenderVersion.join(".");
+
+    let AddonVersion = formData.addon_version.split(".").map(Number);
+    AddonVersion = AddonVersion.join(".");
+
     router.push({
       pathname: baseURL,
-      query: formData,
+      query: {
+        ...formData,
+        blender_version: BlenderVersion,
+        addon_version: AddonVersion,
+      },
     });
   };
 
