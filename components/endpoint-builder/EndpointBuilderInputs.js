@@ -67,7 +67,7 @@ export const MinimumBlenderVersion = ({
           type="text"
           value={minimumBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
-          pattern="(\d+\.?){1,2}\d+"
+          pattern="(\d+\.){1,2}\d+"
           accessKey="M"
           {...props}
         />
@@ -91,7 +91,7 @@ export const ApiBreakingBlenderVersion = ({
           type="text"
           value={apiBreakingBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
-          pattern="(\d+\.?){1,2}\d+"
+          pattern="(\d+\.){1,2}\d+"
           accessKey="B"
           {...props}
         />

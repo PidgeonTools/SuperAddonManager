@@ -158,7 +158,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   <Form.Control
                     type="text"
                     placeholder={exampleBlenderVersion}
-                    pattern="\d+\.\d+\.\d+"
+                    pattern="(\d+\.){1,2}\d+"
                     onChange={handleChange}
                     required
                     accessKey="B"
@@ -174,7 +174,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   <Form.Control
                     type="text"
                     placeholder={latestSPMVersion}
-                    pattern="\d+\.\d+\.\d+"
+                    pattern="(\d+\.){0,2}\d+"
                     onChange={handleChange}
                     required
                     accessKey="A"
