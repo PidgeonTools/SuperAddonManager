@@ -9,7 +9,7 @@ const glob = require("glob");
 import Header from "../components/Header";
 import { Container, Row } from "react-bootstrap";
 
-const Custom404 = ({ funFacts, pages }) => {
+const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
   const [suggestedPage, setSuggestedPage] = useState({
     bestMatch: { target: "#" },
   });
@@ -45,27 +45,18 @@ const Custom404 = ({ funFacts, pages }) => {
           </div>
           {/* DOWNLOAD LINKS */}
           <div className="error-404-message--links">
-            <Link href="#">
-              <a>Super Image Denoiser</a>
-            </Link>
-            <Link href="#">
-              <a>Super Fast Render</a>
-            </Link>
-            <Link href="#">
-              <a>Super Resolution Render</a>
-            </Link>
-            <Link href="https://github.com/BlenderDefender/SuperProjectManager/releases/latest/download/SuperProjectManager.zip">
-              <a>Super Project Manager</a>
-            </Link>
-            <Link href="https://github.com/BlenderDefender/SuperEasyAnalytics/releases/latest/download/SuperEasyAnalytics.zip">
-              <a>Super Easy Analytics</a>
-            </Link>
+            {addonDownloadLinks.map((addon) => (
+              <Link id={addon.name} href={addon.link}>
+                <a>{addon.name}</a>
+              </Link>
+            ))}
           </div>
+          {/* FUN FACT */}
           <div>Fun Fact: {funFact}</div>
         </Container>
       </section>
 
-      {/* CONTACT LINKS */}
+      {/* CONTACT LINK */}
       <div>
         You are 100% sure this page should be here?{" "}
         <Link href="https://discord.gg/hGzHDA7bj9">
@@ -80,6 +71,7 @@ const Custom404 = ({ funFacts, pages }) => {
 
 export const getStaticProps = () => {
   const funFacts = require("../data/fun-facts.json");
+  const addonDownloadLinks = require("../data/404-download-links.json");
   let pages = [];
 
   // Clean up the file paths and bring them into a URL path format.
@@ -118,6 +110,7 @@ export const getStaticProps = () => {
     props: {
       funFacts,
       pages,
+      addonDownloadLinks,
     },
   };
 };
