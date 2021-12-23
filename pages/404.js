@@ -106,6 +106,10 @@ export const getStaticProps = () => {
     )
   );
 
+  pages.sort((a, b) => {
+    return a.length - b.length;
+  });
+
   return {
     props: {
       funFacts,
