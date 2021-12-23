@@ -46,7 +46,7 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
           {/* DOWNLOAD LINKS */}
           <div className="error-404-message--links">
             {addonDownloadLinks.map((addon) => (
-              <Link id={addon.name} href={addon.link}>
+              <Link key={addon.name} href={addon.link}>
                 <a>{addon.name}</a>
               </Link>
             ))}
