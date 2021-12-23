@@ -1,21 +1,43 @@
 import React from "react";
 import Head from "next/head";
 
-const Header = ({ title, description = "" }) => (
-  <Head>
-    <meta charSet="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {/* <meta name="author" content="Blender Defender,Chris Bond,Kevin Lorengel" />
-    <meta name="description" content={description} /> */}
-    <meta name="robots" content="noindex" />
+const Header = ({ title, description = "" }) => {
+  title = title + " · Super Addon Manager";
+  return (
+    <Head>
+      <meta charSet="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      {/* <meta
+        name="author"
+        content="Blender Defender,Chris Bond,Kevin Lorengel"
+      />
+      <meta
+        name="author"
+        content="Blender Defender,Chris Bond,Kevin Lorengel"
+      />
+      <meta name="description" content={description} /> */}
 
-    <title>{title + " · Super Addon Manager"}</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="./favicon.ico" />
-  </Head>
-);
+      {/* OPEN GRAPH */}
+      {/* <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content="LINK TO THE IMAGE FILE" />
+      <meta property="og:image:alt" content="ALT TEXT FOR THE IMAGE FILE" /> */}
+
+      {/* TWITTER */}
+      {/* <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content="LINK TO THE IMAGE FILE" />
+      <meta name="twitter:card" content="summary_large_image" /> */}
+
+      <meta name="robots" content="noindex" />
+      <title>{title}</title>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+      <link rel="icon" href="./favicon.ico" />
+    </Head>
+  );
+};
 
 export default Header;
