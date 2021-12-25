@@ -22,16 +22,14 @@
   }
 
   &--text {
-    padding: 0 15%;
+    padding: 0 1.5rem;
     text-align: center;
   }
 
-  &--links {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 15%;
+  &--link-container {
     a {
-      color: $black;
+      color: getColor(button-dark);
+      white-space: nowrap;
 
       &:hover {
         color: getColor(hover-button-dark);

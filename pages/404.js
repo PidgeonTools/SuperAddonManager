@@ -7,7 +7,7 @@ const glob = require("glob");
 
 // Components
 import Header from "../components/Header";
-import { Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 
 const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
   const [suggestedPage, setSuggestedPage] = useState({
@@ -28,6 +28,7 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
       <section className="error-404-message">
         <Container>
           <h1>You’ve found a secret place.</h1>
+          {/* ERROR MESSAGE TEXT */}
           <div className="error-404-message--text">
             If you want to, you can{" "}
             <Link href="/">
@@ -44,15 +45,19 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
             addons directly from here:
           </div>
           {/* DOWNLOAD LINKS */}
-          <div className="error-404-message--links">
+          <div className="error-404-message--link-container error-404-message--text">
             {addonDownloadLinks.map((addon) => (
-              <Link key={addon.name} href={addon.link}>
-                <a>{addon.name}</a>
-              </Link>
+              // <Col md={6} lg={4}>
+              <>
+                <Link key={addon.name} href={addon.link}>
+                  <a>{addon.name}</a>
+                </Link>{" "}
+              </>
+              // </Col>
             ))}
           </div>
           {/* FUN FACT */}
-          <div>Fun Fact: {funFact}</div>
+          <div className="error-404-message--text">Fun Fact: {funFact}</div>
         </Container>
       </section>
 
