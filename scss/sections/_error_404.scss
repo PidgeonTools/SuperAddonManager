@@ -22,7 +22,7 @@
   }
 
   &--text {
-    padding: 0 1.5rem;
+    padding: 0.2rem 1.5rem;
     text-align: center;
   }
 
@@ -35,5 +35,15 @@
         color: getColor(hover-button-dark);
       }
     }
+  }
+
+  &--contact {
+    @include media-breakpoint-down(sm) {
+      padding-top: 10vh;
+    }
+    @include media-breakpoint-up(sm) {
+      padding-bottom: 6vh;
+    }
+    padding-top: 25vh;
   }
 }
