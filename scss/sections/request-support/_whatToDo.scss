@@ -3,12 +3,7 @@
 
 .what-todo {
   a {
-    color: $primary;
     font-weight: 600;
-
-    &:hover {
-      color: darken($primary, 20%);
-    }
   }
 }
 
