@@ -1,7 +1,10 @@
 import React from "react";
 import Head from "next/head";
 
-const Header = ({ title, description = "" }) => {
+const Header = ({
+  title,
+  description = "Super Addon Manager (SAM) - a decentralized addon updater and manager for Blender. Keep (all) your addons up to date using SAM!",
+}) => {
   title = title + " · Super Addon Manager";
   return (
     <Head>

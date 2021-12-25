@@ -14,7 +14,10 @@ const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
   return (
     <>
-      <Header title={addonName + " - Error checking for updates"} />
+      <Header
+        title={addonName + " - Error checking for updates"}
+        description="Do you have problems updating an addon with Super Addon Manager? We've got you covered! Request support for your favorite addons in a few clicks."
+      />
       <Navbar />
       {issueType ? (
         <SupportPage

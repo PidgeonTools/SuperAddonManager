@@ -146,7 +146,10 @@ const EndpointBuilderPage = ({
 
   return (
     <>
-      <Header title={PAGE_TITLE} />
+      <Header
+        title={PAGE_TITLE}
+        description="You are a developer and want to support automatic addon updates with Super Addon Manager? Use this tool to generate/update a valid Endpoint in less than a minute!"
+      />
       <Navbar />
 
       {/* INTRO */}
