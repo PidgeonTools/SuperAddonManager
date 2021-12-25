@@ -68,6 +68,8 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
     BlenderVersion = BlenderVersion.join(".");
 
     let AddonVersion = formData.addon_version.split(".").map(Number);
+    if (AddonVersion.length < 2) AddonVersion[1] = 0;
+    if (AddonVersion.length < 3) AddonVersion[2] = 0;
     AddonVersion = AddonVersion.join(".");
 
     router.push({
@@ -191,7 +193,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   <Form.Control
                     type="text"
                     placeholder={latestSPMVersion}
-                    pattern="(\d+\.){0,2}\d+"
+                    pattern="(\d+\.)*\d+"
                     onChange={handleChange}
                     required
                     accessKey="A"
