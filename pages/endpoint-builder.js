@@ -244,25 +244,29 @@ const EndpointBuilderPage = ({
                 </Row>
 
                 {/* API BREAKING BLENDER VERSION */}
-                {showApiBreakingBlenderVersion ? (
-                  <Row>
-                    <Col className="mb-3">
-                      <ApiBreakingBlenderVersion
-                        exampleBlenderLTSVersion={exampleBlenderLTSVersion}
-                        apiBreakingBlenderVersion={apiBreakingBlenderVersion}
-                        onChange={(e) => {
-                          setApiBreakingBlenderVersion(String(e.target.value));
-                        }}
-                        onFocus={(e) => {
-                          setFocusedElement(e.target.id);
-                        }}
-                        required
-                      />
-                    </Col>
-                  </Row>
-                ) : (
-                  ""
-                )}
+                <>
+                  {showApiBreakingBlenderVersion ? (
+                    <Row>
+                      <Col className="mb-3">
+                        <ApiBreakingBlenderVersion
+                          exampleBlenderLTSVersion={exampleBlenderLTSVersion}
+                          apiBreakingBlenderVersion={apiBreakingBlenderVersion}
+                          onChange={(e) => {
+                            setApiBreakingBlenderVersion(
+                              String(e.target.value)
+                            );
+                          }}
+                          onFocus={(e) => {
+                            setFocusedElement(e.target.id);
+                          }}
+                          required
+                        />
+                      </Col>
+                    </Row>
+                  ) : (
+                    ""
+                  )}
+                </>
 
                 <Col className="d-grid">
                   <Button variant="primary" type="submit" accessKey="G">
