@@ -97,7 +97,11 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
       {/* REQUEST SUPPORT */}
       <section className="form" style={{ marginBottom: "50vh" }}>
-        <Form noValidate onSubmit={handleSubmit} validated={validated}>
+        <Form
+          noValidate
+          onSubmit={handleSubmit}
+          className={validated ? "sam-validation" : ""}
+        >
           <Container>
             <Row>
               {/* ISSUE TYPE */}

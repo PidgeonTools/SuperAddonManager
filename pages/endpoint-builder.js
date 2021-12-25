@@ -160,7 +160,11 @@ const EndpointBuilderPage = ({
           <Row>
             {/* ENDPOINT BUILDER FORM */}
             <Col lg={6}>
-              <Form noValidate onSubmit={handleSubmit} validated={validated}>
+              <Form
+                noValidate
+                onSubmit={handleSubmit}
+                className={validated ? "sam-validation" : ""}
+              >
                 {/* ALLOW AUTOMATIC DOWNLOAD */}
                 <Row>
                   <Col>

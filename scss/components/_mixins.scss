@@ -8,3 +8,23 @@
     rgba($secondary, 0.95)
   );
 }
+
+// ROOT VARIABLES MIXIN
+@mixin rootVariables(
+  $theme,
+  $colors,
+  $form-feedback-valid,
+  $form-feedback-invalid
+) {
+  :root.#{$theme} {
+    @each $name, $color in $colors {
+      --colors-#{$name}: #{$color};
+    }
+    @each $name, $color in $colors {
+      --colors-#{$name}-rgb: #{toRGB($color)};
+    }
+
+    --form-feedback-valid-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='#{escapeColor($form-feedback-valid)}' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/></svg>");
+    --form-feedback-invalid-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{escapeColor($form-feedback-invalid)}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{escapeColor($form-feedback-invalid)}' stroke='none'/></svg>");
+  }
+}

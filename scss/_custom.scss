@@ -1,21 +1,58 @@
-// White and Grey colors
-$white: #fff;
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #6c757d;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
-$black: #000;
+@use "components/mixins" as *;
+@use "components/utilities" as *;
 
-// Custom Colors
-$blue-dark: #2d6cdf;
-$blue-light: #46c3db;
-$blue-extreme-light: #bfd5ff;
-$footer: #151414;
+// UNIVERSAL THEME COLORS
+$primary: #46c3db;
+$secondary: #2d6cdf;
+
+// LIGHT THEME
+$form-feedback-valid-light: #127b0a;
+$form-feedback-invalid-light: #d50e0e;
+
+$colors-light: (
+  primary: $primary,
+  bg-primary: #bfd5ff,
+  text-primary: #fff,
+  text-hover-primary: darken(#fff, 10%),
+  hover-primary: darken($primary, 20%),
+  secondary: $secondary,
+  text-secondary: #fff,
+  hover-secondary: lighten($secondary, 20%),
+  success: #16ca09,
+  form-feedback-valid: $form-feedback-valid-light,
+  form-feedback-invalid: $form-feedback-invalid-light,
+  footer: #333333,
+  code-attribute: #b99a3d,
+  code-background: #242424,
+  code-builtin: #535353,
+  code-comment: #007400,
+  code-default: #bdbdbd,
+  code-keyword: #57c0ff,
+  code-meta: #c28b00,
+  code-number: #a9c605,
+  code-link: #0ea5ff,
+  code-string: #f2884d,
+  code-variable: #3f6e74,
+  white: #fff,
+  gray-300: #dee2e6,
+  gray-500: #adb5bd,
+  gray-600: #6c757d,
+  hover-gray-600: #767f86,
+  gray-700: #495057,
+  gray-900: #212529,
+  button-dark: #000,
+  hover-button-dark: #333,
+  disabled-button-dark: #82888e,
+  disabled-button-border-dark: #51585e,
+  endpoint-form-example-container-outline: #ced4da,
+);
+
+@include rootVariables(
+  "light",
+  $colors-light,
+  $form-feedback-valid-light,
+  $form-feedback-invalid-light
+);
 
 // Border Radius Variables
 $border-small: 0.2rem;
@@ -23,24 +60,18 @@ $border-medium: 0.4rem;
 $border-large: 0.6rem;
 
 // Code Colors
-$code-attribute: #b99a3d;
-$code-background: #242424;
-$code-builtin: #535353;
-$code-comment: #007400;
-$code-default: #bdbdbd;
-$code-keyword: #57c0ff;
-$code-meta: #c28b00;
-$code-number: #a9c605;
-$code-link: #0ea5ff;
-$code-string: #f2884d;
-$code-variable: #3f6e74;
+$code-background: #242424; // TODO: Investigate and remove
 
-// Theme Colors
-$primary: $blue-light;
-$primary-text: $white; // Color, that works for text on a background with the color of $primary
-$secondary: $blue-dark;
-$secondary-text: $white; // Color, that works for text on a background with the color of $secondary
-$success: #48cc6f;
+// White and Grey colors TODO: Remove and assign better names!
+// $gray-300: #dee2e6;
+// $gray-500: #adb5bd;
+// $gray-600: #6c757d;
+// $gray-700: #495057;
+// $gray-900: #212529;
+
+// TODO: Dark, Colorblind Light, Colorblind Dark
+// $form-feedback-valid-light: #0a69ce; // Colorblind Theme
+// $form-feedback-invalid-light: #8c6a11; // Colorblind Theme
 
 // FONT OVERRIDES
 $font-size-sm: 0.9rem;
@@ -55,13 +86,7 @@ $font-family-sans-serif: "Cabin", system-ui, -apple-system, "Segoe UI", Roboto,
 
 // RANGE OVERRIDES
 $component-active-bg: $secondary;
-$form-range-track-bg: $secondary-text;
-
-// FORM VALIDATION OVERRIDES
-$form-feedback-valid-color: #127b0a;
-$form-feedback-invalid-color: #d50e0e;
-// $form-feedback-valid-color: #0a69ce;  // Colorblind Theme
-// $form-feedback-invalid-color: #8c6a11;  // Colorblind Theme
+$form-range-track-bg: getColor(text-secondary);
 
 // IMPORT BOOTSTRAP 5
 @import "~bootstrap/scss/bootstrap";

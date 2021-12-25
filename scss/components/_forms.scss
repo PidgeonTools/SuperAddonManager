@@ -1,4 +1,5 @@
 @use "../custom" as *;
+@use "utilities" as *;
 
 .form {
   input:required,
@@ -6,6 +7,76 @@
     ~ label {
       &::after {
         content: "*";
+      }
+    }
+  }
+}
+
+$form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{escapeColor(#343a40)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>");
+
+$form-validation-states: (
+  "valid": (
+    "color": getColor(form-feedback-valid),
+    "focus-color": getColorRGB(form-feedback-valid),
+    "icon": var(--form-feedback-valid-icon),
+  ),
+  "invalid": (
+    "color": getColor(form-feedback-invalid),
+    "focus-color": getColorRGB(form-feedback-invalid),
+    "icon": var(--form-feedback-invalid-icon),
+  ),
+);
+
+.sam-validation {
+  @each $state, $data in $form-validation-states {
+    $color: map-get($data, color);
+    $focus-box-shadow: 0 0 0 0.25rem rgba(map-get($data, focus-color), 0.25);
+    .form-control {
+      &:#{$state} {
+        border-color: $color;
+
+        padding-right: calc(1.5em + 0.75rem);
+        background-image: map-get($data, icon);
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+
+        &:focus {
+          border-color: $color;
+          box-shadow: $focus-box-shadow;
+        }
+      }
+    }
+
+    .form-select {
+      &:#{$state} {
+        border-color: $color;
+
+        padding-right: calc(1.5em + 0.75rem);
+        background-image: $form-select-indicator, map-get($data, icon);
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center, center right 2.25rem;
+        background-size: 16px 12px,
+          calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+
+        &:focus {
+          border-color: $color;
+          box-shadow: $focus-box-shadow;
+        }
+      }
+    }
+
+    .form-check-input {
+      &:#{$state} {
+        border-color: $color;
+
+        &:checked {
+          background-color: $color;
+        }
+
+        &:focus {
+          box-shadow: $focus-box-shadow;
+        }
       }
     }
   }
