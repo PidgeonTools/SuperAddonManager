@@ -1,11 +1,11 @@
-@use "../custom" as *;
+@use "utilities" as *;
 
 // GRADIENT MIXIN
 @mixin gradient {
   background: linear-gradient(
     to right,
-    rgba($primary, 0.95),
-    rgba($secondary, 0.95)
+    rgba(getColorRGB(primary), 0.95),
+    rgba(getColorRGB(secondary), 0.95)
   );
 }
 

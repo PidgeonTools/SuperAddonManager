@@ -1,11 +1,12 @@
 @use "../../custom" as *;
 @use "../../components/mixins" as *;
+@use "../../components/utilities" as *;
 
 .download-box {
   @include gradient;
 
   h1 {
-    color: $primary-text;
+    color: getColor(text-primary);
     font-size: $font-size-xxl;
     font-weight: 600;
     word-spacing: 100vw;
@@ -21,14 +22,14 @@
   }
 
   ul {
-    color: $primary-text;
+    color: getColor(text-primary);
     font-size: $font-size-lg;
     user-select: none;
   }
 }
 
 .supported-addons-box {
-  background-color: $white;
+  background-color: getColor(white); // TODO: Variable?
 
   h2 {
     font-weight: 500;

@@ -1,4 +1,5 @@
 @use "../custom" as *;
+@use "utilities" as *;
 
 .copy-button {
   width: 2rem;
@@ -8,12 +9,12 @@
 
   border: 1px solid transparent;
   border-radius: $border-small;
-  border-color: $gray-600;
+  border-color: getColor(gray-600);
 
-  background-color: $code-background;
+  background-color: getColor(code-background);
 
   position: absolute;
-  color: $gray-500;
+  color: getColor(gray-500);
 
   justify-content: center;
   display: flex;
@@ -22,19 +23,19 @@
   transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
 
   &:hover {
-    border-color: tint-color($gray-600, 7%);
-    background-color: tint-color($code-background, 7%);
+    border-color: getColor(hover-gray-600);
+    background-color: getColor(hover-button-dark);
     cursor: pointer;
   }
 
   &:disabled {
-    border-color: shade-color($gray-600, 25%);
-    background-color: $code-background;
-    color: shade-color($gray-500, 25%);
+    border-color: getColor(disabled-button-border-dark);
+    background-color: getColor(code-background);
+    color: getColor(disabled-button-dark);
     cursor: default;
   }
 
   &--copied {
-    color: $success;
+    color: getColor(success);
   }
 }

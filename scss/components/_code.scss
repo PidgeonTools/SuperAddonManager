@@ -1,4 +1,5 @@
 @use "../custom" as *;
+@use "utilities" as *;
 
 pre code.hljs {
   display: block;
@@ -9,8 +10,8 @@ code.hljs {
   padding: 3px 5px;
 }
 .hljs {
-  background: $code-background;
-  color: $code-default;
+  background: getColor(code-background);
+  color: getColor(code-default);
 }
 .xml .hljs-meta {
   color: silver;
@@ -19,7 +20,7 @@ code.hljs {
 // COMMENT
 .hljs-comment,
 .hljs-quote {
-  color: $code-comment;
+  color: getColor(code-comment);
 }
 
 // KEYWORD
@@ -29,20 +30,20 @@ code.hljs {
 .hljs-name,
 .hljs-selector-tag,
 .hljs-tag {
-  color: $code-keyword;
+  color: getColor(code-keyword);
 }
 
 // VARIABLE
 .hljs-template-variable,
 .hljs-variable {
-  color: $code-variable;
+  color: getColor(code-variable);
 }
 
 // STRING
 .hljs-code,
 .hljs-meta .hljs-string,
 .hljs-string {
-  color: $code-string;
+  color: getColor(code-string);
 }
 
 // NUMBER
@@ -50,7 +51,7 @@ code.hljs {
 .hljs-number,
 .hljs-symbol,
 .hljs-title {
-  color: $code-number;
+  color: getColor(code-number);
 }
 
 .hljs-built_in,
@@ -58,25 +59,25 @@ code.hljs {
 .hljs-params,
 .hljs-title.class_,
 .hljs-type {
-  color: $code-builtin;
+  color: getColor(code-builtin);
 }
 
 // Link and Regex
 .hljs-link,
 .hljs-regexp {
-  color: $code-link;
+  color: getColor(code-link);
 }
 
 .hljs-meta,
 .hljs-section {
-  color: $code-meta;
+  color: getColor(code-meta);
 }
 
 .hljs-attr {
-  color: $code-attribute;
+  color: getColor(code-attribute);
 }
 .hljs-subst {
-  color: $black;
+  color: black;
 }
 .hljs-formula {
   background-color: #eee;

@@ -1,12 +1,21 @@
 @use "./custom" as *;
+@use "components/utilities" as *;
 
 body {
   background: linear-gradient(
     200deg,
-    $blue-extreme-light,
+    getColor(bg-primary),
     transparent,
     transparent,
     transparent
   );
   background-attachment: fixed;
+}
+
+a {
+  color: getColor(primary);
+
+  &:hover {
+    color: getColor(hover-primary);
+  }
 }

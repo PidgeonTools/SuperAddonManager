@@ -1,8 +1,9 @@
 @use "../../custom" as *;
 @use "../../components/mixins" as *;
+@use "../../components/utilities" as *;
 
 .thanks-success-message {
-  background-color: $white;
+  background-color: getColor(white); // TODO: Variable?
 }
 
 .thanks-donate-box {
@@ -10,14 +11,14 @@
 
   h1 {
     text-align: center;
-    color: $primary-text;
+    color: getColor(text-primary);
     margin-bottom: 1rem;
   }
 
   &--form {
     border-radius: $border-medium;
     padding: 1rem;
-    color: $primary-text;
+    color: getColor(text-primary);
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(1rem);

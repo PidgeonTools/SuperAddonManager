@@ -1,8 +1,9 @@
 @use "../custom" as *;
-@use "../components/mixins.scss" as *;
+@use "../components/mixins" as *;
+@use "../components/utilities" as *;
 
 .footer {
-  background-color: #333333;
+  background-color: getColor(footer);
   margin-top: 1.5rem;
 
   &__items {

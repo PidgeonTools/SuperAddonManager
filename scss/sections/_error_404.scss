@@ -1,9 +1,10 @@
 @use "../custom" as *;
 @use "../components/mixins" as *;
+@use "../components/utilities" as *;
 
 .error-404-message {
   @include gradient;
-  color: $primary-text;
+  color: getColor(text-primary);
   line-break: none;
 
   h1 {
@@ -13,10 +14,10 @@
   }
 
   a {
-    color: $primary-text;
+    color: getColor(text-primary);
 
     &:hover {
-      color: shade-color($primary-text, 10%);
+      color: getColor(text-hover-primary);
     }
   }
 
@@ -33,7 +34,7 @@
       color: $black;
 
       &:hover {
-        color: tint-color($black, 20%);
+        color: getColor(hover-button-dark);
       }
     }
   }

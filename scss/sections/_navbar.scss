@@ -1,5 +1,6 @@
 @use "../custom" as *;
-@use "../components/mixins.scss" as *;
+@use "../components/mixins" as *;
+@use "../components/utilities" as *;
 
 .bg-menu {
   @include gradient;
@@ -8,7 +9,7 @@
     padding: 0 0.5rem;
 
     .nav-link {
-      color: $white;
+      color: getColor(white); // TODO: Variable?
       font-weight: 600;
     }
   }

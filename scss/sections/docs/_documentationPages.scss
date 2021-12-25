@@ -1,5 +1,6 @@
 @use "../../custom" as *;
-@use "../../components/mixins.scss" as *;
+@use "../../components/mixins" as *;
+@use "../../components/utilities" as *;
 
 .docs-container {
   @include media-breakpoint-up(lg) {
@@ -39,36 +40,36 @@ main {
     margin: 0;
     padding-top: 1rem;
     font-size: $font-size-default;
-    color: $black;
+    color: black; // TODO: Variable?
     font-weight: 600;
   }
   &--first-element {
     padding-top: 0;
   }
   &--links {
-    color: $gray-700;
+    color: getColor(gray-700);
     text-decoration: none;
     font-size: $font-size-sm;
 
     &:hover {
-      color: $gray-900;
+      color: getColor(gray-900);
     }
   }
   &--active {
-    color: $gray-900;
+    color: getColor(gray-900);
   }
 }
 
 .docs-navigate-one-page {
   padding: 0.5rem 1.2rem;
-  border: 1px solid $gray-300;
+  border: 1px solid getColor(gray-300);
   border-radius: $border-medium;
   width: 100%;
 
   cursor: pointer;
 
   &:hover {
-    border-color: $secondary;
+    border-color: getColor(secondary);
   }
 
   &--previous {
@@ -85,7 +86,7 @@ main {
   }
 
   &--dynamic-label {
-    color: $secondary;
+    color: getColor(secondary);
     font-weight: 800;
   }
 }
