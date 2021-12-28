@@ -50,4 +50,12 @@ const SCHEMA = {
   },
 };
 
+export const SCHEMA_PARTS = {
+  VERSION: "version",
+  ALLOW_AUTOMATIC_DOWNLOAD: "allow_automatic_download",
+  DOWNLOAD_URL: "download_url",
+  MINIMUM_BLENDER_VERSION: "minimum_blender_version",
+  API_BREAKING_BLENDER_VERSION: "api_breaking_blender_version",
+};
+
 export default SCHEMA;
