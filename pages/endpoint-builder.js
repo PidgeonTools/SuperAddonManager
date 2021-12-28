@@ -23,6 +23,9 @@ import {
   AllowAutomaticDownload,
 } from "../components/endpoint-builder/EndpointBuilderInputs";
 
+// Functions
+import { padAddonVersion, padBlenderVersion } from "../functions";
+
 const PAGE_TITLE = "Endpoint JSON Builder";
 
 const EndpointBuilderPage = ({
@@ -91,21 +94,16 @@ const EndpointBuilderPage = ({
 
     let current_version = {};
 
-    current_version.version = addonVersion.split(".").map(Number);
+    current_version.version = padAddonVersion(addonVersion);
 
     current_version.allow_automatic_download = allowAutomaticDownload;
     current_version.download_url = downloadUrl;
 
-    let minBlender = minimumBlenderVersion.split(".").map(Number);
-    if (minBlender[0] < 3 && minBlender[1] < 10) minBlender[1] *= 10;
-    if (minBlender.length < 3) minBlender[2] = 0;
+    let minBlender = padBlenderVersion(minimumBlenderVersion);
     current_version.minimum_blender_version = minBlender;
 
     if (showApiBreakingBlenderVersion) {
-      let apiBreakingBlender = apiBreakingBlenderVersion.split(".").map(Number);
-      if (apiBreakingBlender[0] < 3 && apiBreakingBlender[1] < 10)
-        apiBreakingBlender[1] *= 10;
-      if (apiBreakingBlender.length < 3) apiBreakingBlender[2] = 0;
+      let apiBreakingBlender = padBlenderVersion(apiBreakingBlenderVersion);
 
       if (apiBreakingBlender > minBlender) {
         current_version.api_breaking_blender_version = apiBreakingBlender;

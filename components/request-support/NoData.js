@@ -11,7 +11,8 @@ import {
   Row,
 } from "react-bootstrap";
 
-import { getOS, OS } from "../../functions";
+// Functions
+import { getOS, OS, padAddonVersion, padBlenderVersion } from "../../functions";
 
 export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const [formData, setFormData] = useState({});
@@ -61,16 +62,9 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
       return;
     }
 
-    let BlenderVersion = formData.blender_version.split(".").map(Number);
-    if (BlenderVersion[0] < 3 && BlenderVersion[1] < 10)
-      BlenderVersion[1] *= 10;
-    if (BlenderVersion.length < 3) BlenderVersion[2] = 0;
-    BlenderVersion = BlenderVersion.join(".");
+    let BlenderVersion = padBlenderVersion(formData.blender_version).join(".");
 
-    let AddonVersion = formData.addon_version.split(".").map(Number);
-    if (AddonVersion.length < 2) AddonVersion[1] = 0;
-    if (AddonVersion.length < 3) AddonVersion[2] = 0;
-    AddonVersion = AddonVersion.join(".");
+    let AddonVersion = padAddonVersion(formData.addon_version).join(".");
 
     router.push({
       pathname: baseURL,
