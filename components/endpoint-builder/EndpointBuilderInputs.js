@@ -153,6 +153,7 @@ export const AllowAutomaticDownload = ({
 };
 
 export const COMPONENTS = {
+  allow_automatic_download: AllowAutomaticDownload,
   version: AddonVersion,
   minimum_blender_version: MinimumBlenderVersion,
   api_breaking_blender_version: ApiBreakingBlenderVersion,
