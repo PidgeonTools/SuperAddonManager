@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-// BOOTSTRAP
+// Bootstrap
 import { Col, Container, Row } from "react-bootstrap";
 
 const Footer = () => {

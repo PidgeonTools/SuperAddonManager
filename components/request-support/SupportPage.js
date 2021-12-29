@@ -205,7 +205,6 @@ ${checkedInternet}
     }
   }, [samUpToDate, addonUpToDate, noDuplicate, internetWorks]);
 
-
   return (
     <>
       {/* INTRO SECTION */}
