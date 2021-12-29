@@ -1,6 +1,6 @@
 ---
 title: Fehlercodes
-description: The full list of Error Codes for Super Addon Manager.
+description: Eine vollständige Liste der Fehlercodes für Super Addon Manager.
 for: Entwickler
 category: Error Handling
 category-index: 2
@@ -13,7 +13,7 @@ This is a list of all Error codes, their status and the issue report template th
 
 ## sam_not_supported
 
-**Special Error**
+**Spezieller Fehler**
 
 The bl_info of an Addon doesn't contain an Endpoint URL and/or the addon consists only of a single file.
 
@@ -58,7 +58,7 @@ The URL Endpoint doesn't match the specified schema.
 
 ## unknown_error
 
-**Special Error**
+**Spezieller Fehler**
 
 Any other error that needs to be investigated by us.
 <UnknownError />
