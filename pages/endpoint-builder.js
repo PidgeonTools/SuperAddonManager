@@ -97,7 +97,11 @@ const EndpointBuilderPage = ({
     current_version.version = padAddonVersion(addonVersion);
 
     current_version.allow_automatic_download = allowAutomaticDownload;
-    current_version.download_url = downloadUrl;
+    if (downloadUrl.startsWith("https://")) {
+      current_version.download_url = downloadUrl;
+    } else {
+      current_version.download_url = "https://" + downloadUrl;
+    }
 
     let minBlender = padBlenderVersion(minimumBlenderVersion);
     current_version.minimum_blender_version = minBlender;

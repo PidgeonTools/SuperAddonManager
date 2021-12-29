@@ -161,7 +161,12 @@ export const FixEndpoint = ({
         newData = fixEntryFromPath(padAddonVersion(addonVersion), data, path);
         break;
       case SCHEMA_PARTS.DOWNLOAD_URL:
-        newData = fixEntryFromPath(downloadUrl, data, path);
+        if (downloadUrl.startsWith("https://")) {
+          newData = fixEntryFromPath(downloadUrl, data, path);
+        } else {
+          newData = fixEntryFromPath("https://" + downloadUrl, data, path);
+        }
+
         path[path.length - 1] = SCHEMA_PARTS.ALLOW_AUTOMATIC_DOWNLOAD;
         newData = fixEntryFromPath(allowAutomaticDownload, data, path);
         break;
