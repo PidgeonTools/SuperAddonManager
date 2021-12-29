@@ -1,7 +1,7 @@
 ---
-title: Error Codes
+title: Fehlercodes
 description: The full list of Error Codes for Super Addon Manager.
-for: Developers
+for: Entwickler
 category: Error Handling
 category-index: 2
 page-index: 3
@@ -21,21 +21,21 @@ The bl_info of an Addon doesn't contain an Endpoint URL and/or the addon consist
 
 ## bl_info_version_problems
 
-**Critical Error**
+**Kritischer Fehler**
 
 The version set in bl_info either is invalid or doesn't exist.
 <BlInfoVersionProblems />
 
 ## url_invalid
 
-**Critical Error**
+**Kritischer Fehler**
 
 The URL Endpoint doesn't exist.
 <UrlInvalid />
 
 ## endpoint_offline
 
-**Critical Error**
+**Kritischer Fehler**
 
 The URL Endpoint doesn't respond. Most likely, this issue occurs because of missing Internet connection.
 <EndpointOffline />
@@ -44,14 +44,14 @@ Title:
 
 ## invalid_endpoint
 
-**Critical Error**
+**Kritischer Fehler**
 
 The URL Endpoint isn't in JSON format.
 <InvalidEndpoint />
 
 ## endpoint_invalid_schema
 
-**Critical Error**
+**Kritischer Fehler**
 
 The URL Endpoint doesn't match the specified schema.
 <EndpointInvalidSchema />
