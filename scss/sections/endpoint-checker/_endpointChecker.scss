@@ -4,6 +4,7 @@
 .dropzone {
   display: flex;
   justify-content: center;
+  text-align: center;
   padding: 3rem;
 
   border-radius: $border-large;
@@ -13,6 +14,11 @@
   p {
     margin: 0;
   }
+}
+
+.dropzone-container {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .endpoint-checker-enter-url {

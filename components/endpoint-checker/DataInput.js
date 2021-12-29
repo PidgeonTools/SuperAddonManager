@@ -94,7 +94,7 @@ export const DataInput = ({ callbackFunction }) => {
         </p>
       </Row>
       {/* DROPZONE */}
-      <Row>
+      <Row className="dropzone-container">
         <Dropzone
           onDrop={handleDrop}
           accept={["application/json", "text/json"]}
