@@ -9,12 +9,14 @@ import Navbar from "../components/Navbar";
 import { DataInput, FixEndpoint } from "../components/endpoint-checker";
 
 const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
-  const [hasData, setHasData] = useState(true); // TODO: Set to false in procuction!
+  const [hasData, setHasData] = useState(false);
   const [dataIsValid, setDataIsValid] = useState(false);
+
   const [data, setData] = useState({
     schema_version: "super-addon-manager-version-info-1.0.0",
     versions: [{}],
   });
+  const [filename, setFilename] = useState("SuperAddonManager-Endpoint.json");
 
   const [displayComponent, setDisplayComponent] = useState(<></>);
 
@@ -22,8 +24,9 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
     if (!hasData) {
       setDisplayComponent(
         <DataInput
-          callbackFunction={(d) => {
+          callbackFunction={(d, filename) => {
             setData(d);
+            setFilename(filename);
             setHasData(true);
           }}
         />

@@ -17,10 +17,9 @@ export const DataInput = ({ callbackFunction }) => {
     event.stopPropagation();
 
     // Map over all accepted files
-    console.log(acceptedFiles[0]);
-    acceptedFiles.map((file) => {
-      console.log(file);
-    });
+    // acceptedFiles.map((file) => {
+    //   console.log(file);
+    // });
 
     if (acceptedFiles[0]) {
       const reader = new FileReader();
@@ -28,7 +27,17 @@ export const DataInput = ({ callbackFunction }) => {
         let text = reader.result;
         let data = JSON.parse(text);
         console.log(data);
-        callbackFunction(data);
+        // console.log({
+        //   schema_version: data.schema_version,
+        //   versions: data.versions,
+        // });
+        callbackFunction(
+          {
+            schema_version: data.schema_version,
+            versions: data.versions,
+          },
+          acceptedFiles[0].name
+        );
       };
       reader.readAsText(acceptedFiles[0]);
     }
