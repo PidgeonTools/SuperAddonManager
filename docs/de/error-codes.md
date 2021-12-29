@@ -7,15 +7,15 @@ category-index: 2
 page-index: 3
 ---
 
-Many things can go wrong with this addon, since Super Addon Manager can't control how Developers implement support for it. Therefore, Super Addon Manager tries to determine these issues and return an error code that triggers a customized template issue report.
+Viele Dinge können mit Super Addon Manager schief gehen, da es nicht kontrollieren kann, wie die Entwickler die benötigten Daten bereitstellen. Deswegen versucht Super Addon Manager diese Probleme herauszufinden und einen Fehlercode zurückzugeben, der eine ausgefüllte, vorgefertigte Fehlermeldung als Ergebnis hat.
 
-This is a list of all Error codes, their status and the issue report template they trigger:
+Das ist eine Liste von allen Fehlercodes und den vorgefertigten Fehlermeldungen, die sie auslösen. Diese sind auf Englisch, damit sie international verstanden werden können:
 
 ## sam_not_supported
 
 **Spezieller Fehler**
 
-The bl_info of an Addon doesn't contain an Endpoint URL and/or the addon consists only of a single file.
+Die bl_info eines Addons enthält keine Endpunkt URL und/oder das Addon besteht nur aus einer einzigen Datei.
 
 <SamNotSupported />
 
@@ -44,14 +44,14 @@ Der URL Endpunkt antwortet nicht. Höchstwahrscheinlich tritt dieser Fehler aufg
 
 **Kritischer Fehler**
 
-The URL Endpoint isn't in JSON format.
+Der URL Endpunkt ist nicht im JSON-Format.
 <InvalidEndpoint />
 
 ## endpoint_invalid_schema
 
 **Kritischer Fehler**
 
-The URL Endpoint doesn't match the specified schema.
+Der URL Endpunkt stimmt nicht mit dem vorgegebenen Schema überein.
 <EndpointInvalidSchema />
 
 ## unknown_error
