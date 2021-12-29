@@ -51,14 +51,6 @@ export const FixEndpoint = ({
       return;
     }
 
-    // Return, if the schema problem occurs outside the "versions" array.
-    // TODO: Change this and allow fixing the Endpoint, even if it is missing
-    // e.g. "schema_version" or "versions"
-    if (errors.instancePath === "") {
-      setSchemaPart("Undefined");
-      return;
-    }
-
     // Get the path to the property that needs to be changed.
     let path = errors.instancePath;
     if (errors.keyword === "required") {
@@ -77,7 +69,24 @@ export const FixEndpoint = ({
 
   // Update the components that are displayed
   useEffect(() => {
+    const errorMessageIntro = (
+      <>
+        We've found an Error in {errorLocation}: {errorMessage}.
+      </>
+    );
     switch (schemaPart) {
+      case SCHEMA_PARTS.SCHEMA_VERSION:
+        setShowComponent(<></>);
+        setShowMessage(
+          'The schema version is missing or invalid. Please click "Fix this" below to fix this issue.'
+        );
+        break;
+      case SCHEMA_PARTS.VERSIONS:
+        setShowComponent(<></>);
+        setShowMessage(
+          'The array of versions is missing or invalid. Please click "Fix this" below to fix this issue.'
+        );
+        break;
       case SCHEMA_PARTS.VERSION:
         setShowComponent(
           <COMPONENTS.version
@@ -88,6 +97,12 @@ export const FixEndpoint = ({
             }}
             required
           />
+        );
+        setShowMessage(
+          <>
+            {errorMessageIntro} Please enter a valid addon version number (must
+            have at most three parts).
+          </>
         );
         break;
       case SCHEMA_PARTS.DOWNLOAD_URL:
@@ -111,10 +126,8 @@ export const FixEndpoint = ({
         );
         setShowMessage(
           <>
-            We've found an Error in {errorLocation}: {errorMessage}. The data
-            that is currently filled in to this page is (data). Please enter a
-            correct Download URL or uncheck "Allow Automatic Download", if an
-            automatic download isn't possible.
+            {errorMessageIntro} Please enter a correct Download URL or uncheck
+            "Allow Automatic Download", if an automatic download isn't possible.
           </>
         );
         break;
@@ -126,7 +139,14 @@ export const FixEndpoint = ({
             onChange={(e) => {
               setMinimumBlenderVersion(e.target.value);
             }}
+            required
           />
+        );
+        setShowMessage(
+          <>
+            {errorMessageIntro} Please fill in the oldest Blender Version that
+            your addon works with for sure.
+          </>
         );
         break;
       default:
@@ -157,6 +177,16 @@ export const FixEndpoint = ({
 
     let newData;
     switch (schemaPart) {
+      case SCHEMA_PARTS.SCHEMA_VERSION:
+        newData = fixEntryFromPath(
+          "super-addon-manager-version-info-1.0.0",
+          data,
+          path
+        );
+        break;
+      case SCHEMA_PARTS.VERSIONS:
+        newData = fixEntryFromPath([{}], data, path);
+        break;
       case SCHEMA_PARTS.VERSION:
         newData = fixEntryFromPath(padAddonVersion(addonVersion), data, path);
         break;

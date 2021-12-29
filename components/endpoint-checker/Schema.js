@@ -51,6 +51,8 @@ const SCHEMA = {
 };
 
 export const SCHEMA_PARTS = {
+  SCHEMA_VERSION: "schema_version",
+  VERSIONS: "versions",
   VERSION: "version",
   ALLOW_AUTOMATIC_DOWNLOAD: "allow_automatic_download",
   DOWNLOAD_URL: "download_url",
