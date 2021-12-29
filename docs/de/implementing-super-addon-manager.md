@@ -1,7 +1,7 @@
 ---
 title: Implementing Super Addon Manager
 description: A step-by-step guide that shows you how to implement support for Super Addon Manager into your addon.
-for: Developers
+for: Entwickler
 category: Developer Documentation
 category-index: 1
 page-index: 0
@@ -11,7 +11,7 @@ page-index: 0
 
 Because of its simplicity and code-free nature (= no risk of accidentally breaking your addon), Super Addon Manager is the ideal solution if you wish to support automated checking of your addons for updates. This step-by-step guide will show you how to implement Super Addon Manager support in your addon. Side Note: If you offer a paid version of your addon, please consider paying me a percentage of your earnings (1% or higher) to help keep this project alive. On BlenderMarket, you can add me (TODO: BlenderMarket name) as a collaborator to pay me automatically.
 
-## Preparation:
+## Vorbereitung:
 
 If your Addon only consists of one single file, you have to turn it into a folder addon. Just create a new folder (with the same name as the addon) and rename your script into `__init__.py`. This exact filename is very important! After doing this, you're set up for implementing Super Addon Manager.
 
