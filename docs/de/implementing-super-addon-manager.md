@@ -147,7 +147,6 @@ if not "Super Addon Manager" in context.preferences.addons:
     layout.separator()
     layout.label(text="This addon can be updated automatically with Super Addon Manager.")
     layout.operator("wm.url_open", text="Learn more!", icon="URL").url="https//TODO"
-    layout.operator("wm.url_open", text="Learn more!", icon="URL").url="https//TODO"
 ```
 
 This snippet checks, if Super Addon Manager is installed and enabled, and if that's not the case, it displays a message, saying, that your addon can be updated with Super Addon Manager and a link to the SAM homepage.
