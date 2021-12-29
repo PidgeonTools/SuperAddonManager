@@ -42,21 +42,21 @@ Der URL Endpunkt antwortet nicht. Höchstwahrscheinlich tritt dieser Fehler aufg
 
 ## invalid_endpoint
 
-**Critical Error**
+**Kritischer Fehler**
 
 The URL Endpoint isn't in JSON format.
 <InvalidEndpoint />
 
 ## endpoint_invalid_schema
 
-**Critical Error**
+**Kritischer Fehler**
 
 The URL Endpoint doesn't match the specified schema.
 <EndpointInvalidSchema />
 
 ## unknown_error
 
-**Special Error**
+**Spezieller Fehler**
 
-Any other error that needs to be investigated by us.
+Jeder andere Fehler, der von uns untersucht werden muss.
 <UnknownError />
