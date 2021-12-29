@@ -24,7 +24,11 @@ import {
 } from "../components/endpoint-builder/EndpointBuilderInputs";
 
 // Functions
-import { padAddonVersion, padBlenderVersion } from "../functions";
+import {
+  downloadJSONFile,
+  padAddonVersion,
+  padBlenderVersion,
+} from "../functions";
 
 const PAGE_TITLE = "Endpoint JSON Builder";
 
@@ -58,7 +62,7 @@ const EndpointBuilderPage = ({
     switch (focusedElement) {
       case INPUTID.VERSION:
         setHelpText(<Version exampleText={latestSPMVersion} />);
-        console.log(helpText);
+        // console.log(helpText);
         break;
       case INPUTID.DOWNLOAD_URL:
         setHelpText(
@@ -67,7 +71,7 @@ const EndpointBuilderPage = ({
             exampleText={"https://www.example.com/download-my-addon"}
           />
         );
-        console.log(helpText);
+        // console.log(helpText);
         break;
       case INPUTID.MINIMUM_BLENDER_VERSION:
         setHelpText(<MinBlender exampleText={exampleBlenderLTSVersion} />);
@@ -120,20 +124,9 @@ const EndpointBuilderPage = ({
       versions: [current_version, ...data.versions],
     };
 
-    console.log(downloadData);
+    // console.log(downloadData);
 
-    // Create a new file with the contents of the current data.
-    const file = new Blob([JSON.stringify(downloadData)], {
-      type: "text/json",
-    });
-
-    // Create and click a temporary link to download the file.
-    const el = document.createElement("a");
-    el.href = URL.createObjectURL(file);
-    el.download = "SuperAddonManager-Endpoint.json";
-    document.body.appendChild(el);
-    el.click();
-    document.body.removeChild(el);
+    downloadJSONFile(document, downloadData, "SuperAddonManager-Endpoint.json");
   };
 
   // Initialize form content on page load.
