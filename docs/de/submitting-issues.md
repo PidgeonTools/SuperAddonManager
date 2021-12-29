@@ -1,7 +1,7 @@
 ---
 title: Submitting good issue reports
 description: A guide on submitting good issue reports on different platforms.
-for: Users
+for: Benutzer
 category: Error Handling
 category-index: 2
 page-index: 1
