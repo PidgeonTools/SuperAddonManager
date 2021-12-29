@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
+// Bootstrap
+import { Col, Container, Row } from "react-bootstrap";
+
 // Guess the page the user wants to go to
 const guessPage = require("string-similarity");
 const glob = require("glob");
 
 // Components
 import Header from "../components/Header";
-import { Col, Container, Row } from "react-bootstrap";
+
+// Functions
+import { getLanguage } from "../functions";
 
 const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
   const [suggestedPage, setSuggestedPage] = useState({
@@ -15,6 +20,12 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
   });
 
   useEffect(() => {
+    let language = getLanguage(window);
+
+    pages = pages.map((page) => {
+      return page.replace("[lang]", language);
+    });
+
     setSuggestedPage(guessPage.findBestMatch(window.location.pathname, pages));
     // console.log(guessPage.findBestMatch(window.location.pathname, pages));
   }, []);
@@ -90,7 +101,7 @@ export const getStaticProps = () => {
     let pages = [];
     files.map((file) => {
       if (file.endsWith(".md")) {
-        file = "/" + file.substring(0, file.length - 3);
+        file = "/docs/[lang]/" + file.substring(8, file.length - 3);
       }
       if (file.endsWith(".js")) {
         file = file.substring(5, file.length - 3);
@@ -108,7 +119,7 @@ export const getStaticProps = () => {
   };
 
   // Get documentation pages
-  pages = pages.concat(getPagePaths(glob.sync("docs/**/*.md")));
+  pages = pages.concat(getPagePaths(glob.sync("docs/en/**/*.md")));
 
   // Get all other pages
   pages = pages.concat(
