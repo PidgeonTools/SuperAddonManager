@@ -23,42 +23,40 @@ The bl_info of an Addon doesn't contain an Endpoint URL and/or the addon consist
 
 **Kritischer Fehler**
 
-The version set in bl_info either is invalid or doesn't exist.
+Die in bl_info festgelegte Version ist entweder ungültig oder existiert nicht.
 <BlInfoVersionProblems />
 
 ## url_invalid
 
 **Kritischer Fehler**
 
-The URL Endpoint doesn't exist.
+Der URL Endpunkt existiert nicht.
 <UrlInvalid />
 
 ## endpoint_offline
 
 **Kritischer Fehler**
 
-The URL Endpoint doesn't respond. Most likely, this issue occurs because of missing Internet connection.
+Der URL Endpunkt antwortet nicht. Höchstwahrscheinlich tritt dieser Fehler aufgrund fehlender Internetverbindung auf.
 <EndpointOffline />
-
-Title:
 
 ## invalid_endpoint
 
-**Kritischer Fehler**
+**Critical Error**
 
 The URL Endpoint isn't in JSON format.
 <InvalidEndpoint />
 
 ## endpoint_invalid_schema
 
-**Kritischer Fehler**
+**Critical Error**
 
 The URL Endpoint doesn't match the specified schema.
 <EndpointInvalidSchema />
 
 ## unknown_error
 
-**Spezieller Fehler**
+**Special Error**
 
 Any other error that needs to be investigated by us.
 <UnknownError />
