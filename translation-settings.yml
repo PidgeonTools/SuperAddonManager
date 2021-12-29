@@ -1,3 +1,12 @@
+pull_request_title: "Translations: Update Translations"
+commit_message: "Translations: Update %language% translations in %original_file_name%"
+append_commit_message: false
+pull_request_labels: [
+  "translation",
+  "l10n"
+]
+
+
 files:
   - source: /docs/en/
     translation: /docs/%two_letters_code%/%original_file_name%
