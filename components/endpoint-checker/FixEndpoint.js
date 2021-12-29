@@ -264,6 +264,7 @@ export const FixEndpoint = ({
     setChangedData(changedData + 1);
   };
 
+  // Check the data for schema errors.
   const checkSchemaErrors = (data) => {
     const validate = ajv.compile(SCHEMA);
 
@@ -275,6 +276,7 @@ export const FixEndpoint = ({
     return [];
   };
 
+  // Fix an entry in an object from a given Path (Array)
   const fixEntryFromPath = (newEntryData, data, path, type = "default") => {
     // Change the last part of the Path provided by AJV
     if (path.length <= 1) {
@@ -309,7 +311,9 @@ export const FixEndpoint = ({
   return (
     <>
       <h1>Endpoint JSON Checker</h1>
+      {/* ERROR MESSAGE */}
       <div>{showMessage}</div>
+      {/* INPUT FOR FIXING */}
       <section className="form">
         <Form
           noValidate
