@@ -56,7 +56,7 @@ export const getStaticProps = async ({ params: { lang } }) => {
       .toString();
     return {
       ...matter(fileData).data,
-      file: path.join(lang, filename.replace(".md", "")),
+      file: lang + "/" + filename.replace(".md", ""),
     };
   });
 

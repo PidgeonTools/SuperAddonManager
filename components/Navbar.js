@@ -21,7 +21,7 @@ const SiteNavbar = () => (
               <Nav.Link href="/download">Download</Nav.Link>
             </Nav.Item>
             <Nav.Item as="li">
-              <Nav.Link href="/docs">Docs</Nav.Link>
+              <Nav.Link href="/docs/en/">Docs</Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
