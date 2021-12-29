@@ -11,9 +11,9 @@ import Markdown from "markdown-to-jsx";
 import hljs from "highlight.js";
 
 // COMPONENTS
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
-import CopyButton from "../../components/CopyButton";
+import Header from "../../../components/Header";
+import Navbar from "../../../components/Navbar";
+import CopyButton from "../../../components/CopyButton";
 import {
   BlInfoVersionProblems,
   SamNotSupported,
@@ -22,7 +22,7 @@ import {
   InvalidEndpoint,
   EndpointInvalidSchema,
   UnknownError,
-} from "../../components/request-support/ErrorCodes";
+} from "../../../components/request-support/ErrorCodes";
 
 const CodeRender = ({ children }) => {
   let className = children.props.className;
@@ -49,7 +49,14 @@ const CodeRender = ({ children }) => {
   );
 };
 
-const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
+const Page = ({
+  content,
+  data,
+  lang = "en",
+  navbarData,
+  previousArticle,
+  nextArticle,
+}) => (
   <>
     <Header title={data.title + " · Documentation"} />
     <Navbar />
@@ -76,7 +83,7 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
                 <React.Fragment key={pageData.file}>
                   {categoryHeading}
                   <li id={pageData.title}>
-                    <Link href={"/docs/" + pageData.file}>
+                    <Link href={"/docs/" + lang + "/" + pageData.file}>
                       <a
                         className={
                           "docs-navbar--links " +
@@ -137,7 +144,7 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
           {/* PREVIOUS PAGE BUTTON */}
           <>
             {previousArticle ? (
-              <Link href={"/docs/" + previousArticle.file}>
+              <Link href={"/docs/" + lang + "/" + previousArticle.file}>
                 <div className="docs-navigate-one-page docs-navigate-one-page--previous">
                   <div className="docs-navigate-one-page--static-label">
                     Previous
@@ -154,7 +161,7 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
           {/* NEXT PAGE BUTTON */}
           <>
             {nextArticle ? (
-              <Link href={"/docs/" + nextArticle.file}>
+              <Link href={"/docs/" + lang + "/" + nextArticle.file}>
                 <div className="docs-navigate-one-page docs-navigate-one-page--next">
                   <div className="docs-navigate-one-page--static-label">
                     Next
@@ -175,13 +182,23 @@ const Page = ({ content, data, navbarData, previousArticle, nextArticle }) => (
 );
 
 export const getStaticPaths = async () => {
-  const files = readdirSync("docs");
+  const folders = readdirSync("docs");
 
-  const paths = files.map((filename) => ({
-    params: {
-      slug: filename.replace(".md", ""),
-    },
-  }));
+  const paths_outer = folders.map((folder) => {
+    const files = readdirSync("docs/" + folder);
+
+    const paths_inner = files.map((filename) => ({
+      params: {
+        lang: folder,
+        slug: filename.replace(".md", ""),
+      },
+    }));
+
+    return paths_inner;
+  });
+
+  // Concat all subarrays into one array to avoid Next JS errors.
+  const paths = [].concat.apply([], paths_outer);
 
   return {
     paths,
@@ -189,12 +206,14 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params: { slug } }) => {
-  const files = readdirSync("docs");
+export const getStaticProps = async ({ params: { slug, lang } }) => {
+  const files = readdirSync(path.join("docs", lang));
   const navbarData = files.map((filename) => {
     let categoryClassName = "";
 
-    const fileData = fs.readFileSync(path.join("docs", filename)).toString();
+    const fileData = fs
+      .readFileSync(path.join("docs", lang, filename))
+      .toString();
     return {
       ...matter(fileData).data,
       file: filename.replace(".md", ""),
@@ -227,7 +246,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
   // console.log(navbarData);
 
   const markdownWithMetadata = fs
-    .readFileSync(path.join("docs", slug + ".md"))
+    .readFileSync(path.join("docs", lang, slug + ".md"))
     .toString();
 
   const parsedMarkdown = matter(markdownWithMetadata);
@@ -236,6 +255,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
     props: {
       content: parsedMarkdown.content,
       data: parsedMarkdown.data,
+      lang,
       navbarData,
       previousArticle,
       nextArticle,

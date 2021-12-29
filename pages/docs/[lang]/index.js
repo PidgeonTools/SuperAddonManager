@@ -5,8 +5,8 @@ import Link from "next/link";
 import { Container } from "react-bootstrap";
 
 // COMPONENTS
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import Header from "../../../components/Header";
+import Navbar from "../../../components/Navbar";
 
 // FILESYSTEM MODULES
 import fs from "fs";
@@ -33,11 +33,31 @@ const Docs = ({ navbarData }) => (
   </>
 );
 
-export const getStaticProps = async () => {
-  const files = fs.readdirSync("docs");
+export const getStaticPaths = async () => {
+  const folders = fs.readdirSync("docs");
+
+  const paths = folders.map((folder) => ({
+    params: {
+      lang: folder,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params: { lang } }) => {
+  const files = fs.readdirSync("docs/" + lang);
   const navbarData = files.map((filename) => {
-    const fileData = fs.readFileSync(path.join("docs", filename)).toString();
-    return { ...matter(fileData).data, file: filename.replace(".md", "") };
+    const fileData = fs
+      .readFileSync(path.join("docs", lang, filename))
+      .toString();
+    return {
+      ...matter(fileData).data,
+      file: path.join(lang, filename.replace(".md", "")),
+    };
   });
 
   navbarData.sort((a, b) => {
