@@ -6,7 +6,11 @@ import { Container } from "react-bootstrap";
 // Components
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
-import { DataInput, FixEndpoint } from "../components/endpoint-checker";
+import {
+  DataInput,
+  FixEndpoint,
+  DownloadFixedFile,
+} from "../components/endpoint-checker";
 
 const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
   const [hasData, setHasData] = useState(false);
@@ -48,11 +52,7 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
       return;
     }
 
-    setDisplayComponent(
-      <>
-        <p>Valid. Hurray!</p>
-      </>
-    );
+    setDisplayComponent(<DownloadFixedFile data={data} filename={filename} />);
   }, [data, hasData, dataIsValid]);
 
   return (
