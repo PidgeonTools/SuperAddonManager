@@ -2,7 +2,7 @@
 title: Fehlercodes
 description: Eine vollständige Liste der Fehlercodes für Super Addon Manager.
 for: Entwickler
-category: Error Handling
+category: Fehlerbehandlung
 category-index: 2
 page-index: 3
 ---
@@ -30,7 +30,7 @@ Die in bl_info festgelegte Version ist entweder ungültig oder existiert nicht.
 
 **Kritischer Fehler**
 
-The URL Endpoint set in bl_info either is invalid or doesn't exist.
+Die in bl_info festgelegte Endpunkt URL ist entweder ungültig oder existiert nicht.
 <UrlInvalid />
 
 ## endpoint_offline
