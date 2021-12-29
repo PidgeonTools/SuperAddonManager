@@ -30,6 +30,7 @@ export const FixEndpoint = ({
   const [schemaPart, setSchemaPart] = useState();
   const [showComponent, setShowComponent] = useState(<></>);
   const [showMessage, setShowMessage] = useState(<></>);
+  const [showFixButton, setShowFixButton] = useState(true);
 
   // Component Data
   const [allowAutomaticDownload, setAllowAutomaticDownload] = useState(true);
@@ -72,11 +73,8 @@ export const FixEndpoint = ({
 
   // Update the components that are displayed
   useEffect(() => {
-    const errorMessageIntro = (
-      <>
-        We've found an Error in {errorLocation}: {errorMessage}.
-      </>
-    );
+    setShowFixButton(true);
+    const errorMessageIntro = <>We've found an Error in {errorLocation}.</>;
     switch (schemaPart) {
       case SCHEMA_PARTS.SCHEMA_VERSION:
         setShowComponent(<></>);
@@ -182,10 +180,16 @@ export const FixEndpoint = ({
       default:
         setShowMessage(
           <>
-            <p>Use the Endpoint Builder... :(</p>
+            Ooops. We ran into an error and don't know what's the problem.
+            Please{" "}
+            <a href="https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender">
+              Contact us on Github
+            </a>{" "}
+            so we can figure out the issue together.
           </>
         );
         setShowComponent(<></>);
+        setShowFixButton(false);
     }
   }, [
     schemaPart,
@@ -308,6 +312,7 @@ export const FixEndpoint = ({
 
   return (
     <>
+      <h1>Endpoint JSON Checker</h1>
       <div>{showMessage}</div>
       <section className="form">
         <Form
@@ -316,12 +321,16 @@ export const FixEndpoint = ({
           className={validated ? "sam-validation" : ""}
         >
           <Row>
-            <Col className="mb-3">{showComponent}</Col>
+            <Col className="mb-3 mt-2">{showComponent}</Col>
           </Row>
           <Col className="d-grid">
-            <Button variant="primary" type="submit">
-              Fix this!
-            </Button>
+            {showFixButton ? (
+              <Button variant="primary" type="submit">
+                Fix this!
+              </Button>
+            ) : (
+              ""
+            )}
           </Col>
         </Form>
       </section>
