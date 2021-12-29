@@ -213,10 +213,6 @@ export const FixEndpoint = ({
     }
 
     let path = errorLocation.split("/").slice(1);
-    // console.log("===Path===");
-    // console.log(errorLocation);
-    // console.log(path);
-    // console.log("======");
 
     let newData;
     switch (schemaPart) {
