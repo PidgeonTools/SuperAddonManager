@@ -30,7 +30,7 @@ Die in bl_info festgelegte Version ist entweder ungültig oder existiert nicht.
 
 **Kritischer Fehler**
 
-Der URL Endpunkt existiert nicht.
+The URL Endpoint set in bl_info either is invalid or doesn't exist.
 <UrlInvalid />
 
 ## endpoint_offline
