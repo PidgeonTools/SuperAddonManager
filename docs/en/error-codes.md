@@ -42,8 +42,6 @@ The URL Endpoint doesn't exist.
 The URL Endpoint doesn't respond. Most likely, this issue occurs because of missing Internet connection.
 <EndpointOffline />
 
-Title:
-
 ## invalid_endpoint
 
 **Critical Error**
