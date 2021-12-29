@@ -36,6 +36,9 @@ export const FixEndpoint = ({
   const [addonVersion, setAddonVersion] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
   const [minimumBlenderVersion, setMinimumBlenderVersion] = useState("");
+  const [apiBreakingBlenderVersion, setApiBreakingBlenderVersion] =
+    useState("");
+  const [hasCompatibilityIssues, setHasCompatibilityIssues] = useState(true);
 
   // Check the data for issues, if the data changes.
   useEffect(() => {
@@ -149,6 +152,33 @@ export const FixEndpoint = ({
           </>
         );
         break;
+      case SCHEMA_PARTS.API_BREAKING_BLENDER_VERSION:
+        setShowComponent(
+          <>
+            <COMPONENTS.show_api_breaking_blender_version
+              showApiBreakingBlenderVersion={hasCompatibilityIssues}
+              onChange={(e) => {
+                setHasCompatibilityIssues(e.target.checked);
+              }}
+            />
+            <COMPONENTS.api_breaking_blender_version
+              apiBreakingBlenderVersion={apiBreakingBlenderVersion}
+              exampleBlenderLTSVersion={exampleBlenderLTSVersion}
+              onChange={(e) => {
+                setApiBreakingBlenderVersion(e.target.value);
+              }}
+              required={hasCompatibilityIssues}
+            />
+          </>
+        );
+        setShowMessage(
+          <>
+            {errorMessageIntro} Please type in the first Blender Version where
+            the update doesn't work due to API changes or uncheck "This addon
+            has compatibility issues with a newer Blender version."
+          </>
+        );
+        break;
       default:
         setShowMessage(
           <>
@@ -163,6 +193,8 @@ export const FixEndpoint = ({
     allowAutomaticDownload,
     downloadUrl,
     minimumBlenderVersion,
+    apiBreakingBlenderVersion,
+    hasCompatibilityIssues,
   ]);
 
   const fixError = (e) => {
@@ -214,6 +246,14 @@ export const FixEndpoint = ({
           path
         );
         break;
+      case SCHEMA_PARTS.API_BREAKING_BLENDER_VERSION:
+        newData = fixEntryFromPath(
+          padBlenderVersion(apiBreakingBlenderVersion),
+          data,
+          path,
+          SCHEMA_PARTS.API_BREAKING_BLENDER_VERSION
+        );
+        break;
     }
 
     console.log("===New Data===");
@@ -235,10 +275,18 @@ export const FixEndpoint = ({
     return [];
   };
 
-  const fixEntryFromPath = (newEntryData, data, path) => {
+  const fixEntryFromPath = (newEntryData, data, path, type = "default") => {
     // Change the last part of the Path provided by AJV
     if (path.length <= 1) {
       data[path[0]] = newEntryData;
+
+      if (
+        type === SCHEMA_PARTS.API_BREAKING_BLENDER_VERSION &&
+        (!hasCompatibilityIssues ||
+          data[SCHEMA_PARTS.MINIMUM_BLENDER_VERSION] >= newEntryData)
+      ) {
+        delete data[path[0]];
+      }
 
       return data;
     }
@@ -252,7 +300,8 @@ export const FixEndpoint = ({
     data[path[0]] = fixEntryFromPath(
       newEntryData,
       data[path[0]],
-      path.slice(1)
+      path.slice(1),
+      type
     );
     return data;
   };

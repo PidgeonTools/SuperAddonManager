@@ -157,5 +157,6 @@ export const COMPONENTS = {
   version: AddonVersion,
   minimum_blender_version: MinimumBlenderVersion,
   api_breaking_blender_version: ApiBreakingBlenderVersion,
+  show_api_breaking_blender_version: ShowApiBreakingBlenderVersion,
   download_url: DownloadUrl,
 };
