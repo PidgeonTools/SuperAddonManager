@@ -169,6 +169,13 @@ export const FixEndpoint = ({
     e.preventDefault();
     setValidated(true);
 
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+
+      return;
+    }
+
     let path = errorLocation.split("/").slice(1);
     // console.log("===Path===");
     // console.log(errorLocation);
