@@ -16,7 +16,7 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
 
   useEffect(() => {
     setSuggestedPage(guessPage.findBestMatch(window.location.pathname, pages));
-    console.log(guessPage.findBestMatch(window.location.pathname, pages));
+    // console.log(guessPage.findBestMatch(window.location.pathname, pages));
   }, []);
 
   const funFact = funFacts[Math.floor(Math.random() * funFacts.length)];
