@@ -30,6 +30,9 @@ import {
   padBlenderVersion,
 } from "../functions";
 
+// Translations
+import IntlWrapper from "../components/IntlWrapper";
+
 const PAGE_TITLE = "Endpoint JSON Builder";
 
 const EndpointBuilderPage = ({
@@ -140,7 +143,7 @@ const EndpointBuilderPage = ({
   }, []);
 
   return (
-    <>
+    <IntlWrapper>
       <Header
         title={PAGE_TITLE}
         description="You are a developer and want to support automatic addon updates with Super Addon Manager? Use this tool to generate/update a valid Endpoint in less than a minute!"
@@ -281,7 +284,7 @@ const EndpointBuilderPage = ({
           </Row>
         </Container>
       </section>
-    </>
+    </IntlWrapper>
   );
 };
 

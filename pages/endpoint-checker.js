@@ -12,6 +12,9 @@ import {
   DownloadFixedFile,
 } from "../components/endpoint-checker";
 
+// Translations
+import IntlWrapper from "../components/IntlWrapper";
+
 const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
   const [hasData, setHasData] = useState(false);
   const [dataIsValid, setDataIsValid] = useState(false);
@@ -24,6 +27,7 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
 
   const [displayComponent, setDisplayComponent] = useState(<></>);
 
+  // Change the display component depending on the data.
   useEffect(() => {
     if (!hasData) {
       setDisplayComponent(
@@ -56,13 +60,13 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
   }, [data, hasData, dataIsValid]);
 
   return (
-    <>
+    <IntlWrapper>
       <Header title="Endpoint JSON Checker" />
       <Navbar />
       <Container className="intro" style={{ marginBottom: "24rem" }}>
         {displayComponent}
       </Container>
-    </>
+    </IntlWrapper>
   );
 };
 

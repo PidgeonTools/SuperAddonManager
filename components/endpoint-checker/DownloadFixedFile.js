@@ -3,6 +3,9 @@ import React from "react";
 // Bootstrap
 import { Button, Col, Row } from "react-bootstrap";
 
+// Translations
+import { FormattedMessage } from "react-intl";
+
 // Functions
 import { downloadJSONFile } from "../../functions";
 
@@ -10,11 +13,14 @@ export const DownloadFixedFile = ({ data, filename }) => {
   return (
     <>
       <Row>
-        <h1>You're good to go</h1>
+        <h1>
+          <FormattedMessage id="endpoint_checker.download_fixed_file.aBHlVkOI3Y3PuWJ" />
+        </h1>
         <p>
-          We've fixed all errors inside the Endpoint JSON file. You can download
-          and update your file now, double check that everything works and{" "}
-          <a>tell everyone that you've fixed the issue.</a>
+          <FormattedMessage id="endpoint_checker.download_fixed_file.hvHADetwP5igCuxV" />
+          <a>
+            <FormattedMessage id="endpoint_checker.download_fixed_file.B02AfgFPvxrEbk5Je" />
+          </a>
         </p>
         <Col className="d-grid">
           <Button
@@ -22,7 +28,7 @@ export const DownloadFixedFile = ({ data, filename }) => {
               downloadJSONFile(document, data, "Fixed - " + filename);
             }}
           >
-            Download
+            <FormattedMessage id="endpoint_checker.download_fixed_file.1L8InQhjo" />
           </Button>
         </Col>
       </Row>

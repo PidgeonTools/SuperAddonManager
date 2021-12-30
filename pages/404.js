@@ -11,7 +11,8 @@ const glob = require("glob");
 // Components
 import Header from "../components/Header";
 
-// Functions
+// Translations
+import IntlWrapper from "../components/IntlWrapper";
 import { getLanguage } from "../functions";
 
 const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
@@ -32,13 +33,13 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
 
   const funFact = funFacts[Math.floor(Math.random() * funFacts.length)];
   return (
-    <>
+    <IntlWrapper>
       <Header title="Error 404" />
 
       {/* Error Message */}
       <section className="error-404-message">
         <Container>
-          <h1>You’ve found a secret place.</h1>
+          <h1>You've found a secret place.</h1>
           {/* ERROR MESSAGE TEXT */}
           <div className="error-404-message--text">
             If you want to, you can{" "}
@@ -51,7 +52,7 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
                 try this page
               </a>
             </Link>
-            , but here’s a secret for you: Super Addon Manager isn’t the only
+            , but here's a secret for you: Super Addon Manager isn't the only
             addon that we created. You can download the other Pidgeon tools
             addons directly from here:
           </div>
@@ -87,7 +88,7 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
           </a>
         </Link>
       </div>
-    </>
+    </IntlWrapper>
   );
 };
 

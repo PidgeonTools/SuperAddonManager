@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 // Bootstrap
@@ -15,23 +15,28 @@ import path from "path";
 // MARKDOWN MODULES
 import matter from "gray-matter";
 
-const Docs = ({ navbarData }) => (
-  <>
-    <Header title="Documentation" />
-    <Navbar />
-    <Container className="intro">
-      {navbarData.map((page) => {
-        return (
-          <div key={page}>
-            <Link href={`/docs/${page.file}`}>
-              <a>{page.title}</a>
-            </Link>
-          </div>
-        );
-      })}
-    </Container>
-  </>
-);
+// Translations
+import IntlWrapper from "../../../components/IntlWrapper";
+
+const Docs = ({ navbarData }) => {
+  return (
+    <IntlWrapper>
+      <Header title="Documentation" />
+      <Navbar />
+      <Container className="intro">
+        {navbarData.map((page) => {
+          return (
+            <div key={page}>
+              <Link href={`/docs/${page.file}`}>
+                <a>{page.title}</a>
+              </Link>
+            </div>
+          );
+        })}
+      </Container>
+    </IntlWrapper>
+  );
+};
 
 export const getStaticPaths = async () => {
   const folders = fs.readdirSync("docs");

@@ -6,6 +6,9 @@ import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 // Components
 import Dropzone from "react-dropzone";
 
+// Translations
+import { FormattedMessage } from "react-intl";
+
 export const DataInput = ({ callbackFunction }) => {
   const [validated, setValidated] = useState(false);
   const [endpointURL, setEndpointURL] = useState();
@@ -87,10 +90,11 @@ export const DataInput = ({ callbackFunction }) => {
     <>
       {/* INTRO INFORMATION */}
       <Row>
-        <h1>Endpoint JSON Checker</h1>
+        <h1>
+          <FormattedMessage id="endpoint_checker.data_input.title" />
+        </h1>
         <p>
-          Check and fix your Endpoint JSON File. Drag'n Drop/Select your file or
-          enter the Endpoint URL and click "Go" to check your file:
+          <FormattedMessage id="endpoint_checker.data_input.description_text" />
         </p>
       </Row>
       {/* DROPZONE */}
@@ -103,7 +107,9 @@ export const DataInput = ({ callbackFunction }) => {
           {({ getRootProps, getInputProps }) => (
             <div {...getRootProps({ className: "dropzone" })}>
               <input {...getInputProps()} />
-              <p>Drag’n Drop your file here or click to select a file.</p>
+              <p>
+                <FormattedMessage id="endpoint_checker.data_input.drag_and_drop" />
+              </p>
             </div>
           )}
         </Dropzone>
@@ -119,7 +125,7 @@ export const DataInput = ({ callbackFunction }) => {
             <Col lg={10} className="endpoint-checker-enter-url--first">
               <FloatingLabel
                 controlId="endpoint_url"
-                label="Load file from URL"
+                label={<FormattedMessage id="endpoint_checker.data_input.load_file_from_url" />}
               >
                 <Form.Control
                   type="text"
@@ -135,7 +141,7 @@ export const DataInput = ({ callbackFunction }) => {
             </Col>
             <Col lg={2} className="d-grid endpoint-checker-enter-url--last">
               <Button variant="primary" type="submit">
-                Go
+                <FormattedMessage id="endpoint_checker.data_input.go" />
               </Button>
             </Col>
           </Row>

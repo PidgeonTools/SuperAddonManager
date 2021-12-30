@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 // Bootstrap
@@ -7,9 +8,12 @@ import { Container, Nav } from "react-bootstrap";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 
+// Translations
+import IntlWrapper from "../components/IntlWrapper";
+
 export default function Home() {
   return (
-    <>
+    <IntlWrapper>
       <Header title="Home" />
       <Navbar />
       <Container className="intro" style={{ marginBottom: "80vh" }}>
@@ -26,6 +30,6 @@ export default function Home() {
           </Nav.Item>
         </Nav>
       </Container>
-    </>
+    </IntlWrapper>
   );
 }

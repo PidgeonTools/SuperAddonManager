@@ -24,6 +24,9 @@ import {
   UnknownError,
 } from "../../../components/request-support/ErrorCodes";
 
+// Translations
+import IntlWrapper from "../../../components/IntlWrapper";
+
 const CodeRender = ({ children }) => {
   let className = children.props.className;
   children = children.props.children;
@@ -57,7 +60,7 @@ const Page = ({
   previousArticle,
   nextArticle,
 }) => (
-  <>
+  <IntlWrapper>
     <Header title={data.title + " · Documentation"} />
     <Navbar />
     <div className="docs-container">
@@ -178,7 +181,7 @@ const Page = ({
         </div>
       </main>
     </div>
-  </>
+  </IntlWrapper>
 );
 
 export const getStaticPaths = async () => {

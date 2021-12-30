@@ -3,6 +3,9 @@ import React from "react";
 // Bootstrap
 import { FloatingLabel, Form } from "react-bootstrap";
 
+// Translations
+import { FormattedMessage } from "react-intl";
+
 export const INPUTID = {
   VERSION: "version",
   MINIMUM_BLENDER_VERSION: "minimum_blender_version",
@@ -13,7 +16,10 @@ export const INPUTID = {
 export const AddonVersion = ({ addonVersion, latestSPMVersion, ...props }) => {
   return (
     <>
-      <FloatingLabel controlId={INPUTID.VERSION} label={`Addon Version`}>
+      <FloatingLabel
+        controlId={INPUTID.VERSION}
+        label={<FormattedMessage id="endpoint_builder.addon_version" />}
+      >
         <Form.Control
           type="text"
           value={addonVersion}
@@ -34,7 +40,10 @@ export const DownloadUrl = ({
 }) => {
   return (
     <>
-      <FloatingLabel controlId={INPUTID.DOWNLOAD_URL} label="Download URL">
+      <FloatingLabel
+        controlId={INPUTID.DOWNLOAD_URL}
+        label={<FormattedMessage id="endpoint_builder.download_url" />}
+      >
         <Form.Control
           type="text"
           value={downloadUrl}
@@ -61,7 +70,9 @@ export const MinimumBlenderVersion = ({
     <>
       <FloatingLabel
         controlId={INPUTID.MINIMUM_BLENDER_VERSION}
-        label={`Minimum Blender Version`}
+        label={
+          <FormattedMessage id="endpoint_builder.minimum_blender_version" />
+        }
       >
         <Form.Control
           type="text"
@@ -85,7 +96,9 @@ export const ApiBreakingBlenderVersion = ({
     <>
       <FloatingLabel
         controlId={INPUTID.API_BREAKING_BLENDER_VERSION}
-        label="Newer Blender version that has compatibility issues"
+        label={
+          <FormattedMessage id="endpoint_builder.api_breaking_blender_version" />
+        }
       >
         <Form.Control
           type="text"
@@ -119,7 +132,7 @@ export const ShowApiBreakingBlenderVersion = ({
           htmlFor="update_for_older_blender_version"
           className="form-checked-label"
         >
-          This addon has compatibility issues with a newer Blender version.
+          <FormattedMessage id="endpoint_builder.has_compatibility_issues" />
         </label>
       </div>
     </>
@@ -145,7 +158,7 @@ export const AllowAutomaticDownload = ({
           htmlFor="allow_automatic_download"
           className="form-checked-label"
         >
-          Allow Automatic Download
+          <FormattedMessage id="endpoint_builder.allow_automatic_download" />
         </label>
       </div>
     </>

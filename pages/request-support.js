@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // Components
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import { NoData, SupportPage } from "../components/request-support";
+
+// Translations
+import IntlWrapper from "../components/IntlWrapper";
 
 const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const { query } = useRouter();
@@ -13,7 +16,7 @@ const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const issueType = query.issue_type;
 
   return (
-    <>
+    <IntlWrapper>
       <Header
         title={addonName + " - Error checking for updates"}
         description="Do you have problems updating an addon with Super Addon Manager? We've got you covered! Request support for your favorite addons in a few clicks."
@@ -31,7 +34,7 @@ const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
           latestSPMVersion={latestSPMVersion}
         />
       )}
-    </>
+    </IntlWrapper>
   );
 };
 

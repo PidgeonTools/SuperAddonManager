@@ -4,11 +4,18 @@ import Footer from "../components/Footer";
 // Styles
 import "../scss/globals.scss";
 
+// Translations
+import { IntlProvider } from "react-intl";
+import { getLocaleData } from "../lib/i10n/getLocaleData";
+
 function MyApp({ Component, pageProps }) {
+  const intlProps = getLocaleData("en");
   return (
     <>
-      <Component {...pageProps} />
-      <Footer />
+      <IntlProvider {...intlProps}>
+        <Component {...pageProps} />
+        <Footer />
+      </IntlProvider>
     </>
   );
 }

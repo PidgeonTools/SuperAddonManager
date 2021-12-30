@@ -14,6 +14,10 @@ import { COMPONENTS } from "../endpoint-builder/EndpointBuilderInputs";
 // Functions
 import { padAddonVersion, padBlenderVersion } from "../../functions";
 
+// Translations
+// TODO: Properly name all ID's!!
+import { FormattedMessage } from "react-intl";
+
 export const FixEndpoint = ({
   inputData,
   callbackFunction,
@@ -74,18 +78,23 @@ export const FixEndpoint = ({
   // Update the components that are displayed
   useEffect(() => {
     setShowFixButton(true);
-    const errorMessageIntro = <>We've found an Error in {errorLocation}.</>;
+    const errorMessageIntro = (
+      <FormattedMessage
+        id="endpoint_checker.fix_endpoint.error_message_intro"
+        values={{ errorLocation: errorLocation }}
+      />
+    );
     switch (schemaPart) {
       case SCHEMA_PARTS.SCHEMA_VERSION:
         setShowComponent(<></>);
         setShowMessage(
-          'The schema version is missing or invalid. Please click "Fix this" below to fix this issue.'
+          <FormattedMessage id="endpoint_checker.fix_endpoint.isvTQQvhTRMU" />
         );
         break;
       case SCHEMA_PARTS.VERSIONS:
         setShowComponent(<></>);
         setShowMessage(
-          'The array of versions is missing or invalid. Please click "Fix this" below to fix this issue.'
+          <FormattedMessage id="endpoint_checker.fix_endpoint.VVNIvfJFSdZNKfNa3sM" />
         );
         break;
       case SCHEMA_PARTS.VERSION:
@@ -100,10 +109,10 @@ export const FixEndpoint = ({
           />
         );
         setShowMessage(
-          <>
-            {errorMessageIntro} Please enter a valid addon version number (must
-            have at most three parts).
-          </>
+          <FormattedMessage
+            id="endpoint_checker.fix_endpoint.pdZJ6"
+            values={{ errorMessageIntro: errorMessageIntro }}
+          />
         );
         break;
       case SCHEMA_PARTS.DOWNLOAD_URL:
@@ -126,10 +135,10 @@ export const FixEndpoint = ({
           </>
         );
         setShowMessage(
-          <>
-            {errorMessageIntro} Please enter a correct Download URL or uncheck
-            "Allow Automatic Download", if an automatic download isn't possible.
-          </>
+          <FormattedMessage
+            id="endpoint_checker.fix_endpoint.VrKkjM9Bjp29EpNTNj"
+            values={{ errorMessageIntro: errorMessageIntro }}
+          />
         );
         break;
       case SCHEMA_PARTS.MINIMUM_BLENDER_VERSION:
@@ -144,10 +153,10 @@ export const FixEndpoint = ({
           />
         );
         setShowMessage(
-          <>
-            {errorMessageIntro} Please fill in the oldest Blender Version that
-            your addon works with for sure.
-          </>
+          <FormattedMessage
+            id="endpoint_checker.fix_endpoint.yfdsg"
+            values={{ errorMessageIntro: errorMessageIntro }}
+          />
         );
         break;
       case SCHEMA_PARTS.API_BREAKING_BLENDER_VERSION:
@@ -170,22 +179,20 @@ export const FixEndpoint = ({
           </>
         );
         setShowMessage(
-          <>
-            {errorMessageIntro} Please type in the first Blender Version where
-            the update doesn't work due to API changes or uncheck "This addon
-            has compatibility issues with a newer Blender version."
-          </>
+          <FormattedMessage
+            id="endpoint_checker.fix_endpoint.57UQpEM"
+            values={{ errorMessageIntro: errorMessageIntro }}
+          />
         );
         break;
       default:
         setShowMessage(
           <>
-            Ooops. We ran into an error and don't know what's the problem.
-            Please{" "}
+            <FormattedMessage id="endpoint_checker.fix_endpoint.Md2x1kHRYLNq" />
             <a href="https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender">
-              Contact us on Github
+              <FormattedMessage id="endpoint_checker.fix_endpoint.contact_us_on_github" />
             </a>{" "}
-            so we can figure out the issue together.
+            <FormattedMessage id="endpoint_checker.fix_endpoint.SUfOOJe2zyRIeBKGbb7v" />
           </>
         );
         setShowComponent(<></>);
@@ -310,7 +317,9 @@ export const FixEndpoint = ({
 
   return (
     <>
-      <h1>Endpoint JSON Checker</h1>
+      <h1>
+        <FormattedMessage id="endpoint_checker.data_input.title" />
+      </h1>
       {/* ERROR MESSAGE */}
       <div>{showMessage}</div>
       {/* INPUT FOR FIXING */}
@@ -326,7 +335,7 @@ export const FixEndpoint = ({
           <Col className="d-grid">
             {showFixButton ? (
               <Button variant="primary" type="submit">
-                Fix this!
+                <FormattedMessage id="endpoint_checker.fix_endpoint.fix_this" />
               </Button>
             ) : (
               ""
