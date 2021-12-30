@@ -17,7 +17,8 @@ export const DownloadFixedFile = ({ data, filename }) => {
           <FormattedMessage id="endpoint_checker.download_fixed_file.you_are_good_to_go" />
         </h1>
         <p>
-          <FormattedMessage id="endpoint_checker.download_fixed_file.hvHADetwP5igCuxV" />
+          <FormattedMessage id="endpoint_checker.download_fixed_file.we_have_fixed_all_errors" />{" "}
+          <FormattedMessage id="endpoint_checker.download_fixed_file.you_can_download_your_file" />{" "}
           <a>
             <FormattedMessage id="endpoint_checker.download_fixed_file.tell_everyone_that_you_fixed_it" />
           </a>

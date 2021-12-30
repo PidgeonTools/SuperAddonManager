@@ -15,7 +15,6 @@ import { COMPONENTS } from "../endpoint-builder/EndpointBuilderInputs";
 import { padAddonVersion, padBlenderVersion } from "../../functions";
 
 // Translations
-// TODO: Properly name all ID's!!
 import { FormattedMessage } from "react-intl";
 
 export const FixEndpoint = ({
@@ -88,13 +87,19 @@ export const FixEndpoint = ({
       case SCHEMA_PARTS.SCHEMA_VERSION:
         setShowComponent(<></>);
         setShowMessage(
-          <FormattedMessage id="endpoint_checker.fix_endpoint.isvTQQvhTRMU" />
+          <>
+            <FormattedMessage id="endpoint_checker.fix_endpoint.the_schema_version_is_missing" />{" "}
+            <FormattedMessage id="endpoint_checker.fix_endpoint.please_click_fix_this" />
+          </>
         );
         break;
       case SCHEMA_PARTS.VERSIONS:
         setShowComponent(<></>);
         setShowMessage(
-          <FormattedMessage id="endpoint_checker.fix_endpoint.VVNIvfJFSdZNKfNa3sM" />
+          <>
+            <FormattedMessage id="endpoint_checker.fix_endpoint.the_array_of_versions_is_missing" />
+            <FormattedMessage id="endpoint_checker.fix_endpoint.please_click_fix_this" />
+          </>
         );
         break;
       case SCHEMA_PARTS.VERSION:
@@ -192,7 +197,7 @@ export const FixEndpoint = ({
             <a href="https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender">
               <FormattedMessage id="endpoint_checker.fix_endpoint.contact_us_on_github" />
             </a>{" "}
-            <FormattedMessage id="endpoint_checker.fix_endpoint.SUfOOJe2zyRIeBKGbb7v" />
+            <FormattedMessage id="endpoint_checker.fix_endpoint.so_we_can_figure_out_the_issue" />
           </>
         );
         setShowComponent(<></>);
