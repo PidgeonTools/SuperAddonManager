@@ -11,19 +11,19 @@ export const Version = ({ exampleText }) => {
     <>
       <div className="endpoint-form-example-container">{exampleText}</div>
       <div>
-        <FormattedMessage id="endpoint_builder.help_texts.version.K7itFDF" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.version.please_note_that" />{" "}
         <strong>
-          <FormattedMessage id="endpoint_builder.help_texts.version.qudfuQGi8WJsXPOY" />
+          <FormattedMessage id="endpoint_builder.help_texts.version.shouldnt_consist_of" />
         </strong>
-        <FormattedMessage id="endpoint_builder.help_texts.version.llf6Ax7" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.version.because_any_version_number" />{" "}
         <strong>
-          <FormattedMessage id="endpoint_builder.help_texts.version.SOcdAep1NVi" />
+          <FormattedMessage id="endpoint_builder.help_texts.version.might_lead_to_unexpected" />
         </strong>{" "}
-        <FormattedMessage id="endpoint_builder.help_texts.version.LPbEqS" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.version.when_checking_for_updates" />{" "}
         <strong>
           <FormattedMessage id="endpoint_builder.help_texts.version.major_minor_patch" />
         </strong>{" "}
-        <FormattedMessage id="endpoint_builder.help_texts.version.xVvFS8ZQ2ha0X" />
+        <FormattedMessage id="endpoint_builder.help_texts.version.versioning_scheme_that_blender" />
       </div>
     </>
   );
@@ -42,17 +42,17 @@ export const DownloadURL = ({ allowAutomaticDownload, exampleText }) => {
           setShowTooltip(false);
         }}
       >
-        <FormattedMessage id="endpoint_builder.help_texts.download_url.IRlgnfgj5Du7Vr" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.download_url.please_fill_in_the_link" />{" "}
         {allowAutomaticDownload ? (
           <>
-            <FormattedMessage id="endpoint_builder.help_texts.download_url.w8mOYtqm6dM" />{" "}
-            <FormattedMessage id="endpoint_builder.help_texts.download_url.ELe3d2" />{" "}
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.since_you_checked" />{" "}
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.cannot_link_to_a_file" />{" "}
             <OverlayTrigger
               placement="top"
               show={showTooltip}
               overlay={
                 <Tooltip>
-                  <FormattedMessage id="endpoint_builder.help_texts.download_url.ezjNiOYcanfb025UX8dN" />
+                  <FormattedMessage id="endpoint_builder.help_texts.download_url.if_your_addon_is_paid" />
                 </Tooltip>
               }
             >
@@ -62,10 +62,10 @@ export const DownloadURL = ({ allowAutomaticDownload, exampleText }) => {
                 }}
                 style={{ textDecoration: "underline" }}
               >
-                <FormattedMessage id="endpoint_builder.help_texts.download_url.6ThpyMAmfl6rrSpjK" />
+                <FormattedMessage id="endpoint_builder.help_texts.download_url.your_product_is_paid" />
               </span>
             </OverlayTrigger>
-            <FormattedMessage id="endpoint_builder.help_texts.download_url.FecRvZglbZFp6" />
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.uncheck_allow_automatic_download" />
           </>
         ) : (
           ""
@@ -85,12 +85,12 @@ export const MinBlender = ({ exampleText }) => {
   return (
     <>
       <div>
-        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.KxAoQ" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.please_type_in" />{" "}
         <strong>
           <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.know_for_sure" />
         </strong>{" "}
-        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.79Lc31YaS5Ex3mvnc8W9" />
-        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.fc6Hp3mBTQXAOg5OJb" />
+        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.that_your_addon_is_compatible" />
+        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.we_would_suggest" />
       </div>
       <div className="endpoint-form-example-container">{exampleText}</div>
     </>
@@ -101,12 +101,12 @@ export const MaxBlender = ({ exampleText }) => {
   return (
     <>
       <div>
-        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.ARnHLK8Q" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.if_you_are_making_an_update" />{" "}
         <strong>
           <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.for_an_older_blender_version" />
         </strong>
-        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.PVEu0gdDpqmHjF" />{" "}
-        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.yX2gEaB" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.and_you_know_for_sure" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.if_your_addon_works" />{" "}
         <strong>
           <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.please_leave_this_field_empty" />
         </strong>
