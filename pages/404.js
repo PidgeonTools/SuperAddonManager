@@ -41,25 +41,25 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
       <section className="error-404-message">
         <Container>
           <h1>
-            <FormattedMessage id="error_404.message.aUujd9AJDKgD1z" />
+            <FormattedMessage id="error_404.message.secret_place_found" />
           </h1>
           {/* ERROR MESSAGE TEXT */}
           <div className="error-404-message--text">
             <FormattedMessage id="error_404.message.LKj94jPYGa" />{" "}
             <Link href="/">
               <a>
-                <FormattedMessage id="error_404.message.1S8K84aRm8OOqCUVH" />
+                <FormattedMessage id="error_404.message.go_home" />
               </a>
             </Link>{" "}
-            <FormattedMessage id="error_404.message.3xPH0WAQyTJRzbsZl" />{" "}
+            <FormattedMessage id="error_404.message.or" />{" "}
             <Link href={suggestedPage.bestMatch.target}>
               <a target="_blank" rel="noopener noreferrer">
-                <FormattedMessage id="error_404.message.1AoXD" />
+                <FormattedMessage id="error_404.message.try_this_page" />
               </a>
             </Link>
-            <FormattedMessage id="error_404.message.xPIsJu0JO" />{" "}
-            <FormattedMessage id="error_404.message.qRtlyEYSfA03ee2" />{" "}
-            <FormattedMessage id="error_404.message.SK5R6GT2lW" />
+            <FormattedMessage id="error_404.message.here_is_a_secret" />{" "}
+            <FormattedMessage id="error_404.message.sam_is_not_the_only_addon" />{" "}
+            <FormattedMessage id="error_404.message.download_other_pidgeon_tools_addons" />
           </div>
           {/* DOWNLOAD LINKS */}
           <div className="error-404-message--link-container error-404-message--text">
@@ -73,7 +73,7 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
           </div>
           {/* FUN FACT */}
           <div className="error-404-message--text">
-            <FormattedMessage id="error_404.message.UNsYmxPCkECdl7" />{" "}
+            <FormattedMessage id="error_404.message.fun_fact" />{" "}
             <FormattedMessage id={funFactID} />
           </div>
         </Container>
@@ -89,10 +89,10 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
 
       {/* CONTACT LINK */}
       <div className="error-404-message--text error-404-message--link-container error-404-message--contact">
-        <FormattedMessage id="error_404.message.P7VK3" />{" "}
+        <FormattedMessage id="error_404.message.are_you_sure" />{" "}
         <Link href="https://discord.gg/hGzHDA7bj9">
           <a target="_blank" rel="noopener noreferrer">
-            <FormattedMessage id="error_404.message.cwd7VDsH22fs9" />
+            <FormattedMessage id="error_404.message.contact_us_on_discord" />
           </a>
         </Link>
       </div>
