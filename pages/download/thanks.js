@@ -12,6 +12,9 @@ import Navbar from "../../components/Navbar";
 // Animations
 import { motion } from "framer-motion";
 
+// Translations
+import IntlWrapper from "../../components/IntlWrapper";
+
 const Thanks = ({ data }) => {
   const router = useRouter();
   const [amount, setAmount] = useState(5);
@@ -43,7 +46,7 @@ const Thanks = ({ data }) => {
   }, []);
 
   return (
-    <>
+    <IntlWrapper>
       <Header title="Thanks" />
       <Navbar />
       {/* SUCCESS MESSAGE */}
@@ -125,7 +128,7 @@ const Thanks = ({ data }) => {
           />
         </svg>
       </section>
-    </>
+    </IntlWrapper>
   );
 };
 

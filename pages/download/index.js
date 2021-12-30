@@ -12,6 +12,9 @@ import AnimatedNumber from "react-animated-number";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 
+// Translations
+import IntlWrapper from "../../components/IntlWrapper";
+
 const Download = ({ addons }) => {
   const router = useRouter();
 
@@ -23,7 +26,7 @@ const Download = ({ addons }) => {
   };
 
   return (
-    <>
+    <IntlWrapper>
       <Header title="Download" />
       <Navbar />
       {/* DOWNLOAD SECTION */}
@@ -108,7 +111,7 @@ const Download = ({ addons }) => {
           </Row>
         </Container>
       </section>
-    </>
+    </IntlWrapper>
   );
 };
 
