@@ -21,7 +21,7 @@ export const Version = ({ exampleText }) => {
         </strong>{" "}
         <FormattedMessage id="endpoint_builder.help_texts.version.LPbEqS" />{" "}
         <strong>
-          <FormattedMessage id="endpoint_builder.help_texts.version.pD4jIvjbV" />
+          <FormattedMessage id="endpoint_builder.help_texts.version.major_minor_patch" />
         </strong>{" "}
         <FormattedMessage id="endpoint_builder.help_texts.version.xVvFS8ZQ2ha0X" />
       </div>
@@ -87,7 +87,7 @@ export const MinBlender = ({ exampleText }) => {
       <div>
         <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.KxAoQ" />{" "}
         <strong>
-          <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.niMH5gQI73xpHCGHn" />
+          <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.know_for_sure" />
         </strong>{" "}
         <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.79Lc31YaS5Ex3mvnc8W9" />
         <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.fc6Hp3mBTQXAOg5OJb" />
@@ -103,12 +103,12 @@ export const MaxBlender = ({ exampleText }) => {
       <div>
         <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.ARnHLK8Q" />{" "}
         <strong>
-          <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.3CDExe3M" />
+          <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.for_an_older_blender_version" />
         </strong>
         <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.PVEu0gdDpqmHjF" />{" "}
         <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.yX2gEaB" />{" "}
         <strong>
-          <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.DSzbQ94SHQ2IA" />
+          <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.please_leave_this_field_empty" />
         </strong>
       </div>
       <div className="endpoint-form-example-container">{exampleText}</div>
