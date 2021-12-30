@@ -12,10 +12,19 @@ import {
 } from "react-bootstrap";
 
 // Functions
-import { getOS, OS, padAddonVersion, padBlenderVersion } from "../../functions";
+import {
+  getOS,
+  getOSByID,
+  OS,
+  padAddonVersion,
+  padBlenderVersion,
+} from "../../functions";
+
+// Translations
+import { FormattedMessage, useIntl } from "react-intl";
 
 export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
-  const [formData, setFormData] = useState({});
+  const intl = useIntl();
   const [validated, setValidated] = useState(false);
 
   // Form Variables
@@ -29,7 +38,17 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
     "unknown_error",
   ];
   const operatingSystems = [OS.WINDOWS, OS.LINUX, OS.MACOS, OS.OTHER];
-  const [operatingSystem, setOperatingSystem] = useState();
+
+  // Input Data
+  const [issueType, setIssueType] = useState("");
+  const [addonName, setAddonName] = useState("");
+  const [operatingSystem, setOperatingSystem] = useState(OS.WINDOWS);
+  const [blenderVersion, setBlenderVersion] = useState("");
+  const [addonVersion, setAddonVersion] = useState("");
+  const [addonCount, setAddonCount] = useState(15);
+  const [endpointURL, setEndpointURL] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [trackerURL, setTrackerURL] = useState("");
 
   // Router specific variables
   const router = useRouter();
@@ -37,18 +56,8 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
   // Set the Operating System at page load.
   useEffect(() => {
-    setOperatingSystem(getOS().display);
-    setFormData({ ...formData, os_name: getOS().display });
+    setOperatingSystem(getOS());
   }, []);
-
-  // Handle the change of a form component.
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-
-      [e.target.id]: e.target.value.trim(),
-    });
-  };
 
   // Handle Submitting the form.
   const handleSubmit = (e) => {
@@ -62,16 +71,22 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
       return;
     }
 
-    let BlenderVersion = padBlenderVersion(formData.blender_version).join(".");
+    let BlenderVersion = padBlenderVersion(blenderVersion).join(".");
 
-    let AddonVersion = padAddonVersion(formData.addon_version).join(".");
+    let AddonVersion = padAddonVersion(addonVersion).join(".");
 
     router.push({
       pathname: baseURL,
       query: {
-        ...formData,
+        issue_type: issueType,
+        addon_name: addonName,
         blender_version: BlenderVersion,
         addon_version: AddonVersion,
+        os_name: operatingSystem.englishName,
+        addon_count: addonCount,
+        endpoint_url: endpointURL,
+        error_message: errorMessage,
+        tracker_url: trackerURL,
       },
     });
   };
@@ -82,10 +97,11 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
       <section className="intro">
         <Container>
           <Row>
-            <h1>Request support for your addon</h1>
+            <h1>
+              <FormattedMessage id="request_support.no_data.zkLTPa5LKW" />
+            </h1>
             <p>
-              Fill in the Form with all necessary data to get support, if Super
-              Addon Manager doesn't work with your addon.
+              <FormattedMessage id="request_support.no_data.2q9ua96" />
             </p>
           </Row>
         </Container>
@@ -104,16 +120,22 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
               <Col lg={4} className="mb-3">
                 <FloatingLabel
                   controlId="issue_type"
-                  label="Issue Type / Error Code"
+                  label={
+                    <FormattedMessage id="request_support.no_data.jkLwSQHR2gof" />
+                  }
                 >
                   <Form.Select
-                    defaultValue=""
-                    onChange={handleChange}
+                    value={issueType}
+                    onChange={(e) => {
+                      setIssueType(e.target.value);
+                    }}
                     required
                     accessKey="I"
                   >
                     <option value="" disabled>
-                      Select an Option
+                      {intl.formatMessage({
+                        id: "request_support.no_data.eA5QLDHgBK1OiQyz9M",
+                      })}
                     </option>
                     {issueTypes.map((el) => (
                       <option key={el} value={el}>
@@ -125,11 +147,19 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
               </Col>
               {/* ADDON NAME */}
               <Col lg={8} className="mb-3">
-                <FloatingLabel controlId="addon_name" label="Addon Name">
+                <FloatingLabel
+                  controlId="addon_name"
+                  label={
+                    <FormattedMessage id="request_support.no_data.DMlLkBsNAPel" />
+                  }
+                >
                   <Form.Control
                     type="text"
                     placeholder="Super Project Manager"
-                    onChange={handleChange}
+                    value={addonName}
+                    onChange={(e) => {
+                      setAddonName(e.target.value);
+                    }}
                     required
                     accessKey="N"
                   />
@@ -141,22 +171,28 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
             <Row>
               {/* OS */}
               <Col lg={4} className="mb-3">
-                <FloatingLabel controlId="os_name" label="Operating System">
+                <FloatingLabel
+                  controlId="os_name"
+                  label={
+                    <FormattedMessage id="request_support.no_data.WO4KrT25M" />
+                  }
+                >
                   <Form.Select
+                    value={operatingSystem.displayID}
                     onChange={(e) => {
-                      setOperatingSystem(e.target.value);
-                      handleChange(e);
+                      setOperatingSystem(getOSByID(e.target.value));
                     }}
-                    value={operatingSystem}
                     required
                     accessKey="O"
                   >
                     <option value="" disabled>
-                      Select an Option
+                      {intl.formatMessage({
+                        id: "request_support.no_data.eA5QLDHgBK1OiQyz9M",
+                      })}
                     </option>
                     {operatingSystems.map((el) => (
-                      <option key={el} value={el.display}>
-                        {el.display}
+                      <option key={el} value={el.displayID}>
+                        {intl.formatMessage({ id: el.displayID })}
                       </option>
                     ))}
                   </Form.Select>
@@ -166,13 +202,21 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
               <Col lg={4} md={6} className="mb-3">
                 <FloatingLabel
                   controlId="blender_version"
-                  label={`Blender Version (e.g. ${exampleBlenderVersion})`}
+                  label={
+                    <FormattedMessage
+                      id="request_support.no_data.GVm5ZfE7X2IKhtw8"
+                      values={{ exampleBlenderVersion }}
+                    />
+                  }
                 >
                   <Form.Control
                     type="text"
                     placeholder={exampleBlenderVersion}
                     pattern="(\d+\.){1,2}\d+"
-                    onChange={handleChange}
+                    value={blenderVersion}
+                    onChange={(e) => {
+                      setBlenderVersion(e.target.value);
+                    }}
                     required
                     accessKey="B"
                   />
@@ -182,13 +226,21 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
               <Col lg={4} md={6} className="mb-3">
                 <FloatingLabel
                   controlId="addon_version"
-                  label={`Addon Version (e.g. ${latestSPMVersion})`}
+                  label={
+                    <FormattedMessage
+                      id="request_support.no_data.pGkge"
+                      values={{ latestSPMVersion }}
+                    />
+                  }
                 >
                   <Form.Control
                     type="text"
                     placeholder={latestSPMVersion}
                     pattern="(\d+\.)*\d+"
-                    onChange={handleChange}
+                    value={addonVersion}
+                    onChange={(e) => {
+                      setAddonVersion(e.target.value);
+                    }}
                     required
                     accessKey="A"
                   />
@@ -199,19 +251,24 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
             {/* === ISSUE-DEPENDENT PARAMETERS === */}
             {/* ADDON COUNT */}
             <>
-              {formData.issue_type == "sam_not_supported" ? (
+              {issueType == "sam_not_supported" ? (
                 <Row>
                   <Col lg={12} className="mb-3">
                     <FloatingLabel
                       controlId="addon_count"
-                      label="Estimated Number of installed Addons"
+                      label={
+                        <FormattedMessage id="request_support.no_data.2xITgKG6q8SaCUq" />
+                      }
                     >
                       <Form.Control
                         type="number"
                         min="1"
                         max="9000"
                         placeholder="42"
-                        onChange={handleChange}
+                        value={addonCount}
+                        onChange={(e) => {
+                          setAddonCount(e.target.value);
+                        }}
                         required
                         accessKey="C"
                       />
@@ -228,16 +285,21 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 "invalid_endpoint",
                 "endpoint_invalid_schema",
                 "endpoint_offline",
-              ].includes(formData.issue_type) ? (
+              ].includes(issueType) ? (
                 <Row>
                   <Col className="mb-3">
                     <FloatingLabel
                       controlId="endpoint_url"
-                      label="Endpoint URL"
+                      label={
+                        <FormattedMessage id="request_support.no_data.Ze89maa77DLSB" />
+                      }
                     >
                       <Form.Control
                         type="text"
-                        onChange={handleChange}
+                        value={endpointURL}
+                        onChange={(e) => {
+                          setEndpointURL(e.target.value);
+                        }}
                         placeholder="https://github.com/BlenderDefender/SuperProjectManager"
                         accessKey="U"
                       />
@@ -249,18 +311,21 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
             {/* ERROR MESSAGE */}
             <>
-              {["endpoint_offline", "unknown_error"].includes(
-                formData.issue_type
-              ) ? (
+              {["endpoint_offline", "unknown_error"].includes(issueType) ? (
                 <Row>
                   <Col className="mb-3">
                     <FloatingLabel
                       controlId="error_message"
-                      label="Error Message"
+                      label={
+                        <FormattedMessage id="request_support.no_data.JccAxUHPqLfq" />
+                      }
                     >
                       <Form.Control
                         as="textarea"
-                        onChange={handleChange}
+                        value={errorMessage}
+                        onChange={(e) => {
+                          setErrorMessage(e.target.value);
+                        }}
                         placeholder="Error Message"
                         style={{ height: "8rem" }}
                         accessKey="M"
@@ -274,10 +339,18 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
             {/* TRACKER URL */}
             <Row>
               <Col className="mb-3">
-                <FloatingLabel controlId="tracker_url" label="Tracker URL">
+                <FloatingLabel
+                  controlId="tracker_url"
+                  label={
+                    <FormattedMessage id="request_support.no_data.APvsfp8A72doZ50T7XN" />
+                  }
+                >
                   <Form.Control
                     type="text"
-                    onChange={handleChange}
+                    value={trackerURL}
+                    onChange={(e) => {
+                      setTrackerURL(e.target.value);
+                    }}
                     placeholder="https://github.com/BlenderDefender/SuperProjectManager"
                     pattern="(https?://)?.+\..+"
                     accessKey="T"
@@ -288,7 +361,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
             <Col className="d-grid">
               <Button variant="primary" type="submit">
-                Request Support
+                <FormattedMessage id="request_support.no_data.wpOXD0EAdk5fmz8rnQ" />
               </Button>
             </Col>
           </Container>
