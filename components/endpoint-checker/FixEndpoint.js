@@ -110,7 +110,7 @@ export const FixEndpoint = ({
         );
         setShowMessage(
           <FormattedMessage
-            id="endpoint_checker.fix_endpoint.pdZJ6"
+            id="endpoint_checker.fix_endpoint.please_enter_a_valid_addon_version"
             values={{ errorMessageIntro: errorMessageIntro }}
           />
         );
@@ -136,7 +136,7 @@ export const FixEndpoint = ({
         );
         setShowMessage(
           <FormattedMessage
-            id="endpoint_checker.fix_endpoint.VrKkjM9Bjp29EpNTNj"
+            id="endpoint_checker.fix_endpoint.please_enter_a_valid_download_url"
             values={{ errorMessageIntro: errorMessageIntro }}
           />
         );
@@ -180,7 +180,7 @@ export const FixEndpoint = ({
         );
         setShowMessage(
           <FormattedMessage
-            id="endpoint_checker.fix_endpoint.57UQpEM"
+            id="endpoint_checker.fix_endpoint.please_enter_a_valid_minimum_blender_version"
             values={{ errorMessageIntro: errorMessageIntro }}
           />
         );
@@ -188,7 +188,7 @@ export const FixEndpoint = ({
       default:
         setShowMessage(
           <>
-            <FormattedMessage id="endpoint_checker.fix_endpoint.Md2x1kHRYLNq" />
+            <FormattedMessage id="endpoint_checker.fix_endpoint.unknown_error" />
             <a href="https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender">
               <FormattedMessage id="endpoint_checker.fix_endpoint.contact_us_on_github" />
             </a>{" "}

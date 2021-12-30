@@ -14,12 +14,12 @@ export const DownloadFixedFile = ({ data, filename }) => {
     <>
       <Row>
         <h1>
-          <FormattedMessage id="endpoint_checker.download_fixed_file.aBHlVkOI3Y3PuWJ" />
+          <FormattedMessage id="endpoint_checker.download_fixed_file.you_are_good_to_go" />
         </h1>
         <p>
           <FormattedMessage id="endpoint_checker.download_fixed_file.hvHADetwP5igCuxV" />
           <a>
-            <FormattedMessage id="endpoint_checker.download_fixed_file.B02AfgFPvxrEbk5Je" />
+            <FormattedMessage id="endpoint_checker.download_fixed_file.tell_everyone_that_you_fixed_it" />
           </a>
         </p>
         <Col className="d-grid">
@@ -28,7 +28,7 @@ export const DownloadFixedFile = ({ data, filename }) => {
               downloadJSONFile(document, data, "Fixed - " + filename);
             }}
           >
-            <FormattedMessage id="endpoint_checker.download_fixed_file.1L8InQhjo" />
+            <FormattedMessage id="endpoint_checker.download_fixed_file.download" />
           </Button>
         </Col>
       </Row>
