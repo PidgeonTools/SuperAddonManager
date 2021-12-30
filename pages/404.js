@@ -12,10 +12,11 @@ const glob = require("glob");
 import Header from "../components/Header";
 
 // Translations
+import { FormattedMessage } from "react-intl";
 import IntlWrapper from "../components/IntlWrapper";
 import { getLanguage } from "../functions";
 
-const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
+const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
   const [suggestedPage, setSuggestedPage] = useState({
     bestMatch: { target: "#" },
   });
@@ -31,7 +32,7 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
     // console.log(guessPage.findBestMatch(window.location.pathname, pages));
   }, []);
 
-  const funFact = funFacts[Math.floor(Math.random() * funFacts.length)];
+  const funFactID = funFactIDs[Math.floor(Math.random() * funFactIDs.length)];
   return (
     <IntlWrapper>
       <Header title="Error 404" />
@@ -39,22 +40,26 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
       {/* Error Message */}
       <section className="error-404-message">
         <Container>
-          <h1>You've found a secret place.</h1>
+          <h1>
+            <FormattedMessage id="error_404.message.aUujd9AJDKgD1z" />
+          </h1>
           {/* ERROR MESSAGE TEXT */}
           <div className="error-404-message--text">
-            If you want to, you can{" "}
+            <FormattedMessage id="error_404.message.LKj94jPYGa" />{" "}
             <Link href="/">
-              <a>go home</a>
+              <a>
+                <FormattedMessage id="error_404.message.1S8K84aRm8OOqCUVH" />
+              </a>
             </Link>{" "}
-            or{" "}
+            <FormattedMessage id="error_404.message.3xPH0WAQyTJRzbsZl" />{" "}
             <Link href={suggestedPage.bestMatch.target}>
               <a target="_blank" rel="noopener noreferrer">
-                try this page
+                <FormattedMessage id="error_404.message.1AoXD" />
               </a>
             </Link>
-            , but here's a secret for you: Super Addon Manager isn't the only
-            addon that we created. You can download the other Pidgeon tools
-            addons directly from here:
+            <FormattedMessage id="error_404.message.xPIsJu0JO" />{" "}
+            <FormattedMessage id="error_404.message.qRtlyEYSfA03ee2" />{" "}
+            <FormattedMessage id="error_404.message.SK5R6GT2lW" />
           </div>
           {/* DOWNLOAD LINKS */}
           <div className="error-404-message--link-container error-404-message--text">
@@ -67,7 +72,10 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
             ))}
           </div>
           {/* FUN FACT */}
-          <div className="error-404-message--text">Fun Fact: {funFact}</div>
+          <div className="error-404-message--text">
+            <FormattedMessage id="error_404.message.UNsYmxPCkECdl7" />{" "}
+            <FormattedMessage id={funFactID} />
+          </div>
         </Container>
         {/* BOTTOM WAVES */}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 315">
@@ -81,10 +89,10 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
 
       {/* CONTACT LINK */}
       <div className="error-404-message--text error-404-message--link-container error-404-message--contact">
-        You are 100% sure this page should be here?{" "}
+        <FormattedMessage id="error_404.message.P7VK3" />{" "}
         <Link href="https://discord.gg/hGzHDA7bj9">
           <a target="_blank" rel="noopener noreferrer">
-            Contact us via Discord!
+            <FormattedMessage id="error_404.message.cwd7VDsH22fs9" />
           </a>
         </Link>
       </div>
@@ -93,7 +101,7 @@ const Custom404 = ({ funFacts, pages, addonDownloadLinks }) => {
 };
 
 export const getStaticProps = () => {
-  const funFacts = require("../data/fun-facts.json");
+  const funFactIDs = require("../data/fun-facts.json");
   const addonDownloadLinks = require("../data/404-download-links.json");
   let pages = [];
 
@@ -135,7 +143,7 @@ export const getStaticProps = () => {
 
   return {
     props: {
-      funFacts,
+      funFactIDs,
       pages,
       addonDownloadLinks,
     },
