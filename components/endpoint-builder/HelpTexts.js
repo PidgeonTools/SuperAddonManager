@@ -1,18 +1,29 @@
 import React, { useState } from "react";
 
+// Bootstrap
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+
+// Translations
+import { FormattedMessage } from "react-intl";
 
 export const Version = ({ exampleText }) => {
   return (
     <>
       <div className="endpoint-form-example-container">{exampleText}</div>
       <div>
-        Please note that due to limitations your version number{" "}
-        <strong>shouldn't consist of more than 3 parts</strong>, because any
-        version number that is longer{" "}
-        <strong>might lead to unexpected behavior</strong> when checking for
-        updates. We'd suggest using the <strong>Major.Minor.Patch</strong>{" "}
-        Versioning scheme that Blender and many addons use.
+        <FormattedMessage id="endpoint_builder.help_texts.version.K7itFDF" />{" "}
+        <strong>
+          <FormattedMessage id="endpoint_builder.help_texts.version.qudfuQGi8WJsXPOY" />
+        </strong>
+        <FormattedMessage id="endpoint_builder.help_texts.version.llf6Ax7" />{" "}
+        <strong>
+          <FormattedMessage id="endpoint_builder.help_texts.version.SOcdAep1NVi" />
+        </strong>{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.version.LPbEqS" />{" "}
+        <strong>
+          <FormattedMessage id="endpoint_builder.help_texts.version.pD4jIvjbV" />
+        </strong>{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.version.xVvFS8ZQ2ha0X" />
       </div>
     </>
   );
@@ -31,18 +42,17 @@ export const DownloadURL = ({ allowAutomaticDownload, exampleText }) => {
           setShowTooltip(false);
         }}
       >
-        Please fill in the link to the download page of your addon.{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.download_url.IRlgnfgj5Du7Vr" />{" "}
         {allowAutomaticDownload ? (
           <>
-            Since you checked allow automatic downloads, the link must be a link
-            to the .zip file of your addon. If you can't link to a file directly
-            because e.g.{" "}
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.w8mOYtqm6dM" />{" "}
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.ELe3d2" />{" "}
             <OverlayTrigger
               placement="top"
               show={showTooltip}
               overlay={
                 <Tooltip>
-                  If your addon is paid, please consider donating!
+                  <FormattedMessage id="endpoint_builder.help_texts.download_url.ezjNiOYcanfb025UX8dN" />
                 </Tooltip>
               }
             >
@@ -52,10 +62,10 @@ export const DownloadURL = ({ allowAutomaticDownload, exampleText }) => {
                 }}
                 style={{ textDecoration: "underline" }}
               >
-                your product is paid
+                <FormattedMessage id="endpoint_builder.help_texts.download_url.6ThpyMAmfl6rrSpjK" />
               </span>
             </OverlayTrigger>
-            , uncheck "Allow Automatic Download".
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.FecRvZglbZFp6" />
           </>
         ) : (
           ""
@@ -75,10 +85,12 @@ export const MinBlender = ({ exampleText }) => {
   return (
     <>
       <div>
-        Please type in the latest Blender version where you{" "}
-        <strong>know for sure</strong> that your addon is compatible with it.
-        We'd suggest making your addon compatible with all Blender versions that
-        receive updates, including the LTS versions.
+        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.KxAoQ" />{" "}
+        <strong>
+          <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.niMH5gQI73xpHCGHn" />
+        </strong>{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.79Lc31YaS5Ex3mvnc8W9" />
+        <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.fc6Hp3mBTQXAOg5OJb" />
       </div>
       <div className="endpoint-form-example-container">{exampleText}</div>
     </>
@@ -89,12 +101,15 @@ export const MaxBlender = ({ exampleText }) => {
   return (
     <>
       <div>
-        If you are making an update{" "}
-        <strong>for an older Blender Version</strong>, and you know for sure,
-        that it won't work on a newer Blender Version, please type in the first
-        Blender Version where the update doesn't work due to API changes. If
-        your addon works with the latest version of Blender,{" "}
-        <strong>please leave this field empty!</strong>
+        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.ARnHLK8Q" />{" "}
+        <strong>
+          <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.3CDExe3M" />
+        </strong>
+        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.PVEu0gdDpqmHjF" />{" "}
+        <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.yX2gEaB" />{" "}
+        <strong>
+          <FormattedMessage id="endpoint_builder.help_texts.maximum_blender_version.DSzbQ94SHQ2IA" />
+        </strong>
       </div>
       <div className="endpoint-form-example-container">{exampleText}</div>
     </>
