@@ -16,6 +16,9 @@ import {
   UnknownError,
 } from "./ErrorCodes";
 
+// Translations
+import { FormattedMessage } from "react-intl";
+
 export const SupportPage = ({ query, addonName, issueType }) => {
   // === Page Elements ===
   const [samUpToDate, setSamUpToDate] = useState(false);
@@ -71,47 +74,95 @@ export const SupportPage = ({ query, addonName, issueType }) => {
 
   // === Update the non-developer friendly issue description. ===
   let issueDescriptionText;
-  let endpointIntroText = `
-    To be able to check for updates, the developers of ${addonName} have to provide a link to an online resource (the "Endpoint"), which contains information about new versions (if available).
-  `.trim();
+  let endpointIntroText = (
+    <>
+      {/* To be able to check for updates, the developers of {addonName} have to
+      provide a link to an online resource (the "Endpoint"), which contains
+      information about new versions (if available). */}
+      <FormattedMessage
+        id="request_support.support_page.1OMs4Spov56B"
+        values={{ addonName }}
+      />
+    </>
+  );
   switch (issueType) {
     case ERROR_CODES.BL_INFO_VERSION_PROBLEMS:
-      issueDescriptionText = `
-  Super Addon Manager can't understand the current version, so it can't compare it with the latest version. This means that Super Addon Manager doesn't know if there's a new version available, and can't display any updates.
-      `;
+      issueDescriptionText = (
+        <>
+          <FormattedMessage id="request_support.support_page.E1IJemfSNBxsPYvB3Hf" />{" "}
+          <FormattedMessage id="request_support.support_page.2zhPVh" />
+        </>
+      );
       break;
     case ERROR_CODES.URL_INVALID:
-      issueDescriptionText = `
-  ${endpointIntroText} A valid URL looks like this: "https://www.example.com". The URL that the developer provided seems to be invalid. It looks like this: "${endpointURL}".
-      `;
+      issueDescriptionText = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.LdPe1V2"
+            values={{ endpointIntroText }}
+          />{" "}
+          <FormattedMessage id="request_support.support_page.F6iScya" />{" "}
+          <FormattedMessage
+            id="request_support.support_page.L340OhQ"
+            values={{ endpointURL }}
+          />
+        </>
+      );
       break;
     case ERROR_CODES.INVALID_ENDPOINT:
-      issueDescriptionText = `
-  ${endpointIntroText} This endpoint is in a file format that Super Addon Manager can't understand, so Super Addon Manager can't check for updates.
-      `;
+      issueDescriptionText = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.OGtfrsa5REX9Aycs4GJf"
+            values={{ endpointIntroText }}
+          />
+        </>
+      );
       break;
     case ERROR_CODES.ENDPOINT_INVALID_SCHEMA:
-      issueDescriptionText = `
-  ${endpointIntroText} This endpoint is missing required information, so Super Addon Manager can't check for updates.
-      `;
+      issueDescriptionText = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.pLiRTlAns3ysHtQPmWj"
+            values={{ endpointIntroText }}
+          />
+        </>
+      );
       break;
     case ERROR_CODES.ENDPOINT_OFFLINE:
-      issueDescriptionText = `
-  ${endpointIntroText} The server of this endpoint seems to be offline, because it didn't respond.
-      `;
+      issueDescriptionText = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.Ri2VdsuOOwNu3rO7aTeU"
+            values={{ endpointIntroText }}
+          />
+        </>
+      );
       break;
     case ERROR_CODES.UNKNOWN_ERROR:
-      issueDescriptionText = `
-We don't know what is causing the issue. All that you can do is reporting the issue to us.
-      `;
+      issueDescriptionText = (
+        <>
+          <FormattedMessage id="request_support.support_page.qlnUG" />{" "}
+          <FormattedMessage id="request_support.support_page.sMtbUqHgqKsGz" />
+        </>
+      );
       break;
     default:
-      issueDescriptionText = `
-  Your Addon ${addonName} doesn't support Super Addon Manager and can't be updated automatically. For Super Addon Manager to work, it's necessary that developers enable support for it. The developers of ${addonName} probably don't even know about Super Addon Manager yet, so it's time to tell them.
-      `;
+      issueDescriptionText = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.8HhKBa3"
+            values={{ addonName }}
+          />{" "}
+          <FormattedMessage id="request_support.support_page.gZqnkihrktzIW6He1" />{" "}
+          <FormattedMessage
+            id="request_support.support_page.dbIUtWj8AxVZ5"
+            values={{ addonName }}
+          />
+        </>
+      );
       break;
   }
-  issueDescriptionText = issueDescriptionText.trim();
 
   // === Update the issue text boxes ===
   useEffect(() => {
@@ -211,10 +262,17 @@ ${checkedInternet}
       <section className="intro">
         <Container>
           <Row>
-            <h1>Issue with your addon {addonName}</h1>
+            <h1>
+              <FormattedMessage
+                id="request_support.support_page.5GqcRfryAYt"
+                values={{ addonName }}
+              />
+            </h1>
             <p>
-              Super Addon Manager can't check for updates for your addon{" "}
-              {addonName}.
+              <FormattedMessage
+                id="request_support.support_page.wETvq7xS4Cnfsg"
+                values={{ addonName }}
+              />
             </p>
           </Row>
         </Container>
@@ -224,7 +282,9 @@ ${checkedInternet}
       <section className="problem-description">
         <Container>
           <Row className="mt-3 mb-3">
-            <h2>What's the problem?</h2>
+            <h2>
+              <FormattedMessage id="request_support.support_page.YJ0pza" />
+            </h2>
             <p>{issueDescriptionText}</p>
           </Row>
         </Container>
@@ -235,44 +295,40 @@ ${checkedInternet}
         <Container>
           <Row className="mt-3 mb-3">
             {/* HEADING */}
-            <h2>What can you do to make it work?</h2>
+            <h2>
+              <FormattedMessage id="request_support.support_page.yhlniNuyq" />
+            </h2>
             {/* TEXT */}
             <>
               {issueType === "endpoint_offline" ? (
                 <>
                   <p>
-                    Check, that your internet connection works. Then, try to
-                    reach the Endpoint found at{" "}
+                    <FormattedMessage id="request_support.support_page.nz4icA96e4VVQ0YA" />{" "}
+                    <FormattedMessage id="request_support.support_page.OLKYCqs4HzF" />{" "}
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
                       href={endpointURL}
                     >
-                      {endpointURL}
-                    </a>
-                    . If you can reach the page, retry to check for updates. If
-                    it still doesn't work, or your browser also tells you that
-                    this page can't be reached, it's the developer's
-                    responsibility to fix this problem. If the issue has already
-                    been reported, you can upvote it (for example, with an
-                    emoji) if the site provides such a feature.
+                      {endpointURL}.
+                    </a>{" "}
+                    <FormattedMessage id="request_support.support_page.hJ8N6fSlu82xYLzPK3T" />{" "}
+                    <FormattedMessage id="request_support.support_page.Y3vD1" />{" "}
+                    <FormattedMessage id="request_support.support_page.qYtpKLi" />
                   </p>
                   <p>
-                    You can use our automatically generated text if you want to,
-                    but you should first check a few things:
+                    <FormattedMessage id="request_support.support_page.wVgjyw82" />
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    It looks like the developer has to fix this problem. Please
-                    report an issue to the developer. If the issue has already
-                    been reported, you can upvote it (for example, with an
-                    emoji) if the site provides such a feature.
+                    <FormattedMessage id="request_support.support_page.rNHXMGcM" />{" "}
+                    <FormattedMessage id="request_support.support_page.jvNvoyohNY" />{" "}
+                    <FormattedMessage id="request_support.support_page.V4HUA7rBjjr7kCAE" />
                   </p>
                   <p>
-                    You can use our automatically generated text if you want to,
-                    but you should first check a few things:
+                    <FormattedMessage id="request_support.support_page.vJQAoHLaVtS" />
                   </p>
                 </>
               )}
@@ -293,7 +349,7 @@ ${checkedInternet}
                   htmlFor="checklist_addon_manager_updated"
                   className="form-checked-label"
                 >
-                  Super Addon Manager is up to date.
+                  <FormattedMessage id="request_support.support_page.LHooErZI2OenSfGnS" />
                 </label>
               </div>
 
@@ -312,7 +368,10 @@ ${checkedInternet}
                       htmlFor="checklist_addon_updated"
                       className="form-checked-label"
                     >
-                      {addonName} is up to date.
+                      <FormattedMessage
+                        id="request_support.support_page.QvP7uVRQqHmaNO"
+                        values={{ addonName }}
+                      />
                     </label>
                   </div>
                 )}
@@ -331,7 +390,7 @@ ${checkedInternet}
                   htmlFor="checklist_issue_reported"
                   className="form-checked-label"
                 >
-                  The issue hasn't been reported already.
+                  <FormattedMessage id="request_support.support_page.MgQT5vzKdyKq2R" />
                 </label>
               </div>
 
@@ -350,7 +409,7 @@ ${checkedInternet}
                       htmlFor="checkbox_internet_connection_checked"
                       className="form-checked-label"
                     >
-                      There's no problem with your internet connection.
+                      <FormattedMessage id="request_support.support_page.rK4KRLFHD" />
                     </label>
                   </div>
                 ) : null}
@@ -360,17 +419,18 @@ ${checkedInternet}
             {/* SUBMIT ISSUE */}
             <Row className="mt-3 mb-3">
               {/* HEADING */}
-              <h3>Submit an issue</h3>
+              <h3>
+                <FormattedMessage id="request_support.support_page.ze3zxggu0Fp" />
+              </h3>
               <p>
-                Once you have checked the items above, you can copy the
-                following text into a new issue on the{" "}
+                <FormattedMessage id="request_support.support_page.vzZIpZV" />{" "}
                 <a href={trackerURL} target="_blank" rel="noopener noreferrer">
-                  developer's website
+                  <FormattedMessage id="request_support.support_page.JFVwEbJqbyNM4SlZxpI" />
                 </a>
-                . Unsure how to submit issues on different platforms?{" "}
+                <FormattedMessage id="request_support.support_page.MwK6gYi" />{" "}
                 <Link href="/docs/submitting-issues">
                   <a rel="noopener noreferrer" target="_blank">
-                    Read this article on submitting good issue reports!
+                    <FormattedMessage id="request_support.support_page.qXmsNDX4zm" />
                   </a>
                 </Link>
               </p>
