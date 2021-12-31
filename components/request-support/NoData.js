@@ -98,7 +98,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
         <Container>
           <Row>
             <h1>
-              <FormattedMessage id="request_support.no_data.zkLTPa5LKW" />
+              <FormattedMessage id="request_support.no_data.request_support_for_your_addon" />
             </h1>
             <p>
               <FormattedMessage id="request_support.no_data.2q9ua96" />
@@ -121,7 +121,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 <FloatingLabel
                   controlId="issue_type"
                   label={
-                    <FormattedMessage id="request_support.no_data.jkLwSQHR2gof" />
+                    <FormattedMessage id="request_support.no_data.error_code" />
                   }
                 >
                   <Form.Select
@@ -134,7 +134,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   >
                     <option value="" disabled>
                       {intl.formatMessage({
-                        id: "request_support.no_data.eA5QLDHgBK1OiQyz9M",
+                        id: "request_support.no_data.select_an_option",
                       })}
                     </option>
                     {issueTypes.map((el) => (
@@ -150,7 +150,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 <FloatingLabel
                   controlId="addon_name"
                   label={
-                    <FormattedMessage id="request_support.no_data.DMlLkBsNAPel" />
+                    <FormattedMessage id="request_support.no_data.addon_name" />
                   }
                 >
                   <Form.Control
@@ -174,7 +174,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 <FloatingLabel
                   controlId="os_name"
                   label={
-                    <FormattedMessage id="request_support.no_data.WO4KrT25M" />
+                    <FormattedMessage id="request_support.no_data.operating_system" />
                   }
                 >
                   <Form.Select
@@ -187,7 +187,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   >
                     <option value="" disabled>
                       {intl.formatMessage({
-                        id: "request_support.no_data.eA5QLDHgBK1OiQyz9M",
+                        id: "request_support.no_data.select_an_option",
                       })}
                     </option>
                     {operatingSystems.map((el) => (
@@ -204,7 +204,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   controlId="blender_version"
                   label={
                     <FormattedMessage
-                      id="request_support.no_data.GVm5ZfE7X2IKhtw8"
+                      id="request_support.no_data.blender_version"
                       values={{ exampleBlenderVersion }}
                     />
                   }
@@ -228,7 +228,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   controlId="addon_version"
                   label={
                     <FormattedMessage
-                      id="request_support.no_data.pGkge"
+                      id="request_support.no_data.addon_version"
                       values={{ latestSPMVersion }}
                     />
                   }
@@ -257,7 +257,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     <FloatingLabel
                       controlId="addon_count"
                       label={
-                        <FormattedMessage id="request_support.no_data.2xITgKG6q8SaCUq" />
+                        <FormattedMessage id="request_support.no_data.estimated_number_of_installed_addons" />
                       }
                     >
                       <Form.Control
@@ -291,7 +291,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     <FloatingLabel
                       controlId="endpoint_url"
                       label={
-                        <FormattedMessage id="request_support.no_data.Ze89maa77DLSB" />
+                        <FormattedMessage id="request_support.no_data.endpoint_url" />
                       }
                     >
                       <Form.Control
@@ -317,7 +317,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     <FloatingLabel
                       controlId="error_message"
                       label={
-                        <FormattedMessage id="request_support.no_data.JccAxUHPqLfq" />
+                        <FormattedMessage id="request_support.no_data.error_message" />
                       }
                     >
                       <Form.Control
@@ -342,7 +342,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 <FloatingLabel
                   controlId="tracker_url"
                   label={
-                    <FormattedMessage id="request_support.no_data.APvsfp8A72doZ50T7XN" />
+                    <FormattedMessage id="request_support.no_data.tracker_url" />
                   }
                 >
                   <Form.Control
@@ -361,7 +361,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
             <Col className="d-grid">
               <Button variant="primary" type="submit">
-                <FormattedMessage id="request_support.no_data.wpOXD0EAdk5fmz8rnQ" />
+                <FormattedMessage id="request_support.no_data.request_support" />
               </Button>
             </Col>
           </Container>

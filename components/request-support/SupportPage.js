@@ -80,7 +80,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       provide a link to an online resource (the "Endpoint"), which contains
       information about new versions (if available). */}
       <FormattedMessage
-        id="request_support.support_page.1OMs4Spov56B"
+        id="request_support.support_page.endpoint_needed"
         values={{ addonName }}
       />
     </>
@@ -89,7 +89,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
     case ERROR_CODES.BL_INFO_VERSION_PROBLEMS:
       issueDescriptionText = (
         <>
-          <FormattedMessage id="request_support.support_page.E1IJemfSNBxsPYvB3Hf" />{" "}
+          <FormattedMessage id="request_support.support_page.cannot_understand_current_version" />{" "}
           <FormattedMessage id="request_support.support_page.2zhPVh" />
         </>
       );
@@ -98,12 +98,12 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       issueDescriptionText = (
         <>
           <FormattedMessage
-            id="request_support.support_page.LdPe1V2"
+            id="request_support.support_page.a_valid_url_looks_like"
             values={{ endpointIntroText }}
           />{" "}
-          <FormattedMessage id="request_support.support_page.F6iScya" />{" "}
+          <FormattedMessage id="request_support.support_page.the_url_is_invalid" />{" "}
           <FormattedMessage
-            id="request_support.support_page.L340OhQ"
+            id="request_support.support_page.it_looks_like_this"
             values={{ endpointURL }}
           />
         </>
@@ -133,7 +133,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       issueDescriptionText = (
         <>
           <FormattedMessage
-            id="request_support.support_page.Ri2VdsuOOwNu3rO7aTeU"
+            id="request_support.support_page.server_seems_offline"
             values={{ endpointIntroText }}
           />
         </>
@@ -142,8 +142,8 @@ export const SupportPage = ({ query, addonName, issueType }) => {
     case ERROR_CODES.UNKNOWN_ERROR:
       issueDescriptionText = (
         <>
-          <FormattedMessage id="request_support.support_page.qlnUG" />{" "}
-          <FormattedMessage id="request_support.support_page.sMtbUqHgqKsGz" />
+          <FormattedMessage id="request_support.support_page.we_do_not_know" />{" "}
+          <FormattedMessage id="request_support.support_page.all_that_you" />
         </>
       );
       break;
@@ -151,12 +151,12 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       issueDescriptionText = (
         <>
           <FormattedMessage
-            id="request_support.support_page.8HhKBa3"
+            id="request_support.support_page.addon_does_not_support_sam"
             values={{ addonName }}
           />{" "}
-          <FormattedMessage id="request_support.support_page.gZqnkihrktzIW6He1" />{" "}
+          <FormattedMessage id="request_support.support_page.developers_have_to_enable_support" />{" "}
           <FormattedMessage
-            id="request_support.support_page.dbIUtWj8AxVZ5"
+            id="request_support.support_page.it_is_time_to_tell_the_developers"
             values={{ addonName }}
           />
         </>
@@ -264,13 +264,13 @@ ${checkedInternet}
           <Row>
             <h1>
               <FormattedMessage
-                id="request_support.support_page.5GqcRfryAYt"
+                id="request_support.support_page.issue_with_your_addon"
                 values={{ addonName }}
               />
             </h1>
             <p>
               <FormattedMessage
-                id="request_support.support_page.wETvq7xS4Cnfsg"
+                id="request_support.support_page.sam_cannot_check_for_updates"
                 values={{ addonName }}
               />
             </p>
@@ -283,7 +283,7 @@ ${checkedInternet}
         <Container>
           <Row className="mt-3 mb-3">
             <h2>
-              <FormattedMessage id="request_support.support_page.YJ0pza" />
+              <FormattedMessage id="request_support.support_page.what_is_the_problem" />
             </h2>
             <p>{issueDescriptionText}</p>
           </Row>
@@ -296,15 +296,15 @@ ${checkedInternet}
           <Row className="mt-3 mb-3">
             {/* HEADING */}
             <h2>
-              <FormattedMessage id="request_support.support_page.yhlniNuyq" />
+              <FormattedMessage id="request_support.support_page.what_can_you_do_to_make_it_work" />
             </h2>
             {/* TEXT */}
             <>
               {issueType === "endpoint_offline" ? (
                 <>
                   <p>
-                    <FormattedMessage id="request_support.support_page.nz4icA96e4VVQ0YA" />{" "}
-                    <FormattedMessage id="request_support.support_page.OLKYCqs4HzF" />{" "}
+                    <FormattedMessage id="request_support.support_page.check_that_your_internet_connection_works" />{" "}
+                    <FormattedMessage id="request_support.support_page.try_to_reach_the_endpoint" />{" "}
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
@@ -312,23 +312,23 @@ ${checkedInternet}
                     >
                       {endpointURL}.
                     </a>{" "}
-                    <FormattedMessage id="request_support.support_page.hJ8N6fSlu82xYLzPK3T" />{" "}
-                    <FormattedMessage id="request_support.support_page.Y3vD1" />{" "}
-                    <FormattedMessage id="request_support.support_page.qYtpKLi" />
+                    <FormattedMessage id="request_support.support_page.retry_to_check_for_updates" />{" "}
+                    <FormattedMessage id="request_support.support_page.what_if_it_still_does_not_work" />{" "}
+                    <FormattedMessage id="request_support.support_page.what_if_the_issue_has_already_been_reported" />
                   </p>
                   <p>
-                    <FormattedMessage id="request_support.support_page.wVgjyw82" />
+                    <FormattedMessage id="request_support.support_page.you_can_use_our_automatically_generated_text" />
                   </p>
                 </>
               ) : (
                 <>
                   <p>
-                    <FormattedMessage id="request_support.support_page.rNHXMGcM" />{" "}
-                    <FormattedMessage id="request_support.support_page.jvNvoyohNY" />{" "}
-                    <FormattedMessage id="request_support.support_page.V4HUA7rBjjr7kCAE" />
+                    <FormattedMessage id="request_support.support_page.the_developer_has_to_fix_this_problem" />{" "}
+                    <FormattedMessage id="request_support.support_page.please_report_an_issue" />{" "}
+                    <FormattedMessage id="request_support.support_page.what_if_the_issue_has_already_been_reported" />
                   </p>
                   <p>
-                    <FormattedMessage id="request_support.support_page.vJQAoHLaVtS" />
+                    <FormattedMessage id="request_support.support_page.you_can_use_our_automatically_generated_text" />
                   </p>
                 </>
               )}
@@ -349,7 +349,7 @@ ${checkedInternet}
                   htmlFor="checklist_addon_manager_updated"
                   className="form-checked-label"
                 >
-                  <FormattedMessage id="request_support.support_page.LHooErZI2OenSfGnS" />
+                  <FormattedMessage id="request_support.support_page.sam_is_up_to_date" />
                 </label>
               </div>
 
@@ -369,7 +369,7 @@ ${checkedInternet}
                       className="form-checked-label"
                     >
                       <FormattedMessage
-                        id="request_support.support_page.QvP7uVRQqHmaNO"
+                        id="request_support.support_page.addon_is_up_to_date"
                         values={{ addonName }}
                       />
                     </label>
@@ -390,7 +390,7 @@ ${checkedInternet}
                   htmlFor="checklist_issue_reported"
                   className="form-checked-label"
                 >
-                  <FormattedMessage id="request_support.support_page.MgQT5vzKdyKq2R" />
+                  <FormattedMessage id="request_support.support_page.the_issue_hasnt_been_reported_already" />
                 </label>
               </div>
 
@@ -409,7 +409,7 @@ ${checkedInternet}
                       htmlFor="checkbox_internet_connection_checked"
                       className="form-checked-label"
                     >
-                      <FormattedMessage id="request_support.support_page.rK4KRLFHD" />
+                      <FormattedMessage id="request_support.support_page.theres_no_problem_with_your_internet_connection" />
                     </label>
                   </div>
                 ) : null}
@@ -420,17 +420,17 @@ ${checkedInternet}
             <Row className="mt-3 mb-3">
               {/* HEADING */}
               <h3>
-                <FormattedMessage id="request_support.support_page.ze3zxggu0Fp" />
+                <FormattedMessage id="request_support.support_page.submit_an_issue" />
               </h3>
               <p>
-                <FormattedMessage id="request_support.support_page.vzZIpZV" />{" "}
+                <FormattedMessage id="request_support.support_page.you_can_copy_the_following_text" />{" "}
                 <a href={trackerURL} target="_blank" rel="noopener noreferrer">
-                  <FormattedMessage id="request_support.support_page.JFVwEbJqbyNM4SlZxpI" />
+                  <FormattedMessage id="request_support.support_page.developers_website" />
                 </a>
                 <FormattedMessage id="request_support.support_page.MwK6gYi" />{" "}
                 <Link href="/docs/submitting-issues">
                   <a rel="noopener noreferrer" target="_blank">
-                    <FormattedMessage id="request_support.support_page.qXmsNDX4zm" />
+                    <FormattedMessage id="request_support.support_page.read_this_article" />
                   </a>
                 </Link>
               </p>
