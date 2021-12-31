@@ -1,3 +1,24 @@
+# ##### BEGIN GPL LICENSE BLOCK #####
+#
+#  <A central Updater for all your Addons>
+#    Copyright (C) <2021>  <Blender Defender>
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 3
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software Foundation,
+#  Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+#
+# ##### END GPL LICENSE BLOCK #####
+
 import bpy
 from bpy.app.handlers import persistent
 
@@ -25,7 +46,8 @@ def startup_setup(*args):
     d = decode_json(path)
     if d is not None:
         if prefs.auto_check_for_updates and time.time() - d["last_check"] > check_interval:
-            bpy.ops.superaddonmanager.check_for_updates(is_background_check=True)
+            bpy.ops.superaddonmanager.check_for_updates(
+                is_background_check=True)
 
 
 def register():
