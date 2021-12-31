@@ -8,4 +8,9 @@ Maybe save backup copies (of the addons) for (a) downgrade option(s)
 
 Manual Download: Offer the possibility of updating an addon from a downloaded ZIP file.
 
+All addons: Add option to update an addon from file, even if it doesn't support Super Addon Manager
+
+Download Page: Add Page that says "Thank you for your donation" (Component on the thanks page):
+Social Media Description: "I've just donated to Super Addon Manager. If you want to support the project too, please donate!"
+
 Schema Validation: Try to use a schema validator.
