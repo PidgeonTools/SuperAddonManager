@@ -14,6 +14,7 @@ import hljs from "highlight.js";
 import Header from "../../../components/Header";
 import Navbar from "../../../components/Navbar";
 import CopyButton from "../../../components/CopyButton";
+import DocumentationImage from "../../../components/docs/DocumentationImage";
 import {
   BlInfoVersionProblems,
   SamNotSupported,
@@ -136,6 +137,9 @@ const Page = ({
               },
               UnknownError: {
                 component: UnknownError,
+              },
+              DocumentationImage: {
+                component: DocumentationImage,
               },
             },
           }}
