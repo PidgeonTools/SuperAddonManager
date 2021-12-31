@@ -14,3 +14,12 @@
     }
   }
 }
+
+*[id]::before {
+  display: block;
+  content: " ";
+  margin-top: -7rem;
+  height: 7rem;
+  visibility: hidden;
+  pointer-events: none;
+}

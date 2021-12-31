@@ -1,5 +1,7 @@
 import React from "react";
 
+// TODO: Style the component!
+
 const DocumentationImage = ({ ...props }) => {
   return (
     <>
