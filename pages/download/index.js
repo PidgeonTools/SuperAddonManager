@@ -27,7 +27,10 @@ const Download = ({ addons }) => {
 
   return (
     <IntlWrapper>
-      <Header title="Download" />
+      <Header
+        title="Download"
+        description="Finally keep track of new versions for your addons. Download Super Addon Manager!"
+      />
       <Navbar />
       {/* DOWNLOAD SECTION */}
       <section className="intro download-box">

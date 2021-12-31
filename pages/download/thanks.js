@@ -47,7 +47,10 @@ const Thanks = ({ data }) => {
 
   return (
     <IntlWrapper>
-      <Header title="Thanks" />
+      <Header
+        title="Thanks"
+        description="I've just downloaded Super Addon Manager to make updating all of my addons easier. Do you want to try it out? Visit their site!"
+      />
       <Navbar />
       {/* SUCCESS MESSAGE */}
       <section className="intro thanks-success-message pb-3">
