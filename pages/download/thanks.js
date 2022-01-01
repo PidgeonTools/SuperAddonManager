@@ -13,6 +13,7 @@ import Navbar from "../../components/Navbar";
 import { motion } from "framer-motion";
 
 // Translations
+import { FormattedMessage, FormattedNumber, useIntl } from "react-intl";
 import IntlWrapper from "../../components/IntlWrapper";
 
 const Thanks = ({ data }) => {
@@ -57,9 +58,9 @@ const Thanks = ({ data }) => {
         <Container>
           <Row>
             <div>
-              Thank you for downloading Super Addon Manager. Your download
-              should start soon. If it doesn't start, try to download Super
-              Addon Manager via this link:
+              <FormattedMessage id="download.thanks.jCmeFR" />{" "}
+              <FormattedMessage id="download.thanks.f9jeOkwFSed" />{" "}
+              <FormattedMessage id="download.thanks.HIzSIVtzKFal" />
             </div>
             <Link href={data.downloadLink}>{data.downloadLink}</Link>
           </Row>
@@ -79,7 +80,9 @@ const Thanks = ({ data }) => {
         <Container>
           {/* HEADING */}
           <Row>
-            <h1>Help us to keep this project alive:</h1>
+            <h1>
+              <FormattedMessage id="download.thanks.qy2kXWxMz2is" />
+            </h1>
           </Row>
           <div className="thanks-donate-box--form">
             {/* AMOUNT FORM */}
@@ -116,8 +119,18 @@ const Thanks = ({ data }) => {
             {/* AMOUNT COMPARISON TEXT */}
             <Row>
               <Col md="11">
-                <div>The same price as: {item.description}</div>
-                <div>Your contribution: {amount} €</div>
+                <div>
+                  <FormattedMessage id="download.thanks.JIXwXtWEOviZYjQAs" />{" "}
+                  <FormattedMessage id={item.id} />
+                </div>
+                <div>
+                  <FormattedMessage id="download.thanks.WNYzkrgWAp8" />{" "}
+                  <FormattedNumber
+                    value={amount}
+                    style="currency"
+                    currency="EUR"
+                  />
+                </div>
               </Col>
             </Row>
           </div>

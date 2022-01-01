@@ -1,62 +1,61 @@
 {
     "productComparisons": [
-    {
-        "price": 0,
-        "description": "Nothing. Use Super Addon Manager for free"
-    },
-    {
-        "price": 2,
-        "description": "A little Hamburger"
-    },
-    {
-        "price": 5,
-        "description": "A medium iced tea"
-    },
-    {
-        "price": 20,
-        "description": "Some cheap headphones"
-    },
-    {
-        "price": 50,
-        "description": "A warm jacket"
-    },
-    {
-        "price": 100,
-        "description": "A gaming headset"
-    },
-    {
-        "price": 500,
-        "description": "A robotic mop"
-    },
-    {
-        "price": 749,
-        "description": "A robotic mop"
-    },
-    {
-        "price": 750,
-        "description": "Kevins rent"
-    },
-    {
-        "price": 751,
-        "description": "A medium graphics card for Blender"
-    },
-    {
-        "price": 1000,
-        "description": "A medium graphics card for Blender"
-    },
-    {
-        "price": 2000,
-        "description": "A flight from Berlin to Sydney (one way)"
-    },
-    {
-        "price": 5000,
-        "description": "A flight from Berlin to Sydney (two ways)"
-    },
-    {
-        "price": 9999,
-        "description": "An extremely high-power PC setup"
-    }
-],
+        {
+            "price": 0,
+            "id": "download.thanks.product_comparisons.0"
+        },
+        {
+            "price": 2,
+            "id": "download.thanks.product_comparisons.2"
+        },
+        {
+            "price": 5,
+            "id": "download.thanks.product_comparisons.5"
+        },
+        {
+            "price": 20,
+            "id": "download.thanks.product_comparisons.20"
+        },
+        {
+            "price": 50,
+            "id": "download.thanks.product_comparisons.50"
+        },
+        {
+            "price": 100,
+            "id": "download.thanks.product_comparisons.100"
+        },
+        {
+            "price": 500,
+            "id": "download.thanks.product_comparisons.500"
+        },
+        {
+            "price": 749,
+            "id": "download.thanks.product_comparisons.749"
+        },
+        {
+            "price": 750,
+            "id": "download.thanks.product_comparisons.750"
+        },
+        {
+            "price": 751,
+            "id": "download.thanks.product_comparisons.751"
+        },
+        {
+            "price": 1000,
+            "id": "download.thanks.product_comparisons.1000"
+        },
+        {
+            "price": 2000,
+            "id": "download.thanks.product_comparisons.2000"
+        },
+        {
+            "price": 5000,
+            "id": "download.thanks.product_comparisons.5000"
+        },
+        {
+            "price": 9999,
+            "id": "download.thanks.product_comparisons.9999"
+        }
+    ],
     "downloadLink": "https://github.com/BlenderDefender/SuperAddonManager/archive/refs/heads/master.zip"
-
 }
