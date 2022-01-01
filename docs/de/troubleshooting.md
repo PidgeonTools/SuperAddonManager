@@ -1,6 +1,6 @@
 ---
 title: Fehlerbehebung
-description: A troubleshooting guide for common issues.
+description: Eine Anleitung zur Behebung häufiger Probleme.
 for: Benutzer
 category: Fehlerbehandlung
 category-index: 2
