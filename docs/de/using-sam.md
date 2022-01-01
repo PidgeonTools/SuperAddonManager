@@ -1,8 +1,8 @@
 ---
-title: Using Super Addon Manager
-description: A guide that shows how to use Super Addon Manager
+title: Super Addon Manager benutzen
+description: Ein Leitfaden für die Verwendung von Super Addon Manager
 for: Benutzer
-category: Using Super Addon Manager
+category: Super Addon Manager benutzen
 category-index: 0
 page-index: 0
 ---
