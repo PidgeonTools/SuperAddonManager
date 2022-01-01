@@ -18,6 +18,7 @@ import {
 
 // Translations
 import { FormattedMessage } from "react-intl";
+import { getI18nLink } from "../../lib/i10n/I18nFormatters";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
   // === Page Elements ===
@@ -423,10 +424,16 @@ ${checkedInternet}
                 <FormattedMessage id="request_support.support_page.submit_an_issue" />
               </h3>
               <p>
-                <FormattedMessage id="request_support.support_page.you_can_copy_the_following_text" />{" "}
-                <a href={trackerURL} target="_blank" rel="noopener noreferrer">
-                  <FormattedMessage id="request_support.support_page.developers_website" />
-                </a>
+                <FormattedMessage
+                  id="request_support.support_page.you_can_copy_the_following_text"
+                  values={{
+                    link: getI18nLink({
+                      href: trackerURL,
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    }),
+                  }}
+                />{" "}
                 <FormattedMessage id="request_support.support_page.MwK6gYi" />{" "}
                 <Link href="/docs/submitting-issues">
                   <a rel="noopener noreferrer" target="_blank">
