@@ -1,4 +1,4 @@
-const LANGUAGES = ["en", "de"];
+export const LANGUAGES = ["en"];
 
 export const getLanguage = (window) => {
   // Read the language from Local Storage
