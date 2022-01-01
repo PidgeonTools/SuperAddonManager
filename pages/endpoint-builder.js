@@ -31,14 +31,14 @@ import {
 } from "../functions";
 
 // Translations
+import { FormattedMessage, useIntl } from "react-intl";
 import IntlWrapper from "../components/IntlWrapper";
-
-const PAGE_TITLE = "Endpoint JSON Builder";
 
 const EndpointBuilderPage = ({
   exampleBlenderLTSVersion,
   latestSPMVersion,
 }) => {
+  const intl = useIntl();
   const [validated, setValidated] = useState(false);
 
   // Form Values
@@ -143,14 +143,16 @@ const EndpointBuilderPage = ({
   return (
     <IntlWrapper>
       <Header
-        title={PAGE_TITLE}
+        title={intl.formatMessage({ id: "endpoint_builder.title" })}
         description="You are a developer and want to support automatic addon updates with Super Addon Manager? Use this tool to generate/update a valid Endpoint in less than a minute!"
       />
       <Navbar />
 
       {/* INTRO */}
       <Container className="intro">
-        <h1>{PAGE_TITLE}</h1>
+        <h1>
+          <FormattedMessage id="endpoint_builder.title" />
+        </h1>
       </Container>
 
       {/* ENDPOINT BUILDER */}
@@ -269,7 +271,7 @@ const EndpointBuilderPage = ({
 
                 <Col className="d-grid">
                   <Button variant="primary" type="submit" accessKey="G">
-                    Generate Endpoint JSON
+                    <FormattedMessage id="endpoint_builder.generate" />
                   </Button>
                 </Col>
               </Form>

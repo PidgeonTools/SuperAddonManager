@@ -56,6 +56,8 @@
     "endpoint_builder.help_texts.minimum_blender_version.we_would_suggest": "We'd suggest making your addon compatible with all Blender versions that receive updates, including the LTS versions.",
     "endpoint_builder.help_texts.maximum_blender_version.if_you_are_making_an_update": "If you are making an update <b>for an older Blender Version</b>, and you know for sure, that it won't work on a newer Blender Version, please type in the first Blender Version where the update doesn't work due to API changes.",
     "endpoint_builder.help_texts.maximum_blender_version.if_your_addon_works": "If your addon works with the latest version of Blender, <b>please leave this field empty!</b>",
+    "endpoint_builder.title": "Endpoint JSON Builder",
+    "endpoint_builder.generate": "Generate Endpoint JSON",
     "endpoint_checker.data_input.title": "Endpoint JSON Checker",
     "endpoint_checker.data_input.description_text": "Check and fix your Endpoint JSON File. Drag'n Drop/Select your file or enter the Endpoint URL and click \"Go\" to check your file:",
     "endpoint_checker.data_input.drag_and_drop": "Drag'n Drop your file here or click to select a file.",
