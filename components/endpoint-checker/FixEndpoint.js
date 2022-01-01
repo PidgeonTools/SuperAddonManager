@@ -16,6 +16,7 @@ import { padAddonVersion, padBlenderVersion } from "../../functions";
 
 // Translations
 import { FormattedMessage } from "react-intl";
+import { getI18nLink } from "../../lib/i10n/I18nFormatters";
 
 export const FixEndpoint = ({
   inputData,
@@ -193,11 +194,14 @@ export const FixEndpoint = ({
       default:
         setShowMessage(
           <>
-            <FormattedMessage id="endpoint_checker.fix_endpoint.unknown_error" />
-            <a href="https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender">
-              <FormattedMessage id="endpoint_checker.fix_endpoint.contact_us_on_github" />
-            </a>{" "}
-            <FormattedMessage id="endpoint_checker.fix_endpoint.so_we_can_figure_out_the_issue" />
+            <FormattedMessage
+              id="endpoint_checker.fix_endpoint.unknown_error"
+              values={{
+                link: getI18nLink({
+                  href: "https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender",
+                }),
+              }}
+            />
           </>
         );
         setShowComponent(<></>);
