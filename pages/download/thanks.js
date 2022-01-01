@@ -66,9 +66,9 @@ const Thanks = ({ data }) => {
         <Container>
           <Row>
             <div>
-              <FormattedMessage id="download.thanks.jCmeFR" />{" "}
-              <FormattedMessage id="download.thanks.f9jeOkwFSed" />{" "}
-              <FormattedMessage id="download.thanks.HIzSIVtzKFal" />
+              <FormattedMessage id="download.thanks.thank_you_for_downloading" />{" "}
+              <FormattedMessage id="download.thanks.your_download_should_start_soon" />{" "}
+              <FormattedMessage id="download.thanks.what_if_the_download_does_not_start" />
             </div>
             <Link href={data.downloadLink}>{data.downloadLink}</Link>
           </Row>
@@ -89,7 +89,7 @@ const Thanks = ({ data }) => {
           {/* HEADING */}
           <Row>
             <h1>
-              <FormattedMessage id="download.thanks.qy2kXWxMz2is" />
+              <FormattedMessage id="download.thanks.help_us" />
             </h1>
           </Row>
           <div className="thanks-donate-box--form">
@@ -128,11 +128,11 @@ const Thanks = ({ data }) => {
             <Row>
               <Col md="11">
                 <div>
-                  <FormattedMessage id="download.thanks.JIXwXtWEOviZYjQAs" />{" "}
+                  <FormattedMessage id="download.thanks.the_same_price_as" />{" "}
                   <FormattedMessage id={item.id} />
                 </div>
                 <div>
-                  <FormattedMessage id="download.thanks.WNYzkrgWAp8" />{" "}
+                  <FormattedMessage id="download.thanks.your_contribution" />{" "}
                   <FormattedNumber
                     value={amount}
                     style="currency"

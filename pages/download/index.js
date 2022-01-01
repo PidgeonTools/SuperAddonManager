@@ -40,7 +40,7 @@ const Download = ({ addons }) => {
             {/* DOWNLOAD BUTTON */}
             <Col md="6" className="text-center">
               <h1>
-                <FormattedMessage id="download.e2tAlHNP6aZnAqfxC0" />
+                <FormattedMessage id="download.super_addon_manager" />
               </h1>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -48,20 +48,20 @@ const Download = ({ addons }) => {
                 onClick={downloadCallback}
                 className="btn btn-secondary"
               >
-                <FormattedMessage id="download.IMJOUwfmyhkD" />
+                <FormattedMessage id="download.download" />
               </motion.button>
             </Col>
             {/* SAM FEATURES */}
             <Col md="6" className="text-left pt-3">
               <ul>
                 <li>
-                  <FormattedMessage id="download.gVDEiO5Ey1pz9uiGKZ" />
+                  <FormattedMessage id="download.sam_features_list_one" />
                 </li>
                 <li>
-                  <FormattedMessage id="download.ARUncLfdwgrL" />
+                  <FormattedMessage id="download.sam_features_list_two" />
                 </li>
                 <li>
-                  <FormattedMessage id="download.U9Qba7SOd" />
+                  <FormattedMessage id="download.sam_features_list_three" />
                 </li>
               </ul>
             </Col>
@@ -82,13 +82,13 @@ const Download = ({ addons }) => {
           <Row className="text-center">
             {/* HEADING */}
             <h2>
-              <FormattedMessage id="download.sSunBmyjo" />{" "}
+              <FormattedMessage id="download.you_can_use_super_addon_manager_with" />{" "}
               <AnimatedNumber
                 value={addons.length}
                 formatValue={(n) => n.toFixed(0)}
                 duration={counterDuration}
               />
-              <FormattedMessage id="download.NQ5Z4" />
+              <FormattedMessage id="download.addons" />
             </h2>
             {/* ADDONS LISTING */}
             {addons.map((addon) => (

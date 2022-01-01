@@ -2,59 +2,59 @@
     "productComparisons": [
         {
             "price": 0,
-            "id": "download.thanks.product_comparisons.0"
+            "id": "download.thanks.product_comparisons.nothing"
         },
         {
             "price": 2,
-            "id": "download.thanks.product_comparisons.2"
+            "id": "download.thanks.product_comparisons.hamburger"
         },
         {
             "price": 5,
-            "id": "download.thanks.product_comparisons.5"
+            "id": "download.thanks.product_comparisons.iced_tea"
         },
         {
             "price": 20,
-            "id": "download.thanks.product_comparisons.20"
+            "id": "download.thanks.product_comparisons.headphones"
         },
         {
             "price": 50,
-            "id": "download.thanks.product_comparisons.50"
+            "id": "download.thanks.product_comparisons.jacket"
         },
         {
             "price": 100,
-            "id": "download.thanks.product_comparisons.100"
+            "id": "download.thanks.product_comparisons.a_gaming_headset"
         },
         {
             "price": 500,
-            "id": "download.thanks.product_comparisons.500"
+            "id": "download.thanks.product_comparisons.a_robotic_mop"
         },
         {
             "price": 749,
-            "id": "download.thanks.product_comparisons.749"
+            "id": "download.thanks.product_comparisons.a_robotic_mop"
         },
         {
             "price": 750,
-            "id": "download.thanks.product_comparisons.750"
+            "id": "download.thanks.product_comparisons.kevins_rent"
         },
         {
             "price": 751,
-            "id": "download.thanks.product_comparisons.751"
+            "id": "download.thanks.product_comparisons.medium_graphics_card"
         },
         {
             "price": 1000,
-            "id": "download.thanks.product_comparisons.1000"
+            "id": "download.thanks.product_comparisons.medium_graphics_card"
         },
         {
             "price": 2000,
-            "id": "download.thanks.product_comparisons.2000"
+            "id": "download.thanks.product_comparisons.one_way_flight"
         },
         {
             "price": 5000,
-            "id": "download.thanks.product_comparisons.5000"
+            "id": "download.thanks.product_comparisons.two_way_flight"
         },
         {
             "price": 9999,
-            "id": "download.thanks.product_comparisons.9999"
+            "id": "download.thanks.product_comparisons.high_power_pc_setup"
         }
     ],
     "downloadLink": "https://github.com/BlenderDefender/SuperAddonManager/archive/refs/heads/master.zip"
