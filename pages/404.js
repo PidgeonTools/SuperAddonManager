@@ -63,11 +63,11 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
           {/* DOWNLOAD LINKS */}
           <div className="error-404-message--link-container error-404-message--text">
             {addonDownloadLinks.map((addon) => (
-              <>
-                <Link key={addon.name} href={addon.link}>
+              <React.Fragment key={addon.name}>
+                <Link href={addon.link}>
                   <a>{addon.name}</a>
                 </Link>{" "}
-              </>
+              </React.Fragment>
             ))}
           </div>
           {/* FUN FACT */}
