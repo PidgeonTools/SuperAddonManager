@@ -65,7 +65,6 @@ const EndpointBuilderPage = ({
     switch (focusedElement) {
       case INPUTID.VERSION:
         setHelpText(<Version exampleText={latestSPMVersion} />);
-        // console.log(helpText);
         break;
       case INPUTID.DOWNLOAD_URL:
         setHelpText(
@@ -74,7 +73,6 @@ const EndpointBuilderPage = ({
             exampleText={"https://www.example.com/download-my-addon"}
           />
         );
-        // console.log(helpText);
         break;
       case INPUTID.MINIMUM_BLENDER_VERSION:
         setHelpText(<MinBlender exampleText={exampleBlenderLTSVersion} />);

@@ -18,7 +18,7 @@ import IntlWrapper from "../../components/IntlWrapper";
 
 const Thanks = ({ data }) => {
   const router = useRouter();
-  const [amount, setAmount] = useState(5);
+  const [amount, setAmount] = useState("5");
 
   // === Pick an item from the list of comparison texts ===
   let item = {};
@@ -31,11 +31,17 @@ const Thanks = ({ data }) => {
     }
   });
 
+  const floor = (number, decimal) => {
+    return Math.floor(number * 10 ** decimal) / 10 ** decimal;
+  };
+
   // === Handle a change in the donation form ===
   const handleChange = (value, callback) => {
     value = value == "" ? "0" : value;
+    value = floor(Number(value), 2);
     value = value <= 9999 ? value : 9999;
-    callback(value);
+
+    callback(String(value));
   };
 
   // === Download the file on pageload. ===
@@ -44,6 +50,8 @@ const Thanks = ({ data }) => {
       router.push(data.downloadLink);
       window.sessionStorage.setItem("file_downloaded", true);
     }
+
+    setAmount(5);
   }, []);
 
   return (
@@ -96,8 +104,8 @@ const Thanks = ({ data }) => {
                   min="0"
                   max="100"
                   value={amount}
-                  onChange={(e) => {
-                    handleChange(e.target.value, setAmount);
+                  onChange={({ target }) => {
+                    handleChange(target.value, setAmount);
                   }}
                 />
               </Col>
@@ -110,8 +118,8 @@ const Thanks = ({ data }) => {
                   min="0"
                   max="9999"
                   value={amount}
-                  onChange={(e) => {
-                    handleChange(e.target.value, setAmount);
+                  onChange={({ target }) => {
+                    handleChange(target.value, setAmount);
                   }}
                 />
               </Col>
