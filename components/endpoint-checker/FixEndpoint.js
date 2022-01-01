@@ -98,7 +98,7 @@ export const FixEndpoint = ({
         setShowComponent(<></>);
         setShowMessage(
           <>
-            <FormattedMessage id="endpoint_checker.fix_endpoint.the_array_of_versions_is_missing" />
+            <FormattedMessage id="endpoint_checker.fix_endpoint.the_array_of_versions_is_missing" />{" "}
             <FormattedMessage id="endpoint_checker.fix_endpoint.please_click_fix_this" />
           </>
         );
