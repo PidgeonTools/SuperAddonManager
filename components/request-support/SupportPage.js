@@ -19,8 +19,11 @@ import {
 // Translations
 import { FormattedMessage } from "react-intl";
 import { getI18nLink } from "../../lib/i10n/I18nFormatters";
+import { getLanguage } from "../../functions/getLanguage";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
+  const [language, setLanguage] = useState("en");
+
   // === Page Elements ===
   const [samUpToDate, setSamUpToDate] = useState(false);
   const [addonUpToDate, setAddonUpToDate] = useState(false);
@@ -257,6 +260,11 @@ ${checkedInternet}
     }
   }, [samUpToDate, addonUpToDate, noDuplicate, internetWorks]);
 
+  // Initialize the page
+  useEffect(() => {
+    setLanguage(getLanguage(window));
+  }, []);
+
   return (
     <>
       {/* INTRO SECTION */}
@@ -435,7 +443,7 @@ ${checkedInternet}
                   }}
                 />{" "}
                 <FormattedMessage id="request_support.support_page.MwK6gYi" />{" "}
-                <Link href="/docs/submitting-issues">
+                <Link href={`/docs/${language}/submitting-issues`}>
                   <a rel="noopener noreferrer" target="_blank">
                     <FormattedMessage id="request_support.support_page.read_this_article" />
                   </a>
