@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 
 const Header = ({
+  children = <></>,
   title,
   description = "Super Addon Manager (SAM) - a decentralized addon updater and manager for Blender. Keep (all) your addons up to date using SAM!",
 }) => {
@@ -39,6 +40,7 @@ const Header = ({
         rel="stylesheet"
       />
       <link rel="icon" href="./favicon.ico" />
+      {children}
     </Head>
   );
 };
