@@ -47,7 +47,7 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
           {/* ERROR MESSAGE TEXT */}
           <div className="error-404-message--text">
             <FormattedMessage
-              id="error_404.message.LKj94jPYGa"
+              id="error_404.message.you_can_go_home"
               values={{
                 Home: getI18nLink({ href: "/" }),
                 TryThisPage: getI18nLink({

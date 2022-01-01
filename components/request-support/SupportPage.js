@@ -94,7 +94,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       issueDescriptionText = (
         <>
           <FormattedMessage id="request_support.support_page.cannot_understand_current_version" />{" "}
-          <FormattedMessage id="request_support.support_page.2zhPVh" />
+          <FormattedMessage id="request_support.support_page.sam_does_not_know_if_there_is_an_update" />
         </>
       );
       break;
@@ -117,7 +117,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       issueDescriptionText = (
         <>
           <FormattedMessage
-            id="request_support.support_page.OGtfrsa5REX9Aycs4GJf"
+            id="request_support.support_page.endpoint_has_wrong_file_format"
             values={{ endpointIntroText }}
           />
         </>
@@ -127,7 +127,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
       issueDescriptionText = (
         <>
           <FormattedMessage
-            id="request_support.support_page.pLiRTlAns3ysHtQPmWj"
+            id="request_support.support_page.endpoint_is_incomplete"
             values={{ endpointIntroText }}
           />
         </>
@@ -442,7 +442,7 @@ ${checkedInternet}
                     }),
                   }}
                 />{" "}
-                <FormattedMessage id="request_support.support_page.MwK6gYi" />{" "}
+                <FormattedMessage id="request_support.support_page.are_you_unsure_how_to_submit_issues" />{" "}
                 <Link href={`/docs/${language}/submitting-issues`}>
                   <a rel="noopener noreferrer" target="_blank">
                     <FormattedMessage id="request_support.support_page.read_this_article" />

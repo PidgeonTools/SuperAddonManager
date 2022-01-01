@@ -101,7 +101,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
               <FormattedMessage id="request_support.no_data.request_support_for_your_addon" />
             </h1>
             <p>
-              <FormattedMessage id="request_support.no_data.2q9ua96" />
+              <FormattedMessage id="request_support.no_data.fill_in_the_form" />
             </p>
           </Row>
         </Container>

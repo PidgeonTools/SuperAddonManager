@@ -160,7 +160,7 @@ export const FixEndpoint = ({
         );
         setShowMessage(
           <FormattedMessage
-            id="endpoint_checker.fix_endpoint.yfdsg"
+            id="endpoint_checker.fix_endpoint.fill_in_minimum_blender_version"
             values={{ errorMessageIntro: errorMessageIntro }}
           />
         );
