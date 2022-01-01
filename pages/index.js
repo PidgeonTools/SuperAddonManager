@@ -28,6 +28,11 @@ export default function Home() {
               Endpoint Builder
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item as="li">
+            <Nav.Link as={Link} href="/endpoint-checker">
+              Endpoint Checker
+            </Nav.Link>
+          </Nav.Item>
         </Nav>
       </Container>
     </IntlWrapper>
