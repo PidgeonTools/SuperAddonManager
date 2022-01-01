@@ -13,6 +13,7 @@ import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
 
 // Translations
+import { FormattedMessage } from "react-intl";
 import IntlWrapper from "../../components/IntlWrapper";
 
 const Download = ({ addons }) => {
@@ -38,30 +39,29 @@ const Download = ({ addons }) => {
           <Row>
             {/* DOWNLOAD BUTTON */}
             <Col md="6" className="text-center">
-              <h1>Super Addon Manager</h1>
+              <h1>
+                <FormattedMessage id="download.e2tAlHNP6aZnAqfxC0" />
+              </h1>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadCallback}
                 className="btn btn-secondary"
               >
-                Download
+                <FormattedMessage id="download.IMJOUwfmyhkD" />
               </motion.button>
             </Col>
             {/* SAM FEATURES */}
             <Col md="6" className="text-left pt-3">
               <ul>
                 <li>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Voluptates consequuntur consectetur voluptas.
+                  <FormattedMessage id="download.gVDEiO5Ey1pz9uiGKZ" />
                 </li>
                 <li>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
-                  harum est debitis.
+                  <FormattedMessage id="download.ARUncLfdwgrL" />
                 </li>
                 <li>
-                  Accusamus modi alias reprehenderit accusantium, quibusdam
-                  ipsum natus. Harum esse nihil quibusdam!
+                  <FormattedMessage id="download.U9Qba7SOd" />
                 </li>
               </ul>
             </Col>
@@ -82,13 +82,13 @@ const Download = ({ addons }) => {
           <Row className="text-center">
             {/* HEADING */}
             <h2>
-              You can use Super Addon Manager with{" "}
+              <FormattedMessage id="download.sSunBmyjo" />{" "}
               <AnimatedNumber
                 value={addons.length}
                 formatValue={(n) => n.toFixed(0)}
                 duration={counterDuration}
               />
-              + Addons:
+              <FormattedMessage id="download.NQ5Z4" />
             </h2>
             {/* ADDONS LISTING */}
             {addons.map((addon) => (
