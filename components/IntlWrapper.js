@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 // Translations
 import { IntlProvider } from "react-intl";
-import { getLocaleData } from "../lib/i10n/getLocaleData";
+import { getLocaleData } from "../lib/i18n/getLocaleData";
 import { getLanguage } from "../functions";
 
 const IntlWrapper = ({ children }) => {

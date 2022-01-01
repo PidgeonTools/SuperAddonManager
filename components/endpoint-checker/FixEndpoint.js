@@ -16,7 +16,7 @@ import { padAddonVersion, padBlenderVersion } from "../../functions";
 
 // Translations
 import { FormattedMessage } from "react-intl";
-import { getI18nLink } from "../../lib/i10n/I18nFormatters";
+import { getI18nLink } from "../../lib/i18n/I18nFormatters";
 
 export const FixEndpoint = ({
   inputData,

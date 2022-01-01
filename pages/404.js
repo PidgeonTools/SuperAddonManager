@@ -15,7 +15,7 @@ import Header from "../components/Header";
 import { FormattedMessage } from "react-intl";
 import IntlWrapper from "../components/IntlWrapper";
 import { getLanguage } from "../functions";
-import { getI18nLink } from "../lib/i10n/I18nFormatters";
+import { getI18nLink } from "../lib/i18n/I18nFormatters";
 
 const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
   const [suggestedPage, setSuggestedPage] = useState({

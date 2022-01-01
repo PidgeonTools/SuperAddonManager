@@ -5,7 +5,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 // Translations
 import { FormattedMessage } from "react-intl";
-import I18nFormatters from "../../lib/i10n/I18nFormatters";
+import I18nFormatters from "../../lib/i18n/I18nFormatters";
 
 export const Version = ({ exampleText }) => {
   return (

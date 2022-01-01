@@ -18,7 +18,7 @@ import {
 
 // Translations
 import { FormattedMessage } from "react-intl";
-import { getI18nLink } from "../../lib/i10n/I18nFormatters";
+import { getI18nLink } from "../../lib/i18n/I18nFormatters";
 import { getLanguage } from "../../functions/getLanguage";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
