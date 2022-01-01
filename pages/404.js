@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 // Bootstrap
-import { Col, Container, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 // Guess the page the user wants to go to
 const guessPage = require("string-similarity");
@@ -15,6 +15,7 @@ import Header from "../components/Header";
 import { FormattedMessage } from "react-intl";
 import IntlWrapper from "../components/IntlWrapper";
 import { getLanguage } from "../functions";
+import { getI18nLink } from "../lib/i10n/I18nFormatters";
 
 const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
   const [suggestedPage, setSuggestedPage] = useState({
@@ -45,19 +46,17 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
           </h1>
           {/* ERROR MESSAGE TEXT */}
           <div className="error-404-message--text">
-            <FormattedMessage id="error_404.message.LKj94jPYGa" />{" "}
-            <Link href="/">
-              <a>
-                <FormattedMessage id="error_404.message.go_home" />
-              </a>
-            </Link>{" "}
-            <FormattedMessage id="error_404.message.or" />{" "}
-            <Link href={suggestedPage.bestMatch.target}>
-              <a target="_blank" rel="noopener noreferrer">
-                <FormattedMessage id="error_404.message.try_this_page" />
-              </a>
-            </Link>
-            <FormattedMessage id="error_404.message.here_is_a_secret" />{" "}
+            <FormattedMessage
+              id="error_404.message.LKj94jPYGa"
+              values={{
+                Home: getI18nLink({ href: "/" }),
+                TryThisPage: getI18nLink({
+                  href: suggestedPage.bestMatch.target,
+                  target: "_blank",
+                  rel: "noopener noreferrer",
+                }),
+              }}
+            />{" "}
             <FormattedMessage id="error_404.message.sam_is_not_the_only_addon" />{" "}
             <FormattedMessage id="error_404.message.download_other_pidgeon_tools_addons" />
           </div>
