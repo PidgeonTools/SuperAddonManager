@@ -1,0 +1,5 @@
+@use "utilities" as *;
+
+.waves {
+  fill: getColor(bg);
+}
