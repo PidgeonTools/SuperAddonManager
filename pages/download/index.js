@@ -34,7 +34,7 @@ const Download = ({ addons }) => {
       />
       <Navbar />
       {/* DOWNLOAD SECTION */}
-      <section className="intro download-box">
+      <section id="main" className="intro download-box">
         <Container>
           <Row>
             {/* DOWNLOAD BUTTON */}

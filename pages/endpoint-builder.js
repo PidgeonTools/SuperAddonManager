@@ -149,7 +149,7 @@ const EndpointBuilderPage = ({
       <Navbar />
 
       {/* INTRO */}
-      <Container className="intro">
+      <Container id="main" className="intro">
         <h1>
           <FormattedMessage id="endpoint_builder.title" />
         </h1>

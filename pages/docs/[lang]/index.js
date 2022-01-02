@@ -23,7 +23,7 @@ const Docs = ({ navbarData }) => {
     <IntlWrapper>
       <Header title="Documentation" />
       <Navbar />
-      <Container className="intro">
+      <Container id="main" className="intro">
         {navbarData.map((page) => {
           return (
             <div key={page}>

@@ -16,7 +16,7 @@ export default function Home() {
     <IntlWrapper>
       <Header title="Home" />
       <Navbar />
-      <Container className="intro" style={{ marginBottom: "80vh" }}>
+      <Container id="main" className="intro" style={{ marginBottom: "80vh" }}>
         <Nav as="ul" className="flex-column">
           <Nav.Item as="li">
             <Nav.Link as={Link} href="/request-support">

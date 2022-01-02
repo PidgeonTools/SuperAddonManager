@@ -106,7 +106,7 @@ const Page = ({
         </nav>
       </aside>
       {/* MAIN PAGE CONTENT */}
-      <main>
+      <main id="main">
         {/* PAGE CONTENT */}
         <Markdown
           options={{

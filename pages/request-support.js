@@ -22,18 +22,20 @@ const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
         description="Do you have problems updating an addon with Super Addon Manager? We've got you covered! Request support for your favorite addons in a few clicks."
       />
       <Navbar />
-      {issueType ? (
-        <SupportPage
-          query={query}
-          addonName={addonName}
-          issueType={issueType}
-        />
-      ) : (
-        <NoData
-          exampleBlenderVersion={exampleBlenderVersion}
-          latestSPMVersion={latestSPMVersion}
-        />
-      )}
+      <section id="main">
+        {issueType ? (
+          <SupportPage
+            query={query}
+            addonName={addonName}
+            issueType={issueType}
+          />
+        ) : (
+          <NoData
+            exampleBlenderVersion={exampleBlenderVersion}
+            latestSPMVersion={latestSPMVersion}
+          />
+        )}
+      </section>
     </IntlWrapper>
   );
 };

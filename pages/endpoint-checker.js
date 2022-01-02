@@ -63,7 +63,7 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
     <IntlWrapper>
       <Header title="Endpoint JSON Checker" />
       <Navbar />
-      <Container className="intro" style={{ marginBottom: "24rem" }}>
+      <Container id="main" className="intro" style={{ marginBottom: "24rem" }}>
         {displayComponent}
       </Container>
     </IntlWrapper>

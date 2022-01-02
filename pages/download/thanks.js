@@ -62,7 +62,7 @@ const Thanks = ({ data }) => {
       />
       <Navbar />
       {/* SUCCESS MESSAGE */}
-      <section className="intro thanks-success-message pb-3">
+      <section id="main" className="intro thanks-success-message pb-3">
         <Container>
           <Row>
             <div>

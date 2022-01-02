@@ -15,6 +15,9 @@ const SiteNavbar = () => {
   }, []);
   return (
     <>
+      <a href="#main" className="skip-navigation">
+        Skip Navigation
+      </a>
       <Navbar
         bg="menu"
         variant="dark"
