@@ -3,7 +3,7 @@
 @use "../../components/utilities" as *;
 
 .thanks-success-message {
-  background-color: getColor(white); // TODO: Variable?
+  background-color: getColor(bg);
 }
 
 .thanks-donate-box {

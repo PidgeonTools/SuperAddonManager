@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "components/mixins" as *;
 @use "components/utilities" as *;
 
@@ -6,12 +7,10 @@ $primary: #46c3db;
 $secondary: #2d6cdf;
 
 // LIGHT THEME
-$form-feedback-valid-light: #127b0a;
-$form-feedback-invalid-light: #d50e0e;
-
 $colors-light: (
+  bg: #fff,
+  text-default: #212529,
   primary: $primary,
-  bg-primary: #bfd5ff,
   text-primary: #fff,
   text-hover-primary: darken(#fff, 10%),
   hover-primary: darken($primary, 20%),
@@ -19,8 +18,8 @@ $colors-light: (
   text-secondary: #fff,
   hover-secondary: lighten($secondary, 20%),
   success: #16ca09,
-  form-feedback-valid: $form-feedback-valid-light,
-  form-feedback-invalid: $form-feedback-invalid-light,
+  form-feedback-valid: #127b0a,
+  form-feedback-invalid: #d50e0e,
   footer: #333333,
   code-attribute: #b99a3d,
   code-background: #242424,
@@ -47,12 +46,81 @@ $colors-light: (
   endpoint-form-example-container-outline: #ced4da,
 );
 
-@include rootVariables(
-  "light",
+// Colorblind Light Theme
+$colors-colorblind-light: map.merge(
   $colors-light,
-  $form-feedback-valid-light,
-  $form-feedback-invalid-light
+  (
+    form-feedback-valid: #116bdf,
+    form-feedback-invalid: #9b5e10,
+  )
 );
+
+// Dark Theme
+$colors-dark: (
+  bg: #121212,
+  text-default: #ffffffab,
+  primary: $primary,
+  text-primary: #fff,
+  text-hover-primary: darken(#fff, 10%),
+  hover-primary: darken($primary, 20%),
+  secondary: $secondary,
+  text-secondary: #fff,
+  hover-secondary: lighten($secondary, 20%),
+  success: #16ca09,
+  form-feedback-valid: #127b0a,
+  form-feedback-invalid: #d50e0e,
+  footer: #333333,
+  code-attribute: #b99a3d,
+  code-background: #242424,
+  code-builtin: #535353,
+  code-comment: #007400,
+  code-default: #bdbdbd,
+  code-keyword: #57c0ff,
+  code-meta: #c28b00,
+  code-number: #a9c605,
+  code-link: #0ea5ff,
+  code-string: #f2884d,
+  code-variable: #3f6e74,
+  white: #fff,
+  gray-300: #dee2e6,
+  gray-500: #adb5bd,
+  gray-600: #6c757d,
+  hover-gray-600: #767f86,
+  gray-700: #495057,
+  gray-900: #212529,
+  button-dark: #000,
+  hover-button-dark: #333,
+  disabled-button-dark: #82888e,
+  disabled-button-border-dark: #51585e,
+  endpoint-form-example-container-outline: #ced4da,
+);
+
+// Colorblind Light Theme
+$colors-colorblind-dark: map.merge(
+  $colors-dark,
+  (
+    form-feedback-valid: #116bdf,
+    form-feedback-invalid: #9b5e10,
+  )
+);
+
+// Map of all themes
+$themes: (
+  light: $colors-light,
+  colorblind-light: $colors-colorblind-light,
+  // dark: $colors-dark,
+  colorblind-dark: $colors-colorblind-dark,
+);
+
+// Write all themes to HTML classes.
+@each $theme, $colors in $themes {
+  @include rootVariables(
+    $theme,
+    $colors,
+    map.get($colors, form-feedback-valid),
+    map.get($colors, form-feedback-invalid)
+  );
+}
 
 // Border Radius Variables
 $border-small: 0.2rem;

@@ -2,13 +2,8 @@
 @use "components/utilities" as *;
 
 body {
-  background: linear-gradient(
-    200deg,
-    getColor(bg-primary),
-    transparent,
-    transparent,
-    transparent
-  );
+  background: getColor(bg);
+  color: getColor(text-default);
   background-attachment: fixed;
   max-width: 100%;
   overflow-x: hidden;
