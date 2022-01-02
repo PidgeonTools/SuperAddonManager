@@ -15,4 +15,9 @@ a {
   &:hover {
     color: getColor(hover-primary);
   }
+
+  .feather-external-link {
+    margin-left: 0rem;
+    padding-bottom: 0.1rem;
+  }
 }

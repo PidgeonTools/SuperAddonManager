@@ -16,6 +16,7 @@ import { FormattedMessage } from "react-intl";
 import IntlWrapper from "../components/IntlWrapper";
 import { getLanguage } from "../functions";
 import { getI18nLink } from "../lib/i18n/I18nFormatters";
+import ExternalLink from "../components/ExternalLink";
 
 const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
   const [suggestedPage, setSuggestedPage] = useState({
@@ -53,7 +54,6 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
                 TryThisPage: getI18nLink({
                   href: suggestedPage.bestMatch.target,
                   target: "_blank",
-                  rel: "noopener noreferrer",
                 }),
               }}
             />{" "}
@@ -90,9 +90,9 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
       <div className="error-404-message--text error-404-message--link-container error-404-message--contact">
         <FormattedMessage id="error_404.message.are_you_sure" />{" "}
         <Link href="https://discord.gg/hGzHDA7bj9">
-          <a target="_blank" rel="noopener noreferrer">
+          <ExternalLink>
             <FormattedMessage id="error_404.message.contact_us_on_discord" />
-          </a>
+          </ExternalLink>
         </Link>
       </div>
     </IntlWrapper>

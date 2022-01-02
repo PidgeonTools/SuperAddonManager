@@ -20,6 +20,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { getI18nLink } from "../../lib/i18n/I18nFormatters";
 import { getLanguage } from "../../functions/getLanguage";
+import ExternalLink from "../ExternalLink";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
   const [language, setLanguage] = useState("en");
@@ -314,13 +315,9 @@ ${checkedInternet}
                   <p>
                     <FormattedMessage id="request_support.support_page.check_that_your_internet_connection_works" />{" "}
                     <FormattedMessage id="request_support.support_page.try_to_reach_the_endpoint" />{" "}
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={endpointURL}
-                    >
+                    <ExternalLink href={endpointURL}>
                       {endpointURL}.
-                    </a>{" "}
+                    </ExternalLink>{" "}
                     <FormattedMessage id="request_support.support_page.retry_to_check_for_updates" />{" "}
                     <FormattedMessage id="request_support.support_page.what_if_it_still_does_not_work" />{" "}
                     <FormattedMessage id="request_support.support_page.what_if_the_issue_has_already_been_reported" />
@@ -438,15 +435,14 @@ ${checkedInternet}
                     link: getI18nLink({
                       href: trackerURL,
                       target: "_blank",
-                      rel: "noopener noreferrer",
                     }),
                   }}
                 />{" "}
                 <FormattedMessage id="request_support.support_page.are_you_unsure_how_to_submit_issues" />{" "}
-                <Link href={`/docs/${language}/submitting-issues`}>
-                  <a rel="noopener noreferrer" target="_blank">
+                <Link href={`/docs/${language}/submitting-issues`} passHref>
+                  <ExternalLink>
                     <FormattedMessage id="request_support.support_page.read_this_article" />
-                  </a>
+                  </ExternalLink>
                 </Link>
               </p>
 

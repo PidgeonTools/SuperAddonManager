@@ -15,6 +15,7 @@ import Navbar from "../../components/Navbar";
 // Translations
 import { FormattedMessage } from "react-intl";
 import IntlWrapper from "../../components/IntlWrapper";
+import ExternalLink from "../../components/ExternalLink";
 
 const Download = ({ addons }) => {
   const router = useRouter();
@@ -99,13 +100,7 @@ const Download = ({ addons }) => {
                 className="supported-addons-box--addon"
               >
                 {addon.link ? (
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={addon.link}
-                  >
-                    {addon.name}
-                  </a>
+                  <ExternalLink href={addon.link}>{addon.name}</ExternalLink>
                 ) : (
                   <p>{addon.name}</p>
                 )}
