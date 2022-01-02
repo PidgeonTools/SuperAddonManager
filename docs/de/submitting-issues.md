@@ -13,15 +13,15 @@ Fehler passieren, und beim Programmieren kann schon ein einziges falsch eingegeb
 
 ## Wie man einen Bericht schreibt
 
-#### Issue report
+#### Fehlermeldung
 
-A good issue report helps the developer understand and reproduce the error easily. This is essential for figuring out what the problem is. A good issue report contains the following information:
+Eine gute Fehlermeldung hilft dem Entwickler das Problem leicht zu verstehen und nachzuvollziehen. Dies ist von entscheidender Bedeutung, um herauszufinden, was den Fehler verursacht. Eine gute Fehlermeldung enthält folgende Informationen:
 
-- System Information. Which Operating System do you use? Which Blender Version do you use? Which version of the addon do you use?
-- A description of the bug and the expected behaviour. What exactly does the program wrong and what behavior would you expect?
-- The steps to reproduce the error.
+- Systemdaten. Welches Betriebssystem benutzen Sie? Welche Blender-Version verwenden Sie? Welche Version des Addons benutzen Sie?
+- Eine Beschreibung des Fehlers und des erwarteten Verhaltens. Was genau macht das Programm falsch und welches Verhalten würden Sie erwarten?
+- Die Schritte zum Reproduzieren des Fehlers.
 
-A good starting point is the following template:
+Ein guter Ausgangspunkt ist die folgende Vorlage:
 
 ```
 **Describe the bug**
@@ -53,7 +53,7 @@ Add any other context about the problem here.
 
 #### Feature Request
 
-If you are requesting a new feature, it's essential to communicate clearly, what the new feature should do. The following template can help you:
+If you are requesting a new feature, it's essential to communicate clearly, what the new feature should do. Die folgende Vorlage kann Ihnen helfen:
 
 ```
 **Is your feature request related to a problem? Please describe.**
