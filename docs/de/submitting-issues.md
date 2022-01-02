@@ -81,7 +81,7 @@ After you made sure that you are not submitting a duplicate issue, you can click
 
 <DocumentationImage src="/images/docs/en/submitting-issues/gh-search.png" alt="Search for an issue on GitHub" />
 
-If you are asked to select a template for the issue report, select the appropriate template for the type of issue that you are submitting (Issue, Feature Request, ...). GitHub should now look like this:
+If you are asked to select a template for the issue report, select the appropriate template for the type of issue that you are submitting (Issue, Feature Request, ...). GitHub sollte jetzt so aussehen:
 
 <DocumentationImage src="/images/docs/en/submitting-issues/gh-new-view.png" alt="GitHub submit issue page with empty fields"/>
 
@@ -101,7 +101,7 @@ After you made sure that you are not submitting a duplicate issue, you can click
 
 <DocumentationImage src="/images/docs/en/submitting-issues/gl-search.png" alt="Search for an issue on Gitlab" />
 
-Gitlab should now look like this:
+Gitlab sollte jetzt so aussehen:
 
 <DocumentationImage src="/images/docs/en/submitting-issues/gl-new-view.png" alt="Gitlab submit issue page with empty fields"/>
 
