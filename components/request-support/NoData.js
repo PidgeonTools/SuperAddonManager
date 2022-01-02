@@ -125,6 +125,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   }
                 >
                   <Form.Select
+                    className="sam-form-select"
                     value={issueType}
                     onChange={(e) => {
                       setIssueType(e.target.value);
@@ -155,6 +156,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 >
                   <Form.Control
                     type="text"
+                    className="sam-form-control"
                     placeholder="Super Project Manager"
                     value={addonName}
                     onChange={(e) => {
@@ -178,6 +180,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                   }
                 >
                   <Form.Select
+                    className="sam-form-select"
                     value={operatingSystem.displayID}
                     onChange={(e) => {
                       setOperatingSystem(getOSByID(e.target.value));
@@ -211,6 +214,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 >
                   <Form.Control
                     type="text"
+                    className="sam-form-control"
                     placeholder={exampleBlenderVersion}
                     pattern="(\d+\.){1,2}\d+"
                     value={blenderVersion}
@@ -235,6 +239,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 >
                   <Form.Control
                     type="text"
+                    className="sam-form-control"
                     placeholder={latestSPMVersion}
                     pattern="(\d+\.)*\d+"
                     value={addonVersion}
@@ -262,6 +267,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     >
                       <Form.Control
                         type="number"
+                        className="number-textfield sam-form-control"
                         min="1"
                         max="9000"
                         placeholder="42"
@@ -296,6 +302,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     >
                       <Form.Control
                         type="text"
+                        className="sam-form-control"
                         value={endpointURL}
                         onChange={(e) => {
                           setEndpointURL(e.target.value);
@@ -322,6 +329,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                     >
                       <Form.Control
                         as="textarea"
+                        className="sam-form-control"
                         value={errorMessage}
                         onChange={(e) => {
                           setErrorMessage(e.target.value);
@@ -347,6 +355,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                 >
                   <Form.Control
                     type="text"
+                    className="sam-form-control"
                     value={trackerURL}
                     onChange={(e) => {
                       setTrackerURL(e.target.value);
@@ -360,7 +369,11 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
             </Row>
 
             <Col className="d-grid">
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                className="sam-btn-primary"
+                type="submit"
+              >
                 <FormattedMessage id="request_support.no_data.request_support" />
               </Button>
             </Col>

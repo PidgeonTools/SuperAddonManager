@@ -26,6 +26,8 @@ export const DownloadFixedFile = ({ data, filename }) => {
         </p>
         <Col className="d-grid">
           <Button
+            variant="primary"
+            className="sam-btn-primary"
             onClick={() => {
               downloadJSONFile(document, data, "Fixed - " + filename);
             }}

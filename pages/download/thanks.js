@@ -99,7 +99,7 @@ const Thanks = ({ data }) => {
               <Col lg="10" md="9">
                 <input
                   type="range"
-                  className="form-range"
+                  className="form-range sam-form-range"
                   id="customRange1"
                   min="0"
                   max="100"
@@ -113,7 +113,7 @@ const Thanks = ({ data }) => {
               <Col lg="2" md="3">
                 <input
                   type="number"
-                  className="form-control number-textfield text-center"
+                  className="form-control number-textfield text-center sam-form-control"
                   step="5"
                   min="0"
                   max="9999"

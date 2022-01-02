@@ -350,7 +350,7 @@ ${checkedInternet}
                 <input
                   type="checkbox"
                   id="checklist_addon_manager_updated"
-                  className="form-check-input"
+                  className="form-check-input sam-form-check-input"
                   onClick={() => setSamUpToDate(!samUpToDate)}
                   value={samUpToDate}
                 />
@@ -369,7 +369,7 @@ ${checkedInternet}
                     <input
                       type="checkbox"
                       id="checklist_addon_updated"
-                      className="form-check-input"
+                      className="form-check-input sam-form-check-input"
                       onClick={() => setAddonUpToDate(!addonUpToDate)}
                       value={addonUpToDate}
                     />
@@ -391,7 +391,7 @@ ${checkedInternet}
                 <input
                   type="checkbox"
                   id="checklist_issue_reported"
-                  className="form-check-input"
+                  className="form-check-input sam-form-check-input"
                   onClick={() => setNoDuplicate(!noDuplicate)}
                   value={noDuplicate}
                 />
@@ -410,7 +410,7 @@ ${checkedInternet}
                     <input
                       type="checkbox"
                       id="checkbox_internet_connection_checked"
-                      className="form-check-input"
+                      className="form-check-input sam-form-check-input"
                       onClick={() => setInternetWorks(!internetWorks)}
                       value={internetWorks}
                     />

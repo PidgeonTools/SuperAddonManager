@@ -22,6 +22,7 @@ export const AddonVersion = ({ addonVersion, latestSPMVersion, ...props }) => {
       >
         <Form.Control
           type="text"
+          className="sam-form-control"
           value={addonVersion}
           placeholder={latestSPMVersion}
           pattern="(\d+\.?){0,2}\d+"
@@ -46,6 +47,7 @@ export const DownloadUrl = ({
       >
         <Form.Control
           type="text"
+          className="sam-form-control"
           value={downloadUrl}
           placeholder="https://github.com/BlenderDefender/SuperEasyAnalytics/releases/download/1_2_1/SuperEasyAnalytics.zip"
           pattern={
@@ -76,6 +78,7 @@ export const MinimumBlenderVersion = ({
       >
         <Form.Control
           type="text"
+          className="sam-form-control"
           value={minimumBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
           pattern="(\d+\.){1,2}\d+"
@@ -102,6 +105,7 @@ export const ApiBreakingBlenderVersion = ({
       >
         <Form.Control
           type="text"
+          className="sam-form-control"
           value={apiBreakingBlenderVersion}
           placeholder={exampleBlenderLTSVersion}
           pattern="(\d+\.){1,2}\d+"
@@ -123,7 +127,7 @@ export const ShowApiBreakingBlenderVersion = ({
         <input
           type="checkbox"
           id="update_for_older_blender_version"
-          className="form-check-input"
+          className="form-check-input sam-form-check-input"
           accessKey="C"
           {...props}
           checked={showApiBreakingBlenderVersion}
@@ -149,7 +153,7 @@ export const AllowAutomaticDownload = ({
         <input
           type="checkbox"
           id="allow_automatic_download"
-          className="form-check-input"
+          className="form-check-input sam-form-check-input"
           accessKey="L"
           {...props}
           checked={allowAutomaticDownload}

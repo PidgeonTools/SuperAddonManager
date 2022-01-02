@@ -343,7 +343,11 @@ export const FixEndpoint = ({
           </Row>
           <Col className="d-grid">
             {showFixButton ? (
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                className="sam-btn-primary"
+                type="submit"
+              >
                 <FormattedMessage id="endpoint_checker.fix_endpoint.fix_this" />
               </Button>
             ) : (

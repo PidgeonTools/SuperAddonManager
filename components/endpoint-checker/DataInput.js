@@ -129,6 +129,7 @@ export const DataInput = ({ callbackFunction }) => {
               >
                 <Form.Control
                   type="text"
+                  className="sam-form-control"
                   placeholder="https://www.example.com/endpoint.json"
                   pattern="https://.+"
                   onChange={(e) => {
@@ -140,7 +141,7 @@ export const DataInput = ({ callbackFunction }) => {
               </FloatingLabel>
             </Col>
             <Col lg={2} className="d-grid endpoint-checker-enter-url--last">
-              <Button variant="primary" type="submit">
+              <Button variant="primary" className="sam-btn-primary" type="submit">
                 <FormattedMessage id="endpoint_checker.data_input.go" />
               </Button>
             </Col>

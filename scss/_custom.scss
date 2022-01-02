@@ -7,17 +7,20 @@ $primary: #46c3db;
 $secondary: #2d6cdf;
 
 // LIGHT THEME
+$theme-colors-light: (
+  primary: #46c3db,
+  secondary: #2d6cdf,
+  success: #16ca09,
+);
+
 $colors-light: (
   bg: #fff,
   text-default: #212529,
-  primary: $primary,
   text-primary: #fff,
   text-hover-primary: darken(#fff, 10%),
-  hover-primary: darken($primary, 20%),
-  secondary: $secondary,
+  hover-primary: darken(map.get($theme-colors-light, primary), 20%),
   text-secondary: #fff,
-  hover-secondary: lighten($secondary, 20%),
-  success: #16ca09,
+  hover-secondary: lighten(map.get($theme-colors-light, secondary), 20%),
   form-feedback-valid: #127b0a,
   form-feedback-invalid: #d50e0e,
   footer: #333333,
@@ -32,7 +35,6 @@ $colors-light: (
   code-link: #0ea5ff,
   code-string: #f2884d,
   code-variable: #3f6e74,
-  white: #fff,
   gray-300: #dee2e6,
   gray-500: #adb5bd,
   gray-600: #6c757d,
@@ -45,6 +47,8 @@ $colors-light: (
   disabled-button-border-dark: #51585e,
   endpoint-form-example-container-outline: #ced4da,
 );
+
+$colors-light: map.merge($theme-colors-light, $colors-light);
 
 // Colorblind Light Theme
 $colors-colorblind-light: map.merge(
@@ -56,17 +60,20 @@ $colors-colorblind-light: map.merge(
 );
 
 // Dark Theme
+$theme-colors-dark: (
+  primary: #46c3db,
+  secondary: #2d6cdf,
+  success: #16ca09,
+);
+
 $colors-dark: (
   bg: #121212,
   text-default: #ffffffab,
-  primary: $primary,
   text-primary: #fff,
   text-hover-primary: darken(#fff, 10%),
-  hover-primary: darken($primary, 20%),
-  secondary: $secondary,
+  hover-primary: darken(map.get($theme-colors-light, primary), 20%),
   text-secondary: #fff,
-  hover-secondary: lighten($secondary, 20%),
-  success: #16ca09,
+  hover-secondary: lighten(map.get($theme-colors-light, secondary), 20%),
   form-feedback-valid: #127b0a,
   form-feedback-invalid: #d50e0e,
   footer: #333333,
@@ -81,7 +88,6 @@ $colors-dark: (
   code-link: #0ea5ff,
   code-string: #f2884d,
   code-variable: #3f6e74,
-  white: #fff,
   gray-300: #dee2e6,
   gray-500: #adb5bd,
   gray-600: #6c757d,
@@ -95,6 +101,8 @@ $colors-dark: (
   endpoint-form-example-container-outline: #ced4da,
 );
 
+$colors-dark: map.merge($theme-colors-dark, $colors-dark);
+
 // Colorblind Light Theme
 $colors-colorblind-dark: map.merge(
   $colors-dark,
@@ -105,6 +113,7 @@ $colors-colorblind-dark: map.merge(
 );
 
 // Map of all themes
+// TODO: Dark, Colorblind Light, Colorblind Dark
 $themes: (
   light: $colors-light,
   colorblind-light: $colors-colorblind-light,
@@ -137,10 +146,6 @@ $code-background: #242424; // TODO: Investigate and remove
 // $gray-700: #495057;
 // $gray-900: #212529;
 
-// TODO: Dark, Colorblind Light, Colorblind Dark
-// $form-feedback-valid-light: #0a69ce; // Colorblind Theme
-// $form-feedback-invalid-light: #8c6a11; // Colorblind Theme
-
 // FONT OVERRIDES
 $font-size-sm: 0.9rem;
 $font-size-default: 1rem;
@@ -154,7 +159,8 @@ $font-family-sans-serif: "Cabin", system-ui, -apple-system, "Segoe UI", Roboto,
 
 // RANGE OVERRIDES
 $component-active-bg: $secondary;
-$form-range-track-bg: getColor(text-secondary);
+$form-range-track-bg: getColor(bg);
+$form-range-track-cursor: pointer;
 
 // IMPORT BOOTSTRAP 5
 @import "~bootstrap/scss/bootstrap";

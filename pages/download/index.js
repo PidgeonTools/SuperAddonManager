@@ -46,7 +46,7 @@ const Download = ({ addons }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadCallback}
-                className="btn btn-secondary"
+                className="btn btn-secondary sam-btn-secondary"
               >
                 <FormattedMessage id="download.download" />
               </motion.button>

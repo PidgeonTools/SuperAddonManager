@@ -39,3 +39,31 @@
     color: getColor(success);
   }
 }
+
+// Rewrite the button classes
+@each $name, $color in $theme-colors-light {
+  .sam-btn-#{$name} {
+    background-color: getColor($name);
+    border-color: getColor($name);
+    color: getColor(text-#{$name});
+
+    &:hover {
+      background-color: getColor($name);
+      border-color: getColor($name);
+      color: getColor(text-#{$name});
+    }
+
+    &:focus {
+      background-color: getColor($name);
+      border-color: getColor($name);
+      color: getColor(text-#{$name});
+      box-shadow: 0 0 0 0.25rem rgba(getColorRGB($name), 0.5);
+    }
+
+    &:active {
+      &:focus {
+        box-shadow: 0 0 0 0.25rem rgba(getColorRGB($name), 0.5);
+      }
+    }
+  }
+}

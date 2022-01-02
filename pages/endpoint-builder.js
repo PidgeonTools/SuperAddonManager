@@ -270,7 +270,12 @@ const EndpointBuilderPage = ({
                 </>
 
                 <Col className="d-grid">
-                  <Button variant="primary" type="submit" accessKey="G">
+                  <Button
+                    variant="primary"
+                    className="sam-btn-primary"
+                    type="submit"
+                    accessKey="G"
+                  >
                     <FormattedMessage id="endpoint_builder.generate" />
                   </Button>
                 </Col>
