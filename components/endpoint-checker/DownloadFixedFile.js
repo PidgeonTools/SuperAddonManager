@@ -3,11 +3,12 @@ import React from "react";
 // Bootstrap
 import { Button, Col, Row } from "react-bootstrap";
 
-// Translations
-import { FormattedMessage } from "react-intl";
-
 // Functions
 import { downloadJSONFile } from "../../functions";
+
+// Translations
+import { FormattedMessage } from "react-intl";
+import { getI18nLink } from "../../lib/i18n/I18nFormatters";
 
 export const DownloadFixedFile = ({ data, filename }) => {
   return (
@@ -18,10 +19,10 @@ export const DownloadFixedFile = ({ data, filename }) => {
         </h1>
         <p>
           <FormattedMessage id="endpoint_checker.download_fixed_file.we_have_fixed_all_errors" />{" "}
-          <FormattedMessage id="endpoint_checker.download_fixed_file.you_can_download_your_file" />{" "}
-          <a>
-            <FormattedMessage id="endpoint_checker.download_fixed_file.tell_everyone_that_you_fixed_it" />
-          </a>
+          <FormattedMessage
+            id="endpoint_checker.download_fixed_file.you_can_download_your_file"
+            values={{ link: getI18nLink({ href: "#" }) }}
+          />
         </p>
         <Col className="d-grid">
           <Button
