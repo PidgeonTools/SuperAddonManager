@@ -23,20 +23,13 @@ import {
 // Translations
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { ERROR_CODES } from "./ErrorCodes";
+
 export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const intl = useIntl();
   const [validated, setValidated] = useState(false);
 
   // Form Variables
-  const issueTypes = [
-    "sam_not_supported",
-    "bl_info_version_problems",
-    "url_invalid",
-    "endpoint_offline",
-    "invalid_endpoint",
-    "endpoint_invalid_schema",
-    "unknown_error",
-  ];
   const operatingSystems = [OS.WINDOWS, OS.LINUX, OS.MACOS, OS.OTHER];
 
   // Input Data
@@ -138,9 +131,9 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                         id: "request_support.no_data.select_an_option",
                       })}
                     </option>
-                    {issueTypes.map((el) => (
-                      <option key={el} value={el}>
-                        {el}
+                    {Object.keys(ERROR_CODES).map((key) => (
+                      <option key={key} value={ERROR_CODES[key]}>
+                        {ERROR_CODES[key]}
                       </option>
                     ))}
                   </Form.Select>
@@ -256,7 +249,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
             {/* === ISSUE-DEPENDENT PARAMETERS === */}
             {/* ADDON COUNT */}
             <>
-              {issueType == "sam_not_supported" ? (
+              {issueType == ERROR_CODES.SAM_NOT_SUPPORTED ? (
                 <Row>
                   <Col lg={12} className="mb-3">
                     <FloatingLabel
@@ -287,10 +280,10 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
             {/* ENDPOINT URL */}
             <>
               {[
-                "url_invalid",
-                "invalid_endpoint",
-                "endpoint_invalid_schema",
-                "endpoint_offline",
+                ERROR_CODES.ENDPOINT_URL_INVALID,
+                ERROR_CODES.INVALID_ENDPOINT,
+                ERROR_CODES.ENDPOINT_INVALID_SCHEMA,
+                ERROR_CODES.ENDPOINT_OFFLINE,
               ].includes(issueType) ? (
                 <Row>
                   <Col className="mb-3">
@@ -318,7 +311,10 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
 
             {/* ERROR MESSAGE */}
             <>
-              {["endpoint_offline", "unknown_error"].includes(issueType) ? (
+              {[
+                ERROR_CODES.ENDPOINT_OFFLINE,
+                ERROR_CODES.UNKNOWN_ERROR,
+              ].includes(issueType) ? (
                 <Row>
                   <Col className="mb-3">
                     <FloatingLabel

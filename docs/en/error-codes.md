@@ -28,7 +28,7 @@ The bl_info of an Addon doesn't contain an Endpoint URL and/or the addon consist
 The version set in bl_info either is invalid or doesn't exist.
 <BlInfoVersionProblems />
 
-## url_invalid
+## endpoint_url_invalid
 
 **Critical Error**
 

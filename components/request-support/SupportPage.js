@@ -62,10 +62,10 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   let endpointURL;
   if (
     [
-      "url_invalid",
-      "invalid_endpoint",
-      "endpoint_invalid_schema",
-      "endpoint_offline",
+      ERROR_CODES.ENDPOINT_URL_INVALID,
+      ERROR_CODES.INVALID_ENDPOINT,
+      ERROR_CODES.ENDPOINT_INVALID_SCHEMA,
+      ERROR_CODES.ENDPOINT_OFFLINE,
     ].includes(issueType)
   ) {
     endpointURL = query.endpoint_url ?? "#undefined";
@@ -73,7 +73,11 @@ export const SupportPage = ({ query, addonName, issueType }) => {
 
   // Error Message
   let errorMessage;
-  if (["unknown_error", "endpoint_offline"].includes(issueType)) {
+  if (
+    [ERROR_CODES.ENDPOINT_OFFLINE, ERROR_CODES.UNKNOWN_ERROR].includes(
+      issueType
+    )
+  ) {
     errorMessage = query.error_message;
   }
 
@@ -99,7 +103,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
         </>
       );
       break;
-    case ERROR_CODES.URL_INVALID:
+    case ERROR_CODES.ENDPOINT_URL_INVALID:
       issueDescriptionText = (
         <>
           <FormattedMessage
@@ -211,7 +215,7 @@ ${checkedInternet}
       case ERROR_CODES.BL_INFO_VERSION_PROBLEMS:
         setIssueTextBoxes(<BlInfoVersionProblems {...defaultProps} />);
         break;
-      case ERROR_CODES.URL_INVALID:
+      case ERROR_CODES.ENDPOINT_URL_INVALID:
         setIssueTextBoxes(
           <UrlInvalid {...defaultProps} endpoint_url={endpointURL} />
         );
