@@ -1,4 +1,10 @@
 {
+    "languages.english": "Englisch",
+    "languages.german": "Deutsch",
+    "themes.light": "Helles Design",
+    "themes.colorblind_light": "Light (Colorblind)",
+    "themes.dark": "Dunkles Design",
+    "themes.colorblind_dark": "Dark (Colorblind)",
     "os.windows": "Windows",
     "os.linux": "Linux",
     "os.macos": "macOS",
