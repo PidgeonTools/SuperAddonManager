@@ -1,11 +1,11 @@
-export const LANGUAGES = ["en", "de"];
+import { locales } from "../lib/i18n/getLocaleData";
 
 export const getLanguage = (window) => {
   // Read the language from Local Storage
   let language = window.localStorage.getItem("preferred_language");
 
   // Check the language is stored in Local Storage and supported by the site.
-  if (language && LANGUAGES.includes(language)) {
+  if (language && language in locales) {
     return language;
   }
 
@@ -13,8 +13,8 @@ export const getLanguage = (window) => {
   language = (navigator.language || navigator.userLanguage).substring(0, 2);
 
   // If the language is not supported by the site, default to English.
-  if (!LANGUAGES.includes(language)) {
-    language = LANGUAGES[0];
+  if (!language in locales) {
+    language = locales.en;
   }
 
   // Write the new Language to Local Storage
