@@ -1,3 +1,6 @@
+// Sass modules
+@use "sass:map";
+
 // Return a theme color variable
 @function getColor($color-name) {
   @return var(--colors-#{$color-name});
@@ -16,4 +19,15 @@
 // Convert a color to RGB
 @function toRGB($color) {
   @return red($color) + ", " + green($color) + ", " + blue($color);
+}
+
+// Merge multiple Maps
+@function multiMapMerge($maps...) {
+  $final-map: ();
+
+  @each $item in $maps {
+    $final-map: map.merge($final-map, $item);
+  }
+
+  @return $final-map;
 }
