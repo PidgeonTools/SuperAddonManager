@@ -19,13 +19,18 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
+# Update Check Issues
 BL_INFO_VERSION_PROBLEMS = 'bl_info_version_problems'
 SAM_NOT_SUPPORTED = 'sam_not_supported'
-URL_INVALID = 'url_invalid'
+ENDPOINT_URL_INVALID = 'endpoint_url_invalid'
 ENDPOINT_OFFLINE = 'endpoint_offline'
 INVALID_ENDPOINT = 'invalid_endpoint'
 ENDPOINT_INVALID_SCHEMA = 'endpoint_invalid_schema'
 UNKNOWN_ERROR = "unknown_error"
+
+INVALID_FILE_TYPE = "invalid_file_type"
+INVALID_DOWNLOAD_URL = "invalid_download_url"
+DOWNLOAD_URL_OFFLINE = "download_url_offline"
 
 all_issue_types = [
     BL_INFO_VERSION_PROBLEMS,
@@ -33,5 +38,8 @@ all_issue_types = [
     ENDPOINT_OFFLINE,
     INVALID_ENDPOINT,
     SAM_NOT_SUPPORTED,
-    URL_INVALID
+    ENDPOINT_URL_INVALID,
+    INVALID_FILE_TYPE,
+    INVALID_DOWNLOAD_URL,
+    DOWNLOAD_URL_OFFLINE
 ]

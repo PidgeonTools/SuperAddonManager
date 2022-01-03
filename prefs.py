@@ -42,7 +42,7 @@ from .functions.main_functions import (
 from .issue_types import (
     BL_INFO_VERSION_PROBLEMS,
     SAM_NOT_SUPPORTED,
-    URL_INVALID,
+    ENDPOINT_URL_INVALID,
     all_issue_types
 )
 
@@ -232,7 +232,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         error_code_labels = {
             SAM_NOT_SUPPORTED: "Super Addon Manager is not supported",
             BL_INFO_VERSION_PROBLEMS: "Problems with the current addon version",
-            URL_INVALID: "URL Invalid",
+            ENDPOINT_URL_INVALID: "URL Invalid",
         }
         if msg in error_code_labels.keys():
             string = error_code_labels[msg]

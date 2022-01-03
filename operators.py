@@ -25,7 +25,7 @@ from .issue_types import (
     ENDPOINT_OFFLINE,
     INVALID_ENDPOINT,
     SAM_NOT_SUPPORTED,
-    URL_INVALID,
+    ENDPOINT_URL_INVALID,
     UNKNOWN_ERROR
 )
 import bpy
@@ -265,7 +265,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             endpoint_data = requests.get(endpoint_url).text
         except MissingSchema:  # The URL is invalid.
             self.unavailable_addons.append(
-                {"issue_type": URL_INVALID,
+                {"issue_type": ENDPOINT_URL_INVALID,
                  "addon_name": self.addon_name,
                  "bl_info": addon_bl_info,
                  "endpoint_url": endpoint_url})
@@ -451,7 +451,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         if issue_type in [SAM_NOT_SUPPORTED]:
             url_params["addon_count"] = data["addon_count"]
 
-        if issue_type in [URL_INVALID, INVALID_ENDPOINT, ENDPOINT_INVALID_SCHEMA, ENDPOINT_OFFLINE]:
+        if issue_type in [ENDPOINT_URL_INVALID, INVALID_ENDPOINT, ENDPOINT_INVALID_SCHEMA, ENDPOINT_OFFLINE]:
             url_params["endpoint_url"] = data["endpoint_url"]
 
         if issue_type == ENDPOINT_OFFLINE:
