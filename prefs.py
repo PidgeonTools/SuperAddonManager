@@ -79,6 +79,13 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         set=(lambda self, value: None),
     )
 
+    download_directory: StringProperty(
+        name="Download Directory",
+        description="The directory where the downloaded files are stored.",
+        default=p.join(p.expanduser('~'), 'downloads'),
+        subtype="DIR_PATH"
+    )
+
     check_interval_months: IntProperty(
         name='Months',
         description="Number of months between checking for updates",
@@ -142,13 +149,14 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
             layout.operator("superaddonmanager.update_all")
 
         # Layout all Addons that can be Updated one by one.
-        for addon in updates:
+        for index, addon in enumerate(updates):
             row = layout.row()
             row.label(text=addon["addon_name"])
             # Check, if the Addon supports Auto-Update.
             if addon["allow_automatic_download"]:
                 op = row.operator("superaddonmanager.automatic_update")
                 op.addon_path = addon["addon_path"]
+                op.index = index
             else:
                 op = row.operator("superaddonmanager.manual_update",
                                   text="Go to the downloads page.")
@@ -213,6 +221,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
         props = layout.box()
         props.label(text="Super Addon Manager Settings:")
+        props.row().prop(self, "download_directory")
         props.row(align=True).prop(self, "auto_check_for_updates")
 
         if self.auto_check_for_updates:

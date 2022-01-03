@@ -59,6 +59,7 @@ from . import prefs
 from .objects.update_check import (
     UpdateCheck_v1_0_0
 )
+from .objects.updater import Updater
 from .functions.json_functions import (
     encode_json,
     decode_json
@@ -331,10 +332,23 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
         # Add the Addon to one of the Update Arrays.
         if update_check.update:
-            self.updates.append({"addon_path": addon_path,
-                                 "allow_automatic_download": update_check.automatic_download,
-                                 "download_url": update_check.download_url,
-                                 "addon_name": self.addon_name})
+            self.updates.append(
+                {"addon_path": addon_path,
+                 "allow_automatic_download": update_check.automatic_download,
+                 "download_url": update_check.download_url,
+                 "addon_name": self.addon_name,
+                 "updater": Updater(
+                     addon_name=self.addon_name,
+                     bl_info=addon_bl_info,
+                     allow_automatic_download=update_check.automatic_download,
+                     addon_path=addon_path,
+                     download_directory=bpy.context.preferences.addons[
+                         __package__].preferences.download_directory,
+                     download_url=update_check.download_url,
+                     addon_version=update_check.version
+                 )
+                 }
+            )
 
         self.is_updating = False  # Open the latch
 
@@ -371,9 +385,16 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
 
     addon_path: StringProperty(name="Addon Path")
     download_url: StringProperty(name="Download URL")
+    index: IntProperty()
 
     def execute(self, context):
-        bpy.ops.wm.url_open(url=self.download_url)
+        updater = prefs.updates[self.index]["updater"]
+
+        updater.download_update()
+
+        if updater.error:
+            prefs.updates.pop(self.index)
+            prefs.unavailable_addons.append(updater.error_data)
 
         return {'FINISHED'}
 

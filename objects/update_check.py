@@ -74,6 +74,7 @@ class UpdateCheck_v1_0_0:
 
         # Set the data, that is required to update the addon.
         if self.update:
+            self.version = latest_compatible_version["version"]
             self.automatic_download = False
             if "allow_automatic_download" in latest_compatible_version.keys():
                 self.automatic_download = latest_compatible_version["allow_automatic_download"]
