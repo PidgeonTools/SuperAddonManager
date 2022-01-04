@@ -14,3 +14,6 @@ Download Page: Add Page that says "Thank you for your donation" (Component on th
 Social Media Description: "I've just donated to Super Addon Manager. If you want to support the project too, please donate!"
 
 Schema Validation: Try to use a schema validator.
+
+Pass amount via URL:
+https://github.com/opencollective/opencollective-frontend/blob/34ddb6dc91602110db5847083443b69bd286afae/pages/contribution-flow.js#L58
