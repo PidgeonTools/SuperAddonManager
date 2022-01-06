@@ -28,9 +28,16 @@ INVALID_ENDPOINT = 'invalid_endpoint'
 ENDPOINT_INVALID_SCHEMA = 'endpoint_invalid_schema'
 UNKNOWN_ERROR = "unknown_error"
 
+# Download Issues
 INVALID_FILE_TYPE = "invalid_file_type"
 INVALID_DOWNLOAD_URL = "invalid_download_url"
 DOWNLOAD_URL_OFFLINE = "download_url_offline"
+
+# Installation Issues
+# ! Do not include INVALID_FILE_TYPE_USER on the Website.
+# ! Let the use choose another file!
+INVALID_FILE_TYPE_USER = "invalid_file_type_user"
+NOT_AN_ADDON = "not_an_addon"
 
 all_issue_types = [
     BL_INFO_VERSION_PROBLEMS,
@@ -41,5 +48,6 @@ all_issue_types = [
     ENDPOINT_URL_INVALID,
     INVALID_FILE_TYPE,
     INVALID_DOWNLOAD_URL,
-    DOWNLOAD_URL_OFFLINE
+    DOWNLOAD_URL_OFFLINE,
+    UNKNOWN_ERROR
 ]
