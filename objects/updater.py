@@ -1,32 +1,50 @@
-import urllib
 import bpy
 
 import os
 from os import path as p
 
-import requests
-from requests.models import MissingSchema
+import shutil
+
+import time
+import random
+import hashlib
 
 from urllib import request
+
+import zipfile
+
+from .recursive_dirs import RecursiveDirs
 
 from ..issue_types import (
     DOWNLOAD_URL_OFFLINE,
     INVALID_DOWNLOAD_URL,
-    INVALID_FILE_TYPE
+    INVALID_FILE_TYPE,
+    INVALID_FILE_TYPE_USER,
+    NOT_AN_ADDON
 )
+
+UPDATE_CONTEXTS = {
+    "DOWNLOAD": "Download",
+    "UPDATE": "Update",
+}
 
 
 class Updater:
-    def __init__(self, addon_name="", bl_info={}, allow_automatic_download=False, download_url="", addon_path="", download_directory=p.join(p.expanduser('~'), 'downloads'), addon_version=(0, 0, 0)) -> None:
+    def __init__(self, addon_name="", bl_info={"version": (0, 0, 0)}, allow_automatic_download=False, download_url="", addon_path="", download_directory=p.join(p.expanduser('~'), 'downloads'), addon_version=(0, 0, 0)) -> None:
         self.error = False  # Set to True, if an error occured.
         self.error_data = {
             "addon_name": addon_name,
             "bl_info": bl_info
         }
 
+        self.update_context = UPDATE_CONTEXTS["DOWNLOAD"]
+
         self.allow_automatic_download = allow_automatic_download
+
+        self.addon_name = addon_name
         self.addon_path = addon_path
         self.addon_version = addon_version
+        self.old_version = bl_info["version"]
 
         self.download_url = download_url
         self.download_directory = p.join(
@@ -66,11 +84,14 @@ class Updater:
             header_correct = "application/zip" in download_data_headers[
                 "Content-Type"] or "application/octet-stream" in download_data_headers["Content-Type"]
 
+            # If the first bytes are not \x50\x4b\x03\x04,
+            # the file is not a zip archive
             if not (header_correct and first_bytes == b"\x50\x4b\x03\x04"):
                 self.error_data["issue_type"] = INVALID_FILE_TYPE
                 self.error = True
                 return  # Critical Error
 
+            # Download the file
             self._download(
                 download_data, self.downloaded_file_path, first_bytes)
         except ValueError:  # The URL is invalid.
@@ -85,6 +106,10 @@ class Updater:
             self.error_data["download_url"] = self.download_url
             self.error = True
             return  # Critical Error
+
+        self.update_context = UPDATE_CONTEXTS["UPDATE"]
+
+        return
 
     # Download a file using a HTTPResponse object.
     def _download(self, url_file, file_path, initial_data=b""):
