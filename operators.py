@@ -119,7 +119,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         sam_install_location = p.dirname(__file__)
         self.addon_name = sys.modules[p.basename(
             sam_install_location)].bl_info["name"]
-        self.check_update(sam_install_location)
+        self.check_update(sam_install_location, False)
 
         if self.updates:
             prefs.updates = self.updates
@@ -248,7 +248,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # is available, a get request is sent to the Endpoint. If "endpoint_url"
     # is unavailable or some information in "bl_info" is corrupt, the addon
     # is added to self.unavailable_addons (Addons that can't be updated)
-    def check_update(self, addon_path):
+    def check_update(self, addon_path, auto_reload=True):
         self.is_updating = True  # Lock the latch
 
         # Handle the case, that the current addon is not in sys.modules.
@@ -356,7 +356,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                      download_directory=bpy.context.preferences.addons[
                          __package__].preferences.download_directory,
                      download_url=update_check.download_url,
-                     addon_version=update_check.version
+                     addon_version=update_check.version,
+                     auto_reload=auto_reload
                  )
                  }
             )
@@ -403,7 +404,7 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
 
         # Download the update.
         try:
-            # updater.download_update() # Disabled for testing
+            updater.download_update()  # Disabled for testing
             downloaded_file_path = "C:/Users/NotAdmin/Downloads/Super Addon Manager Downloads/test-automatic-download-main-0.0.1.zip"
 
             if updater.error:
@@ -421,14 +422,15 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
         try:
             update_status = updater.update_addon(downloaded_file_path)
 
-            if update_status == INVALID_FILE_TYPE_USER:
-                self.report(
-                    {"WARNING"}, f"Update of '{updater.addon_name}' failed: Please select a .zip file.")
+            if update_status != None:
+                self.report({"WARNING"}, update_status)
                 return {'CANCELLED'}  # Critical Error
             if updater.error:
                 prefs.updates.pop(self.index)
                 prefs.unavailable_addons.append(updater.error_data)
                 return {'CANCELLED'}  # Critical Error
+
+            bpy.ops.preferences.addon_refresh()  # Refresh the addon list.
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
