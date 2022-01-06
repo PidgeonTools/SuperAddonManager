@@ -19,15 +19,6 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
-from .issue_types import (
-    BL_INFO_VERSION_PROBLEMS,
-    ENDPOINT_INVALID_SCHEMA,
-    ENDPOINT_OFFLINE,
-    INVALID_ENDPOINT,
-    SAM_NOT_SUPPORTED,
-    ENDPOINT_URL_INVALID,
-    UNKNOWN_ERROR
-)
 import bpy
 from bpy.props import (
     StringProperty,
@@ -36,7 +27,6 @@ from bpy.props import (
 )
 from bpy.types import Operator
 from bpy_extras.io_utils import ImportHelper
-
 
 import os
 from os import path as p
@@ -55,7 +45,21 @@ import platform
 import urllib
 import urllib.parse
 
+import random
+
 from . import prefs
+
+from .issue_types import (
+    BL_INFO_VERSION_PROBLEMS,
+    ENDPOINT_INVALID_SCHEMA,
+    ENDPOINT_OFFLINE,
+    INVALID_ENDPOINT,
+    INVALID_FILE_TYPE_USER,
+    SAM_NOT_SUPPORTED,
+    ENDPOINT_URL_INVALID,
+    UNKNOWN_ERROR
+)
+
 from .objects.update_check import (
     UpdateCheck_v1_0_0
 )
@@ -162,7 +166,14 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                     path = p.join(p.dirname(__file__), "updater_status.json")
                     d = decode_json(path)
                     d = {} if d is None else d
+                    if not "tests" in d.keys():
+                        d["tests"] = {}
+
                     d["last_check"] = int(time.time())
+
+                    # ! Test: Which icon is the best for the error buttons.
+                    if not "icons" in d["tests"].keys():
+                        d["tests"]["icons"] = random.randint(0, 4)
                     encode_json(d, path)
 
                     something_happened = bool(
@@ -452,6 +463,9 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
     def generate_report(self, data):
         base_url = "http://localhost:3000/request-support?"
+
+        path = p.join(p.dirname(__file__), "updater_status.json")
+        d = decode_json(path)
 
         issue_type = data["issue_type"]
 

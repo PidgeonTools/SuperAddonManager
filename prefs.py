@@ -172,6 +172,9 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
     # Layout all issues.
     def layout_issues(self, context, layout):
+        path = p.join(p.dirname(__file__), "updater_status.json")
+        d = decode_json(path)
+
         info_row = layout.row()
         # Distribute the label and the search box properly.
         info_row.alignment = "LEFT"
@@ -207,9 +210,10 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 row.separator(factor=DISTANCE_LEFT / 100)
                 row.label(text=addon["addon_name"])
 
-                icons = ["URL", "INFO", "HELP", "QUESTION"]
+                icons = ["URL", "INFO", "HELP",
+                         "QUESTION", "RESTRICT_SELECT_OFF"]
 
-                icon = icons[self.dev_icon]
+                icon = icons[d["tests"]["icons"]]
 
                 op = row.operator(
                     "superaddonmanager.generate_issue_report", text="Request Support", icon=icon)
