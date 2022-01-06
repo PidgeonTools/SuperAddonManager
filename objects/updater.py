@@ -123,8 +123,55 @@ class Updater:
                     break
                 f.write(data)
 
-    def update_addon(self, downloaded_file_path):
-        if self.downloaded_file_path:
-            downloaded_file_path = self.downloaded_file_path
+    def update_addon(self, downloaded_file_path=None) -> None:
+        if not self.downloaded_file_path:
+            self.downloaded_file_path = downloaded_file_path
 
-        # TODO: Put the update code here.
+        try:
+            zfile = zipfile.ZipFile(self.downloaded_file_path, "r")
+        except zipfile.BadZipFile:
+            return INVALID_FILE_TYPE_USER  # Critical Error
+
+        if not zfile:
+            return INVALID_FILE_TYPE_USER  # Critical Error
+
+        file_list = zfile.namelist()
+        # remove_subpath: Subpath to remove when the addon is stored in a subdirectory.
+        # filtered_files: Filtered List of files that should be extracted.
+        remove_subpath, filtered_files = RecursiveDirs(file_list).extract_files
+
+        if not filtered_files:
+            self.error = True
+            self.error_data["issue_type"] = NOT_AN_ADDON
+            self.error_data["file_list"] = zfile.namelist()
+            return  # Critical Error
+
+        # Create a temporary folder for extracting the ZIP file:
+        timestring = time.strftime('%Y%m%d%H%M%S') + \
+            str(random.randint(10**5, 10**6-1))
+        unique_name = hashlib.sha1(timestring.encode("UTF-8")).hexdigest()
+        extract_path = p.join(self.download_directory,
+                              f"temp-{unique_name}")
+
+        if p.exists(extract_path):
+            shutil.rmtree(extract_path)
+
+        # Make the temporary path for extracting the files.
+        os.makedirs(extract_path)
+
+        # Extract all files.
+        for file in filtered_files:
+            extract_file = p.join(
+                extract_path, file.replace(remove_subpath, ""))
+            extract_file = extract_file.replace("/", os.sep)
+            extract_file = extract_file.replace("\\", os.sep)
+
+            if extract_file.endswith(os.sep):
+                os.makedirs(extract_file)
+            else:
+                with open(extract_file, "wb") as f:
+                    data = zfile.read(file)
+                    f.write(data)
+
+        # Remove the extract directory after updating.
+        shutil.rmtree(extract_path)
