@@ -1,8 +1,16 @@
+# -----------------------------------------------------------------------------
+# Ignored Python files:
 # Blender Python cache
 __pycache__/
 
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# runtime artefacts
+updater_status.json
 
+# development settings
+.vscode
+
+# -----------------------------------------------------------------------------
+# Ignored Web files:
 # dependencies
 /node_modules
 /.pnp
@@ -17,12 +25,6 @@ __pycache__/
 
 # production
 /build
-
-# runtime artefacts
-updater_status.json
-
-# development settings
-.vscode
 
 # misc
 .DS_Store
@@ -41,3 +43,4 @@ yarn-error.log*
 
 # vercel
 .vercel
+# -----------------------------------------------------------------------------
