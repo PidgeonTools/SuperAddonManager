@@ -399,13 +399,42 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
     index: IntProperty()
 
     def execute(self, context):
-        updater = prefs.updates[self.index]["updater"]
+        updater: Updater = prefs.updates[self.index]["updater"]
 
-        updater.download_update()
+        # Download the update.
+        try:
+            # updater.download_update() # Disabled for testing
+            downloaded_file_path = "C:/Users/NotAdmin/Downloads/Super Addon Manager Downloads/test-automatic-download-main-0.0.1.zip"
 
-        if updater.error:
-            prefs.updates.pop(self.index)
+            if updater.error:
+                prefs.updates.pop(self.index)
+                prefs.unavailable_addons.append(updater.error_data)
+                return {'CANCELLED'}  # Critical Error
+        except Exception as e:
+            updater.error = True
+            updater.error_data["issue_type"] = UNKNOWN_ERROR
+            updater.error_data["error_message"] = str(e)
             prefs.unavailable_addons.append(updater.error_data)
+            return {'CANCELLED'}  # Critical Error
+
+        # Update the addon.
+        try:
+            update_status = updater.update_addon(downloaded_file_path)
+
+            if update_status == INVALID_FILE_TYPE_USER:
+                self.report(
+                    {"WARNING"}, f"Update of '{updater.addon_name}' failed: Please select a .zip file.")
+                return {'CANCELLED'}  # Critical Error
+            if updater.error:
+                prefs.updates.pop(self.index)
+                prefs.unavailable_addons.append(updater.error_data)
+                return {'CANCELLED'}  # Critical Error
+        except Exception as e:
+            updater.error = True
+            updater.error_data["issue_type"] = UNKNOWN_ERROR
+            updater.error_data["error_message"] = str(e)
+            prefs.unavailable_addons.append(updater.error_data)
+            return {'CANCELLED'}  # Critical Error
 
         return {'FINISHED'}
 
