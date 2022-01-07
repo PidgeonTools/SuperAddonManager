@@ -20,7 +20,6 @@ from ..issue_types import (
     DOWNLOAD_URL_OFFLINE,
     INVALID_DOWNLOAD_URL,
     INVALID_FILE_TYPE,
-    INVALID_FILE_TYPE_USER,
     NOT_AN_ADDON
 )
 

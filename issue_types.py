@@ -34,9 +34,6 @@ INVALID_DOWNLOAD_URL = "invalid_download_url"
 DOWNLOAD_URL_OFFLINE = "download_url_offline"
 
 # Installation Issues
-# ! Do not include INVALID_FILE_TYPE_USER on the Website.
-# ! Let the use choose another file!
-INVALID_FILE_TYPE_USER = "invalid_file_type_user"
 NOT_AN_ADDON = "not_an_addon"
 
 all_issue_types = [
