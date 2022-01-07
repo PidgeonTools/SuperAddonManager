@@ -51,9 +51,11 @@ from . import prefs
 
 from .issue_types import (
     BL_INFO_VERSION_PROBLEMS,
+    DOWNLOAD_URL_OFFLINE,
     ENDPOINT_INVALID_SCHEMA,
     ENDPOINT_OFFLINE,
     INVALID_ENDPOINT,
+    NOT_AN_ADDON,
     SAM_NOT_SUPPORTED,
     ENDPOINT_URL_INVALID,
     UNKNOWN_ERROR
@@ -519,9 +521,11 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         if issue_type in [ENDPOINT_URL_INVALID, INVALID_ENDPOINT, ENDPOINT_INVALID_SCHEMA, ENDPOINT_OFFLINE]:
             url_params["endpoint_url"] = data["endpoint_url"]
 
-        if issue_type == ENDPOINT_OFFLINE:
+        if issue_type in [ENDPOINT_OFFLINE, DOWNLOAD_URL_OFFLINE, UNKNOWN_ERROR]:
             url_params["error_message"] = data["error_message"]
 
+        if issue_type == NOT_AN_ADDON:
+            url_params["file_list"] = data["file_list"]
         return base_url + urllib.parse.urlencode(url_params)
 
 
