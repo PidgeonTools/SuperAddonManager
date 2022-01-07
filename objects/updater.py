@@ -88,24 +88,29 @@ class Updater:
             # If the first bytes are not \x50\x4b\x03\x04,
             # the file is not a zip archive
             if not (header_correct and first_bytes == b"\x50\x4b\x03\x04"):
-                self.error_data["issue_type"] = INVALID_FILE_TYPE
-                self.error = True
+                self._handle_error(issue_type=INVALID_FILE_TYPE)
+                # self.error_data["issue_type"] = INVALID_FILE_TYPE
+                # self.error = True
                 return  # Critical Error
 
             # Download the file
             self._download(
                 download_data, self.downloaded_file_path, first_bytes)
         except ValueError:  # The URL is invalid.
-            self.error_data["issue_type"] = INVALID_DOWNLOAD_URL
-            self.error_data["download_url"] = self.download_url
-            self.error = True
+            self._handle_error(issue_type=INVALID_DOWNLOAD_URL,
+                               download_url=self.download_url)
+            # self.error_data["issue_type"] = INVALID_DOWNLOAD_URL
+            # self.error_data["download_url"] = self.download_url
+            # self.error = True
             return  # Critical Error
         # Any other exception. Most likely, there's no Internet connection or the server doesn't respond.
         except Exception as e:
-            self.error_data["issue_type"] = DOWNLOAD_URL_OFFLINE
-            self.error_data["error_message"] = str(e)
-            self.error_data["download_url"] = self.download_url
-            self.error = True
+            self._handle_error(issue_type=DOWNLOAD_URL_OFFLINE, error_message=str(
+                e), download_url=self.download_url)
+            # self.error_data["issue_type"] = DOWNLOAD_URL_OFFLINE
+            # self.error_data["error_message"] = str(e)
+            # self.error_data["download_url"] = self.download_url
+            # self.error = True
             return  # Critical Error
 
         self.update_context = UPDATE_CONTEXTS["UPDATE"]
@@ -144,9 +149,11 @@ class Updater:
         remove_subpath, filtered_files = RecursiveDirs(file_list).extract_files
 
         if not filtered_files:
-            self.error = True
-            self.error_data["issue_type"] = NOT_AN_ADDON
-            self.error_data["file_list"] = zfile.namelist()
+            self._handle_error(issue_type=NOT_AN_ADDON,
+                               file_list=zfile.namelist())
+            # self.error = True
+            # self.error_data["issue_type"] = NOT_AN_ADDON
+            # self.error_data["file_list"] = zfile.namelist()
             return  # Critical Error
 
         # Create a temporary folder for extracting the ZIP file:
@@ -180,9 +187,11 @@ class Updater:
             return  # TODO
 
         if not p.isfile(p.join(extract_path, "__init__.py")):
-            self.error = True
-            self.error_data["issue_type"] = NOT_AN_ADDON
-            self.error_data["file_list"] = zfile.namelist()
+            self._handle_error(issue_type=NOT_AN_ADDON,
+                               file_list=zfile.namelist())
+            # self.error = True
+            # self.error_data["issue_type"] = NOT_AN_ADDON
+            # self.error_data["file_list"] = zfile.namelist()
             return  # Critical Error
 
         # Get the install directory.
@@ -259,3 +268,8 @@ class Updater:
         bpy.ops.preferences.addon_disable(module=p.basename(self.addon_path))
         bpy.ops.preferences.addon_refresh()
         bpy.ops.preferences.addon_enable(module=p.basename(self.addon_path))
+
+    def _handle_error(self, **kwargs):
+        self.error = True
+        for key in kwargs.keys():
+            self.error_data[key] = kwargs[key]
