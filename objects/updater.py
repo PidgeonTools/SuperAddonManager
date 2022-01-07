@@ -191,6 +191,7 @@ class Updater:
 
         self._install_files(extract_path, install_directory)
 
+        # Remove the extract directory after updating.
         shutil.rmtree(extract_path)
 
         # Reload the addon after updating.
@@ -201,10 +202,8 @@ class Updater:
         except Exception as e:
             return f"Reloading {self.addon_name} automatically failed. Please restart Blender after all Updates have completed."
 
-        # Remove the extract directory after updating.
-
-    # Create a backup of the install directory.
     def _create_backup(self, install_directory):
+        """Create a backup of the install directory."""
         # Get the backup directory.
         version = ".".join([str(i) for i in self.old_version])
         backup_directory = p.join(
