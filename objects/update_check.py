@@ -114,11 +114,11 @@ class UpdateCheck_v1_0_0:
 
         return is_minimum_compatible
 
-    # Set the error state to True and the error data to all of the required data.
     def _set_error(self, **kwargs):
+        """Set the error state to True and the error data to all of the required data."""
         self.error = True
-        for key in kwargs:
-            self.error_data[key] = kwargs[key]
+        for key, value in kwargs.items():
+            self.error_data[key] = value
 
     # Convert a list into a tuple of three integers.
     def pad_tuple(self, t):

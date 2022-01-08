@@ -37,11 +37,10 @@ class RecursiveDirs:
         if search_file in input_object.keys():
             return greatest_common_subpath, self._flatten_list(input_object)
 
-        for key in input_object.keys():
-            el = input_object[key]
-            if type(el) == dict:
+        for key, value in input_object.items():
+            if type(value) == dict:
                 new_try = self._get_recursive_dirs(
-                    el, search_file, greatest_common_subpath + key)
+                    value, search_file, greatest_common_subpath + key)
                 if new_try[1] != []:
                     return new_try
 
