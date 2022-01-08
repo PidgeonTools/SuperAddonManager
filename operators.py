@@ -494,7 +494,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         return {'FINISHED'}
 
     def generate_report(self, data: dict):
-        base_url = "http://localhost:3000/request-support?"
+        BASE_URL = "http://localhost:3000/request-support?"
 
         path = p.join(p.dirname(__file__), "updater_status.json")
         d = decode_json(path)
@@ -534,7 +534,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         # # if issue_type == NOT_AN_ADDON:
         # #     url_params["file_list"] = data["file_list"]
 
-        return base_url + urllib.parse.urlencode(url_params)
+        return BASE_URL + urllib.parse.urlencode(url_params)
 
 
 classes = (
