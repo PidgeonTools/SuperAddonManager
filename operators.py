@@ -493,7 +493,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
         return {'FINISHED'}
 
-    def generate_report(self, data):
+    def generate_report(self, data: dict):
         base_url = "http://localhost:3000/request-support?"
 
         path = p.join(p.dirname(__file__), "updater_status.json")
