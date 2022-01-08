@@ -26,7 +26,6 @@ ENDPOINT_URL_INVALID = 'endpoint_url_invalid'
 ENDPOINT_OFFLINE = 'endpoint_offline'
 INVALID_ENDPOINT = 'invalid_endpoint'
 ENDPOINT_INVALID_SCHEMA = 'endpoint_invalid_schema'
-UNKNOWN_ERROR = "unknown_error"
 
 # Download Issues
 INVALID_FILE_TYPE = "invalid_file_type"
@@ -35,6 +34,9 @@ DOWNLOAD_URL_OFFLINE = "download_url_offline"
 
 # Installation Issues
 NOT_AN_ADDON = "not_an_addon"
+
+# Other Issues
+UNKNOWN_ERROR = "unknown_error"
 
 all_issue_types = [
     BL_INFO_VERSION_PROBLEMS,
