@@ -318,10 +318,16 @@ ${checkedInternet}
                 <>
                   <p>
                     <FormattedMessage id="request_support.support_page.check_that_your_internet_connection_works" />{" "}
-                    <FormattedMessage id="request_support.support_page.try_to_reach_the_endpoint" />{" "}
-                    <ExternalLink href={endpointURL}>
-                      {endpointURL}.
-                    </ExternalLink>{" "}
+                    <FormattedMessage
+                      id="request_support.support_page.try_to_reach_the_endpoint"
+                      values={{
+                        link: getI18nLink({
+                          href: endpointURL,
+                          target: "_blank",
+                        }),
+                        endpointURL: endpointURL,
+                      }}
+                    />{" "}
                     <FormattedMessage id="request_support.support_page.retry_to_check_for_updates" />{" "}
                     <FormattedMessage id="request_support.support_page.what_if_it_still_does_not_work" />{" "}
                     <FormattedMessage id="request_support.support_page.what_if_the_issue_has_already_been_reported" />
