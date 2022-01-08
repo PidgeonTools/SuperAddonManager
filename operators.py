@@ -499,33 +499,41 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         path = p.join(p.dirname(__file__), "updater_status.json")
         d = decode_json(path)
 
-        issue_type = data["issue_type"]
+        issue_type: str = data.pop("issue_type")
+        bl_info: dict = data.pop("bl_info")
 
         addon_version = "Unknown"
-        if issue_type != BL_INFO_VERSION_PROBLEMS and "version" in data["bl_info"].keys():
-            addon_version = ".".join(map(str, data["bl_info"]["version"]))
+        if issue_type != BL_INFO_VERSION_PROBLEMS and "version" in bl_info.keys():
+            addon_version = ".".join(map(str, bl_info["version"]))
 
         url_params = {"issue_type": issue_type,
-                      "addon_name": data["addon_name"],
+                      "addon_name": data.pop("addon_name"),
                       "os_name": platform.system(),
                       "blender_version": bpy.app.version_string,
                       "addon_version": addon_version
                       }
 
-        if "tracker_url" in data["bl_info"].keys():
-            url_params["tracker_url"] = data["bl_info"]["tracker_url"]
+        if "tracker_url" in bl_info.keys():
+            url_params["tracker_url"] = bl_info["tracker_url"]
 
-        if issue_type in [SAM_NOT_SUPPORTED]:
-            url_params["addon_count"] = data["addon_count"]
+        if "new_version" in data.keys():
+            url_params["new_version"] = ".".join(
+                map(str, data.pop("new_version")))
 
-        if issue_type in [ENDPOINT_URL_INVALID, INVALID_ENDPOINT, ENDPOINT_INVALID_SCHEMA, ENDPOINT_OFFLINE]:
-            url_params["endpoint_url"] = data["endpoint_url"]
+        for key, value in data.items():
+            url_params[key] = value
+        # # if issue_type in [SAM_NOT_SUPPORTED]:
+        # #     url_params["addon_count"] = data["addon_count"]
 
-        if issue_type in [ENDPOINT_OFFLINE, DOWNLOAD_URL_OFFLINE, UNKNOWN_ERROR]:
-            url_params["error_message"] = data["error_message"]
+        # # if issue_type in [ENDPOINT_URL_INVALID, INVALID_ENDPOINT, ENDPOINT_INVALID_SCHEMA, ENDPOINT_OFFLINE]:
+        # #     url_params["endpoint_url"] = data["endpoint_url"]
 
-        if issue_type == NOT_AN_ADDON:
-            url_params["file_list"] = data["file_list"]
+        # # if issue_type in [ENDPOINT_OFFLINE, DOWNLOAD_URL_OFFLINE, UNKNOWN_ERROR]:
+        # #     url_params["error_message"] = data["error_message"]
+
+        # # if issue_type == NOT_AN_ADDON:
+        # #     url_params["file_list"] = data["file_list"]
+
         return base_url + urllib.parse.urlencode(url_params)
 
 
