@@ -72,6 +72,11 @@ class UpdateCheck_v1_0_0:
         self.update = latest_compatible_version and latest_compatible_version[
             "version"] > self.current_version
 
+        if not "download_url" in latest_compatible_version.keys():
+            self._set_error(issue_type=ENDPOINT_INVALID_SCHEMA,
+                            endpoint_url=endpoint_url)
+            return  # ! Critical Error
+
         # Set the data, that is required to update the addon.
         if self.update:
             self.version = latest_compatible_version["version"]
@@ -79,11 +84,7 @@ class UpdateCheck_v1_0_0:
             if "allow_automatic_download" in latest_compatible_version.keys():
                 self.automatic_download = latest_compatible_version["allow_automatic_download"]
 
-            if "download_url" in latest_compatible_version.keys():
-                self.download_url = latest_compatible_version["download_url"]
-            else:
-                self._set_error(
-                    issue_type=ENDPOINT_INVALID_SCHEMA, endpoint_url=endpoint_url)
+            self.download_url = latest_compatible_version["download_url"]
 
     # Format all version lists inside self.versions to be a tuple of three integers.
     def pad_version_list(self):
