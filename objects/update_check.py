@@ -43,13 +43,13 @@ class UpdateCheck_v1_0_0:
             self.current_version = self.pad_tuple(bl_info["version"])
         except (KeyError, ValueError, TypeError):
             self._set_error(issue_type=BL_INFO_VERSION_PROBLEMS)
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Make sure that there is a list of addon versions.
         if not "versions" in data.keys():
             self._set_error(issue_type=ENDPOINT_INVALID_SCHEMA,
                             endpoint_url=endpoint_url)
-            return  # Critical Error
+            return  # ! Critical Error
 
         # The list of addon versions.
         self.versions = data["versions"][:]  # Create a local copy.
@@ -60,7 +60,7 @@ class UpdateCheck_v1_0_0:
         except (KeyError, ValueError, TypeError):
             self._set_error(issue_type=ENDPOINT_INVALID_SCHEMA,
                             endpoint_url=endpoint_url)
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Filter the list of versions to only contain compatible versions
         candidate_versions = list(

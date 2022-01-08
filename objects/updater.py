@@ -88,8 +88,9 @@ class Updater:
             # If the first bytes are not \x50\x4b\x03\x04,
             # the file is not a zip archive
             if not (header_correct and first_bytes == b"\x50\x4b\x03\x04"):
-                self._handle_error(issue_type=INVALID_FILE_TYPE)
-                return  # Critical Error
+                self._handle_error(issue_type=INVALID_FILE_TYPE,
+                                   new_version=self.addon_version)
+                return  # ! Critical Error
 
             # Download the file
             self._download(
@@ -97,12 +98,12 @@ class Updater:
         except ValueError:  # The URL is invalid.
             self._handle_error(issue_type=INVALID_DOWNLOAD_URL,
                                download_url=self.download_url)
-            return  # Critical Error
+            return  # ! Critical Error
         # Any other exception. Most likely, there's no Internet connection or the server doesn't respond.
         except Exception as e:
             self._handle_error(issue_type=DOWNLOAD_URL_OFFLINE, error_message=str(
                 e), download_url=self.download_url)
-            return  # Critical Error
+            return  # ! Critical Error
 
         self.update_context = UPDATE_CONTEXTS["UPDATE"]
 
@@ -127,11 +128,11 @@ class Updater:
         try:
             zfile = zipfile.ZipFile(self.downloaded_file_path, "r")
         except zipfile.BadZipFile:
-            # Critical Error
+            # ! Critical Error
             return f"Update of '{self.addon_name}' failed: Please select a .zip file."
 
         if not zfile:
-            # Critical Error
+            # ! Critical Error
             return f"Update of '{self.addon_name}' failed: Please select a .zip file."
 
         file_list = zfile.namelist()
@@ -142,7 +143,7 @@ class Updater:
         if not filtered_files:
             self._handle_error(issue_type=NOT_AN_ADDON,
                                file_list=zfile.namelist())
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Create a temporary folder for extracting the ZIP file:
         timestring = time.strftime('%Y%m%d%H%M%S') + \
@@ -177,7 +178,7 @@ class Updater:
         if not p.isfile(p.join(extract_path, "__init__.py")):
             self._handle_error(issue_type=NOT_AN_ADDON,
                                file_list=zfile.namelist())
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Get the install directory.
         install_directory = self.addon_path

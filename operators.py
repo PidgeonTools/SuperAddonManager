@@ -284,7 +284,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                  "endpoint_url": endpoint_url})
 
             self.is_updating = False  # Open the latch
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
         except Exception as e:
@@ -296,7 +296,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                  "endpoint_url": endpoint_url})
 
             self.is_updating = False  # Open the latch
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Try to convert the data to be helpful for the program.
         try:
@@ -309,7 +309,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                  "endpoint_url": endpoint_url})
 
             self.is_updating = False  # Open the latch
-            return  # Critical Error
+            return  # ! Critical Error
 
         if not "schema_version" in endpoint_data.keys():
             self.unavailable_addons.append(
@@ -319,7 +319,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                  "endpoint_url": endpoint_url})
 
             self.is_updating = False  # Open the latch
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Check the schema of the endpoint data.
         if endpoint_data["schema_version"] == "super-addon-manager-version-info-1.0.0":
@@ -333,14 +333,14 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                  "endpoint_url": endpoint_url})
 
             self.is_updating = False  # Open the latch
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Handle any error that occured inside the update check.
         if update_check.error:
             self.unavailable_addons.append(update_check.error_data)
 
             self.is_updating = False  # Open the latch
-            return  # Critical Error
+            return  # ! Critical Error
 
         # Add the Addon to one of the Update Arrays.
         if update_check.update:
@@ -411,13 +411,13 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             if updater.error:
                 prefs.updates.pop(self.index)
                 prefs.unavailable_addons.append(updater.error_data)
-                return {'CANCELLED'}  # Critical Error
+                return {'CANCELLED'}  # ! Critical Error
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
             updater.error_data["error_message"] = str(e)
             prefs.unavailable_addons.append(updater.error_data)
-            return {'CANCELLED'}  # Critical Error
+            return {'CANCELLED'}  # ! Critical Error
 
         # Update the addon.
         try:
@@ -425,11 +425,11 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
 
             if update_status != None:
                 self.report({"WARNING"}, update_status)
-                return {'CANCELLED'}  # Critical Error
+                return {'CANCELLED'}  # ! Critical Error
             if updater.error:
                 prefs.updates.pop(self.index)
                 prefs.unavailable_addons.append(updater.error_data)
-                return {'CANCELLED'}  # Critical Error
+                return {'CANCELLED'}  # ! Critical Error
 
             bpy.ops.preferences.addon_refresh()  # Refresh the addon list.
         except Exception as e:
@@ -437,7 +437,7 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             updater.error_data["issue_type"] = UNKNOWN_ERROR
             updater.error_data["error_message"] = str(e)
             prefs.unavailable_addons.append(updater.error_data)
-            return {'CANCELLED'}  # Critical Error
+            return {'CANCELLED'}  # ! Critical Error
 
         return {'FINISHED'}
 
