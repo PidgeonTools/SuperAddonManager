@@ -71,13 +71,13 @@ Add any other context or screenshots about the feature request here.
 
 ## Einreichen einer Fehlermeldung auf GitHub
 
-When submitting an issue on GitHub, it's helpful to first search if the issue exists already. If you are submitting an issue for Super Addon Manager, you should search for the following title:
+Wenn Sie eine Fehlermeldung auf GitHub einreichen, ist es hilfreich, zunächst zu prüfen, ob die Fehlermeldung bereits existiert. Wenn Sie eine Fehlermeldung für Super Addon Manager einreichen, sollten Sie nach dem folgenden Titel suchen:
 
 ```markdown
 [Super Addon Manager]
 ```
 
-After you made sure that you are not submitting a duplicate issue, you can click on "New Issue":
+Nachdem Sie sich vergewissert haben, dass Sie keine doppelte Fehlermeldung einreichen, können Sie auf "New Issue" klicken:
 
 <DocumentationImage src="/images/docs/en/submitting-issues/gh-search.png" alt="Search for an issue on GitHub" />
 
@@ -91,13 +91,13 @@ You can now copy and paste the title and the issue report that you wrote previou
 
 ## Einreichen einer Fehlermeldung auf Gitlab
 
-Submitting an issue on Gitlab is pretty similar to submitting an issue on GitHub. It's helpful to first search if the issue exists already. If you are submitting an issue for Super Addon Manager, you should search for the following title:
+Das Einreichen einer Fehlermeldung auf Gitlab ist dem Einreichen einer Fehlermeldung auf GitHub sehr ähnlich. It's helpful to first search if the issue exists already. If you are submitting an issue for Super Addon Manager, you should search for the following title:
 
 ```markdown
 [Super Addon Manager]
 ```
 
-After you made sure that you are not submitting a duplicate issue, you can click on "New Issue":
+Nachdem Sie sich vergewissert haben, dass Sie keine doppelte Fehlermeldung einreichen, können Sie auf "New Issue" klicken:
 
 <DocumentationImage src="/images/docs/en/submitting-issues/gl-search.png" alt="Search for an issue on Gitlab" />
 
