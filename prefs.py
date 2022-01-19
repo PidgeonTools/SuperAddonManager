@@ -130,7 +130,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
     def draw(self, context):
         layout = self.layout
 
-        # layout.prop(self, "dev_icon")  # TODO: Decide on an icon.
+        # layout.prop(self, "dev_icon")  # TODO: #46 Decide on an icon.
 
         if checking_for_updates:
             # Checking for updates progress bar.

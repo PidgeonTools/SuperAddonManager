@@ -389,7 +389,7 @@ class SUPERADDONMANAGER_OT_update_info(Operator):
             text=f"{len(prefs.unavailable_addons)} errors occured.", icon="ERROR")
 
 
-# TODO: Automatic Update.
+# TODO #34 #35: Automatic Update.
 class SUPERADDONMANAGER_OT_automatic_update(Operator):
     """Update the addon automatically"""
     bl_idname = "superaddonmanager.automatic_update"
@@ -462,7 +462,7 @@ class SUPERADDONMANAGER_OT_update_all(Operator):
     bl_label = "Update All"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # TODO: Progress bar!
+    # TODO #9: Progress bar!
     def execute(self, context):
         for addon in prefs.updates:
             if addon[1]:

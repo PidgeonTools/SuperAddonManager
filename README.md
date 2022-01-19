@@ -5,7 +5,7 @@
 
 # Super Addon Manager
 
-<!-- TODO Add a description -->
+<!-- TODO #36 Add a description -->
 
 ## Upcoming Version:
 

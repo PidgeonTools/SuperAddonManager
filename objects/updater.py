@@ -173,7 +173,7 @@ class Updater:
                     f.write(data)
 
         if not p.isdir(extract_path):
-            return  # TODO
+            return  # TODO #47
 
         if not p.isfile(p.join(extract_path, "__init__.py")):
             self._set_error(issue_type=NOT_AN_ADDON,
