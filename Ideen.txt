@@ -15,5 +15,7 @@ Social Media Description: "I've just donated to Super Addon Manager. If you want
 
 Schema Validation: Try to use a schema validator.
 
+Update self: Disable automatic updates for really old Versions!
+
 Pass amount via URL:
 https://github.com/opencollective/opencollective-frontend/blob/34ddb6dc91602110db5847083443b69bd286afae/pages/contribution-flow.js#L58
