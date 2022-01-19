@@ -25,6 +25,8 @@ export const Version = ({ exampleText }) => {
   );
 };
 
+/* TODO: #39 Add notice that this shouldn't be a link to e.g. a main branch download on GitHub,
+  as that link will change over time. */
 export const DownloadURL = ({ allowAutomaticDownload, exampleText }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   if (allowAutomaticDownload) {

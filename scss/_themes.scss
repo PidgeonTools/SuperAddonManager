@@ -108,7 +108,7 @@ $colors-colorblind-dark: map.merge(
 );
 
 // Map of all themes
-// TODO: Dark, Colorblind Light, Colorblind Dark
+// TODO: #44 Dark, Colorblind Light, Colorblind Dark
 $themes: (
   light: $colors-light,
   colorblind-light: $colors-colorblind-light,

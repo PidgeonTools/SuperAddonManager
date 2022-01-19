@@ -288,7 +288,7 @@ export const FixEndpoint = ({
 
     if (!valid) return validate.errors[0];
 
-    // TODO: Add code to find out, whether the files (Download URL) actually exist.
+    // TODO: #40 Add code to find out, whether the files (Download URL) actually exist.
     return [];
   };
 

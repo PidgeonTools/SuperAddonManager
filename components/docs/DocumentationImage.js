@@ -1,6 +1,6 @@
 import React from "react";
 
-// TODO: Style the component!
+// TODO: #38 Style the component!
 
 const DocumentationImage = ({ ...props }) => {
   return (

@@ -78,7 +78,7 @@ And finally, if you make an update for an older version of Blender that won't wo
 
 You're now set up for publishing your endpoint to the web. Upload the endpoint file to a host, where you can easyly change it without changing its url. GitHub is a great place where you can host your file for free:
 
-<!-- TODO: Add a description on hosting an endpoint on GitHub -->
+<!-- TODO: #41 Add a description on hosting an endpoint on GitHub -->
 
 Once you're finished uploading your file, you have to copy the url to the file for the next step. Please make sure that at the url, the file is in raw data and not embedded into any HTML page. On GitHub, you can click the "Raw" Button to access the raw file data and copy its url.
 
