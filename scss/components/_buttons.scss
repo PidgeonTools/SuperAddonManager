@@ -10,12 +10,12 @@
 
   border: 1px solid transparent;
   border-radius: $border-small;
-  border-color: getColor(copy-button-border);
+  border-color: getColor(button-copy-border);
 
   background-color: getColor(code-background);
 
   position: absolute;
-  color: getColor(copy-button-content);
+  color: getColor(button-copy-content);
 
   justify-content: center;
   display: flex;
@@ -24,26 +24,41 @@
   transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
 
   &:hover {
-    border-color: getColor(hover-copy-button-border);
-    background-color: getColor(hover-button-dark);
+    border-color: getColor(button-hover-copy-border);
+    background-color: getColor(button-hover-dark);
     cursor: pointer;
   }
 
   &:disabled {
-    border-color: getColor(disabled-button-border-dark);
+    border-color: getColor(button-disabled-border-dark);
     background-color: getColor(code-background);
-    color: getColor(disabled-button-dark);
+    color: getColor(button-disabled-dark);
     cursor: default;
   }
 
   &--copied {
-    color: getColor(success);
+    color: getColor(theme-success);
   }
+}
+
+.sam-toggle-button {
+  background-color: #4f4f4f;
+  border-radius: 50%;
+
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 // Rewrite the button classes
 @each $name, $color in $theme-colors-light {
   .sam-btn-#{$name} {
+    $name: "theme-" + $name;
+
     background-color: getColor($name);
     border-color: getColor($name);
     color: getColor(text-#{$name});
@@ -68,3 +83,15 @@
     }
   }
 }
+
+// TODO: Language Switcher
+// Element {
+// 	position: absolute;
+// 	transform: translate(600%, -60%);
+// }
+
+// TODO: Theme switcher
+// Element {
+// 	position: absolute;
+// 	transform: translate(480%, -60%);
+// }

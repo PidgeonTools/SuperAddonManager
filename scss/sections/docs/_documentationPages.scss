@@ -72,7 +72,7 @@ main {
   cursor: pointer;
 
   &:hover {
-    border-color: getColor(secondary);
+    border-color: getColor(theme-secondary);
   }
 
   &--previous {
@@ -89,7 +89,7 @@ main {
   }
 
   &--dynamic-label {
-    color: getColor(secondary);
+    color: getColor(theme-secondary);
     font-weight: 800;
   }
 }

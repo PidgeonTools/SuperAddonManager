@@ -8,19 +8,63 @@
 $primary: #3c9bd6;
 $secondary: #2d6cdf;
 
-// SYNTAX HIGHLIGHTING
-$code-colors: (
-  code-attribute: #b99a3d,
-  code-background: #242424,
-  code-builtin: #535353,
-  code-comment: #007400,
-  code-default: #bdbdbd,
-  code-keyword: #57c0ff,
-  code-meta: #c28b00,
-  code-number: #a9c605,
-  code-link: #0ea5ff,
-  code-string: #f2884d,
-  code-variable: #3f6e74,
+$base-theme: (
+  settings: (
+    hover: (
+      theme: 10,
+    ),
+  ),
+  colors: (
+    theme: (
+      primary: $primary,
+      secondary: $secondary,
+      success: #16ca09,
+      text-primary: #fff, // TODO
+      text-secondary: #fff, // TODO
+      text-hover-primary: darken(#fff, 10%), // TODO
+      hover-primary: darken($primary, 20%), // TODO
+      hover-secondary: lighten($secondary, 20%), // TODO
+    ),
+    layout: (
+      bg: #fff,
+      text: #212529,
+      footer: #333333,
+    ),
+    code: (
+      // SYNTAX HIGHLIGHTING
+      attribute: #b99a3d,
+      background: #242424,
+      builtin: #535353,
+      comment: #007400,
+      default: #bdbdbd,
+      keyword: #57c0ff,
+      meta: #c28b00,
+      number: #a9c605,
+      link: #0ea5ff,
+      string: #f2884d,
+      variable: #3f6e74,
+    ),
+    docs: (
+      navbar-heading: #000,
+      navbar-link: #495057,
+      navbar-link-active: #212529,
+      navigate-box-outline: #dee2e6,
+    ),
+    button: (
+      copy-content: #adb5bd,
+      copy-border: #6c757d,
+      hover-copy-border: #767f86, // TODO
+      dark: #000,
+      hover-dark: #333, // TODO
+      disabled-dark: #82888e,
+      disabled-border-dark: #51585e,
+    ),
+    form: (
+      feedback-valid: #3c8c42,
+      feedback-invalid: #b33224,
+      endpoint-example-container-outline: #ced4da,
+    ),
+  ),
 );
 
 // LIGHT THEME
@@ -30,82 +74,48 @@ $theme-colors-light: (
   success: #16ca09,
 );
 
-$colors-light: (
-  bg: #fff,
-  text-default: #212529,
-  text-primary: #fff,
-  text-hover-primary: darken(#fff, 10%),
-  hover-primary: darken(map.get($theme-colors-light, primary), 20%),
-  text-secondary: #fff,
-  hover-secondary: lighten(map.get($theme-colors-light, secondary), 20%),
-  form-feedback-valid: #3c8c42,
-  form-feedback-invalid: #b33224,
-  footer: #333333,
-  docs-navigate-box-outline: #dee2e6,
-  docs-navbar-heading: #000,
-  docs-navbar-link: #495057,
-  docs-navbar-link-active: #212529,
-  copy-button-content: #adb5bd,
-  copy-button-border: #6c757d,
-  hover-copy-button-border: #767f86,
-  button-dark: #000,
-  hover-button-dark: #333,
-  disabled-button-dark: #82888e,
-  disabled-button-border-dark: #51585e,
-  endpoint-form-example-container-outline: #ced4da,
-);
-
-$colors-light: multiMapMerge($theme-colors-light, $code-colors, $colors-light);
+$colors-light: $base-theme;
 
 // Colorblind Light Theme
-$colors-colorblind-light: map.merge(
+$colors-colorblind-light: map.deep-merge(
   $colors-light,
   (
-    form-feedback-valid: #116bdf,
-    form-feedback-invalid: #9b5e10,
+    colors: (
+      form: (
+        feedback-valid: #116bdf,
+        feedback-invalid: #9b5e10,
+      ),
+    ),
   )
 );
 
 // Dark Theme
-$theme-colors-dark: (
-  primary: color.scale(#46c3db, $saturation: -30%),
-  secondary: color.scale(#2d6cdf, $saturation: -30%),
-  success: #16ca09,
+$theme-modifications-dark: (
+  colors: (
+    theme: (
+      primary: color.scale(#46c3db, $saturation: -30%),
+      secondary: color.scale(#2d6cdf, $saturation: -30%),
+      // TODO: Hover primary and secondary!
+    ),
+    layout: (
+      bg: #121212,
+      text: #ffffffab,
+    ),
+  ),
 );
 
-$colors-dark: (
-  bg: #121212,
-  text-default: #ffffffab,
-  text-primary: #fff,
-  text-hover-primary: darken(#fff, 10%),
-  hover-primary: darken(map.get($theme-colors-dark, primary), 20%),
-  text-secondary: #fff,
-  hover-secondary: lighten(map.get($theme-colors-dark, secondary), 20%),
-  form-feedback-valid: #3c8c42,
-  form-feedback-invalid: #b33224,
-  footer: #333333,
-  docs-navigate-box-outline: #dee2e6,
-  copy-button-content: #adb5bd,
-  docs-navbar-heading: #000,
-  docs-navbar-link: #495057,
-  docs-navbar-link-active: #212529,
-  copy-button-border: #6c757d,
-  hover-copy-button-border: #767f86,
-  button-dark: #000,
-  hover-button-dark: #333,
-  disabled-button-dark: #82888e,
-  disabled-button-border-dark: #51585e,
-  endpoint-form-example-container-outline: #ced4da,
-);
-
-$colors-dark: multiMapMerge($theme-colors-dark, $code-colors, $colors-dark);
+$colors-dark: map.deep-merge($base-theme, $theme-modifications-dark);
 
 // Colorblind Light Theme
-$colors-colorblind-dark: map.merge(
+$colors-colorblind-dark: map.deep-merge(
   $colors-dark,
   (
-    form-feedback-valid: #116bdf,
-    form-feedback-invalid: #9b5e10,
+    colors: (
+      form: (
+        feedback-valid: #116bdf,
+        feedback-invalid: #9b5e10,
+      ),
+    ),
   )
 );
 

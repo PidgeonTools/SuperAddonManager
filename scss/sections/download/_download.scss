@@ -6,7 +6,7 @@
   @include gradient;
 
   h1 {
-    color: getColor(text-primary);
+    color: getColor(theme-text-primary);
     font-size: $font-size-xxl;
     font-weight: 600;
     word-spacing: 100vw;
@@ -22,14 +22,14 @@
   }
 
   ul {
-    color: getColor(text-primary);
+    color: getColor(theme-text-primary);
     font-size: $font-size-lg;
     user-select: none;
   }
 }
 
 .supported-addons-box {
-  background-color: getColor(bg);
+  background-color: getColor(layout-bg);
 
   h2 {
     font-weight: 500;

@@ -6,12 +6,14 @@
 @use "components/utilities" as *;
 
 // Write all themes to HTML classes.
-@each $theme, $colors in $themes {
+@each $theme, $variables in $themes {
+  $colors: map.get($variables, colors);
+  $settings: map.get($variables, settings);
+
   @include rootVariables(
     $theme,
     $colors,
-    map.get($colors, form-feedback-valid),
-    map.get($colors, form-feedback-invalid)
+    $settings,
   );
 }
 
@@ -33,7 +35,7 @@ $font-family-sans-serif: "Cabin", system-ui, -apple-system, "Segoe UI", Roboto,
 
 // RANGE OVERRIDES
 $component-active-bg: $secondary;
-$form-range-track-bg: getColor(bg);
+$form-range-track-bg: getColor(layout-bg);
 $form-range-track-cursor: pointer;
 
 // IMPORT BOOTSTRAP 5

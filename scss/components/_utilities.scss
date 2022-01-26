@@ -3,12 +3,12 @@
 
 // Return a theme color variable
 @function getColor($color-name) {
-  @return var(--colors-#{$color-name});
+  @return var(--sam-#{$color-name});
 }
 
 // Return the RGB Value of a theme color variable
 @function getColorRGB($color-name) {
-  @return var(--colors-#{$color-name}-rgb);
+  @return var(--sam-#{$color-name}-rgb);
 }
 
 // Escape a color to be URL friendly

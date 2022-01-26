@@ -6,69 +6,69 @@
 }
 
 .sam-form-control {
-  color: getColor(text-default);
-  border-color: getColor(text-default);
-  background-color: getColor(bg);
+  color: getColor(layout-text);
+  border-color: getColor(layout-text);
+  background-color: getColor(layout-bg);
 
   &:focus {
-    color: getColor(text-default);
-    border-color: getColor(text-default);
-    background-color: getColor(bg);
-    box-shadow: 0 0 0 0.25rem rgba(getColorRGB(secondary), 0.25);
+    color: getColor(layout-text);
+    border-color: getColor(layout-text);
+    background-color: getColor(layout-bg);
+    box-shadow: 0 0 0 0.25rem rgba(getColorRGB(theme-secondary), 0.25);
   }
 }
 
 .sam-form-select {
-  border-color: getColor(text-default);
-  color: getColor(text-default);
-  background-color: getColor(bg);
+  border-color: getColor(layout-text);
+  color: getColor(layout-text);
+  background-color: getColor(layout-bg);
 
   &:focus {
-    border-color: getColor(text-default);
-    box-shadow: 0 0 0 0.25rem rgba(getColorRGB(secondary), 0.25);
+    border-color: getColor(layout-text);
+    box-shadow: 0 0 0 0.25rem rgba(getColorRGB(theme-secondary), 0.25);
   }
 }
 
 .sam-form-check-input {
-  background-color: getColor(bg);
-  border-color: rgba(getColorRGB(text-default), 0.25);
+  background-color: getColor(layout-bg);
+  border-color: rgba(getColorRGB(layout-text), 0.25);
 
   &:checked {
-    background-color: getColor(secondary);
-    border-color: getColor(secondary);
+    background-color: getColor(theme-secondary);
+    border-color: getColor(theme-secondary);
   }
 
   &:focus {
-    border-color: rgba(getColorRGB(secondary), 0.4);
-    box-shadow: 0 0 0 0.25rem rgba(getColorRGB(secondary), 0.25);
+    border-color: rgba(getColorRGB(theme-secondary), 0.4);
+    box-shadow: 0 0 0 0.25rem rgba(getColorRGB(theme-secondary), 0.25);
   }
 }
 
 .sam-form-range {
   &:focus {
     &::-webkit-slider-thumb {
-      box-shadow: 0 0 0 0.25rem rgba(getColorRGB(secondary), 0.25);
+      box-shadow: 0 0 0 0.25rem rgba(getColorRGB(theme-secondary), 0.25);
     }
     &::-moz-range-thumb {
-      box-shadow: 0 0 0 0.25rem rgba(getColorRGB(secondary), 0.25);
+      box-shadow: 0 0 0 0.25rem rgba(getColorRGB(theme-secondary), 0.25);
     }
   }
 
   &::-webkit-slider-thumb {
-    background-color: getColor(secondary);
+    background-color: getColor(theme-secondary);
     cursor: $form-range-track-cursor;
 
     &:active {
-      background-color: rgba(getColorRGB(secondary), 0.8);
+      background-color: rgba(getColorRGB(theme-secondary), 0.8);
     }
   }
 
   &::-moz-range-thumb {
-    background-color: getColor(secondary);
+    background-color: getColor(theme-secondary);
     cursor: $form-range-track-cursor;
 
     &:active {
-      background-color: rgba(getColorRGB(secondary), 0.8);
+      background-color: rgba(getColorRGB(theme-secondary), 0.8);
     }
   }
 }

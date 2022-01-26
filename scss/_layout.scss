@@ -2,18 +2,18 @@
 @use "components/utilities" as *;
 
 body {
-  background: getColor(bg);
-  color: getColor(text-default);
+  background: getColor(layout-bg);
+  color: getColor(layout-text);
   background-attachment: fixed;
   max-width: 100%;
   overflow-x: hidden;
 }
 
 a {
-  color: getColor(primary);
+  color: getColor(theme-primary);
 
   &:hover {
-    color: getColor(hover-primary);
+    color: getColor(theme-hover-primary);
   }
 
   .feather-external-link {

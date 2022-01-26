@@ -3,7 +3,7 @@
 @use "../components/utilities" as *;
 
 .footer {
-  background-color: getColor(footer);
+  background-color: getColor(layout-footer);
   margin-top: 1.5rem;
 
   &__items {
