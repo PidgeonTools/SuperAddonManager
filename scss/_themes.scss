@@ -5,7 +5,7 @@
 @use "components/utilities" as *;
 
 // UNIVERSAL THEME COLORS
-$primary: #46c3db;
+$primary: #3c9bd6;
 $secondary: #2d6cdf;
 
 // SYNTAX HIGHLIGHTING
@@ -25,7 +25,7 @@ $code-colors: (
 
 // LIGHT THEME
 $theme-colors-light: (
-  primary: #46c3db,
+  primary: #3c9bd6,
   secondary: #2d6cdf,
   success: #16ca09,
 );
@@ -38,8 +38,8 @@ $colors-light: (
   hover-primary: darken(map.get($theme-colors-light, primary), 20%),
   text-secondary: #fff,
   hover-secondary: lighten(map.get($theme-colors-light, secondary), 20%),
-  form-feedback-valid: #127b0a,
-  form-feedback-invalid: #d50e0e,
+  form-feedback-valid: #3c8c42,
+  form-feedback-invalid: #b33224,
   footer: #333333,
   gray-300: #dee2e6,
   gray-500: #adb5bd,
@@ -80,8 +80,8 @@ $colors-dark: (
   hover-primary: darken(map.get($theme-colors-dark, primary), 20%),
   text-secondary: #fff,
   hover-secondary: lighten(map.get($theme-colors-dark, secondary), 20%),
-  form-feedback-valid: #127b0a,
-  form-feedback-invalid: #d50e0e,
+  form-feedback-valid: #3c8c42,
+  form-feedback-invalid: #b33224,
   footer: #333333,
   gray-300: #dee2e6,
   gray-500: #adb5bd,
