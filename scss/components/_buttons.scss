@@ -10,12 +10,12 @@
 
   border: 1px solid transparent;
   border-radius: $border-small;
-  border-color: getColor(gray-600);
+  border-color: getColor(copy-button-border);
 
   background-color: getColor(code-background);
 
   position: absolute;
-  color: getColor(gray-500);
+  color: getColor(copy-button-content);
 
   justify-content: center;
   display: flex;
@@ -24,7 +24,7 @@
   transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
 
   &:hover {
-    border-color: getColor(hover-gray-600);
+    border-color: getColor(hover-copy-button-border);
     background-color: getColor(hover-button-dark);
     cursor: pointer;
   }

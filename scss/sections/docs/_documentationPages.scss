@@ -43,26 +43,29 @@ main {
     color: black; // TODO: #45 Variable?
     font-weight: 600;
   }
+
   &--first-element {
     padding-top: 0;
   }
+
   &--links {
-    color: getColor(gray-700);
+    color: getColor(docs-navbar-link);
     text-decoration: none;
     font-size: $font-size-sm;
 
     &:hover {
-      color: getColor(gray-900);
+      color: getColor(docs-navbar-link-active);
     }
   }
+
   &--active {
-    color: getColor(gray-900);
+    color: getColor(docs-navbar-link-active);
   }
 }
 
 .docs-navigate-one-page {
   padding: 0.5rem 1.2rem;
-  border: 1px solid getColor(gray-300);
+  border: 1px solid getColor(docs-navigate-box-outline);
   border-radius: $border-medium;
   width: 100%;
 
