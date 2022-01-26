@@ -17,5 +17,14 @@ Schema Validation: Try to use a schema validator.
 
 Update self: Disable automatic updates for really old Versions!
 
+Update security: Verify checksum to make sure that the file is not malicious using the following system:
+2 RSA Public Keys: Store them inside the SAM endpoint, get the public keys when checking for SAM updates
+and verify the SHA256() signatures of the files which have been signed with a private key. Stop updating
+if the checksum of the downloaded file and the verified checksum don't match.
+
+Verified checksums can be acquired by donating.
+Level 1: Simple VT Scan of the ZIP file (cheaper, less secure)
+Level 2: VT Scan + Source Code Analysis
+
 Pass amount via URL:
 https://github.com/opencollective/opencollective-frontend/blob/34ddb6dc91602110db5847083443b69bd286afae/pages/contribution-flow.js#L58
