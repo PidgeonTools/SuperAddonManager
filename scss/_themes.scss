@@ -11,7 +11,7 @@ $secondary: #2d6cdf;
 $base-theme: (
   settings: (
     hover: (
-      theme: 10,
+      theme: 20%,
     ),
   ),
   colors: (
@@ -21,9 +21,9 @@ $base-theme: (
       success: #16ca09,
       text-primary: #fff, // TODO
       text-secondary: #fff, // TODO
-      text-hover-primary: darken(#fff, 10%), // TODO
-      hover-primary: darken($primary, 20%), // TODO
-      hover-secondary: lighten($secondary, 20%), // TODO
+      // text-hover-primary: darken(#fff, 10%),
+      // hover-primary: darken($primary, 20%),
+      // hover-secondary: lighten($secondary, 20%),
     ),
     layout: (
       bg: #fff,
@@ -95,7 +95,6 @@ $theme-modifications-dark: (
     theme: (
       primary: color.scale(#46c3db, $saturation: -30%),
       secondary: color.scale(#2d6cdf, $saturation: -30%),
-      // TODO: Hover primary and secondary!
     ),
     layout: (
       bg: #121212,

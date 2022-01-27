@@ -61,18 +61,18 @@
 
     background-color: getColor($name);
     border-color: getColor($name);
-    color: getColor(text-#{$name});
+    color: getColor(#{$name}-text);
 
     &:hover {
       background-color: getColor($name);
       border-color: getColor($name);
-      color: getColor(text-#{$name});
+      color: getColor(#{$name}-text);
     }
 
     &:focus {
       background-color: getColor($name);
       border-color: getColor($name);
-      color: getColor(text-#{$name});
+      color: getColor(#{$name}-text);
       box-shadow: 0 0 0 0.25rem rgba(getColorRGB($name), 0.5);
     }
 

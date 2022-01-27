@@ -13,7 +13,7 @@ a {
   color: getColor(theme-primary);
 
   &:hover {
-    color: getColor(theme-hover-primary);
+    color: getColor(theme-primary-hover);
   }
 
   .feather-external-link {
