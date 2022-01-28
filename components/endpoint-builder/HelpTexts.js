@@ -63,7 +63,12 @@ export const DownloadURL = ({ allowAutomaticDownload, exampleText }) => {
                 <FormattedMessage id="endpoint_builder.help_texts.download_url.your_product_is_paid" />
               </span>
             </OverlayTrigger>{" "}
-            <FormattedMessage id="endpoint_builder.help_texts.download_url.uncheck_allow_automatic_download" />
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.uncheck_allow_automatic_download" />{" "}
+            <FormattedMessage
+              id="endpoint_builder.help_texts.download_url.uniqueness_notice"
+              values={I18nFormatters}
+            />{" "}
+            <FormattedMessage id="endpoint_builder.help_texts.download_url.avoid_github_main" />
           </>
         ) : (
           ""
