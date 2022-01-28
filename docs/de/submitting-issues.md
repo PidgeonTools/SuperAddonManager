@@ -51,9 +51,9 @@ If applicable, add screenshots to help explain your problem.
 Add any other context about the problem here.
 ```
 
-#### Feature Request
+#### Feature-Anfrage
 
-If you are requesting a new feature, it's essential to communicate clearly, what the new feature should do. Die folgende Vorlage kann Ihnen helfen:
+Wenn Sie eine neue Funktion anregen, ist es wichtig, dass Sie klar kommunizieren, was diese tun soll. Die folgende Vorlage kann Ihnen helfen:
 
 ```
 **Is your feature request related to a problem? Please describe.**
@@ -109,13 +109,13 @@ You can now copy and paste the title and the issue report that you wrote previou
 
 <DocumentationImage src="/images/docs/en/submitting-issues/gl-inserted-text.png" alt="Insert the text and submit the Issue" />
 
-## Submitting an issue on BlenderMarket
+## Einreichen einer Fehlermeldung auf BlenderMarket
 
-On BlenderMarket, you should first navigate to the page of the creator:
+Auf BlenderMarket sollten Sie zunächst auf die Seite des Entwicklers gehen:
 
 <DocumentationImage src="/images/docs/en/submitting-issues/bm-product-page.png" alt="Navigate to the creator page on BlenderMarket" />
 
-On the creator page, you'll see a button with the text "Contact Creator":
+Auf der Seite des Entwicklers finden Sie eine Schaltfläche mit dem Text "Contact Creator":
 
 <DocumentationImage src="/images/docs/en/submitting-issues/bm-creator-page.png" alt="Contact Button on the Creator page" />
 
@@ -127,7 +127,7 @@ You can now click submit and ignore the error that BlenderMarket displays, your 
 
 <DocumentationImage src="/images/docs/en/submitting-issues/bm-error.png" alt="BlenderMarket might display an error message - just ignore it." />
 
-## Submitting an issue on Gumroad
+## Einreichen einer Fehlermeldung auf Gumroad
 
 Submitting issues on Gumroad is the same as submitting an issue via E-Mail, with one extra step. After downloading a file from Gumroad, you'll receive an E-Mail which confirms your download. Open that E-Mail and hit "Reply":
 
@@ -135,12 +135,12 @@ Submitting issues on Gumroad is the same as submitting an issue via E-Mail, with
 
 ## Einreichen einer Fehlermeldung via E-Mail
 
-Whether you're replying to an E-Mail or you're writing a new one, the following steps are the same. I'm using Thunderbird in this example, but you can use any E-Mail software of your choice.
+Egal, ob Sie auf eine E-Mail antworten oder eine neue E-Mail schreiben, die folgenden Schritte sind die gleichen. Ich verwende in diesem Beispiel Thunderbird, aber Sie können jede E-Mail-Software Ihrer Wahl verwenden.
 
-First, select everything, right click and select "Paste without formatting". This is necessary because the E-Mail software may have problems with the text you copied earlier:
+Markieren Sie zunächst alles, klicken Sie mit der rechten Maustaste und wählen Sie "Einfügen ohne Formatierung". Dies ist notwendig, da die E-Mail-Software möglicherweise Probleme mit dem Text hat, den Sie zuvor kopiert haben:
 <DocumentationImage src="/images/docs/en/submitting-issues/mail-replace-text.png" alt="Select everything and replace it with your issue message" />
 
-Then, copy and paste the issue title into the subject field. You can also format headings bold to make the text easier to read:
+Kopieren Sie dann den Titel der Fehlermeldung und fügen Sie ihn in die Betreffzeile ein. Sie können Überschriften auch fett formatieren, um den Text lesbarer zu machen:
 <DocumentationImage src="/images/docs/en/submitting-issues/mail-inserted-message.png" alt="Insert the title into the subject field." />
 
 Finally, review the E-Mail and make sure that you've set the E-Mail-Adress that you want to send it to. Click "Send", and you've sucessfully submitted an issue report. Congratulations!
