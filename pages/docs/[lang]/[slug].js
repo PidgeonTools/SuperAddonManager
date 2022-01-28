@@ -117,6 +117,11 @@ const Page = ({
                   // className: "hljs",
                 },
               },
+              p: {
+                props: {
+                  className: "mb-1"
+                },
+              },
               SamNotSupported: {
                 component: SamNotSupported,
               },
@@ -140,6 +145,10 @@ const Page = ({
               },
               DocumentationImage: {
                 component: DocumentationImage,
+                props: {
+                  article: data.file,
+                  language: data.lang,
+                },
               },
             },
           }}
@@ -147,7 +156,7 @@ const Page = ({
           {content}
         </Markdown>
 
-        <div className="d-flex">
+        <div className="d-flex mt-3">
           {/* PREVIOUS PAGE BUTTON */}
           <>
             {previousArticle ? (
@@ -261,7 +270,7 @@ export const getStaticProps = async ({ params: { slug, lang } }) => {
   return {
     props: {
       content: parsedMarkdown.content,
-      data: parsedMarkdown.data,
+      data: {...parsedMarkdown.data, file: slug, lang},
       lang,
       navbarData,
       previousArticle,

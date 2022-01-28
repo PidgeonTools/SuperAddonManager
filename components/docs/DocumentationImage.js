@@ -1,11 +1,22 @@
 import React from "react";
 
-// TODO: #38 Style the component!
+const DocumentationImage = ({
+  filename,
+  article = "bullshit",
+  language = "Placeholder",
+  localeVersions = "en",
+  fileExtension = "png",
+  ...props
+}) => {
+  const basePath = "/images/docs";
+  const locale = localeVersions.split(";").includes(language) ? language : "en";
 
-const DocumentationImage = ({ ...props }) => {
+  const src = `${basePath}/${locale}/${article}/${filename}.${fileExtension}`;
   return (
     <>
-      <img {...props} width={"500px"} />
+      <div className="docs-img-wrapper">
+        <img {...props} src={src} className="img-fluid" />
+      </div>
     </>
   );
 };
