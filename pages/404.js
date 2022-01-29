@@ -87,9 +87,9 @@ const Custom404 = ({ funFactIDs, pages, addonDownloadLinks }) => {
       </section>
 
       {/* CONTACT LINK */}
-      <div className="error-404-message--text error-404-message--link-container error-404-message--contact">
+      <div className="error-404-message--text error-404-message--contact">
         <FormattedMessage id="error_404.message.are_you_sure" />{" "}
-        <Link href="https://discord.gg/hGzHDA7bj9">
+        <Link passHref href="https://discord.gg/hGzHDA7bj9">
           <ExternalLink>
             <FormattedMessage id="error_404.message.contact_us_on_discord" />
           </ExternalLink>
