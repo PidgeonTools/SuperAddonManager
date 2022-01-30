@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: My issue is confidential
+    url: "https://blenderdefender.github.io/BlenderDefender/pages/confidential-issue.html"
+    about: Your issue is confidential? Please report it here.
