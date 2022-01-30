@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for the Addon
-title: ''
+title: 'Feature Request: '
 labels: 'feature request, enhancement, addon'
 assignees: 'BlenderDefender'
 
