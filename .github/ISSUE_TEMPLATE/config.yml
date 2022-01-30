@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: My issue is confidential
+    url: "https://blenderdefender.github.io/BlenderDefender/pages/confidential-issue.html"
+    about: Your issue is confidential? Please report it here.
+  - name: I have an issue with a translation
+    url: "https://crowdin.com/project/super-addon-manager"
+    about: For issues with translations, please head to the and leave a comment or suggest a better translation.
