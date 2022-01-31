@@ -10,9 +10,9 @@
 .issue_text {
   .issue_text_area {
     width: 100%;
-    background-color: getColor(code-background);
+    background-color: getColor("code", "background");
     border-radius: $border-large;
-    color: getColor(code-default);
+    color: getColor("code", "default");
     padding: 1rem;
     font-weight: 300;
     white-space: pre-wrap;

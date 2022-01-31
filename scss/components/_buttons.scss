@@ -10,12 +10,12 @@
 
   border: 1px solid transparent;
   border-radius: $border-small;
-  border-color: getColor(button-copy-border);
+  border-color: getColor("button", "copy-border");
 
-  background-color: getColor(code-background);
+  background-color: getColor("code", "background");
 
   position: absolute;
-  color: getColor(button-copy-content);
+  color: getColor("button", "copy-content");
 
   justify-content: center;
   display: flex;
@@ -24,20 +24,20 @@
   transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
 
   &:hover {
-    border-color: getColor(button-hover-copy-border);
-    background-color: getColor(button-hover-dark);
+    border-color: getColor("button", "copy-border", "hover");
+    background-color: getColor("button", "dark", "hover");
     cursor: pointer;
   }
 
   &:disabled {
-    border-color: getColor(button-disabled-border-dark);
-    background-color: getColor(code-background);
-    color: getColor(button-disabled-dark);
+    border-color: getColor("button", "disabled-border-dark");
+    background-color: getColor("code", "background");
+    color: getColor("button", "disabled-dark");
     cursor: default;
   }
 
   &--copied {
-    color: getColor(theme-success);
+    color: getColor("theme", "success");
   }
 }
 
@@ -57,28 +57,36 @@
 // Rewrite the button classes
 @each $name, $color in $theme-colors-light {
   .sam-btn-#{$name} {
-    $name: "theme-" + $name;
+    $category: "theme";
 
-    background-color: getColor($name);
-    border-color: getColor($name);
-    color: getColor(#{$name}-text);
+    background-color: getColor($category, $name);
+    border-color: getColor($category, $name);
+    color: getColor($category, $name, "text");
 
     &:hover {
-      background-color: getColor($name);
-      border-color: getColor($name);
-      color: getColor(#{$name}-text);
+      background-color: getColor($category, $name);
+      border-color: getColor($category, $name);
+      color: getColor($category, $name, "text");
     }
 
     &:focus {
-      background-color: getColor($name);
-      border-color: getColor($name);
-      color: getColor(#{$name}-text);
-      box-shadow: 0 0 0 0.25rem rgba(getColorRGB($name), 0.5);
+      background-color: getColor($category, $name);
+      border-color: getColor($category, $name);
+      color: getColor($category, $name, "text");
+      box-shadow: 0
+        0
+        0
+        0.25rem
+        rgba(getColor($category, $name, "", "rgb"), 0.5);
     }
 
     &:active {
       &:focus {
-        box-shadow: 0 0 0 0.25rem rgba(getColorRGB($name), 0.5);
+        box-shadow: 0
+          0
+          0
+          0.25rem
+          rgba(getColor($category, $name, "", "rgb"), 0.5);
       }
     }
   }

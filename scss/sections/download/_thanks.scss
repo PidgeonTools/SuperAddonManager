@@ -3,7 +3,7 @@
 @use "../../components/utilities" as *;
 
 .thanks-success-message {
-  background-color: getColor(layout-bg);
+  background-color: getColor("layout", "bg");
 }
 
 .thanks-donate-box {
@@ -11,14 +11,14 @@
 
   h1 {
     text-align: center;
-    color: getColor(theme-text-primary);
+    color: getColor("theme", "primary", "text");
     margin-bottom: 1rem;
   }
 
   &--form {
     border-radius: $border-medium;
     padding: 1rem;
-    color: getColor(theme-text-primary);
+    color: getColor("theme", "primary", "text");
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.4),
       rgba(131, 232, 255, 0.2) -0.5rem -0.5rem 1rem;

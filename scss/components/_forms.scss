@@ -16,13 +16,13 @@ $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/20
 
 $form-validation-states: (
   "valid": (
-    "color": getColor(form-feedback-valid),
-    "focus-color": getColorRGB(form-feedback-valid),
+    "color": getColor("form", "feedback-valid"),
+    "focus-color": getColor("form", "feedback-valid", "", "rgb"),
     "icon": var(--form-feedback-valid-icon),
   ),
   "invalid": (
-    "color": getColor(form-feedback-invalid),
-    "focus-color": getColorRGB(form-feedback-invalid),
+    "color": getColor("form", "feedback-invalid"),
+    "focus-color": getColor("form", "feedback-invalid", "", "rgb"),
     "icon": var(--form-feedback-invalid-icon),
   ),
 );

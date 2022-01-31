@@ -19,11 +19,13 @@ $base-theme: (
       primary: $primary,
       secondary: $secondary,
       success: #16ca09,
-      text-primary: #fff, // TODO
-      text-secondary: #fff, // TODO
+      // TODO #78
+      primary-text: #fff,
+      // TODO #78
+      secondary-text: #fff,
       // text-hover-primary: darken(#fff, 10%),
       // hover-primary: darken($primary, 20%),
-      // hover-secondary: lighten($secondary, 20%),
+      // hover-secondary: lighten($secondary, 20%),,
     ),
     layout: (
       bg: #fff,
@@ -53,9 +55,11 @@ $base-theme: (
     button: (
       copy-content: #adb5bd,
       copy-border: #6c757d,
-      hover-copy-border: #767f86, // TODO
+      hover-copy-border: #767f86,
+      // TODO
       dark: #000,
-      hover-dark: #333, // TODO
+      hover-dark: #333,
+      // TODO
       disabled-dark: #82888e,
       disabled-border-dark: #51585e,
     ),
@@ -104,7 +108,7 @@ $theme-modifications-dark: (
       navbar-heading: #bbbbbb,
       navbar-link: #8c959e,
       navbar-link-active: #acb4bc,
-    )
+    ),
   ),
 );
 

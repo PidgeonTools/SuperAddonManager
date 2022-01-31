@@ -10,11 +10,7 @@
   $colors: map.get($variables, colors);
   $settings: map.get($variables, settings);
 
-  @include rootVariables(
-    $theme,
-    $colors,
-    $settings,
-  );
+  @include rootVariables($theme, $colors, $settings);
 }
 
 // Border Radius Variables
@@ -35,7 +31,7 @@ $font-family-sans-serif: "Cabin", system-ui, -apple-system, "Segoe UI", Roboto,
 
 // RANGE OVERRIDES
 $component-active-bg: $secondary;
-$form-range-track-bg: getColor(layout-bg);
+$form-range-track-bg: getColor("layout", "bg");
 $form-range-track-cursor: pointer;
 
 // IMPORT BOOTSTRAP 5

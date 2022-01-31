@@ -1,5 +1,5 @@
 @use "utilities" as *;
 
 .waves {
-  fill: getColor(layout-bg);
+  fill: getColor("layout", "bg");
 }

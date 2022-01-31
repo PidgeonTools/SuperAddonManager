@@ -2,13 +2,16 @@
 @use "sass:map";
 
 // Return a theme color variable
-@function getColor($color-name) {
-  @return var(--sam-#{$color-name});
-}
+@function getColor($category, $color, $modification: "", $color-format: "") {
+  @if $modification != "" {
+    $modification: "-" + $modification;
+  }
 
-// Return the RGB Value of a theme color variable
-@function getColorRGB($color-name) {
-  @return var(--sam-#{$color-name}-rgb);
+  @if $color-format != "" {
+    $color-format: "-" + $color-format;
+  }
+
+  @return var(--sam-#{$category}-#{$color}#{$modification}#{$color-format});
 }
 
 // Escape a color to be URL friendly

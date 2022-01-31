@@ -40,7 +40,7 @@ main {
     margin: 0;
     padding-top: 1rem;
     font-size: $font-size-default;
-    color: getColor(docs-navbar-heading);
+    color: getColor("docs", "navbar-heading");
     font-weight: 600;
   }
 
@@ -49,30 +49,30 @@ main {
   }
 
   &--links {
-    color: getColor(docs-navbar-link);
+    color: getColor("docs", "navbar-link");
     text-decoration: none;
     font-size: $font-size-sm;
 
     &:hover {
-      color: getColor(docs-navbar-link-active);
+      color: getColor("docs", "navbar-link-active");
     }
   }
 
   &--active {
-    color: getColor(docs-navbar-link-active);
+    color: getColor("docs", "navbar-link-active");
   }
 }
 
 .docs-navigate-one-page {
   padding: 0.5rem 1.2rem;
-  border: 1px solid getColor(docs-navigate-box-outline);
+  border: 1px solid getColor("docs", "navigate-box-outline");
   border-radius: $border-medium;
   width: 100%;
 
   cursor: pointer;
 
   &:hover {
-    border-color: getColor(theme-secondary);
+    border-color: getColor("theme", "secondary");
   }
 
   &--previous {
@@ -89,14 +89,14 @@ main {
   }
 
   &--dynamic-label {
-    color: getColor(theme-secondary);
+    color: getColor("theme", "secondary");
     font-weight: 800;
   }
 }
 
 .docs-img-wrapper {
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
 }
 
 pre code.hljs {

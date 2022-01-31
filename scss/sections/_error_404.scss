@@ -4,7 +4,7 @@
 
 .error-404-message {
   @include gradient;
-  color: getColor(theme-text-primary);
+  color: getColor("theme", "primary", "text");
   line-break: none;
 
   h1 {
@@ -14,10 +14,10 @@
   }
 
   a {
-    color: getColor(theme-text-primary);
+    color: getColor("theme", "primary", "text");
 
     &:hover {
-      color: getColor(theme-text-primary-hover);
+      color: getColor("theme", "primary", "text-hover");
     }
   }
 
@@ -28,11 +28,11 @@
 
   &--link-container {
     a {
-      color: getColor(button-dark);
+      color: getColor("button", "dark");
       white-space: nowrap;
 
       &:hover {
-        color: getColor(button-hover-dark);
+        color: getColor("button", "dark", "hover");
       }
     }
   }

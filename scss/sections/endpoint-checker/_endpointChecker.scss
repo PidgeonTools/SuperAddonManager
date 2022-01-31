@@ -8,8 +8,8 @@
   padding: 3rem;
 
   border-radius: $border-large;
-  background-color: getColor(code-background);
-  color: getColor(code-default);
+  background-color: getColor("code", "background");
+  color: getColor("code", "default");
 
   p {
     margin: 0;

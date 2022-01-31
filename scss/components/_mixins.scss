@@ -9,8 +9,8 @@
 @mixin gradient {
   background: linear-gradient(
     to right,
-    rgba(getColorRGB(theme-primary), 0.95),
-    rgba(getColorRGB(theme-secondary), 0.95)
+    rgba(getColor("theme", "primary", "", "rgb"), 0.95),
+    rgba(getColor("theme", "secondary", "", "rgb"), 0.95)
   );
 }
 
