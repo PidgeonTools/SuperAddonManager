@@ -39,9 +39,46 @@
         // Iterate through each color in the current color category.
         @each $name, $color in map.get($colors, $category) {
           $new-color: #f00;
-          // @debug $color;
 
-          @if ($setting == hover) {
+          // ! Important! Don't define a text colors setting without defining a hover color setting.
+          @if ($setting == "text") {
+            // Set the initial values for the new text and hover color.
+            $new-hover-color: #f00;
+            $new-color: color.scale(
+              $color,
+              $lightness: $value,
+              $saturation: -1 * $value
+            );
+
+            // Darken the color, if it is lighter than 65% lightness.
+            @if color.lightness($color) > 65 {
+              $new-color: color.scale(
+                $color,
+                $lightness: $value * -1,
+                $saturation: -1 * $value
+              );
+            }
+
+            // Set the new hover color.
+            $new-hover-color: darken(
+              $new-color,
+              math.div(map.get($settings, hover, $category), 2)
+            );
+
+            // Set the new hover color, if the text color is darker than 50% dark.
+            @if color.lightness($new-color) < 50 {
+              $new-hover-color: lighten(
+                $new-color,
+                math.div(map.get($settings, hover, $category), 2)
+              );
+            }
+
+            // Set the CSS variables.
+            --sam-#{$category}-#{$name}-text: #{$new-color};
+            --sam-#{$category}-#{$name}-text-hover: #{$new-hover-color};
+          }
+
+          @if ($setting == "hover") {
             $new-color: darken($color, $value);
 
             @if color.lightness($color) > 99 {
@@ -49,10 +86,10 @@
             } @else if color.lightness($color) < 50 or $name == secondary {
               $new-color: lighten($color, $value);
             }
-          }
 
-          // Create a new CSS variable with the new color
-          --sam-#{$category}-#{$name}-#{$setting}: #{$new-color};
+            // Create a new CSS variable with the new color
+            --sam-#{$category}-#{$name}-hover: #{$new-color};
+          }
         }
       }
     }

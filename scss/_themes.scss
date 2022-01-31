@@ -12,6 +12,10 @@ $base-theme: (
   settings: (
     hover: (
       theme: 20%,
+      button: 20%,
+    ),
+    text: (
+      theme: 100%,
     ),
   ),
   colors: (
@@ -19,18 +23,29 @@ $base-theme: (
       primary: $primary,
       secondary: $secondary,
       success: #16ca09,
-      // TODO #78
-      primary-text: #fff,
-      // TODO #78
-      secondary-text: #fff,
-      // text-hover-primary: darken(#fff, 10%),
-      // hover-primary: darken($primary, 20%),
-      // hover-secondary: lighten($secondary, 20%),,
     ),
     layout: (
       bg: #fff,
       text: #212529,
       footer: #333333,
+    ),
+    docs: (
+      navbar-heading: #000,
+      navbar-link: #495057,
+      navbar-link-active: #212529,
+      navigate-box-outline: #dee2e6,
+    ),
+    button: (
+      copy-content: #adb5bd,
+      copy-border: #6c757d,
+      dark: #000,
+      disabled-dark: #82888e,
+      disabled-border-dark: #51585e,
+    ),
+    form: (
+      feedback-valid: #3c8c42,
+      feedback-invalid: #b33224,
+      endpoint-example-container-outline: #ced4da,
     ),
     code: (
       // SYNTAX HIGHLIGHTING
@@ -45,28 +60,6 @@ $base-theme: (
       link: #0ea5ff,
       string: #f2884d,
       variable: #3f6e74,
-    ),
-    docs: (
-      navbar-heading: #000,
-      navbar-link: #495057,
-      navbar-link-active: #212529,
-      navigate-box-outline: #dee2e6,
-    ),
-    button: (
-      copy-content: #adb5bd,
-      copy-border: #6c757d,
-      hover-copy-border: #767f86,
-      // TODO
-      dark: #000,
-      hover-dark: #333,
-      // TODO
-      disabled-dark: #82888e,
-      disabled-border-dark: #51585e,
-    ),
-    form: (
-      feedback-valid: #3c8c42,
-      feedback-invalid: #b33224,
-      endpoint-example-container-outline: #ced4da,
     ),
   ),
 );
@@ -128,7 +121,6 @@ $colors-colorblind-dark: map.deep-merge(
 );
 
 // Map of all themes
-// TODO: #44 Dark, Colorblind Light, Colorblind Dark
 $themes: (
   light: $colors-light,
   colorblind-light: $colors-colorblind-light,
