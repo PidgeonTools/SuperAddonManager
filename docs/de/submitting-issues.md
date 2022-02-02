@@ -81,17 +81,17 @@ Nachdem Sie sich vergewissert haben, dass Sie keine doppelte Fehlermeldung einre
 
 <DocumentationImage filename="gh-search" alt="Search for an issue on GitHub" />
 
-If you are asked to select a template for the issue report, select the appropriate template for the type of issue that you are submitting (Issue, Feature Request, ...). GitHub sollte jetzt so aussehen:
+Wenn Sie aufgefordert werden, eine Vorlage für den Fehlerbericht auszuwählen, wählen Sie die passende Vorlage für die Art des Fehlers, den Sie einreichen (Fehler, Feature Request, ...). GitHub sollte jetzt so aussehen:
 
 <DocumentationImage filename="gh-new-view" alt="GitHub submit issue page with empty fields"/>
 
-You can now copy and paste the title and the issue report that you wrote previously (or that Super Addon Manager generated for you) into the appropriate fields and click "Submit new Issue" to submit the issue. Congratulations, you've sucessfully submitted an issue report.
+Sie können nun den Titel und die Fehlermeldung, die Sie zuvor geschrieben haben (oder die Super Addon Manager für Sie erstellt hat), in die entsprechenden Felder kopieren und einfügen und auf "Neue Meldung einreichen" klicken, um die Meldung einzureichen. Herzlichen Glückwunsch, Sie haben erfolgreich einen Problembericht eingereicht.
 
 <DocumentationImage filename="gh-inserted-text" alt="Insert the text and submit the Issue" />
 
 ## Einreichen einer Fehlermeldung auf Gitlab
 
-Das Einreichen einer Fehlermeldung auf Gitlab ist dem Einreichen einer Fehlermeldung auf GitHub sehr ähnlich. It's helpful to first search if the issue exists already. If you are submitting an issue for Super Addon Manager, you should search for the following title:
+Das Einreichen einer Fehlermeldung auf Gitlab ist dem Einreichen einer Fehlermeldung auf GitHub sehr ähnlich. Es ist hilfreich, zuerst zu überprüfen, ob die Fehlermeldung bereits existiert. Wenn Sie ein Problem für Super Addon Manager einreichen, sollten Sie nach dem folgenden Titel suchen:
 
 ```markdown
 [Super Addon Manager]
@@ -105,7 +105,7 @@ Gitlab sollte jetzt so aussehen:
 
 <DocumentationImage filename="gl-new-view" alt="Gitlab submit issue page with empty fields"/>
 
-You can now copy and paste the title and the issue report that you wrote previously (or that Super Addon Manager generated for you) into the appropriate fields and click "Submit new Issue" to submit the issue. Thank you, your issue report is about to make the software a bit better!
+Sie können nun den Titel und die Fehlermeldung, die Sie zuvor geschrieben haben (oder die Super Addon Manager für Sie erstellt hat), in die entsprechenden Felder kopieren und einfügen und auf "Neue Meldung einreichen" klicken, um die Meldung einzureichen. Vielen Dank, Ihr Problembericht ist dabei, die Software ein bisschen besser zu machen!
 
 <DocumentationImage filename="gl-inserted-text" alt="Insert the text and submit the Issue" />
 
@@ -119,17 +119,17 @@ Auf der Seite des Entwicklers finden Sie eine Schaltfläche mit dem Text "Contac
 
 <DocumentationImage filename="bm-creator-page" alt="Contact Button on the Creator page" />
 
-If you click that button, a popup dialog will open and ask you for a subject and a message. Here you can copy and paste the title and the report that you wrote earlier (or that Super Addon Manager generated for you). MAKE SURE that you paste the texts without formatting (The shortcut CRTL + SHIFT + V should work for this), BlenderMarket will behave unexpectedly if you just paste the message.
+Wenn Sie auf diese Schaltfläche klicken, öffnet sich ein Popup-Fenster, in dem Sie nach einem Betreff und einer Nachricht gefragt werden. Hier können Sie den Titel und die Fehlermeldung, die Sie zuvor geschrieben haben (oder die Super Addon Manager für Sie erstellt hat), kopieren und einfügen. Achten Sie darauf, dass Sie die Texte ohne Formatierung einfügen (die Tastenkombination STRG + UMSCHALT + V sollte dafür funktionieren), BlenderMarket wird sich unerwartet verhalten, wenn Sie nur die Nachricht einfügen.
 
 <DocumentationImage filename="bm-inserted-message" alt="Insert the Subject and the message into the dialog box" />
 
-You can now click submit and ignore the error that BlenderMarket displays, your message has probably arrived. Thank you for submitting an issue!
+Sie können nun auf "Submit" klicken und die Fehlermeldung von BlenderMarket ignorieren, Ihre Nachricht ist wahrscheinlich angekommen. Vielen Dank, dass Sie ein Problem eingereicht haben!
 
 <DocumentationImage filename="bm-error" alt="BlenderMarket might display an error message - just ignore it." />
 
 ## Einreichen einer Fehlermeldung auf Gumroad
 
-Submitting issues on Gumroad is the same as submitting an issue via E-Mail, with one extra step. After downloading a file from Gumroad, you'll receive an E-Mail which confirms your download. Open that E-Mail and hit "Reply":
+Das Einreichen von Ausgaben auf Gumroad ist dasselbe wie das Einreichen einer Ausgabe per E-Mail, mit einem zusätzlichen Schritt. Nachdem Sie eine Datei von Gumroad heruntergeladen haben, erhalten Sie eine E-Mail, die Ihren Download bestätigt. Öffnen Sie diese E-Mail und klicken Sie auf "Antworten":
 
 <DocumentationImage filename="gum-orig-mail" alt="Confirmation message from Gumroad" />
 
@@ -143,4 +143,4 @@ Markieren Sie zunächst alles, klicken Sie mit der rechten Maustaste und wählen
 Kopieren Sie dann den Titel der Fehlermeldung und fügen Sie ihn in die Betreffzeile ein. Sie können Überschriften auch fett formatieren, um den Text lesbarer zu machen:
 <DocumentationImage filename="mail-inserted-message" alt="Insert the title into the subject field." />
 
-Finally, review the E-Mail and make sure that you've set the E-Mail-Adress that you want to send it to. Click "Send", and you've sucessfully submitted an issue report. Congratulations!
+Überprüfen Sie abschließend die E-Mail und vergewissern Sie sich, dass Sie die E-Mail-Adresse angegeben haben, an die Sie die E-Mail senden möchten. Klicken Sie auf "Senden", und Sie haben erfolgreich einen Problembericht eingereicht. Herzlichen Glückwunsch!
