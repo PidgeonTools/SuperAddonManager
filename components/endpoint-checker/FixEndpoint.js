@@ -40,6 +40,7 @@ export const FixEndpoint = ({
   const [allowAutomaticDownload, setAllowAutomaticDownload] = useState(true);
   const [addonVersion, setAddonVersion] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
+  const [initialDownloadUrlSet, setInitialDownloadUrlSet] = useState(false);
   const [minimumBlenderVersion, setMinimumBlenderVersion] = useState("");
   const [apiBreakingBlenderVersion, setApiBreakingBlenderVersion] =
     useState("");
@@ -121,6 +122,15 @@ export const FixEndpoint = ({
           />
         );
         break;
+      case SCHEMA_PARTS.ALLOW_AUTOMATIC_DOWNLOAD:
+        let path = errorLocation.split("/").slice(1);
+        path[path.length - 1] = SCHEMA_PARTS.DOWNLOAD_URL;
+        setDownloadUrl(
+          initialDownloadUrlSet
+            ? downloadUrl
+            : String(getEntryFromPath(data, path))
+        );
+        setInitialDownloadUrlSet(true);
       case SCHEMA_PARTS.DOWNLOAD_URL:
         setShowComponent(
           <>
@@ -255,6 +265,18 @@ export const FixEndpoint = ({
         path[path.length - 1] = SCHEMA_PARTS.ALLOW_AUTOMATIC_DOWNLOAD;
         newData = fixEntryFromPath(allowAutomaticDownload, data, path);
         break;
+      case SCHEMA_PARTS.ALLOW_AUTOMATIC_DOWNLOAD:
+        setInitialDownloadUrlSet(false);
+        newData = fixEntryFromPath(allowAutomaticDownload, data, path);
+
+        path[path.length - 1] = SCHEMA_PARTS.DOWNLOAD_URL;
+        if (downloadUrl.startsWith("https://")) {
+          newData = fixEntryFromPath(downloadUrl, data, path);
+          break;
+        }
+
+        newData = fixEntryFromPath("https://" + downloadUrl, data, path);
+        break;
       case SCHEMA_PARTS.MINIMUM_BLENDER_VERSION:
         newData = fixEntryFromPath(
           padBlenderVersion(minimumBlenderVersion),
@@ -322,6 +344,14 @@ export const FixEndpoint = ({
       type
     );
     return data;
+  };
+
+  const getEntryFromPath = (data, path) => {
+    if (path.length === 1) {
+      return data[path[0]];
+    }
+
+    return getEntryFromPath(data[path[0]], path.slice(1));
   };
 
   return (
