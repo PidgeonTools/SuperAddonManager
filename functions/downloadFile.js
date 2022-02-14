@@ -1,6 +1,6 @@
 export const downloadJSONFile = (document, downloadData, filename) => {
   // Create a new file with the contents of the current data.
-  const file = new Blob([JSON.stringify(downloadData)], {
+  const file = new Blob([JSON.stringify(downloadData, null, 2)], {
     type: "application/json",
   });
 
