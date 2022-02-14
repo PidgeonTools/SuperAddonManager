@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 
 // Bootstrap
 import { Col, Container, Row } from "react-bootstrap";
@@ -6,10 +7,14 @@ import { Col, Container, Row } from "react-bootstrap";
 // Translations
 import IntlWrapper from "./IntlWrapper";
 import { FormattedMessage } from "react-intl";
+import { getLanguage } from "../functions";
+import { getTheme } from "../functions/getTheme";
 
 const Footer = () => {
   useEffect(() => {
-    document.documentElement.className = "light";
+    console.log(getTheme(window));
+    document.documentElement.className = getTheme(window);
+    document.documentElement.lang = getLanguage(window);
   }, []);
   return (
     <IntlWrapper>
@@ -20,17 +25,27 @@ const Footer = () => {
             <Col className="footer__items">
               {/* <Col className="align-self-center footer__items"> */}
               {/* <Col className="justify-content-center d-flex"> */}
-              <a href="/request-support" className="px-2">
-                <FormattedMessage id="footer.request_support" />
-              </a>
+              {/* REQUEST SUPPORT */}
+              <Link passHref href="/request-support">
+                <a className="px-2">
+                  <FormattedMessage id="footer.request_support" />
+                </a>
+              </Link>
 
-              <a href="/endpoint-builder" className="px-2">
-                <FormattedMessage id="footer.endpoint_builder" />
-              </a>
+              {/* ENDPOINT BUILDER */}
+              <Link passHref href="/endpoint-builder">
+                <a className="px-2">
+                  <FormattedMessage id="footer.endpoint_builder" />
+                </a>
+              </Link>
 
-              <a href="/endpoint-checker" className="px-2">
-                <FormattedMessage id="footer.endpoint_schema_checker" />
-              </a>
+              {/* ENDPOINT CHECKER */}
+              <Link passHref href="/endpoint-checker">
+                <a className="px-2">
+                  <FormattedMessage id="footer.endpoint_schema_checker" />
+                </a>
+              </Link>
+
             </Col>
           </Row>
           {/* COPYRIGHT */}
