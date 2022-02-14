@@ -87,7 +87,7 @@ const Page = ({
                 <React.Fragment key={pageData.file}>
                   {categoryHeading}
                   <li id={pageData.title}>
-                    <Link href={"/docs/" + lang + "/" + pageData.file}>
+                    <Link passHref href={"/docs/" + lang + "/" + pageData.file}>
                       <a
                         className={
                           "docs-navbar--links " +
@@ -160,7 +160,10 @@ const Page = ({
           {/* PREVIOUS PAGE BUTTON */}
           <>
             {previousArticle ? (
-              <Link href={"/docs/" + lang + "/" + previousArticle.file}>
+              <Link
+                passHref
+                href={"/docs/" + lang + "/" + previousArticle.file}
+              >
                 <div className="docs-navigate-one-page docs-navigate-one-page--previous">
                   <div className="docs-navigate-one-page--static-label">
                     Previous
@@ -177,7 +180,7 @@ const Page = ({
           {/* NEXT PAGE BUTTON */}
           <>
             {nextArticle ? (
-              <Link href={"/docs/" + lang + "/" + nextArticle.file}>
+              <Link passHref href={"/docs/" + lang + "/" + nextArticle.file}>
                 <div className="docs-navigate-one-page docs-navigate-one-page--next">
                   <div className="docs-navigate-one-page--static-label">
                     Next
