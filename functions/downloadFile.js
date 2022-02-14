@@ -1,6 +1,13 @@
 export const downloadJSONFile = (document, downloadData, filename) => {
+  let indent = 2;
+  if (
+    typeof localStorage !== "undefined" &&
+    localStorage.getItem("minify_endpoint_data") === "true"
+  ) {
+    indent = 0;
+  }
   // Create a new file with the contents of the current data.
-  const file = new Blob([JSON.stringify(downloadData, null, 2)], {
+  const file = new Blob([JSON.stringify(downloadData, null, indent)], {
     type: "application/json",
   });
 
