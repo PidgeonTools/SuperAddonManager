@@ -21,6 +21,7 @@ import { FormattedMessage } from "react-intl";
 import { getI18nLink } from "../../lib/i18n/I18nFormatters";
 import { getLanguage } from "../../functions/getLanguage";
 import ExternalLink from "../ExternalLink";
+import FormattedMessages from "../FormattedMessages";
 
 export const SupportPage = ({ query, addonName, issueType }) => {
   const [language, setLanguage] = useState("en");
@@ -182,12 +183,12 @@ export const SupportPage = ({ query, addonName, issueType }) => {
     const addonUpdated = addonUpToDate ? checked : unchecked;
     const issueReported = noDuplicate ? checked : unchecked;
     let checkedInternet = "";
-    if (issueType == "endpoint_offline") {
+    if (issueType == ERROR_CODES.ENDPOINT_OFFLINE) {
       let checkboxChecked = internetWorks ? checked : unchecked;
       checkedInternet = `${checkboxChecked} Checked that my internet works.`;
     }
     let checkedAddonUpdated = `${addonUpdated} ${addonName} is up to date.\n`;
-    if (issueType == "unknown_error") {
+    if (issueType == ERROR_CODES.UNKNOWN_ERROR) {
       checkedAddonUpdated = "";
     }
 
@@ -265,6 +266,57 @@ ${checkedInternet}
     }
   }, [samUpToDate, addonUpToDate, noDuplicate, internetWorks]);
 
+  // === Update the "What can you do"-Text ===
+  let whatToDoMessages = [
+    {
+      id: "request_support.support_page.the_developer_has_to_fix_this_problem",
+    },
+    {
+      id: "request_support.support_page.please_report_an_issue",
+    },
+    {
+      id: "request_support.support_page.what_if_the_issue_has_already_been_reported",
+    },
+  ];
+
+  if (issueType === ERROR_CODES.ENDPOINT_OFFLINE) {
+    whatToDoMessages = [
+      {
+        id: "request_support.support_page.check_that_your_internet_connection_works",
+      },
+      {
+        id: "request_support.support_page.try_to_reach_the_endpoint",
+        values: {
+          link: getI18nLink({
+            href: endpointURL,
+            target: "_blank",
+          }),
+          endpointURL: endpointURL,
+        },
+      },
+      {
+        id: "request_support.support_page.retry_to_check_for_updates",
+      },
+      {
+        id: "request_support.support_page.what_if_it_still_does_not_work",
+      },
+      {
+        id: "request_support.support_page.what_if_the_issue_has_already_been_reported",
+      },
+    ];
+  }
+
+  if (issueType === ERROR_CODES.UNKNOWN_ERROR) {
+    whatToDoMessages = [
+      {
+        id: "request_support.support_page.please_report_an_issue_to_us",
+      },
+      {
+        id: "request_support.support_page.what_if_the_issue_has_already_been_reported",
+      },
+    ];
+  }
+
   // Initialize the page
   useEffect(() => {
     setLanguage(getLanguage(window));
@@ -314,40 +366,12 @@ ${checkedInternet}
             </h2>
             {/* TEXT */}
             <>
-              {issueType === "endpoint_offline" ? (
-                <>
-                  <p>
-                    <FormattedMessage id="request_support.support_page.check_that_your_internet_connection_works" />{" "}
-                    <FormattedMessage
-                      id="request_support.support_page.try_to_reach_the_endpoint"
-                      values={{
-                        link: getI18nLink({
-                          href: endpointURL,
-                          target: "_blank",
-                        }),
-                        endpointURL: endpointURL,
-                      }}
-                    />{" "}
-                    <FormattedMessage id="request_support.support_page.retry_to_check_for_updates" />{" "}
-                    <FormattedMessage id="request_support.support_page.what_if_it_still_does_not_work" />{" "}
-                    <FormattedMessage id="request_support.support_page.what_if_the_issue_has_already_been_reported" />
-                  </p>
-                  <p>
-                    <FormattedMessage id="request_support.support_page.you_can_use_our_automatically_generated_text" />
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p>
-                    <FormattedMessage id="request_support.support_page.the_developer_has_to_fix_this_problem" />{" "}
-                    <FormattedMessage id="request_support.support_page.please_report_an_issue" />{" "}
-                    <FormattedMessage id="request_support.support_page.what_if_the_issue_has_already_been_reported" />
-                  </p>
-                  <p>
-                    <FormattedMessage id="request_support.support_page.you_can_use_our_automatically_generated_text" />
-                  </p>
-                </>
-              )}
+              <p>
+                <FormattedMessages messages={whatToDoMessages} />
+              </p>
+              <p>
+                <FormattedMessage id="request_support.support_page.you_can_use_our_automatically_generated_text" />
+              </p>
             </>
 
             {/* CHECKLIST */}
@@ -371,7 +395,7 @@ ${checkedInternet}
 
               {/* ADDON UP TO DATE CHECKBOX */}
               <>
-                {issueType === ERROR_CODES.UNKNOWN_ERROR ? null : (
+                {issueType !== ERROR_CODES.UNKNOWN_ERROR ? (
                   <div className="form-check">
                     <input
                       type="checkbox"
@@ -390,7 +414,7 @@ ${checkedInternet}
                       />
                     </label>
                   </div>
-                )}
+                ) : null}
               </>
 
               {/* NO ISSUE DUPLICATE CHECKBOX */}
