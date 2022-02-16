@@ -124,6 +124,7 @@
     "request_support.support_page.you_can_use_our_automatically_generated_text": "Sie können, wenn Sie möchten, unseren automatisch generierten Text verwenden, aber Sie sollten vorher einige Dinge überprüfen:",
     "request_support.support_page.the_developer_has_to_fix_this_problem": "Es sieht so aus, als müsste der Entwickler dieses Problem beheben.",
     "request_support.support_page.please_report_an_issue": "Bitte melden Sie einen Fehler an den Entwickler.",
+    "request_support.support_page.please_report_an_issue_to_us": "Please report an issue to to us.",
     "request_support.support_page.sam_is_up_to_date": "Super Addon Manager ist aktuell.",
     "request_support.support_page.addon_is_up_to_date": "{addonName} ist aktuell.",
     "request_support.support_page.the_issue_hasnt_been_reported_already": "Der Fehler wurde noch nicht gemeldet.",
