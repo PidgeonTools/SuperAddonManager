@@ -25,7 +25,12 @@ from bpy.props import (
     IntProperty,
     BoolProperty
 )
-from bpy.types import Operator
+from bpy.types import (
+    Operator,
+    Context,
+    Event
+)
+
 from bpy_extras.io_utils import ImportHelper
 
 import os
@@ -83,7 +88,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # checking the next addon at self.enabled_addons[prefs.addon_index]
     is_updating: bool = False
 
-    def execute(self, context):
+    def execute(self, context: Context):
         self.report({"INFO"}, "SAM is checking for updates!")
 
         self.updates = []
@@ -145,7 +150,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # Iterate through all directories and files in the Addons Folders.
     # Add single files to the list of addons that can't be updated by SAM.
     # Folders are sent to self.check_update() for the actual update check.
-    def modal(self, context, event):
+    def modal(self, context: Context, event: Event):
         if event.type == "TIMER":
             if not self.is_updating:
                 if prefs.addon_index >= prefs.addons_total:
@@ -372,14 +377,14 @@ class SUPERADDONMANAGER_OT_update_info(Operator):
     bl_label = "Update Information"
     bl_options = {'REGISTER', 'UNDO'}
 
-    def execute(self, context):
+    def execute(self, context: Context):
         bpy.ops.preferences.addon_show(module=__package__)
         return {"FINISHED"}
 
-    def invoke(self, context, event):
+    def invoke(self, context: Context, event: Event):
         return context.window_manager.invoke_props_dialog(self)
 
-    def draw(self, context):
+    def draw(self, context: Context):
         layout = self.layout
 
         layout.label(text="Super Addon Manager just checked for updates:")
@@ -400,7 +405,7 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
     download_url: StringProperty(name="Download URL")
     index: IntProperty()
 
-    def execute(self, context):
+    def execute(self, context: Context):
         updater: Updater = prefs.updates[self.index]["updater"]
 
         # Download the update.
@@ -463,7 +468,7 @@ class SUPERADDONMANAGER_OT_update_all(Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     # TODO #9: Progress bar!
-    def execute(self, context):
+    def execute(self, context: Context):
         for addon in prefs.updates:
             if addon[1]:
                 bpy.ops.superaddonmanager.automatic_update(
@@ -482,7 +487,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
     addon_index: IntProperty()
 
-    def execute(self, context):
+    def execute(self, context: Context):
         report_data = prefs.unavailable_addons[self.addon_index]
 
         bpy.ops.wm.url_open(url=self.generate_report(report_data))

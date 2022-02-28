@@ -20,7 +20,10 @@
 # ##### END GPL LICENSE BLOCK #####
 
 import bpy
-from bpy.types import AddonPreferences
+from bpy.types import (
+    AddonPreferences,
+    UILayout
+)
 from bpy.props import (
     BoolProperty,
     FloatProperty,
@@ -128,7 +131,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
     dev_icon: IntProperty(max=3, min=0)
 
     def draw(self, context):
-        layout = self.layout
+        layout: UILayout = self.layout
 
         # layout.prop(self, "dev_icon")  # TODO: #46 Decide on an icon.
 
