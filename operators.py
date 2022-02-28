@@ -441,6 +441,9 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             # Notify the user, that the update has been successful.
             self.report(
                 {"INFO"}, f"{updater.addon_name} has been updated sucessfully!")
+
+            # Remove the addon from the list of updates to avoid confusion.
+            prefs.updates.pop(self.index)
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
