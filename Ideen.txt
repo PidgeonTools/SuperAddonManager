@@ -26,5 +26,7 @@ Verified checksums can be acquired by donating.
 Level 1: Simple VT Scan of the ZIP file (cheaper, less secure)
 Level 2: VT Scan + Source Code Analysis
 
+Super Addon Manager error handling: When addon transitions from no SAM Support to SAM Support,  many people might have the old, unsupported version installed. Giving the people to enter an endpoint url to temporarily check for updates from. <=> Add the option to update any addon from a downloaded file.
+
 Pass amount via URL:
 https://github.com/opencollective/opencollective-frontend/blob/34ddb6dc91602110db5847083443b69bd286afae/pages/contribution-flow.js#L58
