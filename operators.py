@@ -437,6 +437,10 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
                 return {'CANCELLED'}  # ! Critical Error
 
             bpy.ops.preferences.addon_refresh()  # Refresh the addon list.
+
+            # Notify the user, that the update has been successful.
+            self.report(
+                {"INFO"}, f"{updater.addon_name} has been updated sucessfully!")
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
