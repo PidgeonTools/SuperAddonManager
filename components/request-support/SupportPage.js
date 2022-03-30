@@ -14,6 +14,10 @@ import {
   InvalidEndpoint,
   EndpointInvalidSchema,
   UnknownError,
+  InvalidFileType,
+  InvalidDownloadUrl,
+  DownloadUrlOffline,
+  NotAnAddon,
 } from "./ErrorCodes";
 
 // Translations
@@ -200,6 +204,42 @@ ${checkedInternet}
           <EndpointInvalidSchema
             {...defaultProps}
             endpoint_url={parameters.endpointURL}
+          />
+        );
+        break;
+      case ERROR_CODES.INVALID_FILE_TYPE:
+        setIssueTextBoxes(
+          <InvalidFileType
+            {...defaultProps}
+            addon_name={addonName}
+            new_addon_version={parameters.newAddonVersion}
+          />
+        );
+        break;
+      case ERROR_CODES.INVALID_DOWNLOAD_URL:
+        setIssueTextBoxes(
+          <InvalidDownloadUrl
+            {...defaultProps}
+            addon_name={addonName}
+            new_addon_version={parameters.newAddonVersion}
+          />
+        );
+        break;
+      case ERROR_CODES.DOWNLOAD_URL_OFFLINE:
+        setIssueTextBoxes(
+          <DownloadUrlOffline
+            {...defaultProps}
+            addon_name={addonName}
+            new_addon_version={parameters.newAddonVersion}
+          />
+        );
+        break;
+      case ERROR_CODES.NOT_AN_ADDON:
+        setIssueTextBoxes(
+          <NotAnAddon
+            {...defaultProps}
+            addon_name={addonName}
+            new_addon_version={parameters.newAddonVersion}
           />
         );
         break;

@@ -42,6 +42,7 @@ const getQueryParameters = (query, issueType) => {
     systemOS: query.os_name,
     systemBlenderVersion: query.blender_version,
     systemAddonVersion: query.addon_version,
+    newAddonVersion: query.new_addon_version,
     addonCount:
       query.addon_count < threshold ? "multiple" : String(query.addon_count),
   };
