@@ -23,7 +23,9 @@ import { getLanguage } from "../../functions/getLanguage";
 import ExternalLink from "../ExternalLink";
 import FormattedMessages from "../FormattedMessages";
 
-export const SupportPage = ({ query, addonName, issueType }) => {
+export const SupportPage = ({ parameters }) => {
+  const { addonName, issueType } = parameters;
+
   const [language, setLanguage] = useState("en");
 
   // === Page Elements ===
@@ -33,54 +35,6 @@ export const SupportPage = ({ query, addonName, issueType }) => {
   const [internetWorks, setInternetWorks] = useState(false);
 
   const [issueTextBoxes, setIssueTextBoxes] = useState();
-
-  // === Issue independent Parameters ===
-  let url = new URL("https://www.ecosia.org/search");
-  url.search = `?q=${addonName} Blender Addon prefer:github`;
-
-  let trackerURL = url.toString();
-  if (query.tracker_url) {
-    let protocolPrefix = trackerURL.match("https?://") ? "" : "https://";
-    trackerURL = protocolPrefix + query.tracker_url;
-  }
-
-  if (issueType === ERROR_CODES.UNKNOWN_ERROR) {
-    trackerURL = `https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender&labels=bug&title=[${addonName}]+Unknown+Error`;
-  }
-
-  // === System Information ===
-  let systemOS = query.os_name;
-  let systemBlenderVersion = query.blender_version;
-  let systemAddonVersion = query.addon_version;
-
-  // === Issue Specific Variables ===
-  // Addon Count
-  let threshold = 15;
-  let addonCount =
-    query.addon_count < threshold ? "multiple" : query.addon_count;
-
-  // Endpoint URL
-  let endpointURL;
-  if (
-    [
-      ERROR_CODES.ENDPOINT_URL_INVALID,
-      ERROR_CODES.INVALID_ENDPOINT,
-      ERROR_CODES.ENDPOINT_INVALID_SCHEMA,
-      ERROR_CODES.ENDPOINT_OFFLINE,
-    ].includes(issueType)
-  ) {
-    endpointURL = query.endpoint_url ?? "#undefined";
-  }
-
-  // Error Message
-  let errorMessage;
-  if (
-    [ERROR_CODES.ENDPOINT_OFFLINE, ERROR_CODES.UNKNOWN_ERROR].includes(
-      issueType
-    )
-  ) {
-    errorMessage = query.error_message;
-  }
 
   // === Update the non-developer friendly issue description. ===
   let issueDescriptionText;
@@ -114,7 +68,7 @@ export const SupportPage = ({ query, addonName, issueType }) => {
           <FormattedMessage id="request_support.support_page.the_url_is_invalid" />{" "}
           <FormattedMessage
             id="request_support.support_page.it_looks_like_this"
-            values={{ endpointURL }}
+            values={{ endpointURL: parameters.endpointURL }}
           />
         </>
       );
@@ -202,9 +156,9 @@ ${checkedAddonUpdated}${issueReported} Checked that this issue hasn't been repor
 ${checkedInternet}
 
 **System Information**
-- OS: ${systemOS}
-- Blender Version: ${systemBlenderVersion}
-- Version of ${addonName}: ${systemAddonVersion}
+- OS: ${parameters.systemOS}
+- Blender Version: ${parameters.systemBlenderVersion}
+- Version of ${addonName}: ${parameters.systemAddonVersion}
     `.trim();
 
     let defaultProps = {
@@ -218,15 +172,15 @@ ${checkedInternet}
         break;
       case ERROR_CODES.ENDPOINT_URL_INVALID:
         setIssueTextBoxes(
-          <UrlInvalid {...defaultProps} endpoint_url={endpointURL} />
+          <UrlInvalid {...defaultProps} endpoint_url={parameters.endpointURL} />
         );
         break;
       case ERROR_CODES.ENDPOINT_OFFLINE:
         setIssueTextBoxes(
           <EndpointOffline
             {...defaultProps}
-            endpoint_url={endpointURL}
-            error_message={errorMessage}
+            endpoint_url={parameters.endpointURL}
+            error_message={parameters.errorMessage}
             disabled={
               !(addonUpToDate && samUpToDate && noDuplicate && internetWorks)
             }
@@ -235,12 +189,18 @@ ${checkedInternet}
         break;
       case ERROR_CODES.INVALID_ENDPOINT:
         setIssueTextBoxes(
-          <InvalidEndpoint {...defaultProps} endpoint_url={endpointURL} />
+          <InvalidEndpoint
+            {...defaultProps}
+            endpoint_url={parameters.endpointURL}
+          />
         );
         break;
       case ERROR_CODES.ENDPOINT_INVALID_SCHEMA:
         setIssueTextBoxes(
-          <EndpointInvalidSchema {...defaultProps} endpoint_url={endpointURL} />
+          <EndpointInvalidSchema
+            {...defaultProps}
+            endpoint_url={parameters.endpointURL}
+          />
         );
         break;
       case ERROR_CODES.UNKNOWN_ERROR:
@@ -248,7 +208,7 @@ ${checkedInternet}
           <UnknownError
             {...defaultProps}
             addon_name={addonName}
-            error_message={errorMessage}
+            error_message={parameters.errorMessage}
             disabled={!(samUpToDate && noDuplicate)}
           />
         );
@@ -258,7 +218,7 @@ ${checkedInternet}
         setIssueTextBoxes(
           <SamNotSupported
             {...defaultProps}
-            addon_count={addonCount}
+            addon_count={parameters.addonCount}
             addon_name={addonName}
           />
         );
@@ -288,10 +248,10 @@ ${checkedInternet}
         id: "request_support.support_page.try_to_reach_the_endpoint",
         values: {
           link: getI18nLink({
-            href: endpointURL,
+            href: parameters.endpointURL,
             target: "_blank",
           }),
-          endpointURL: endpointURL,
+          endpointURL: parameters.endpointURL,
         },
       },
       {
@@ -467,7 +427,7 @@ ${checkedInternet}
                   id="request_support.support_page.you_can_copy_the_following_text"
                   values={{
                     link: getI18nLink({
-                      href: trackerURL,
+                      href: parameters.trackerURL,
                       target: "_blank",
                     }),
                   }}
