@@ -14,6 +14,10 @@ export const ERROR_CODES = {
   INVALID_ENDPOINT: "invalid_endpoint",
   ENDPOINT_INVALID_SCHEMA: "endpoint_invalid_schema",
   UNKNOWN_ERROR: "unknown_error",
+  INVALID_FILE_TYPE: "invalid_file_type",
+  INVALID_DOWNLOAD_URL: "invalid_download_url",
+  DOWNLOAD_URL_OFFLINE: "download_url_offline",
+  NOT_AN_ADDON: "not_an_addon",
 };
 
 const IssueTextBox = ({
@@ -141,6 +145,77 @@ export const EndpointInvalidSchema = ({
 **Describe the bug**
 Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: The endpoint found under ${endpoint_url} does not match the schema, so Super Addon Manager can't check for new versions. For more details, use our [schema checker.](TODO SCHEMA CHECKER URL)
 `.trim();
+
+  return <IssueTextBox text={text} title={title} {...props} />;
+};
+
+export const InvalidFileType = ({
+  addon_name = "{addon_name}",
+  new_version = "{new_version}",
+  ...props
+}) => {
+  const title =
+    `[Super Addon Manager] Error downloading Version ${new_version}: No Zip file found`.trim();
+
+  const text = `
+**Describe the bug**
+Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: When trying to install version ${new_version}, the file that Super Addon Manager downloaded was not a Zip file. Super Addon Manager can only handle Zip files for updating addons. If you accidentaly enabled "allow_automatic_download", please disable it. Otherwise, please provide a link to the Zip file of ${addon_name}, Version ${new_version}.
+`.trim();
+
+  return <IssueTextBox text={text} title={title} {...props} />;
+};
+
+export const InvalidDownloadUrl = ({
+  addon_name = "{addon_name}",
+  new_version = "{new_version}",
+  download_url = "{download_url}",
+  ...props
+}) => {
+  const title =
+    `[Super Addon Manager] Error downloading Version ${new_version}: Invalid download URL`.trim();
+
+  const text = `
+**Describe the bug**
+Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: When trying to install version ${new_version}, the download URL is set to an invalid URL (${download_url}). Please provide a valid download URL for ${addon_name}, Version ${new_version}.
+`.trim();
+
+  return <IssueTextBox text={text} title={title} {...props} />;
+};
+
+export const DownloadUrlOffline = ({
+  addon_name = "{addon_name}",
+  new_version = "{new_version}",
+  error_message = "{error_message}",
+  download_url = "{download_url}",
+  ...props
+}) => {
+  const title =
+    `[Super Addon Manager] Error downloading Version ${new_version}: Download URL can't be reached`.trim();
+
+  const text = `
+**Describe the bug**
+Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: When trying to install version ${new_version}, the specified download URL ("${download_url}") seems to be offline, so Super Addon Manager can't update the addon. This is the bare error message that I got from Python:
+
+\`\`\`bash
+${error_message}
+\`\`\`
+`.trim();
+
+  return <IssueTextBox text={text} title={title} {...props} />;
+};
+
+export const NotAnAddon = ({
+  addon_name = "{addon_name}",
+  new_version = "{new_version}",
+  download_url = "{download_url}",
+  ...props
+}) => {
+  const title =
+    `[Super Addon Manager] Error downloading Version ${new_version}: The downloaded file is not an addon`.trim();
+
+  const text = `
+**Describe the bug**
+Thank you for enabling support for the Super Addon Manager. Unfortunately, something is wrong with the Implementation: When trying to install version ${new_version}, the file downloaded from "${download_url}" does not contain a Blender addon, so Super Addon Manager can't update the addon.`.trim();
 
   return <IssueTextBox text={text} title={title} {...props} />;
 };
