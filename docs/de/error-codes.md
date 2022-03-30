@@ -54,6 +54,35 @@ Der URL Endpunkt ist nicht im JSON-Format.
 Der URL Endpunkt stimmt nicht mit dem vorgegebenen Schema überein.
 <EndpointInvalidSchema />
 
+## invalid_file_type
+
+**Kritischer Fehler**
+
+The file that Super Addon Manager tried to download is not a Zip file. Super Addon Manager can only handle Zip files.
+<InvalidFileType />
+
+## invalid_download_url
+
+**Kritischer Fehler**
+
+The download URL set in the Endpoint either is invalid or doesn't exist.
+<InvalidDownloadUrl />
+
+## download_url_offline
+
+**Kritischer Fehler**
+
+The download URL doesn't respond. Most likely, this issue occurs because of missing Internet connection.
+<DownloadUrlOffline />
+
+## not_an_addon
+
+**Kritischer Fehler**
+
+The downloaded file is not an addon.
+<NotAnAddon />
+
+
 ## unknown_error
 
 **Spezieller Fehler**
