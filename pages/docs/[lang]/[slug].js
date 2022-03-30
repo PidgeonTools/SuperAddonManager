@@ -23,6 +23,10 @@ import {
   InvalidEndpoint,
   EndpointInvalidSchema,
   UnknownError,
+  InvalidFileType,
+  InvalidDownloadUrl,
+  DownloadUrlOffline,
+  NotAnAddon,
 } from "../../../components/request-support/ErrorCodes";
 
 // Translations
@@ -119,7 +123,7 @@ const Page = ({
               },
               p: {
                 props: {
-                  className: "mb-1"
+                  className: "mb-1",
                 },
               },
               SamNotSupported: {
@@ -139,6 +143,18 @@ const Page = ({
               },
               EndpointInvalidSchema: {
                 component: EndpointInvalidSchema,
+              },
+              InvalidFileType: {
+                component: InvalidFileType,
+              },
+              InvalidDownloadUrl: {
+                component: InvalidDownloadUrl,
+              },
+              DownloadUrlOffline: {
+                component: DownloadUrlOffline,
+              },
+              NotAnAddon: {
+                component: NotAnAddon,
               },
               UnknownError: {
                 component: UnknownError,
@@ -273,7 +289,7 @@ export const getStaticProps = async ({ params: { slug, lang } }) => {
   return {
     props: {
       content: parsedMarkdown.content,
-      data: {...parsedMarkdown.data, file: slug, lang},
+      data: { ...parsedMarkdown.data, file: slug, lang },
       lang,
       navbarData,
       previousArticle,
