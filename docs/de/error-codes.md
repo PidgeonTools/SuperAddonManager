@@ -56,28 +56,28 @@ Der URL Endpunkt stimmt nicht mit dem vorgegebenen Schema überein.
 
 ## invalid_file_type
 
-**Critical Error**
+**Kritischer Fehler**
 
 The file that Super Addon Manager tried to download is not a Zip file. Super Addon Manager can only handle Zip files.
 <InvalidFileType />
 
 ## invalid_download_url
 
-**Critical Error**
+**Kritischer Fehler**
 
 The download URL set in the Endpoint either is invalid or doesn't exist.
 <InvalidDownloadUrl />
 
 ## download_url_offline
 
-**Critical Error**
+**Kritischer Fehler**
 
 The download URL doesn't respond. Most likely, this issue occurs because of missing Internet connection.
 <DownloadUrlOffline />
 
 ## not_an_addon
 
-**Critical Error**
+**Kritischer Fehler**
 
 The downloaded file is not an addon.
 <NotAnAddon />
@@ -85,7 +85,7 @@ The downloaded file is not an addon.
 
 ## unknown_error
 
-**Special Error**
+**Spezieller Fehler**
 
-Any other error that needs to be investigated by us.
+Jeder andere Fehler, der von uns untersucht werden muss.
 <UnknownError />
