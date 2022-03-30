@@ -83,50 +83,52 @@ const Settings = () => {
           );
         })}
       </Form.Select>
-      {
-        /////* <Dropdown className="theme-switcher">
-        ////<Dropdown.Toggle as={CustomToggle}>
-        ////        <span>asdf</span>
-        ////      </Dropdown.Toggle>
-        ////      <Dropdown.Menu aria-labelledby="dropdownMenuButton1">
-        ////        {Object.keys(THEMES).map((key) => {
-        ////          let theme = THEMES[key];
-        ////          return (
-        ////            <Dropdown.Item
-        ////              key={theme}
-        ////              onClick={(e) => {
-        ////                document.documentElement.className = theme.class;
-        ////                setTheme(theme.class, window);
-        ////              }}
-        ////            >
-        ////              <FormattedMessage id={theme.id} />
-        ////            </Dropdown.Item>
-        ////          );
-        ////        })}
-        ////      </Dropdown.Menu>
-        ////    </Dropdown>
-        ////    <Dropdown className="language-switcher">
-        ////      <Dropdown.Toggle as={CustomToggle}>
-        ////        <span>{locales[language].flag}</span>
-        ////      </Dropdown.Toggle>
-        ////      <Dropdown.Menu aria-labelledby="dropdownMenuButton1">
-        ////        {Object.keys(locales).map((key) => {
-        ////          let locale = locales[key];
-        ////          return (
-        ////            <Dropdown.Item
-        ////              key={locale}
-        ////              onClick={(e) => {
-        ////                setLanguage(locale.locale, window);
-        ////                location.reload();
-        ////              }}
-        ////            >
-        ////              {locale.flag} <FormattedMessage id={locale.id} />
-        ////            </Dropdown.Item>
-        ////          );
-        ////        })}
-        ////      </Dropdown.Menu>
-        ////    </Dropdown> */
-      }
+      <>
+        {
+          /////* <Dropdown className="theme-switcher">
+          ////<Dropdown.Toggle as={CustomToggle}>
+          ////        <span>asdf</span>
+          ////      </Dropdown.Toggle>
+          ////      <Dropdown.Menu aria-labelledby="dropdownMenuButton1">
+          ////        {Object.keys(THEMES).map((key) => {
+          ////          let theme = THEMES[key];
+          ////          return (
+          ////            <Dropdown.Item
+          ////              key={theme}
+          ////              onClick={(e) => {
+          ////                document.documentElement.className = theme.class;
+          ////                setTheme(theme.class, window);
+          ////              }}
+          ////            >
+          ////              <FormattedMessage id={theme.id} />
+          ////            </Dropdown.Item>
+          ////          );
+          ////        })}
+          ////      </Dropdown.Menu>
+          ////    </Dropdown>
+          ////    <Dropdown className="language-switcher">
+          ////      <Dropdown.Toggle as={CustomToggle}>
+          ////        <span>{locales[language].flag}</span>
+          ////      </Dropdown.Toggle>
+          ////      <Dropdown.Menu aria-labelledby="dropdownMenuButton1">
+          ////        {Object.keys(locales).map((key) => {
+          ////          let locale = locales[key];
+          ////          return (
+          ////            <Dropdown.Item
+          ////              key={locale}
+          ////              onClick={(e) => {
+          ////                setLanguage(locale.locale, window);
+          ////                location.reload();
+          ////              }}
+          ////            >
+          ////              {locale.flag} <FormattedMessage id={locale.id} />
+          ////            </Dropdown.Item>
+          ////          );
+          ////        })}
+          ////      </Dropdown.Menu>
+          ////    </Dropdown> */
+        }
+      </>
       <div className="form-check">
         <input
           type="checkbox"
