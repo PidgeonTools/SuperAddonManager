@@ -25,7 +25,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ERROR_CODES } from "./ErrorCodes";
 
-export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
+export const NoData = ({
+  exampleBlenderVersion,
+  latestSPMVersion,
+  nextSPMVersion,
+}) => {
   const intl = useIntl();
   const [validated, setValidated] = useState(false);
 
@@ -41,6 +45,8 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
   const [addonCount, setAddonCount] = useState(15);
   const [endpointURL, setEndpointURL] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState("");
+  const [newAddonVersion, setNewAddonVersion] = useState("");
   const [trackerURL, setTrackerURL] = useState("");
 
   // Router specific variables
@@ -67,6 +73,7 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
     let BlenderVersion = padBlenderVersion(blenderVersion).join(".");
 
     let AddonVersion = padAddonVersion(addonVersion).join(".");
+    let NewAddonVersion = padAddonVersion(newAddonVersion).join(".");
 
     router.push({
       pathname: baseURL,
@@ -80,6 +87,9 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
         endpoint_url: endpointURL,
         error_message: errorMessage,
         tracker_url: trackerURL,
+        download_url: downloadUrl,
+        new_addon_version:
+          NewAddonVersion > AddonVersion ? NewAddonVersion : "Unknown",
       },
     });
   };
@@ -302,6 +312,71 @@ export const NoData = ({ exampleBlenderVersion, latestSPMVersion }) => {
                         }}
                         placeholder="https://github.com/BlenderDefender/SuperProjectManager"
                         accessKey="U"
+                      />
+                    </FloatingLabel>
+                  </Col>
+                </Row>
+              ) : null}
+            </>
+
+            {/* NEW ADDON VERSION */}
+            <>
+              {[
+                ERROR_CODES.INVALID_FILE_TYPE,
+                ERROR_CODES.INVALID_DOWNLOAD_URL,
+                ERROR_CODES.DOWNLOAD_URL_OFFLINE,
+                ERROR_CODES.NOT_AN_ADDON,
+              ].includes(issueType) ? (
+                <Col className="mb-3">
+                  <FloatingLabel
+                    controlId="new_addon_version"
+                    label={
+                      <FormattedMessage
+                        id="request_support.no_data.new_addon_version"
+                        values={{ nextSPMVersion }}
+                      />
+                    }
+                  >
+                    <Form.Control
+                      type="text"
+                      className="sam-form-control"
+                      placeholder={nextSPMVersion}
+                      pattern="(\d+\.)*\d+"
+                      value={newAddonVersion}
+                      onChange={(e) => {
+                        setNewAddonVersion(e.target.value);
+                      }}
+                      required
+                      accessKey="V"
+                    />
+                  </FloatingLabel>
+                </Col>
+              ) : null}
+            </>
+
+            {/* DOWNLOAD URL */}
+            <>
+              {[
+                ERROR_CODES.INVALID_DOWNLOAD_URL,
+                ERROR_CODES.DOWNLOAD_URL_OFFLINE,
+              ].includes(issueType) ? (
+                <Row>
+                  <Col className="mb-3">
+                    <FloatingLabel
+                      controlId="download_url"
+                      label={
+                        <FormattedMessage id="request_support.no_data.download_url" />
+                      }
+                    >
+                      <Form.Control
+                        type="text"
+                        className="sam-form-control"
+                        value={downloadUrl}
+                        onChange={(e) => {
+                          setDownloadUrl(e.target.value);
+                        }}
+                        placeholder="https://github.com/BlenderDefender/SuperProjectManager/releases/download/1.3.1/SuperProjectManager.zip"
+                        accessKey="D"
                       />
                     </FloatingLabel>
                   </Col>

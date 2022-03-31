@@ -1,5 +1,6 @@
 {
     "exampleBlenderLTSVersion": "2.83.0",
     "exampleBlenderVersion": "3.1.0",
-    "latestSPMVersion": "1.3.1"
+    "latestSPMVersion": "1.3.1",
+    "nextSPMVersion": "1.4.0"
 }

@@ -81,7 +81,11 @@ const getQueryParameters = (query) => {
   return parameters;
 };
 
-const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
+const RequestSupport = ({
+  exampleBlenderVersion,
+  latestSPMVersion,
+  nextSPMVersion,
+}) => {
   const parameters = getQueryParameters(useRouter().query);
 
   return (
@@ -98,6 +102,7 @@ const RequestSupport = ({ exampleBlenderVersion, latestSPMVersion }) => {
           <NoData
             exampleBlenderVersion={exampleBlenderVersion}
             latestSPMVersion={latestSPMVersion}
+            nextSPMVersion={nextSPMVersion}
           />
         )}
       </section>
@@ -111,6 +116,7 @@ export const getStaticProps = () => {
     props: {
       exampleBlenderVersion: data.exampleBlenderVersion,
       latestSPMVersion: data.latestSPMVersion,
+      nextSPMVersion: data.nextSPMVersion,
     },
   };
 };

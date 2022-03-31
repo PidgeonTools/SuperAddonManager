@@ -96,6 +96,8 @@
     "request_support.no_data.addon_version": "Addon Version (e.g. {latestSPMVersion})",
     "request_support.no_data.estimated_number_of_installed_addons": "Estimated Number of installed Addons",
     "request_support.no_data.endpoint_url": "Endpoint URL",
+    "request_support.no_data.new_addon_version": "New Addon Version (e.g. {nextSPMVersion})",
+    "request_support.no_data.download_url": "Download URL",
     "request_support.no_data.error_message": "Error Message",
     "request_support.no_data.tracker_url": "Tracker URL",
     "request_support.support_page.endpoint_needed": "To be able to check for updates, the developers of {addonName} have to provide a link to an online resource (the \"Endpoint\"), which contains information about new versions (if available).",
