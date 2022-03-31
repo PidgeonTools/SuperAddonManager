@@ -119,7 +119,7 @@
     "request_support.support_page.check_that_your_internet_connection_works": "Prüfen Sie Ihre Internetverbindung.",
     "request_support.support_page.try_to_reach_the_endpoint": "Versuchen Sie dann, den Endpoint unter <link>{endpointURL}</link> zu erreichen.",
     "request_support.support_page.retry_to_check_for_updates": "Wenn Sie die Seite erreichen können, versuchen Sie erneut, nach Aktualisierungen zu suchen.",
-    "request_support.support_page.what_if_it_still_does_not_work": "Wenn es dann immer noch nicht funktioniert oder Ihr Browser Ihnen mitteilt, dass diese Seite nicht erreicht werden kann, liegt es in der Verantwortung des Entwicklers, dieses Problem zu beheben.",
+    "request_support.support_page.what_if_the_url_still_cannot_be_reached": "Wenn es dann immer noch nicht funktioniert oder Ihr Browser Ihnen mitteilt, dass diese Seite nicht erreicht werden kann, liegt es in der Verantwortung des Entwicklers, dieses Problem zu beheben.",
     "request_support.support_page.what_if_the_issue_has_already_been_reported": "Wenn das Problem bereits gemeldet wurde, können Sie es positiv bewerten (z. B. mit einem Emoji), wenn die Webseite eine solche Funktion bietet.",
     "request_support.support_page.you_can_use_our_automatically_generated_text": "Sie können, wenn Sie möchten, unseren automatisch generierten Text verwenden, aber Sie sollten vorher einige Dinge überprüfen:",
     "request_support.support_page.the_developer_has_to_fix_this_problem": "Es sieht so aus, als müsste der Entwickler dieses Problem beheben.",

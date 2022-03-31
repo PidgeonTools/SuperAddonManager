@@ -45,6 +45,7 @@ const getQueryParameters = (query, issueType) => {
     newAddonVersion: query.new_addon_version,
     addonCount:
       query.addon_count < threshold ? "multiple" : String(query.addon_count),
+    downloadUrl: query.download_url ?? "#undefined",
   };
 
   if (query.tracker_url) {

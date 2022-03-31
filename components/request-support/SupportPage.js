@@ -40,6 +40,40 @@ export const SupportPage = ({ parameters }) => {
 
   const [issueTextBoxes, setIssueTextBoxes] = useState();
 
+  // === Update the intro text, depending on the type of issue ===
+  // TODO: #97 Find a better name, make the code more readable.
+  let firstLine = (
+    <>
+      <FormattedMessage
+        id="request_support.support_page.sam_cannot_check_for_updates"
+        values={{ addonName }}
+      />
+    </>
+  );
+
+  switch (issueType) {
+    case ERROR_CODES.INVALID_FILE_TYPE:
+    case ERROR_CODES.INVALID_DOWNLOAD_URL:
+    case ERROR_CODES.DOWNLOAD_URL_OFFLINE:
+    case ERROR_CODES.NOT_AN_ADDON:
+      firstLine = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.sam_cannot_install_update"
+            values={{ addonName }}
+          />
+        </>
+      );
+      break;
+    case ERROR_CODES.UNKNOWN_ERROR:
+      firstLine = (
+        <>
+          <FormattedMessage id="request_support.support_page.there_is_an_unknown_error" />
+        </>
+      );
+      break;
+  }
+
   // === Update the non-developer friendly issue description. ===
   let issueDescriptionText;
   let endpointIntroText = (
@@ -107,6 +141,49 @@ export const SupportPage = ({ parameters }) => {
         </>
       );
       break;
+    case ERROR_CODES.INVALID_FILE_TYPE:
+      issueDescriptionText = (
+        <>
+          <FormattedMessage id="request_support.support_page.downloaded_file_is_not_a_zip" />{" "}
+          <FormattedMessage id="request_support.support_page.sam_addons_need_to_be_packed" />
+        </>
+      );
+      break;
+    case ERROR_CODES.INVALID_DOWNLOAD_URL:
+      issueDescriptionText = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.download_url_needed"
+            values={{ addonName }}
+          />{" "}
+          <FormattedMessage id="request_support.support_page.a_valid_download_url_looks_like" />{" "}
+          <FormattedMessage id="request_support.support_page.the_url_is_invalid" />{" "}
+          <FormattedMessage
+            id="request_support.support_page.it_looks_like_this"
+            values={{ endpointURL: parameters.downloadUrl }}
+          />
+        </>
+      );
+      break;
+    case ERROR_CODES.DOWNLOAD_URL_OFFLINE:
+      issueDescriptionText = (
+        <>
+          <FormattedMessage
+            id="request_support.support_page.download_url_needed"
+            values={{ addonName }}
+          />{" "}
+          <FormattedMessage id="request_support.support_page.download_link_seems_offline" />
+        </>
+      );
+      break;
+    case ERROR_CODES.NOT_AN_ADDON:
+      issueDescriptionText = (
+        <>
+          <FormattedMessage id="request_support.support_page.not_an_addon" />{" "}
+          <FormattedMessage id="request_support.support_page.sam_can_only_install_blender_addons" />
+        </>
+      );
+      break;
     case ERROR_CODES.UNKNOWN_ERROR:
       issueDescriptionText = (
         <>
@@ -115,6 +192,7 @@ export const SupportPage = ({ parameters }) => {
         </>
       );
       break;
+
     default:
       issueDescriptionText = (
         <>
@@ -298,6 +376,47 @@ ${checkedInternet}
         id: "request_support.support_page.retry_to_check_for_updates",
       },
       {
+        id: "request_support.support_page.what_if_the_url_still_cannot_be_reached",
+      },
+      {
+        id: "request_support.support_page.what_if_the_issue_has_already_been_reported",
+      },
+    ];
+  }
+
+  if (issueType === ERROR_CODES.DOWNLOAD_URL_OFFLINE) {
+    whatToDoMessages = [
+      {
+        id: "request_support.support_page.check_that_your_internet_connection_works",
+      },
+      {
+        id: "request_support.support_page.try_to_reach_the_download_url",
+        values: {
+          link: getI18nLink({
+            href: parameters.endpointURL,
+            target: "_blank",
+          }),
+          downloadUrl: parameters.downloadUrl,
+        },
+      },
+      {
+        id: "request_support.support_page.install_from_file",
+      },
+      {
+        id: "request_support.support_page.what_if_the_url_still_cannot_be_reached",
+      },
+      {
+        id: "request_support.support_page.what_if_the_issue_has_already_been_reported",
+      },
+    ];
+  }
+
+  if (issueType === ERROR_CODES.NOT_AN_ADDON) {
+    whatToDoMessages = [
+      {
+        id: "request_support.support_page.make_sure_you_selected_the_right_file",
+      },
+      {
         id: "request_support.support_page.what_if_it_still_does_not_work",
       },
       {
@@ -334,12 +453,7 @@ ${checkedInternet}
                 values={{ addonName }}
               />
             </h1>
-            <p>
-              <FormattedMessage
-                id="request_support.support_page.sam_cannot_check_for_updates"
-                values={{ addonName }}
-              />
-            </p>
+            <p>{firstLine}</p>
           </Row>
         </Container>
       </section>
