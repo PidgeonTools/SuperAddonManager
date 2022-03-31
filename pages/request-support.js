@@ -12,7 +12,7 @@ import IntlWrapper from "../components/IntlWrapper";
 // Error Codes
 import { ERROR_CODES } from "../components/request-support/ErrorCodes";
 
-const getQueryParameters = (query, issueType) => {
+const getQueryParameters = (query) => {
   const addonName = query.addon_name ?? "[Your Addon]";
 
   let defaultParameters = {
