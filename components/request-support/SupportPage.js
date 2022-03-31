@@ -224,7 +224,15 @@ export const SupportPage = ({ parameters }) => {
       checkedInternet = `${checkboxChecked} Checked that my internet works.`;
     }
     let checkedAddonUpdated = `${addonUpdated} ${addonName} is up to date.\n`;
-    if (issueType == ERROR_CODES.UNKNOWN_ERROR) {
+    if (
+      [
+        ERROR_CODES.INVALID_FILE_TYPE,
+        ERROR_CODES.INVALID_DOWNLOAD_URL,
+        ERROR_CODES.DOWNLOAD_URL_OFFLINE,
+        ERROR_CODES.NOT_AN_ADDON,
+        ERROR_CODES.UNKNOWN_ERROR,
+      ].includes(issueType)
+    ) {
       checkedAddonUpdated = "";
     }
 
@@ -291,6 +299,7 @@ ${checkedInternet}
             {...defaultProps}
             addon_name={addonName}
             new_addon_version={parameters.newAddonVersion}
+            disabled={!(samUpToDate && noDuplicate)}
           />
         );
         break;
@@ -300,6 +309,7 @@ ${checkedInternet}
             {...defaultProps}
             addon_name={addonName}
             new_addon_version={parameters.newAddonVersion}
+            disabled={!(samUpToDate && noDuplicate)}
           />
         );
         break;
@@ -309,6 +319,7 @@ ${checkedInternet}
             {...defaultProps}
             addon_name={addonName}
             new_addon_version={parameters.newAddonVersion}
+            disabled={!(samUpToDate && noDuplicate)}
           />
         );
         break;
@@ -318,6 +329,7 @@ ${checkedInternet}
             {...defaultProps}
             addon_name={addonName}
             new_addon_version={parameters.newAddonVersion}
+            disabled={!(samUpToDate && noDuplicate)}
           />
         );
         break;
@@ -509,7 +521,13 @@ ${checkedInternet}
 
               {/* ADDON UP TO DATE CHECKBOX */}
               <>
-                {issueType !== ERROR_CODES.UNKNOWN_ERROR ? (
+                {![
+                  ERROR_CODES.INVALID_FILE_TYPE,
+                  ERROR_CODES.INVALID_DOWNLOAD_URL,
+                  ERROR_CODES.DOWNLOAD_URL_OFFLINE,
+                  ERROR_CODES.NOT_AN_ADDON,
+                  ERROR_CODES.UNKNOWN_ERROR,
+                ].includes(issueType) ? (
                   <div className="form-check">
                     <input
                       type="checkbox"
