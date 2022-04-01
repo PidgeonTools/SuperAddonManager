@@ -116,3 +116,25 @@ export const MaxBlender = ({ exampleText }) => {
     </>
   );
 };
+
+export const RelDescription = ({ exampleText }) => {
+  return (
+    <>
+      <div>
+        <FormattedMessage
+          id="endpoint_builder.help_texts.release_description.inform_your_users"
+          values={I18nFormatters}
+        />{" "}
+        <FormattedMessage
+          id="endpoint_builder.help_texts.release_description.this_is_optional"
+          values={I18nFormatters}
+        />{" "}
+        <FormattedMessage
+          id="endpoint_builder.help_texts.release_description.filling_it_in"
+          values={I18nFormatters}
+        />{" "}
+      </div>
+      <div className="endpoint-form-example-container">{exampleText}</div>
+    </>
+  );
+};

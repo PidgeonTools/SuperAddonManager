@@ -10,6 +10,7 @@ import {
   DownloadURL,
   MaxBlender,
   MinBlender,
+  RelDescription,
   Version,
 } from "../components/endpoint-builder/HelpTexts";
 
@@ -21,6 +22,7 @@ import {
   INPUTID,
   ShowApiBreakingBlenderVersion,
   AllowAutomaticDownload,
+  ReleaseDescription,
 } from "../components/endpoint-builder/EndpointBuilderInputs";
 
 // Functions
@@ -49,6 +51,7 @@ const EndpointBuilderPage = ({
   const [downloadUrl, setDownloadUrl] = useState();
   const [minimumBlenderVersion, setMinimumBlenderVersion] = useState();
   const [apiBreakingBlenderVersion, setApiBreakingBlenderVersion] = useState();
+  const [releaseDescription, setReleaseDescription] = useState();
 
   // Data
   const [data, setData] = useState({
@@ -79,6 +82,15 @@ const EndpointBuilderPage = ({
         break;
       case INPUTID.API_BREAKING_BLENDER_VERSION:
         setHelpText(<MaxBlender exampleText={"3.0.0"} />);
+        break;
+      case INPUTID.RELEASE_DESCRIPTION:
+        setHelpText(
+          <RelDescription
+            exampleText={
+              <FormattedMessage id="endpoint_builder.help_texts.release_description.example" />
+            }
+          />
+        );
         break;
     }
   }, [focusedElement, allowAutomaticDownload]);
@@ -119,6 +131,8 @@ const EndpointBuilderPage = ({
       }
     }
 
+    current_version.release_description = releaseDescription;
+
     // Make a local copy of the data and add the current version to it.
     let downloadData = {
       schema_version: data.schema_version,
@@ -138,6 +152,7 @@ const EndpointBuilderPage = ({
     setDownloadUrl("");
     setMinimumBlenderVersion("");
     setApiBreakingBlenderVersion("");
+    setReleaseDescription("");
   }, []);
 
   return (
@@ -268,6 +283,21 @@ const EndpointBuilderPage = ({
                     ""
                   )}
                 </>
+
+                {/* RELEASE DESCRIPTION */}
+                <Row>
+                  <Col className="mb-3">
+                    <ReleaseDescription
+                      releaseDescription={releaseDescription}
+                      onChange={(e) => {
+                        setReleaseDescription(String(e.target.value));
+                      }}
+                      onFocus={(e) => {
+                        setFocusedElement(e.target.id);
+                      }}
+                    />
+                  </Col>
+                </Row>
 
                 <Col className="d-grid">
                   <Button

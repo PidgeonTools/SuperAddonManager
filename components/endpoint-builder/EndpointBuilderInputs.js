@@ -8,9 +8,10 @@ import { FormattedMessage } from "react-intl";
 
 export const INPUTID = {
   VERSION: "version",
+  DOWNLOAD_URL: "download_url",
   MINIMUM_BLENDER_VERSION: "minimum_blender_version",
   API_BREAKING_BLENDER_VERSION: "api_breaking_blender_version",
-  DOWNLOAD_URL: "download_url",
+  RELEASE_DESCRIPTION: "release_description",
 };
 
 export const AddonVersion = ({ addonVersion, latestSPMVersion, ...props }) => {
@@ -169,6 +170,27 @@ export const AllowAutomaticDownload = ({
   );
 };
 
+export const ReleaseDescription = ({ releaseDescription, ...props }) => {
+  return (
+    <>
+      <FloatingLabel
+        controlId={INPUTID.RELEASE_DESCRIPTION}
+        label={<FormattedMessage id="endpoint_builder.release_description" />}
+      >
+        <Form.Control
+          as="textarea"
+          className="sam-form-control"
+          value={releaseDescription}
+          placeholder="Example Release Notes: Feature 1; Feature 2; Feature 3"
+          accessKey="R"
+          style={{ height: "8rem" }}
+          {...props}
+        />
+      </FloatingLabel>
+    </>
+  );
+};
+
 export const COMPONENTS = {
   allow_automatic_download: AllowAutomaticDownload,
   version: AddonVersion,
@@ -176,4 +198,5 @@ export const COMPONENTS = {
   api_breaking_blender_version: ApiBreakingBlenderVersion,
   show_api_breaking_blender_version: ShowApiBreakingBlenderVersion,
   download_url: DownloadUrl,
+  release_description: ReleaseDescription,
 };
