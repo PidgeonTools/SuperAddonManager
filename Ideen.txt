@@ -35,12 +35,6 @@ Background check: Try to avoid blocking the interface.
 
 When checking in preferences: Disabling/uninstalling an addon doesn't affect sys.modules -> Maybe still check for each addon again, whether it's enabled or not.
 
-Request Support tool: Automatically append URL parameters for github, gitlab, ...
-&labels=bug,enhancement,feature request,updater,sam
-&template=bug_report.md,feature_request.md
-&title=[Super Addon Manager] Whatever
-=> Not worth the effort
-
 Setting to let users decide, whether they want to see the error codes (disabled by default):
 Read these values from the preferences:
 bpy.context.preferences.view.show_tooltips_python
