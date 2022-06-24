@@ -428,12 +428,18 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
         try:
             update_status = updater.update_addon(downloaded_file_path)
 
-            if update_status != None:
-                self.report({"WARNING"}, update_status)
-                return {'CANCELLED'}  # ! Critical Error
+            # Handle update errors.
             if updater.error:
                 prefs.updates.pop(self.index)
                 prefs.unavailable_addons.append(updater.error_data)
+                return {'CANCELLED'}  # ! Critical Error
+
+            if updater.success:
+                # Remove the addon from the list of updates to avoid confusion.
+                prefs.updates.pop(self.index)
+
+            if update_status != None:
+                self.report({"WARNING"}, update_status)
                 return {'CANCELLED'}  # ! Critical Error
 
             bpy.ops.preferences.addon_refresh()  # Refresh the addon list.
@@ -442,8 +448,6 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             self.report(
                 {"INFO"}, f"{updater.addon_name} has been updated sucessfully!")
 
-            # Remove the addon from the list of updates to avoid confusion.
-            prefs.updates.pop(self.index)
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR

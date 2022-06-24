@@ -36,7 +36,8 @@ class Updater:
             "addon_name": addon_name,
             "bl_info": bl_info
         }
-        self.reload_after_update = auto_reload
+        # Set to True, once the addon files are installed correctly.
+        self.success = False
 
         self.update_context = UPDATE_CONTEXTS["DOWNLOAD"]
 
@@ -189,6 +190,8 @@ class Updater:
         # Remove the extract directory after updating.
         shutil.rmtree(extract_path)
 
+        self.success = True
+
         # Reload the addon after updating.
         try:
             reload_status = self._reload_addon()
@@ -251,9 +254,16 @@ class Updater:
         addon_utils.modules(refresh=True)
         bpy.utils.refresh_script_paths()
 
-        bpy.ops.preferences.addon_disable(module=p.basename(self.addon_path))
-        bpy.ops.preferences.addon_refresh()
-        bpy.ops.preferences.addon_enable(module=p.basename(self.addon_path))
+        try:
+            bpy.ops.preferences.addon_disable(
+                module=p.basename(self.addon_path))
+            bpy.ops.preferences.addon_refresh()
+            bpy.ops.preferences.addon_enable(
+                module=p.basename(self.addon_path))
+        except:
+            bpy.ops.preferences.addon_enable(
+                module=p.basename(self.addon_path))
+            return f"Reloading {self.addon_name} automatically failed. Please restart Blender after all Updates have completed."
 
     def _set_error(self, **kwargs):
         """Set the error state to True and the error data to all of the required data."""
