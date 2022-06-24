@@ -68,7 +68,7 @@ class UpdateCheck_v1_0_0:
         candidate_versions.sort(reverse=True, key=lambda v: v["version"])
 
         # Get the latest compatible version and check, if an update is available.
-        latest_compatible_version = candidate_versions[0] if candidate_versions else None
+        latest_compatible_version: dict = candidate_versions[0] if candidate_versions else None
         self.update = latest_compatible_version and latest_compatible_version[
             "version"] > self.current_version
 

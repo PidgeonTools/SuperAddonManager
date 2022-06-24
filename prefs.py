@@ -22,7 +22,8 @@
 import bpy
 from bpy.types import (
     AddonPreferences,
-    UILayout
+    UILayout,
+    Context
 )
 from bpy.props import (
     BoolProperty,
@@ -130,7 +131,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
     dev_icon: IntProperty(max=3, min=0)
 
-    def draw(self, context):
+    def draw(self, context: Context):
         layout: UILayout = self.layout
 
         # layout.prop(self, "dev_icon")  # TODO: #46 Decide on an icon.
@@ -174,7 +175,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         self.draw_settings(layout)
 
     # Layout all issues.
-    def layout_issues(self, context, layout):
+    def layout_issues(self, context: Context, layout: UILayout):
         path = p.join(p.dirname(__file__), "updater_status.json")
         d = decode_json(path)
 
@@ -223,7 +224,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 op.addon_index = index
                 container.separator(factor=ITEMS_DISTANCE / 100)
 
-    def draw_settings(self, layout):
+    def draw_settings(self, layout: UILayout):
         path = p.join(p.dirname(__file__), "updater_status.json")
 
         props = layout.box()

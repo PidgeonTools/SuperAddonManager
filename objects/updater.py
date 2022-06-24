@@ -14,6 +14,8 @@ from urllib import request
 
 import zipfile
 
+import typing
+
 from .recursive_dirs import RecursiveDirs
 
 from ..issue_types import (
@@ -39,19 +41,21 @@ class Updater:
         # Set to True, once the addon files are installed correctly.
         self.success = False
 
-        self.update_context = UPDATE_CONTEXTS["DOWNLOAD"]
+        self.reload_after_update: bool = auto_reload
 
-        self.allow_automatic_download = allow_automatic_download
+        self.update_context: str = UPDATE_CONTEXTS["DOWNLOAD"]
 
-        self.addon_name = addon_name
-        self.addon_path = addon_path
-        self.addon_version = addon_version
-        self.old_version = bl_info["version"]
+        self.allow_automatic_download: bool = allow_automatic_download
 
-        self.download_url = download_url
-        self.download_directory = p.join(
+        self.addon_name: str = addon_name
+        self.addon_path: str = addon_path
+        self.addon_version: tuple = addon_version
+        self.old_version: tuple = bl_info["version"]
+
+        self.download_url: str = download_url
+        self.download_directory: str = p.join(
             download_directory, "Super Addon Manager Downloads")
-        self.downloaded_file_path = None
+        self.downloaded_file_path: typing.Union[str, None] = None
 
     # Download the ZIP file for updating.
     def download_update(self):
