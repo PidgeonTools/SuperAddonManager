@@ -1,4 +1,4 @@
-pull_request_title: "Translations: Update Translations"
+pull_request_title: "chore(Translations): :twisted_rightwards_arrows: Update Translations"
 commit_message: "chore(Translations): :globe_with_meridians: Update %language% translations in %original_file_name%"
 append_commit_message: false
 pull_request_labels:
