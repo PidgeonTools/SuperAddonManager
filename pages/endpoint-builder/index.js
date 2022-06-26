@@ -4,15 +4,15 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Form, Row, Button } from "react-bootstrap";
 
 // Components
-import Navbar from "../components/Navbar";
-import Header from "../components/Header";
+import Navbar from "../../components/Navbar";
+import Header from "../../components/Header";
 import {
   DownloadURL,
   MaxBlender,
   MinBlender,
   RelDescription,
   Version,
-} from "../components/endpoint-builder/HelpTexts";
+} from "../../components/endpoint-builder/HelpTexts";
 
 import {
   AddonVersion,
@@ -23,18 +23,19 @@ import {
   ShowApiBreakingBlenderVersion,
   AllowAutomaticDownload,
   ReleaseDescription,
-} from "../components/endpoint-builder/EndpointBuilderInputs";
+} from "../../components/endpoint-builder/EndpointBuilderInputs";
 
 // Functions
 import {
   downloadJSONFile,
   padAddonVersion,
   padBlenderVersion,
-} from "../functions";
+} from "../../functions";
 
 // Translations
 import { FormattedMessage, useIntl } from "react-intl";
-import IntlWrapper from "../components/IntlWrapper";
+import IntlWrapper from "../../components/IntlWrapper";
+import Link from "next/link";
 
 const EndpointBuilderPage = ({
   exampleBlenderLTSVersion,
@@ -308,6 +309,12 @@ const EndpointBuilderPage = ({
                   >
                     <FormattedMessage id="endpoint_builder.generate" />
                   </Button>
+                  <div className="text-small pt-1">
+                    Already generated an endpoint?{" "}
+                    <Link href={"/endpoint-builder/update"}>
+                      <a className="no-underline">Click here to update it.</a>
+                    </Link>
+                  </div>
                 </Col>
               </Form>
             </Col>
@@ -324,7 +331,7 @@ const EndpointBuilderPage = ({
 };
 
 export const getStaticProps = () => {
-  const data = require("../data/request-support.json");
+  const data = require("../../data/request-support.json");
   return {
     props: {
       exampleBlenderLTSVersion: data.exampleBlenderLTSVersion,

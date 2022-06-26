@@ -20,4 +20,8 @@ a {
     margin-left: 0rem;
     padding-bottom: 0.1rem;
   }
+
+  &.no-underline {
+    text-decoration: none;
+  }
 }

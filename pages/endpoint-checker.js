@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Bootstrap
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 
 // Components
 import Header from "../components/Header";
@@ -14,6 +14,7 @@ import {
 
 // Translations
 import IntlWrapper from "../components/IntlWrapper";
+import { FormattedMessage } from "react-intl";
 
 const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
   const [hasData, setHasData] = useState(false);
@@ -31,13 +32,25 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
   useEffect(() => {
     if (!hasData) {
       setDisplayComponent(
-        <DataInput
-          callbackFunction={(d, filename) => {
-            setData(d);
-            setFilename(filename);
-            setHasData(true);
-          }}
-        />
+        <>
+          {/* INTRO INFORMATION */}
+          <Row>
+            <h1>
+              <FormattedMessage id="endpoint_checker.data_input.title" />
+            </h1>
+            <p>
+              <FormattedMessage id="endpoint_checker.data_input.description_text" />
+            </p>
+          </Row>
+          {/* INPUT */}
+          <DataInput
+            callbackFunction={(d, filename) => {
+              setData(d);
+              setFilename(filename);
+              setHasData(true);
+            }}
+          />
+        </>
       );
       return;
     }

@@ -88,15 +88,6 @@ export const DataInput = ({ callbackFunction }) => {
 
   return (
     <>
-      {/* INTRO INFORMATION */}
-      <Row>
-        <h1>
-          <FormattedMessage id="endpoint_checker.data_input.title" />
-        </h1>
-        <p>
-          <FormattedMessage id="endpoint_checker.data_input.description_text" />
-        </p>
-      </Row>
       {/* DROPZONE */}
       <Row className="dropzone-container">
         <Dropzone
