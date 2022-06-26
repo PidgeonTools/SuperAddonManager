@@ -227,7 +227,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 expand.emboss = "NONE"
                 expand.alignment = "LEFT"
                 expand.prop(self, prev_error,
-                            text=f"{self.convert_error_message(prev_error)} (Error Code: {prev_error})", icon=icon)
+                            text=self.convert_error_message(prev_error), icon=icon)
 
                 container.separator(factor=HEADING_DISTANCE / 100)
 
@@ -311,6 +311,7 @@ def add_issue_types_to_prefs():
         setattr(SUPERADDONMANAGER_APT_preferences, issue_type, True)
         SUPERADDONMANAGER_APT_preferences.__annotations__[
             issue_type] = BoolProperty(default=True,
+                                       description=f"Error Code: '{issue_type}'",
                                        get=get_expanded,
                                        set=set_expanded)
 
