@@ -15,8 +15,13 @@ const DocumentationImage = ({
 
   const src = `${basePath}/${locale}/${article}/${filename}.${fileExtension}`;
 
-  className = className ? " " + className : ""
-  const finalProps = {...props, src, alt, className: "img-fluid" + className}
+  className = className ? " " + className : "";
+  const finalProps = {
+    ...props,
+    src,
+    alt,
+    className: "img-fluid docs-img" + className,
+  };
   return (
     <>
       <div className="docs-img-wrapper">

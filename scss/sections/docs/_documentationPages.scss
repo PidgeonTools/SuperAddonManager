@@ -97,6 +97,11 @@ main {
 .docs-img-wrapper {
   margin-top: 0.5rem;
   margin-bottom: 2rem;
+  border-radius: $border-large;
+}
+
+.docs-img {
+  border-radius: $border-large;
 }
 
 pre code.hljs {
