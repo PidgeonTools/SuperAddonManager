@@ -473,21 +473,45 @@ class SUPERADDONMANAGER_OT_manual_update(Operator):
 
 
 class SUPERADDONMANAGER_OT_update_all(Operator):
-    """Update all addons, that have updates available."""
+    """Update all addons, that can be updated automatically."""
     bl_idname = "superaddonmanager.update_all"
     bl_label = "Update All"
     bl_options = {'REGISTER', 'UNDO'}
 
     # TODO #9: Progress bar!
     def execute(self, context: Context):
-        for addon in prefs.updates:
-            if addon[1]:
-                bpy.ops.superaddonmanager.automatic_update(
-                    addon_path=addon[0], download_url=addon[2])
-            else:
-                bpy.ops.superaddonmanager.manual_update(download_url=addon[2])
+        prefs.updating_all = True
+        prefs.updated_addons = 0
+        prefs.updatable_addons = len(
+            [a for a in prefs.updates if a["allow_automatic_download"]])
 
+        i = 0
+
+        while i < len(prefs.updates):
+            addon = prefs.updates[i]
+            if addon["allow_automatic_download"]:
+                bpy.ops.superaddonmanager.automatic_update(
+                    index=i)
+                prefs.updated_addons += 1
+
+            else:
+                i += 1
+
+            # # bpy.ops.superaddonmanager.manual_update("INVOKE_DEFAULT")
+            # # download_url=addon["download_url"])
+
+            self._redraw()  # Update the progress bar.
+
+        prefs.updating_all = False
         return {'FINISHED'}
+
+    def _redraw(self):
+        # ATTENTION: This is not officially supported! See: https://docs.blender.org/api/current/info_gotcha.html
+        try:
+            bpy.ops.wm.redraw_timer(
+                type='DRAW_WIN_SWAP', iterations=1)
+        except Exception:
+            pass
 
 
 class SUPERADDONMANAGER_OT_generate_issue_report(Operator):

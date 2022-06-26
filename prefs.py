@@ -59,6 +59,11 @@ addons_total = 0
 addon_index = 0
 checking_for_updates = False
 
+# These variables are necessary for the update all progress bar.
+updatable_addons = 0
+updated_addons = 0
+updating_all = False
+
 # Create the lists for addons, that either have available updates
 # or addons, that have issues and can't be updated.
 updates = []
@@ -71,7 +76,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
     """Preferences of Super Addon Manager."""
     bl_idname = __package__
 
-    update_check_percent_complete: FloatProperty(
+    update_check_progress_bar: FloatProperty(
         name="%",
         description="Percentage addons checked for updates",
         subtype='PERCENTAGE',
@@ -80,6 +85,18 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         options=set(),  # Not animatable!
         get=(lambda self: 0 if addons_total ==
              0 else 100 * addon_index / addons_total),
+        set=(lambda self, value: None),
+    )
+
+    update_all_progress_bar: FloatProperty(
+        name="%",
+        description="Percentage addons updated",
+        subtype='PERCENTAGE',
+        min=0,
+        max=100,
+        options=set(),  # Not animatable!
+        get=(lambda self: 0 if updatable_addons ==
+             0 else 100 * updated_addons / updatable_addons),
         set=(lambda self, value: None),
     )
 
@@ -136,11 +153,17 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
         # layout.prop(self, "dev_icon")  # TODO: #46 Decide on an icon.
 
+        if updating_all:
+            # Checking for updates progress bar.
+            layout.label(
+                text=f"Updating: {updated_addons}/{updatable_addons}", icon='INFO')
+            layout.prop(self, "update_all_progress_bar")
+
         if checking_for_updates:
             # Checking for updates progress bar.
             layout.label(
                 text=f"Checking for updates: {addon_index}/{addons_total}", icon='INFO')
-            layout.prop(self, "update_check_percent_complete")
+            layout.prop(self, "update_check_progress_bar")
         else:
             row = layout.row()
             row.scale_y = 2
