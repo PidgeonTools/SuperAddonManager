@@ -41,8 +41,7 @@ export const SupportPage = ({ parameters }) => {
   const [issueTextBoxes, setIssueTextBoxes] = useState();
 
   // === Update the intro text, depending on the type of issue ===
-  // TODO: #97 Find a better name, make the code more readable.
-  let firstLine = (
+  let introText = (
     <>
       <FormattedMessage
         id="request_support.support_page.sam_cannot_check_for_updates"
@@ -56,7 +55,7 @@ export const SupportPage = ({ parameters }) => {
     case ERROR_CODES.INVALID_DOWNLOAD_URL:
     case ERROR_CODES.DOWNLOAD_URL_OFFLINE:
     case ERROR_CODES.NOT_AN_ADDON:
-      firstLine = (
+      introText = (
         <>
           <FormattedMessage
             id="request_support.support_page.sam_cannot_install_update"
@@ -66,7 +65,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.UNKNOWN_ERROR:
-      firstLine = (
+      introText = (
         <>
           <FormattedMessage id="request_support.support_page.there_is_an_unknown_error" />
         </>
@@ -75,7 +74,7 @@ export const SupportPage = ({ parameters }) => {
   }
 
   // === Update the non-developer friendly issue description. ===
-  let issueDescriptionText;
+  let problemDescriptionText;
   let endpointIntroText = (
     <>
       {/* To be able to check for updates, the developers of {addonName} have to
@@ -89,7 +88,7 @@ export const SupportPage = ({ parameters }) => {
   );
   switch (issueType) {
     case ERROR_CODES.BL_INFO_VERSION_PROBLEMS:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage id="request_support.support_page.cannot_understand_current_version" />{" "}
           <FormattedMessage id="request_support.support_page.sam_does_not_know_if_there_is_an_update" />
@@ -97,7 +96,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.ENDPOINT_URL_INVALID:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage
             id="request_support.support_page.a_valid_url_looks_like"
@@ -112,7 +111,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.INVALID_ENDPOINT:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage
             id="request_support.support_page.endpoint_has_wrong_file_format"
@@ -122,7 +121,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.ENDPOINT_INVALID_SCHEMA:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage
             id="request_support.support_page.endpoint_is_incomplete"
@@ -132,7 +131,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.ENDPOINT_OFFLINE:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage
             id="request_support.support_page.server_seems_offline"
@@ -142,7 +141,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.INVALID_FILE_TYPE:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage id="request_support.support_page.downloaded_file_is_not_a_zip" />{" "}
           <FormattedMessage id="request_support.support_page.sam_addons_need_to_be_packed" />
@@ -150,7 +149,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.INVALID_DOWNLOAD_URL:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage
             id="request_support.support_page.download_url_needed"
@@ -166,7 +165,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.DOWNLOAD_URL_OFFLINE:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage
             id="request_support.support_page.download_url_needed"
@@ -177,7 +176,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.NOT_AN_ADDON:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage id="request_support.support_page.not_an_addon" />{" "}
           <FormattedMessage id="request_support.support_page.sam_can_only_install_blender_addons" />
@@ -185,7 +184,7 @@ export const SupportPage = ({ parameters }) => {
       );
       break;
     case ERROR_CODES.UNKNOWN_ERROR:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage id="request_support.support_page.we_do_not_know" />{" "}
           <FormattedMessage id="request_support.support_page.all_that_you" />
@@ -194,7 +193,7 @@ export const SupportPage = ({ parameters }) => {
       break;
 
     default:
-      issueDescriptionText = (
+      problemDescriptionText = (
         <>
           <FormattedMessage
             id="request_support.support_page.addon_does_not_support_sam"
@@ -468,7 +467,7 @@ ${checkedInternet}
                 values={{ addonName }}
               />
             </h1>
-            <p>{firstLine}</p>
+            <p>{introText}</p>
           </Row>
         </Container>
       </section>
@@ -480,7 +479,7 @@ ${checkedInternet}
             <h2>
               <FormattedMessage id="request_support.support_page.what_is_the_problem" />
             </h2>
-            <p>{issueDescriptionText}</p>
+            <p>{problemDescriptionText}</p>
           </Row>
         </Container>
       </section>
