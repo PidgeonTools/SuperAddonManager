@@ -309,6 +309,7 @@ ${checkedInternet}
             {...defaultProps}
             addon_name={addonName}
             new_addon_version={parameters.newAddonVersion}
+            download_url={parameters.downloadUrl}
             disabled={!(samUpToDate && noDuplicate)}
           />
         );
@@ -319,6 +320,8 @@ ${checkedInternet}
             {...defaultProps}
             addon_name={addonName}
             new_addon_version={parameters.newAddonVersion}
+            download_url={parameters.downloadUrl}
+            error_message={parameters.errorMessage}
             disabled={!(samUpToDate && noDuplicate)}
           />
         );
@@ -405,7 +408,7 @@ ${checkedInternet}
         id: "request_support.support_page.try_to_reach_the_download_url",
         values: {
           link: getI18nLink({
-            href: parameters.endpointURL,
+            href: parameters.downloadUrl,
             target: "_blank",
           }),
           downloadUrl: parameters.downloadUrl,
