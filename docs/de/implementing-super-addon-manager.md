@@ -51,7 +51,7 @@ Die Schemaversion bleibt immer dieselbe, Sie können sie also einfach kopieren u
 }
 ```
 
-This object MUST have the minimum Blender version, the version of your addon (both as array of numbers) and the download URL specified:
+Dieses Objekt MUSS die minimale Blender-Version, die Version Ihres Addons (beides als Array von Zahlen) und die Download-URL angegeben haben:
 
 ```json
 {
@@ -61,7 +61,7 @@ This object MUST have the minimum Blender version, the version of your addon (bo
 }
 ```
 
-If you allow automatic downloads, the download URL must be a link to the zip file of your addon:
+Wenn Sie automatische Downloads zulassen, muss die Download-Url ein Link zu der Zip-Datei Ihres Addons sein:
 
 ```json
 "allow_automatic_download": true,
@@ -76,7 +76,7 @@ Und schließlich, wenn Sie ein Update für eine ältere Version von Blender mach
 
 ### Hosten des Endpunkts:
 
-Sie sind nun bereit, Ihren Endpunkt im Web zu veröffentlichen. Upload the endpoint file to a host, where you can easyly change the file content without changing the file URL. GitHub is a great place where you can host your file for free.
+Sie sind nun bereit, Ihren Endpunkt im Web zu veröffentlichen. Laden Sie die Endpunktdatei auf einen Host hoch, wo Sie sie leicht ändern können, ohne dass sich die Url ändert. GitHub ist ein idealer Ort, um Ihre Datei kostenlos zu hosten.
 
 To start, we recommend to create a public repository where you store all of your Super Addon Manager endpoints, e.g. my-endpoints, sam-endpoints, ... This makes updating your endpoint without messing up other files much easier.
 
@@ -95,7 +95,7 @@ The endpoint URL of this example is [https://raw.githubusercontent.com/BlenderDe
 
 ## Einrichten des Addons:
 
-First of all, please make sure that your current bl_info is valid. A good bl_info looks like this:
+Zuerst stellen Sie bitte sicher, dass Ihre aktuelle bl_info gültig ist. Eine gute bl_info sieht wie folgt aus:
 
 ```python
 bl_info = {
@@ -109,13 +109,13 @@ bl_info = {
 }
 ```
 
-After checking your bl_info looks like this, all you have to do is to add another parameter `endpoint_url` to the bl_info dictionary and paste the URL you've got in the previous step in here like this:
+Nachdem Sie überprüft haben, dass Ihre bl_info so aussieht, müssen Sie nur noch einen weiteren Parameter `Endpoint_URL` zum bl_info Wiktionary hinzufügen und die URL, die Sie im vorherigen Schritt erhalten haben, wie folgt hier einfügen:
 
 ```python
 "endpoint_url": "[URL to your endpoint file]"
 ```
 
-The whole bl_info should now look like this:
+Die ganze bl_info sollte nun so aussehen:
 
 ```python
 bl_info = {
@@ -133,15 +133,15 @@ bl_info = {
 <div class="container">
 <div class="row mt-3">
 
-# Showing, that you support Super Addon Manager:
+# Zeigen, dass Sie Super Addon Manager unterstützen:
 
-Enabling support for Super Addon Manager is only half of the rent: People can only keep your addon up to date automatically, if they are using Super Addon Manager. There's multiple ways to remind them to get Super Addon Manager:
+Das Aktivieren der Unterstützung für Super Addon Manager ist nur die Hälfte der Miete: Die Leute können Ihr Addon nur dann automatisch auf dem neuesten Stand halten, wenn sie Super Addon Manager verwenden. Es gibt mehrere Möglichkeiten, sie daran zu erinnern, Super Addon Manager zu installieren:
 
-## Linking to Super Addon Manager:
+## Super Addon Manager verlinken:
 
-### Links on your description pages:
+### Links auf Ihren "Produktseiten":
 
-Obviously, the easiest way to show, that you support Super Addon Manager, is to add a short text with a link in your addon description or README. You can use something like this:
+Der einfachste Weg, um zu zeigen, dass Sie den Super Addon Manager unterstützen, ist es, einen kurzen Text mit einem Link in Ihre Artenbeschreibung oder README einzufügen. Sie können etwas wie das verwenden:
 
 ```markdown
 # Addon Updates:
@@ -149,9 +149,9 @@ Obviously, the easiest way to show, that you support Super Addon Manager, is to 
 This addon can be updated automatically with Super Addon Manager. Learn more on their site: https//TODO
 ```
 
-### Links from your addon preferences:
+### Links in Ihren Addon-Einstellungen:
 
-If you want to, you can paste the following code snippet into the draw function of your addon preferences or a panel:
+Wenn Sie möchten, können Sie den folgenden Codeschnipsel in die Draw-Funktion Ihrer Addon-Einstellungen oder eines Panels einfügen:
 
 ```python
 if not "Super Addon Manager" in context.preferences.addons:
@@ -160,12 +160,12 @@ if not "Super Addon Manager" in context.preferences.addons:
     layout.operator("wm.url_open", text="Learn more!", icon="URL").url="https//TODO"
 ```
 
-This snippet checks, if Super Addon Manager is installed and enabled, and if that's not the case, it displays a message, saying, that your addon can be updated with Super Addon Manager and a link to the SAM homepage.
+Dieses Snippet prüft, ob Super Addon Manager installiert und aktiviert ist, und wenn das nicht der Fall ist, zeigt es eine Meldung an, die erklärt, dass Ihr Addon mit Super Addon Manager aktualisiert werden kann, sowie einen Link zur SAM-Homepage.
 
-## Deliver Super Addon Manager directly with your addon:
+## Liefern Sie Super Addon Manager direkt mit Ihrem Addon:
 
-If your offering your addon on Gumroad, BlenderMarket or similar pages, you can deliver Super Addon Manager directly with your addon.
+Wenn Sie Ihr Addon auf Gumroad, BlenderMarket oder ähnlichen Seiten anbieten, können Sie Super Addon Manager direkt mit Ihrem Addon bereitstellen.
 
-## Show it in your branding!
+## Zeigen Sie es in Ihrem Branding!
 
-If you want to, you can download the [Super Addon Manager Branding Kit](https//TODO) and add the Super Addon Manager Logo according to the rules in the README.md file. If you're unsure, read our [Logo and Branding](https//TODO) page.
+Wenn Sie möchten, können Sie das [Super Addon Manager Branding Kit](https//TODO) herunterladen und das Super Addon Manager Logo gemäß den Regeln in der README.md Datei hinzufügen. Wenn Sie unsicher sind, lesen Sie unsere [Logo und Branding](https//TODO) Seite.
