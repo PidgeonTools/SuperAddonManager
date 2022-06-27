@@ -52,6 +52,9 @@ import urllib.parse
 
 import random
 
+from inspect import currentframe
+
+
 from . import prefs
 
 from .issue_types import (
@@ -70,6 +73,8 @@ from .objects.update_check import (
     UpdateCheck_v1_0_0
 )
 from .objects.updater import Updater
+
+from .functions.main_functions import get_line_and_file
 from .functions.json_functions import (
     encode_json,
     decode_json
@@ -201,6 +206,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                     except Exception as e:  # Unknown error that needs to be investigated.
                         self.unavailable_addons.append(
                             {"issue_type": UNKNOWN_ERROR,
+                             "exception_type": str(e.__class__).split("'")[1],
+                             "traceback_location": get_line_and_file(currentframe()),
                              "addon_name": self.addon_name,
                              "bl_info": sys.modules[p.basename(addon_path)].bl_info,
                              "error_message": str(e)})
@@ -421,6 +428,10 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
             updater.error_data["error_message"] = str(e)
+            updater.error_data["exception_type"] = str(
+                e.__class__).split("'")[1]
+            updater.error_data["traceback_location"] = get_line_and_file(
+                currentframe())
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 
@@ -452,6 +463,10 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
             updater.error_data["error_message"] = str(e)
+            updater.error_data["exception_type"] = str(
+                e.__class__).split("'")[1]
+            updater.error_data["traceback_location"] = get_line_and_file(
+                currentframe())
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 

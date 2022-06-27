@@ -21,6 +21,11 @@
 
 import bpy
 from bpy.types import Context
+
+from os import path as p
+
+from inspect import getframeinfo
+
 from .. import prefs
 
 
@@ -44,3 +49,12 @@ def filter_search(el, search_term: str) -> bool:
         return True
 
     return False
+
+
+def get_line_and_file(frame):
+    """Try to get the line that the function was called from."""
+    try:
+        f = getframeinfo(frame)
+        return f"{p.basename(f.filename)}, line {f.lineno}"
+    except Exception:
+        return ""
