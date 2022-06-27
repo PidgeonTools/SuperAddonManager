@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 // Bootstrap
 import { Container, Row } from "react-bootstrap";
@@ -81,12 +82,27 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
       return;
     }
 
-    if (fromPage !== {}) {
+    if (!!fromPage && !!fromPage.path) {
       console.log(fromPage);
       setDisplayComponent(
         <>
-          <div>The endpoint has been fixed succesfully.</div>
-          <div>Return to {fromPage.displayName}</div>
+          <div>
+            The endpoint has been fixed succesfully.{" "}
+            <Link href={fromPage.path}>
+              <a
+                className="link-no-underline"
+                onClick={() => {
+                  window.sessionStorage.setItem(
+                    "data",
+                    JSON.stringify(data, null, 0)
+                  );
+                  window.sessionStorage.setItem("filename", filename);
+                }}
+              >
+                Return to {fromPage.displayName}
+              </a>
+            </Link>
+          </div>
         </>
       );
       return;

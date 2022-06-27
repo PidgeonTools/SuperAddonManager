@@ -1,26 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 // Bootstrap
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 // Components
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
+import InputsLayout from "../../components/endpoint-builder/InputsLayout";
 
 // Translations
 import { useIntl } from "react-intl";
 import IntlWrapper from "../../components/IntlWrapper";
 import { DataInput } from "../../components/endpoint-checker/DataInput";
 
+// Functions
+import { downloadJSONFile } from "../../functions";
+
 // Schema
 import SCHEMA from "../../components/endpoint-checker/Schema";
 const Ajv = require("ajv");
 const ajv = new Ajv();
 
-const Update = () => {
+const Update = ({ latestSPMVersion, exampleBlenderLTSVersion }) => {
   const intl = useIntl();
   const router = useRouter();
+
+  const [data, setData] = useState({});
+  const [hasData, setHasData] = useState(false);
+  const [filename, setFilename] = useState("");
+  const [updated, setUpdated] = useState(false);
 
   const validateEndpoint = (data, filename) => {
     const validate = ajv.compile(SCHEMA);
@@ -47,6 +56,29 @@ const Update = () => {
     }
   };
 
+  const handleSubmit = (currentVersion) => {
+    let newData = {
+      schema_version: data.schema_version,
+      versions: [currentVersion, ...data.versions],
+    };
+
+    console.log(newData);
+    setData(newData);
+    setUpdated(true);
+  };
+
+  // Initialise the data from sessionStorage, if available.
+  useEffect(() => {
+    if (window.sessionStorage.getItem("data") !== null) {
+      setData(JSON.parse(window.sessionStorage.getItem("data")));
+      setFilename(window.sessionStorage.getItem("filename"));
+      setHasData(true);
+
+      window.sessionStorage.removeItem("data");
+      window.sessionStorage.removeItem("filename");
+    }
+  }, []);
+
   return (
     <>
       <IntlWrapper>
@@ -57,11 +89,61 @@ const Update = () => {
         <Navbar />
         <Container>
           <div className="intro">Update endpoint.</div>
-          <DataInput callbackFunction={validateEndpoint} />
+
+          <>
+            {updated ? (
+              <>
+                {/* DOWNLOAD PAGE */}
+                <div>Your endpoint has been updated successfully.</div>
+                <Button
+                  variant="outline-primary"
+                  onClick={() => {
+                    setUpdated(false);
+                  }}
+                >
+                  Add another version.
+                </Button>
+                <Button
+                  onClick={() => {
+                    downloadJSONFile(document, data, filename);
+                  }}
+                >
+                  Download
+                </Button>
+              </>
+            ) : (
+              <>
+                {/* DATA INPUT */}
+                <>
+                  {hasData ? (
+                    <div className="form">
+                      <InputsLayout
+                        latestSPMVersion={latestSPMVersion}
+                        exampleBlenderLTSVersion={exampleBlenderLTSVersion}
+                        callbackFunction={handleSubmit}
+                      />
+                    </div>
+                  ) : (
+                    <DataInput callbackFunction={validateEndpoint} />
+                  )}
+                </>
+              </>
+            )}
+          </>
         </Container>
       </IntlWrapper>
     </>
   );
+};
+
+export const getStaticProps = () => {
+  const data = require("../../data/request-support.json");
+  return {
+    props: {
+      exampleBlenderLTSVersion: data.exampleBlenderLTSVersion,
+      latestSPMVersion: data.latestSPMVersion,
+    },
+  };
 };
 
 export default Update;
