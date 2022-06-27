@@ -51,7 +51,7 @@ Die Schemaversion bleibt immer dieselbe, Sie können sie also einfach kopieren u
 }
 ```
 
-Dieses Objekt MUSS die minimale Blender-Version, die Version Ihres Addons (beides als Array von Zahlen) und die Download-URL angegeben haben:
+This object MUST have the minimum Blender version, the version of your addon (both as array of numbers) and the download URL specified:
 
 ```json
 {
@@ -61,7 +61,7 @@ Dieses Objekt MUSS die minimale Blender-Version, die Version Ihres Addons (beide
 }
 ```
 
-Wenn Sie automatische Downloads zulassen, muss die Download-Url ein Link zu der Zip-Datei Ihres Addons sein:
+If you allow automatic downloads, the download URL must be a link to the zip file of your addon:
 
 ```json
 "allow_automatic_download": true,
@@ -76,15 +76,26 @@ Und schließlich, wenn Sie ein Update für eine ältere Version von Blender mach
 
 ### Hosten des Endpunkts:
 
-Sie sind nun bereit, Ihren Endpunkt im Web zu veröffentlichen. Laden Sie die Endpunktdatei auf einen Host hoch, wo Sie sie leicht ändern können, ohne dass sich die Url ändert. GitHub ist ein idealer Ort, um Ihre Datei kostenlos zu hosten:
+Sie sind nun bereit, Ihren Endpunkt im Web zu veröffentlichen. Upload the endpoint file to a host, where you can easyly change the file content without changing the file URL. GitHub is a great place where you can host your file for free.
 
-<!-- TODO: #41 Add a description on hosting an endpoint on GitHub -->
+To start, we recommend to create a public repository where you store all of your Super Addon Manager endpoints, e.g. my-endpoints, sam-endpoints, ... This makes updating your endpoint without messing up other files much easier.
 
-Sobald Sie Ihre Datei hochgeladen haben, müssen Sie die Url der Datei für den nächsten Schritt kopieren. Bitte vergewissern Sie sich, dass die Datei in der URL als Rohdaten vorliegt und nicht in eine HTML-Seite eingebettet ist. Auf GitHub können Sie auf die Schaltfläche "Raw" klicken, um auf die Rohdaten zuzugreifen und die Url zu kopieren.
+<DocumentationImage filename="gh-create-repo" alt="GitHub create repository page, creating a public repository with name my-endpoints."/>
+
+After you have initialised your repository, click on (Add File >>) Upload files to upload your endpoint and click "Commit changes".
+
+<DocumentationImage filename="gh-upload-endpoint" alt="GitHub upload file page with one file to upload."/>
+
+Once you're finished uploading your file, you have to copy the URL to the file for the next step. Please make sure that at the URL, the file is in raw data and not embedded into any HTML page. On GitHub, you can click the "Raw" Button to access the raw file data and copy its URL.
+
+<DocumentationImage filename="gh-view-raw" alt="GitHub view Raw file."/>
+
+The endpoint URL of this example is [https://raw.githubusercontent.com/BlenderDefender/my-endpoints/main/my-addon-endpoint.json](https://raw.githubusercontent.com/BlenderDefender/my-endpoints/main/my-addon-endpoint.json)
+
 
 ## Einrichten des Addons:
 
-Zuerst stellen Sie bitte sicher, dass Ihre aktuelle bl_info gültig ist. Eine gute bl_info sieht wie folgt aus:
+First of all, please make sure that your current bl_info is valid. A good bl_info looks like this:
 
 ```python
 bl_info = {
@@ -98,13 +109,13 @@ bl_info = {
 }
 ```
 
-Nachdem Sie überprüft haben, dass Ihre bl_info so aussieht, müssen Sie nur noch einen weiteren Parameter `Endpoint_URL` zum bl_info Wiktionary hinzufügen und die URL, die Sie im vorherigen Schritt erhalten haben, wie folgt hier einfügen:
+After checking your bl_info looks like this, all you have to do is to add another parameter `endpoint_url` to the bl_info dictionary and paste the URL you've got in the previous step in here like this:
 
 ```python
 "endpoint_url": "[URL to your endpoint file]"
 ```
 
-Die ganze bl_info sollte nun so aussehen:
+The whole bl_info should now look like this:
 
 ```python
 bl_info = {
@@ -122,15 +133,15 @@ bl_info = {
 <div class="container">
 <div class="row mt-3">
 
-# Zeigen, dass Sie Super Addon Manager unterstützen:
+# Showing, that you support Super Addon Manager:
 
-Das Aktivieren der Unterstützung für Super Addon Manager ist nur die Hälfte der Miete: Die Leute können Ihr Addon nur dann automatisch auf dem neuesten Stand halten, wenn sie Super Addon Manager verwenden. Es gibt mehrere Möglichkeiten, sie daran zu erinnern, Super Addon Manager zu installieren:
+Enabling support for Super Addon Manager is only half of the rent: People can only keep your addon up to date automatically, if they are using Super Addon Manager. There's multiple ways to remind them to get Super Addon Manager:
 
-## Super Addon Manager verlinken:
+## Linking to Super Addon Manager:
 
-### Links auf Ihren "Produktseiten":
+### Links on your description pages:
 
-Der einfachste Weg, um zu zeigen, dass Sie den Super Addon Manager unterstützen, ist es, einen kurzen Text mit einem Link in Ihre Artenbeschreibung oder README einzufügen. Sie können etwas wie das verwenden:
+Obviously, the easiest way to show, that you support Super Addon Manager, is to add a short text with a link in your addon description or README. You can use something like this:
 
 ```markdown
 # Addon Updates:
@@ -138,9 +149,9 @@ Der einfachste Weg, um zu zeigen, dass Sie den Super Addon Manager unterstützen
 This addon can be updated automatically with Super Addon Manager. Learn more on their site: https//TODO
 ```
 
-### Links in Ihren Addon-Einstellungen:
+### Links from your addon preferences:
 
-Wenn Sie möchten, können Sie den folgenden Codeschnipsel in die Brat-Funktion Ihrer Addon-Einstellungen oder eines Panels einfügen:
+If you want to, you can paste the following code snippet into the draw function of your addon preferences or a panel:
 
 ```python
 if not "Super Addon Manager" in context.preferences.addons:
@@ -149,12 +160,12 @@ if not "Super Addon Manager" in context.preferences.addons:
     layout.operator("wm.url_open", text="Learn more!", icon="URL").url="https//TODO"
 ```
 
-Dieses Snippet prüft, ob Super Addon Manager installiert und aktiviert ist, und wenn das nicht der Fall ist, zeigt es eine Meldung an, die erklärt, dass Ihr Addon mit Super Addon Manager aktualisiert werden kann, sowie einen Link zur SAM-Homepage.
+This snippet checks, if Super Addon Manager is installed and enabled, and if that's not the case, it displays a message, saying, that your addon can be updated with Super Addon Manager and a link to the SAM homepage.
 
-## Liefern Sie Super Addon Manager direkt mit Ihrem Addon:
+## Deliver Super Addon Manager directly with your addon:
 
-Wenn Sie Ihr Addon auf Gumroad, BlenderMarket oder ähnlichen Seiten anbieten, können Sie Super Addon Manager direkt mit Ihrem Addon bereitstellen.
+If your offering your addon on Gumroad, BlenderMarket or similar pages, you can deliver Super Addon Manager directly with your addon.
 
-## Zeigen Sie es in Ihrem Branding!
+## Show it in your branding!
 
-Wenn Sie möchten, können Sie das [Super Addon Manager Branding Kit](https//TODO) herunterladen und das Super Addon Manager Logo gemäß den Regeln in der README.md Datei hinzufügen. Wenn Sie unsicher sind, lesen Sie unsere [Logo und Branding](https//TODO) Seite.
+If you want to, you can download the [Super Addon Manager Branding Kit](https//TODO) and add the Super Addon Manager Logo according to the rules in the README.md file. If you're unsure, read our [Logo and Branding](https//TODO) page.
