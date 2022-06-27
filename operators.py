@@ -408,8 +408,6 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
     bl_label = "Update"
     bl_options = {'REGISTER', 'UNDO'}
 
-    addon_path: StringProperty(name="Addon Path")
-    download_url: StringProperty(name="Download URL")
     index: IntProperty()
 
     def execute(self, context: Context):
@@ -432,6 +430,8 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
                 e.__class__).split("'")[1]
             updater.error_data["traceback_location"] = get_line_and_file(
                 currentframe())
+
+            prefs.updates.pop(self.index)
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 
@@ -467,6 +467,8 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
                 e.__class__).split("'")[1]
             updater.error_data["traceback_location"] = get_line_and_file(
                 currentframe())
+
+            prefs.updates.pop(self.index)
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 
@@ -493,7 +495,6 @@ class SUPERADDONMANAGER_OT_update_all(Operator):
     bl_label = "Update All"
     bl_options = {'REGISTER', 'UNDO'}
 
-    # TODO #9: Progress bar!
     def execute(self, context: Context):
         prefs.updating_all = True
         prefs.updated_addons = 0
