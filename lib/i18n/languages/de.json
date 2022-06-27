@@ -69,6 +69,7 @@
     "endpoint_builder.help_texts.release_description.example": "Release Notes: Meine großartigen Funktionen",
     "endpoint_builder.title": "Endpoint-JSON-Erstellungshilfe",
     "endpoint_builder.generate": "Endpoint JSON-Datei generieren",
+    "endpoint_updater.title": "Endpoint JSON Updater",
     "endpoint_checker.data_input.title": "Endpoint JSON-Prüfer",
     "endpoint_checker.data_input.description_text": "Prüfen und korrigieren Sie Ihre Endpoint JSON-Datei. Wählen Sie eine Datei per Drag'n Drop aus oder geben Sie die Endpoint-URL ein und klicken Sie auf \"Los\", um Ihre Datei zu prüfen:",
     "endpoint_checker.data_input.drag_and_drop": "Datei hierhin ziehen oder klicken, um eine Datei zu wählen.",
