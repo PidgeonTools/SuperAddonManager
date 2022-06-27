@@ -20,9 +20,22 @@ a {
     margin-left: 0rem;
     padding-bottom: 0.1rem;
   }
-
 }
 
-.link-no-underline {
-  text-decoration: none;
+.link {
+  color: getColor("theme", "primary");
+  cursor: pointer;
+  text-decoration: underline;
+
+  background-color: transparent;
+  border: none;
+  padding: 0;
+
+  &:hover {
+    color: getColor("theme", "primary", "hover");
+  }
+
+  &-no-underline {
+    text-decoration: none;
+  }
 }
