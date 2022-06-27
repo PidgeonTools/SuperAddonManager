@@ -69,6 +69,7 @@
     "endpoint_builder.help_texts.release_description.example": "Release Notes: My amazing features",
     "endpoint_builder.title": "Endpoint JSON Builder",
     "endpoint_builder.generate": "Generate Endpoint JSON",
+    "endpoint_updater.title": "Endpoint JSON Updater",
     "endpoint_checker.data_input.title": "Endpoint JSON Checker",
     "endpoint_checker.data_input.description_text": "Check and fix your Endpoint JSON File. Drag'n Drop/Select your file or enter the Endpoint URL and click \"Go\" to check your file:",
     "endpoint_checker.data_input.drag_and_drop": "Drag'n Drop your file here or click to select a file.",

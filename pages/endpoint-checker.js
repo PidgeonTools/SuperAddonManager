@@ -25,11 +25,23 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
     versions: [{}],
   });
   const [filename, setFilename] = useState("SuperAddonManager-Endpoint.json");
+  const [fromPage, setFromPage] = useState({});
 
   const [displayComponent, setDisplayComponent] = useState(<></>);
 
   // Change the display component depending on the data.
   useEffect(() => {
+    if (window.sessionStorage.getItem("data") !== null) {
+      setData(JSON.parse(window.sessionStorage.getItem("data")));
+      setFilename(window.sessionStorage.getItem("filename"));
+      setFromPage(JSON.parse(window.sessionStorage.getItem("from") ?? "{}"));
+      setHasData(true);
+
+      window.sessionStorage.removeItem("data");
+      window.sessionStorage.removeItem("filename");
+      window.sessionStorage.removeItem("from");
+    }
+
     if (!hasData) {
       setDisplayComponent(
         <>
@@ -69,6 +81,16 @@ const EndpointChecker = ({ exampleBlenderLTSVersion, latestSPMVersion }) => {
       return;
     }
 
+    if (fromPage !== {}) {
+      console.log(fromPage);
+      setDisplayComponent(
+        <>
+          <div>The endpoint has been fixed succesfully.</div>
+          <div>Return to {fromPage.displayName}</div>
+        </>
+      );
+      return;
+    }
     setDisplayComponent(<DownloadFixedFile data={data} filename={filename} />);
   }, [data, hasData, dataIsValid]);
 
