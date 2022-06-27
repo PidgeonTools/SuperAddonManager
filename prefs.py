@@ -36,6 +36,8 @@ import time
 
 from os import path as p
 
+from .objects.updater import UPDATE_CONTEXTS, Updater
+
 from .functions.json_functions import (
     decode_json
 )
@@ -177,17 +179,20 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
         # Layout all Addons that can be Updated one by one.
         for index, addon in enumerate(updates):
+            updater: Updater = addon["updater"]
+
             row = layout.row()
             row.label(text=addon["addon_name"])
             # Check, if the Addon supports Auto-Update.
-            if addon["allow_automatic_download"]:
-                op = row.operator("superaddonmanager.automatic_update")
-                op.addon_path = addon["addon_path"]
-                op.index = index
+            new_row = layout.row()
+            if updater.update_context == UPDATE_CONTEXTS["DOWNLOAD"]:
+                op = new_row.operator("superaddonmanager.automatic_update")
             else:
-                op = row.operator("superaddonmanager.manual_update",
-                                  text="Go to the downloads page.")
-            op.download_url = addon["download_url"]
+                op = new_row.operator("superaddonmanager.manual_update",
+                                      text="Update from local file.")
+
+            op.index = index
+
             # TODO: Exchange the operator after Updating --> Maybe with another list - Updated_Addons
 
         # Show a warning, that some addons couldn't be properly updated,

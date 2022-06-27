@@ -61,6 +61,7 @@ class Updater:
     def download_update(self):
         if not self.allow_automatic_download:
             bpy.ops.wm.url_open(url=self.download_url)
+            self.update_context = UPDATE_CONTEXTS["UPDATE"]
             return
 
         # Make the download directory, if it doesn't exist.
@@ -146,6 +147,10 @@ class Updater:
         remove_subpath, filtered_files = RecursiveDirs(file_list).extract_files
 
         if not filtered_files:
+            # Return a warning in case of manual download, because the error is likely due to a users mistake.
+            if not self.allow_automatic_download:
+                return f"Update of '{self.addon_name}' failed: Please select a valid addon. If you're sure that you've collected the right file, please contact the developer."
+
             self._set_error(issue_type=NOT_AN_ADDON,
                             file_list=zfile.namelist())
             return  # ! Critical Error
@@ -182,6 +187,10 @@ class Updater:
             return f"Update of '{self.addon_name}' failed: Extract Path doesn't exist. Please make sure that the temporary extract path doesn't get removed while Super Addon Manager updates your addon."
 
         if not p.isfile(p.join(extract_path, "__init__.py")):
+            # Return a warning in case of manual download, because the error is likely due to a users mistake.
+            if not self.allow_automatic_download:
+                return f"Update of '{self.addon_name}' failed: Please select a valid addon. If you're sure that you've collected the right file, please contact the developer."
+
             self._set_error(issue_type=NOT_AN_ADDON,
                             file_list=zfile.namelist())
             return  # ! Critical Error

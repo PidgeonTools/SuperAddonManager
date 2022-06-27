@@ -435,9 +435,13 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 
+        # Return, if the addon can't be updated automatically.
+        if not updater.allow_automatic_download:
+            return {"FINISHED"}
+
         # Update the addon.
         try:
-            update_status = updater.update_addon(downloaded_file_path)
+            update_status = updater.update_addon()
 
             # Handle update errors.
             if updater.error:
@@ -475,18 +479,61 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
         return {'FINISHED'}
 
 
-class SUPERADDONMANAGER_OT_manual_update(Operator):
+class SUPERADDONMANAGER_OT_manual_update(Operator, ImportHelper):
     """Update the addon manually"""
     bl_idname = "superaddonmanager.manual_update"
     bl_label = "Update"
     bl_options = {'REGISTER', 'UNDO'}
 
-    download_url: StringProperty(name="Download URL")
+    filter_glob: StringProperty(
+        default='*.zip',
+        options={'HIDDEN'}
+    )
+    index: IntProperty()
 
-    def execute(self, context):
-        bpy.ops.wm.url_open(url=self.download_url)
+    def execute(self, context: Context):
+        updater: Updater = prefs.updates[self.index]["updater"]
+
+        # Update the addon.
+        try:
+            update_status = updater.update_addon(self.filepath)
+
+            if updater.error:
+                prefs.updates.pop(self.index)
+                prefs.unavailable_addons.append(updater.error_data)
+                return {'CANCELLED'}  # ! Critical Error
+
+            if updater.success:
+                # Remove the addon from the list of updates to avoid confusion.
+                prefs.updates.pop(self.index)
+
+            if update_status != None:
+                self.report({"WARNING"}, update_status)
+                return {'CANCELLED'}  # ! Critical Error
+
+            bpy.ops.preferences.addon_refresh()  # Refresh the addon list.
+
+            self.report(
+                {"INFO"}, f"{updater.addon_name} has been updated sucessfully!")
+            prefs.updates.pop(self.index)
+
+        except Exception as e:
+            updater.error = True
+            updater.error_data["issue_type"] = UNKNOWN_ERROR
+            updater.error_data["error_message"] = str(e)
+            updater.error_data["exception_type"] = str(
+                e.__class__).split("'")[1]
+            updater.error_data["traceback_location"] = get_line_and_file(
+                currentframe())
+
+            prefs.updates.pop(self.index)
+            prefs.unavailable_addons.append(updater.error_data)
+            return {'CANCELLED'}  # ! Critical Error
 
         return {'FINISHED'}
+
+    def draw(self, context: Context):
+        return
 
 
 class SUPERADDONMANAGER_OT_update_all(Operator):
