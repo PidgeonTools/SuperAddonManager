@@ -10,7 +10,9 @@ import I18nFormatters from "../../lib/i18n/I18nFormatters";
 export const Version = ({ exampleText }) => {
   return (
     <>
-      <div className="endpoint-form-example-container">{exampleText}</div>
+      <div className="endpoint-form-example-container round-border-small">
+        {exampleText}
+      </div>
       <div>
         <FormattedMessage
           id="endpoint_builder.help_texts.version.please_note_that"
@@ -73,7 +75,7 @@ export const DownloadURL = ({ allowAutomaticDownload, exampleText }) => {
         )}
       </div>
       <div
-        className="endpoint-form-example-container"
+        className="endpoint-form-example-container round-border-small"
         key={allowAutomaticDownload}
       >
         {exampleText}
@@ -92,7 +94,9 @@ export const MinBlender = ({ exampleText }) => {
         />{" "}
         <FormattedMessage id="endpoint_builder.help_texts.minimum_blender_version.we_would_suggest" />
       </div>
-      <div className="endpoint-form-example-container">{exampleText}</div>
+      <div className="endpoint-form-example-container round-border-small">
+        {exampleText}
+      </div>
     </>
   );
 };
@@ -110,7 +114,9 @@ export const MaxBlender = ({ exampleText }) => {
           values={I18nFormatters}
         />{" "}
       </div>
-      <div className="endpoint-form-example-container">{exampleText}</div>
+      <div className="endpoint-form-example-container round-border-small">
+        {exampleText}
+      </div>
     </>
   );
 };
@@ -132,7 +138,9 @@ export const RelDescription = ({ exampleText }) => {
           values={I18nFormatters}
         />{" "}
       </div>
-      <div className="endpoint-form-example-container">{exampleText}</div>
+      <div className="endpoint-form-example-container round-border-small">
+        {exampleText}
+      </div>
     </>
   );
 };

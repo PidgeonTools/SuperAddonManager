@@ -66,7 +66,6 @@ main {
 .docs-navigate-one-page {
   padding: 0.5rem 1.2rem;
   border: 1px solid getColor("docs", "navigate-box-outline");
-  border-radius: $border-medium;
   width: 100%;
 
   cursor: pointer;
@@ -97,16 +96,10 @@ main {
 .docs-img-wrapper {
   margin-top: 0.5rem;
   margin-bottom: 2rem;
-  border-radius: $border-large;
-}
-
-.docs-img {
-  border-radius: $border-large;
 }
 
 pre code.hljs {
   white-space: pre-wrap;
   overflow-x: auto;
   max-width: 100%;
-  border-radius: $border-large;
 }

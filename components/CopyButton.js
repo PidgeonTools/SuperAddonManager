@@ -29,7 +29,11 @@ const CopyButton = ({
             onCopyIssueText(setTextCopied);
           }}
         >
-          <button type="button" className="copy-button" disabled={disabled}>
+          <button
+            type="button"
+            className="copy-button round-border-small"
+            disabled={disabled}
+          >
             {textCopied ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"

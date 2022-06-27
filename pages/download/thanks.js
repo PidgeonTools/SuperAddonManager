@@ -92,7 +92,7 @@ const Thanks = ({ data }) => {
               <FormattedMessage id="download.thanks.help_us" />
             </h1>
           </Row>
-          <div className="thanks-donate-box--form">
+          <div className="thanks-donate-box--form round-border-medium">
             {/* AMOUNT FORM */}
             <Form className="row">
               {/* AMOUNT SLIDER */}

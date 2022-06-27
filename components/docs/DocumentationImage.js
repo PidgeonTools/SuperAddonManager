@@ -20,11 +20,11 @@ const DocumentationImage = ({
     ...props,
     src,
     alt,
-    className: "img-fluid docs-img" + className,
+    className: "img-fluid round-border-large" + className,
   };
   return (
     <>
-      <div className="docs-img-wrapper">
+      <div className="docs-img-wrapper round-border-large">
         <img {...finalProps} />
       </div>
     </>

@@ -49,7 +49,7 @@ const CodeRender = ({ children }) => {
       <CopyButton text={children} />
       <pre>
         <code
-          className={`hljs ${language}`}
+          className={`hljs ${language} round-border-large`}
           dangerouslySetInnerHTML={{ __html: html_content }}
         ></code>
       </pre>
@@ -180,7 +180,7 @@ const Page = ({
                 passHref
                 href={"/docs/" + lang + "/" + previousArticle.file}
               >
-                <div className="docs-navigate-one-page docs-navigate-one-page--previous">
+                <div className="docs-navigate-one-page round-border-medium docs-navigate-one-page--previous">
                   <div className="docs-navigate-one-page--static-label">
                     Previous
                   </div>
@@ -197,7 +197,7 @@ const Page = ({
           <>
             {nextArticle ? (
               <Link passHref href={"/docs/" + lang + "/" + nextArticle.file}>
-                <div className="docs-navigate-one-page docs-navigate-one-page--next">
+                <div className="docs-navigate-one-page round-border-medium docs-navigate-one-page--next">
                   <div className="docs-navigate-one-page--static-label">
                     Next
                   </div>

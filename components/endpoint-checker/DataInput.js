@@ -96,7 +96,9 @@ export const DataInput = ({ callbackFunction }) => {
           maxFiles={1}
         >
           {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps({ className: "dropzone" })}>
+            <div
+              {...getRootProps({ className: "dropzone round-border-large" })}
+            >
               <input {...getInputProps()} />
               <p>
                 <FormattedMessage id="endpoint_checker.data_input.drag_and_drop" />

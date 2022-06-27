@@ -95,3 +95,19 @@
     }
   }
 }
+
+@mixin borderRadius($values) {
+  @each $name, $value in $values {
+    .round-border-#{$name} {
+      border-radius: $value;
+    }
+    .round-border-#{$name}-top {
+      border-top-left-radius: $value;
+      border-top-right-radius: $value;
+    }
+    .round-border-#{$name}-bottom {
+      border-bottom-left-radius: $value;
+      border-bottom-right-radius: $value;
+    }
+  }
+}

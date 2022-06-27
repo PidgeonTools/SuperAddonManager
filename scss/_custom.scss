@@ -9,14 +9,12 @@
 @each $theme, $variables in $themes {
   $colors: map.get($variables, colors);
   $settings: map.get($variables, settings);
+  $borders: map.get($variables, borders);
 
   @include rootVariables($theme, $colors, $settings);
+  @include borderRadius($borders);
 }
 
-// Border Radius Variables
-$border-small: 0.2rem;
-$border-medium: 0.4rem;
-$border-large: 0.6rem;
 
 // FONT OVERRIDES
 $font-size-sm: 0.9rem;
