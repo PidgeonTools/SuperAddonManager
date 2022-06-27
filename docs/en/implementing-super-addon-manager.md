@@ -51,7 +51,7 @@ The schema version always stays the same, so you can just copy and paste it to y
 }
 ```
 
-This object MUST have the minimum Blender version, the version of your addon (both as array of numbers) and the download url specified:
+This object MUST have the minimum Blender version, the version of your addon (both as array of numbers) and the download URL specified:
 
 ```json
 {
@@ -61,7 +61,7 @@ This object MUST have the minimum Blender version, the version of your addon (bo
 }
 ```
 
-If you allow automatic downloads, the download url must be a link to the zip file of your addon:
+If you allow automatic downloads, the download URL must be a link to the zip file of your addon:
 
 ```json
 "allow_automatic_download": true,
@@ -76,11 +76,23 @@ And finally, if you make an update for an older version of Blender that won't wo
 
 ### Hosting the endpoint:
 
-You're now set up for publishing your endpoint to the web. Upload the endpoint file to a host, where you can easyly change it without changing its url. GitHub is a great place where you can host your file for free:
+You're now set up for publishing your endpoint to the web. Upload the endpoint file to a host, where you can easyly change the file content without changing the file URL. GitHub is a great place where you can host your file for free.
 
-<!-- TODO: #41 Add a description on hosting an endpoint on GitHub -->
+To start, we recommend to create a public repository where you store all of your Super Addon Manager endpoints, e.g. my-endpoints, sam-endpoints, ...
+This makes updating your endpoint without messing up other files much easier.
 
-Once you're finished uploading your file, you have to copy the url to the file for the next step. Please make sure that at the url, the file is in raw data and not embedded into any HTML page. On GitHub, you can click the "Raw" Button to access the raw file data and copy its url.
+<DocumentationImage filename="gh-create-repo" alt="GitHub create repository page, creating a public repository with name my-endpoints."/>
+
+After you have initialised your repository, click on (Add File >>) Upload files to upload your endpoint and click "Commit changes".
+
+<DocumentationImage filename="gh-upload-endpoint" alt="GitHub upload file page with one file to upload."/>
+
+Once you're finished uploading your file, you have to copy the URL to the file for the next step. Please make sure that at the URL, the file is in raw data and not embedded into any HTML page. On GitHub, you can click the "Raw" Button to access the raw file data and copy its URL.
+
+<DocumentationImage filename="gh-view-raw" alt="GitHub view Raw file."/>
+
+The endpoint URL of this example is [https://raw.githubusercontent.com/BlenderDefender/my-endpoints/main/my-addon-endpoint.json](https://raw.githubusercontent.com/BlenderDefender/my-endpoints/main/my-addon-endpoint.json)
+
 
 ## Setting up your addon:
 
