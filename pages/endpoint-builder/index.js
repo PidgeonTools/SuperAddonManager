@@ -60,7 +60,9 @@ const EndpointBuilderPage = ({
           <div className="text-small pt-1">
             Already generated an endpoint?{" "}
             <Link href={"/endpoint-builder/update"}>
-              <a className="no-underline">Click here to update it.</a>
+              <a className="link-no-underline fw-bold">
+                Click here to update it.
+              </a>
             </Link>
           </div>
         </Container>
