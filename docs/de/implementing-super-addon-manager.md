@@ -76,11 +76,22 @@ Und schließlich, wenn Sie ein Update für eine ältere Version von Blender mach
 
 ### Hosten des Endpunkts:
 
-Sie sind nun bereit, Ihren Endpunkt im Web zu veröffentlichen. Laden Sie die Endpunktdatei auf einen Host hoch, wo Sie sie leicht ändern können, ohne dass sich die Url ändert. GitHub ist ein idealer Ort, um Ihre Datei kostenlos zu hosten:
+Sie sind nun bereit, Ihren Endpunkt im Web zu veröffentlichen. Laden Sie die Endpunktdatei auf einen Host hoch, wo Sie sie leicht ändern können, ohne dass sich die Url ändert. GitHub ist ein idealer Ort, um Ihre Datei kostenlos zu hosten.
 
-<!-- TODO: #41 Add a description on hosting an endpoint on GitHub -->
+To start, we recommend to create a public repository where you store all of your Super Addon Manager endpoints, e.g. my-endpoints, sam-endpoints, ... This makes updating your endpoint without messing up other files much easier.
 
-Sobald Sie Ihre Datei hochgeladen haben, müssen Sie die Url der Datei für den nächsten Schritt kopieren. Bitte vergewissern Sie sich, dass die Datei in der URL als Rohdaten vorliegt und nicht in eine HTML-Seite eingebettet ist. Auf GitHub können Sie auf die Schaltfläche "Raw" klicken, um auf die Rohdaten zuzugreifen und die Url zu kopieren.
+<DocumentationImage filename="gh-create-repo" alt="GitHub create repository page, creating a public repository with name my-endpoints."/>
+
+After you have initialised your repository, click on (Add File >>) Upload files to upload your endpoint and click "Commit changes".
+
+<DocumentationImage filename="gh-upload-endpoint" alt="GitHub upload file page with one file to upload."/>
+
+Once you're finished uploading your file, you have to copy the URL to the file for the next step. Please make sure that at the URL, the file is in raw data and not embedded into any HTML page. On GitHub, you can click the "Raw" Button to access the raw file data and copy its URL.
+
+<DocumentationImage filename="gh-view-raw" alt="GitHub view Raw file."/>
+
+The endpoint URL of this example is [https://raw.githubusercontent.com/BlenderDefender/my-endpoints/main/my-addon-endpoint.json](https://raw.githubusercontent.com/BlenderDefender/my-endpoints/main/my-addon-endpoint.json)
+
 
 ## Einrichten des Addons:
 
@@ -140,7 +151,7 @@ This addon can be updated automatically with Super Addon Manager. Learn more on 
 
 ### Links in Ihren Addon-Einstellungen:
 
-Wenn Sie möchten, können Sie den folgenden Codeschnipsel in die Brat-Funktion Ihrer Addon-Einstellungen oder eines Panels einfügen:
+Wenn Sie möchten, können Sie den folgenden Codeschnipsel in die Draw-Funktion Ihrer Addon-Einstellungen oder eines Panels einfügen:
 
 ```python
 if not "Super Addon Manager" in context.preferences.addons:
