@@ -177,8 +177,9 @@ class Updater:
                     data = zfile.read(file)
                     f.write(data)
 
+        # For the following steps, make sure that the extraction was successful.
         if not p.isdir(extract_path):
-            return  # TODO #47
+            return f"Update of '{self.addon_name}' failed: Extract Path doesn't exist. Please make sure that the temporary extract path doesn't get removed while Super Addon Manager updates your addon."
 
         if not p.isfile(p.join(extract_path, "__init__.py")):
             self._set_error(issue_type=NOT_AN_ADDON,
