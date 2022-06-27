@@ -341,6 +341,7 @@ ${checkedInternet}
             {...defaultProps}
             addon_name={addonName}
             error_message={parameters.errorMessage}
+            traceback_context={parameters.tracebackContext}
             disabled={!(samUpToDate && noDuplicate)}
           />
         );

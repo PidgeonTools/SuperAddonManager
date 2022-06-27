@@ -55,6 +55,9 @@ const getQueryParameters = (query) => {
 
   if (parameters.issueType === ERROR_CODES.UNKNOWN_ERROR) {
     parameters.trackerURL = `https://github.com/BlenderDefender/SuperAddonManager/issues/new?assignees=BlenderDefender&labels=bug&title=[${addonName}]+Unknown+Error`;
+    parameters.tracebackContext = `${query.exception_type ?? ""}${
+      query.traceback_location && query.exception_type ? " in " : ""
+    }${query.traceback_location ?? ""}`;
   }
 
   // Endpoint URL

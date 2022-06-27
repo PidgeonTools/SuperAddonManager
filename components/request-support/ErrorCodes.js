@@ -223,9 +223,12 @@ Thank you for enabling support for the Super Addon Manager. Unfortunately, somet
 export const UnknownError = ({
   addon_name = "{addon_name}",
   error_message = "{error_message}",
+  traceback_context = "",
   ...props
 }) => {
-  const title = `[${addon_name}] Unknown Error`.trim();
+  const title = `[${addon_name}] ${
+    traceback_context !== "" ? traceback_context : "Unknown Error"
+  }`.trim();
 
   const text = `**Describe the bug**
 An unknown error occurred with the addon ${addon_name}:
