@@ -91,13 +91,11 @@ const ThemeSelector = ({
                 id={`${t.class}-${themeType}`}
                 value={t.class}
                 onChange={({ target }) => {
-                  // document.documentElement.className = target.value;
-
                   document.documentElement.setAttribute(
                     `data-${themeType}-theme`,
                     target.value
                   );
-                  setTheme(target.value, window);
+                  setTheme(target.value, window, themeType);
                   /**/ setThemeHook(target.value);
                 }}
                 labelClassName="theme-radio-item"
