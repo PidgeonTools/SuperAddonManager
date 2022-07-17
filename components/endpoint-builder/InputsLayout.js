@@ -25,7 +25,6 @@ import {
 } from "./HelpTexts";
 
 // Translations
-import IntlWrapper from "../IntlWrapper";
 import { FormattedMessage, useIntl } from "react-intl";
 import { padAddonVersion, padBlenderVersion } from "../../functions";
 
@@ -141,7 +140,7 @@ const InputsLayout = ({
   }, []);
 
   return (
-    <IntlWrapper>
+    <>
       {/* ENDPOINT BUILDER */}
       <Row>
         {/* ENDPOINT BUILDER FORM */}
@@ -282,7 +281,7 @@ const InputsLayout = ({
           {helpText}
         </Col>
       </Row>
-    </IntlWrapper>
+    </>
   );
 };
 
