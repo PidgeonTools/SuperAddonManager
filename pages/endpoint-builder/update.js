@@ -53,7 +53,12 @@ const Update = ({ latestSPMVersion, exampleBlenderLTSVersion }) => {
         )
       );
       router.push("/endpoint-checker");
+      return;
     }
+
+    setData(data);
+    setFilename(filename);
+    setHasData(true);
   };
 
   const handleSubmit = (currentVersion) => {
@@ -70,9 +75,10 @@ const Update = ({ latestSPMVersion, exampleBlenderLTSVersion }) => {
   // Initialise the data from sessionStorage, if available.
   useEffect(() => {
     if (window.sessionStorage.getItem("data") !== null) {
-      setData(JSON.parse(window.sessionStorage.getItem("data")));
-      setFilename(window.sessionStorage.getItem("filename"));
-      setHasData(true);
+      validateEndpoint(
+        JSON.parse(window.sessionStorage.getItem("data")),
+        window.sessionStorage.getItem("filename")
+      );
 
       window.sessionStorage.removeItem("data");
       window.sessionStorage.removeItem("filename");
