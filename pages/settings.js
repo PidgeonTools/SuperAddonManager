@@ -23,8 +23,7 @@ const SettingsLayout = () => {
   const [lightThemeActive, setLightThemeActive] = useState(true);
 
   const [minifyEndpointData, setMinifyEndpointData] = useLocalStorage(
-    "minify_endpoint_data",
-    false
+    "minify_endpoint_data"
   );
 
   useEffect(() => {

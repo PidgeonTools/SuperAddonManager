@@ -10,7 +10,7 @@ import Navbar from "../../components/Navbar";
 import InputsLayout from "../../components/endpoint-builder/InputsLayout";
 
 // Translations
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import IntlWrapper from "../../components/IntlWrapper";
 import { DataInput } from "../../components/endpoint-checker/DataInput";
 
@@ -94,27 +94,45 @@ const Update = ({ latestSPMVersion, exampleBlenderLTSVersion }) => {
         />
         <Navbar />
         <Container>
-          <div className="intro">Update endpoint.</div>
+          <div className="intro">
+            <FormattedMessage
+              id="endpoint_builder.update.update_endpoint"
+              defaultMessage={"Update endpoint."}
+            />
+          </div>
 
           <>
             {updated ? (
               <>
                 {/* DOWNLOAD PAGE */}
-                <div>Your endpoint has been updated successfully.</div>
+                <div>
+                  <FormattedMessage
+                    id="endpoint_builder.update.success_message"
+                    defaultMessage={
+                      "Your endpoint has been updated successfully."
+                    }
+                  />
+                </div>
                 <Button
                   variant="outline-primary"
                   onClick={() => {
                     setUpdated(false);
                   }}
                 >
-                  Add another version.
+                  <FormattedMessage
+                    id="endpoint_builder.update.add_another_version"
+                    defaultMessage={"Add another version."}
+                  />
                 </Button>
                 <Button
                   onClick={() => {
                     downloadJSONFile(document, data, filename);
                   }}
                 >
-                  Download
+                  <FormattedMessage
+                    id="endpoint_builder.update.download"
+                    defaultMessage={"Download"}
+                  />
                 </Button>
               </>
             ) : (
