@@ -8,13 +8,13 @@
 // Write all themes to HTML classes.
 @each $theme, $variables in $themes {
   $colors: map.get($variables, colors);
+  $colorTokens: map.get($variables, color-tokens);
   $settings: map.get($variables, settings);
   $borders: map.get($variables, borders);
 
-  @include rootVariables($theme, $colors, $settings);
+  @include rootVariables($theme, $colors, $colorTokens, $settings);
   @include borderRadius($borders);
 }
-
 
 // FONT OVERRIDES
 $font-size-sm: 0.9rem;

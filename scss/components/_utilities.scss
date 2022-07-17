@@ -14,6 +14,19 @@
   @return var(--sam-#{$category}-#{$color}#{$modification}#{$color-format});
 }
 
+@function getColorFromToken(
+  $element,
+  $role,
+  $status: "base",
+  $color-format: ""
+) {
+  @if $color-format != "" {
+    $color-format: "-" + $color-format;
+  }
+
+  @return var(--a-sam-#{$element}-#{$role}-#{$status}#{$color-format});
+}
+
 // Escape a color to be URL friendly
 @function escapeColor($color) {
   @return "%23" + str-slice("#{$color}", 2, -1);

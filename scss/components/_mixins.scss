@@ -15,81 +15,116 @@
 }
 
 // ROOT VARIABLES MIXIN
-@mixin rootVariables($theme, $colors, $settings: ()) {
+@mixin rootVariables($theme, $colors, $colorTokens, $settings: ()) {
   $form-feedback-valid: map.get($colors, form, feedback-valid);
   $form-feedback-invalid: map.get($colors, form, feedback-invalid);
 
   :root.#{$theme} {
-    @each $category, $values in $colors {
-      @each $name, $color in $values {
-        --sam-#{$category}-#{$name}: #{$color};
-      }
-      @each $name, $color in $values {
-        --sam-#{$category}-#{$name}-rgb: #{toRGB($color)};
-      }
+    @include styleVariables($colors, $settings);
+  }
+}
 
-      --form-feedback-valid-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='#{escapeColor($form-feedback-valid)}' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/></svg>");
-      --form-feedback-invalid-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{escapeColor($form-feedback-invalid)}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{escapeColor($form-feedback-invalid)}' stroke='none'/></svg>");
+@mixin testVariables($colors) {
+  // Iterate through each UI element type in the setting.
+  @each $element, $value in $colors {
+    // Iterate through each color role in the current UI element.
+    @each $role, $val in map.get($colors, $element) {
+      // Iterate through each status in the current color role.
+      @each $status, $color in $val {
+        @if type-of($color) == "color" {
+          --a-sam-#{$element}-#{$role}-#{$status}: #{$color};
+        }
+
+        @if type-of($value: $color) == "map" {
+          $col: map.get($color, "color");
+          @if map-get($map: $color, $key: "operation") == "shade" {
+            $col: mix(black, $col, map.get($color, "percentage"));
+          }
+
+          @if map-get($map: $color, $key: "operation") == "tint" {
+            $col: mix(white, $col, map.get($color, "percentage"));
+          }
+
+          --a-sam-#{$element}-#{$role}-#{$status}: #{$col};
+        }
+      }
+    }
+  }
+}
+
+@mixin styleVariables($colors, $settings: ()) {
+  $form-feedback-valid: map.get($colors, form, feedback-valid);
+  $form-feedback-invalid: map.get($colors, form, feedback-invalid);
+
+  @each $category, $values in $colors {
+    @each $name, $color in $values {
+      --sam-#{$category}-#{$name}: #{$color};
+    }
+    @each $name, $color in $values {
+      --sam-#{$category}-#{$name}-rgb: #{toRGB($color)};
     }
 
-    // Iterate through each setting
-    @each $setting, $values in $settings {
-      // Iterate through each color category in the setting.
-      @each $category, $value in $values {
-        // Iterate through each color in the current color category.
-        @each $name, $color in map.get($colors, $category) {
-          $new-color: #f00;
+    --form-feedback-valid-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path fill='#{escapeColor($form-feedback-valid)}' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/></svg>");
+    --form-feedback-invalid-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='#{escapeColor($form-feedback-invalid)}'><circle cx='6' cy='6' r='4.5'/><path stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/><circle cx='6' cy='8.2' r='.6' fill='#{escapeColor($form-feedback-invalid)}' stroke='none'/></svg>");
+  }
 
-          // ! Important! Don't define a text colors setting without defining a hover color setting.
-          @if ($setting == "text") {
-            // Set the initial values for the new text and hover color.
-            $new-hover-color: #f00;
+  // Iterate through each setting
+  @each $setting, $values in $settings {
+    // Iterate through each color category in the setting.
+    @each $category, $value in $values {
+      // Iterate through each color in the current color category.
+      @each $name, $color in map.get($colors, $category) {
+        $new-color: #f00;
+
+        // ! Important! Don't define a text colors setting without defining a hover color setting.
+        @if ($setting == "text") {
+          // Set the initial values for the new text and hover color.
+          $new-hover-color: #f00;
+          $new-color: color.scale(
+            $color,
+            $lightness: $value,
+            $saturation: -1 * $value
+          );
+
+          // Darken the color, if it is lighter than 65% lightness.
+          @if color.lightness($color) > 65 {
             $new-color: color.scale(
               $color,
-              $lightness: $value,
+              $lightness: $value * -1,
               $saturation: -1 * $value
             );
+          }
 
-            // Darken the color, if it is lighter than 65% lightness.
-            @if color.lightness($color) > 65 {
-              $new-color: color.scale(
-                $color,
-                $lightness: $value * -1,
-                $saturation: -1 * $value
-              );
-            }
+          // Set the new hover color.
+          $new-hover-color: darken(
+            $new-color,
+            math.div(map.get($settings, hover, $category), 2)
+          );
 
-            // Set the new hover color.
-            $new-hover-color: darken(
+          // Set the new hover color, if the text color is darker than 50% dark.
+          @if color.lightness($new-color) < 50 {
+            $new-hover-color: lighten(
               $new-color,
               math.div(map.get($settings, hover, $category), 2)
             );
-
-            // Set the new hover color, if the text color is darker than 50% dark.
-            @if color.lightness($new-color) < 50 {
-              $new-hover-color: lighten(
-                $new-color,
-                math.div(map.get($settings, hover, $category), 2)
-              );
-            }
-
-            // Set the CSS variables.
-            --sam-#{$category}-#{$name}-text: #{$new-color};
-            --sam-#{$category}-#{$name}-text-hover: #{$new-hover-color};
           }
 
-          @if ($setting == "hover") {
-            $new-color: darken($color, $value);
+          // Set the CSS variables.
+          --sam-#{$category}-#{$name}-text: #{$new-color};
+          --sam-#{$category}-#{$name}-text-hover: #{$new-hover-color};
+        }
 
-            @if color.lightness($color) > 99 {
-              $new-color: darken($color, math.div($value, 2));
-            } @else if color.lightness($color) < 50 or $name == secondary {
-              $new-color: lighten($color, $value);
-            }
+        @if ($setting == "hover") {
+          $new-color: darken($color, $value);
 
-            // Create a new CSS variable with the new color
-            --sam-#{$category}-#{$name}-hover: #{$new-color};
+          @if color.lightness($color) > 99 {
+            $new-color: darken($color, math.div($value, 2));
+          } @else if color.lightness($color) < 50 or $name == secondary {
+            $new-color: lighten($color, $value);
           }
+
+          // Create a new CSS variable with the new color
+          --sam-#{$category}-#{$name}-hover: #{$new-color};
         }
       }
     }

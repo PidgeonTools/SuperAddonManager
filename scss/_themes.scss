@@ -62,6 +62,41 @@ $base-theme: (
       variable: #3f6e74,
     ),
   ),
+  color-tokens: (
+    surface: (
+      primary: (
+        base: $primary,
+      ),
+      secondary: (
+        base: $secondary,
+
+        muted: (
+          operation: "tint",
+          color: $secondary,
+          percentage: 80%,
+        ),
+      ),
+    ),
+    background: (
+      primary: (
+        base: #ffffff,
+      ),
+    ),
+    text: (),
+    border: (
+      secondary: (
+        base: $secondary,
+        muted: (
+          operation: "tint",
+          color: $secondary,
+          percentage: 20%,
+        ),
+      ),
+    ),
+    link: (),
+    icon: (),
+    button: (),
+  ),
   borders: (
     small: 0.2rem,
     medium: 0.4rem,
@@ -106,6 +141,35 @@ $theme-modifications-dark: (
       navbar-heading: #bbbbbb,
       navbar-link: #8c959e,
       navbar-link-active: #acb4bc,
+    ),
+  ),
+  color-tokens: (
+    surface: (
+      primary: (
+        base: $primary,
+      ),
+      secondary: (
+        base: (
+          operation: "shade",
+          color: $secondary,
+          percentage: 20%,
+        ),
+        muted: (
+          operation: "shade",
+          color: $secondary,
+          percentage: 60%,
+        ),
+      ),
+    ),
+    background: (
+      primary: (
+        base: #201f1d,
+      ),
+    ),
+    border: (
+      secondary: (
+        muted: $secondary,
+      ),
     ),
   ),
 );

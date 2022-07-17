@@ -2,7 +2,8 @@
 @use "components/utilities" as *;
 
 body {
-  background: getColor("layout", "bg");
+  // background: getColor("layout", "bg");
+  background: getColorFromToken("background", "primary");
   color: getColor("layout", "text");
   background-attachment: fixed;
   max-width: 100%;
