@@ -51,6 +51,15 @@ const Footer = () => {
                 </a>
               </Link>
 
+              {/* SETTINGS */}
+              <Link passHref href="/settings">
+                <a className="px-2">
+                  <FormattedMessage
+                    id="footer.settings"
+                    defaultMessage={"Settings"}
+                  />
+                </a>
+              </Link>
             </Col>
           </Row>
           {/* COPYRIGHT */}
