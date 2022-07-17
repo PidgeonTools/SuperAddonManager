@@ -19,8 +19,18 @@
   $form-feedback-valid: map.get($colors, form, feedback-valid);
   $form-feedback-invalid: map.get($colors, form, feedback-invalid);
 
-  :root.#{$theme} {
-    @include styleVariables($colors, $settings);
+  @media (prefers-color-scheme: light) {
+    :root[data-day-theme="#{$theme}"] {
+      @include testVariables($colorTokens);
+      @include styleVariables($colors, $settings);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root[data-night-theme="#{$theme}"] {
+      @include testVariables($colorTokens);
+      @include styleVariables($colors, $settings);
+    }
   }
 }
 

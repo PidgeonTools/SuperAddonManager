@@ -13,9 +13,14 @@ import { getTheme } from "../functions/getTheme";
 const Footer = () => {
   useEffect(() => {
     console.log(getTheme(window));
-    document.documentElement.className = getTheme(window);
     document.documentElement.lang = getLanguage(window);
+    document.documentElement.setAttribute("data-day-theme", getTheme(window));
+    document.documentElement.setAttribute(
+      "data-night-theme",
+      getTheme(window, "night")
+    );
   }, []);
+
   return (
     <IntlWrapper>
       <footer className="footer">

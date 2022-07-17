@@ -8,9 +8,9 @@ export const THEMES = {
   "colorblind-dark": { class: "colorblind-dark", id: "themes.colorblind_dark" },
 };
 
-export const getTheme = (window) => {
+export const getTheme = (window, themeType = "day") => {
   // Read the language from Local Storage
-  let theme = window.localStorage.getItem("preferred_theme");
+  let theme = window.localStorage.getItem(`${themeType}_theme`);
 
   // Check the language is stored in Local Storage and supported by the site.
   if (theme && theme in THEMES) {
@@ -28,10 +28,10 @@ export const getTheme = (window) => {
   }
 
   // Write the new Language to Local Storage
-  setTheme(theme.class, window);
+  setTheme(theme.class, window, themeType);
   return theme.class;
 };
 
-export const setTheme = (data, window) => {
-  window.localStorage.setItem("preferred_theme", data);
+export const setTheme = (data, window, themeType = "day") => {
+  window.localStorage.setItem(`${themeType}_theme`, data);
 };
