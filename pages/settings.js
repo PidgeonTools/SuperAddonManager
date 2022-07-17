@@ -20,6 +20,7 @@ import { getLanguage, setLanguage } from "../functions";
 const SettingsLayout = () => {
   const intl = useIntl();
   const [language, setLanguageHook] = useState("en");
+  const [lightThemeActive, setLightThemeActive] = useState(true);
 
   const [minifyEndpointData, setMinifyEndpointData] = useLocalStorage(
     "minify_endpoint_data",
@@ -27,7 +28,20 @@ const SettingsLayout = () => {
   );
 
   useEffect(() => {
+    let lightThemeQuery = window.matchMedia("(prefers-color-scheme: light)");
+
+    const updateLightThemeActive = (queryRes) => {
+      setLightThemeActive(queryRes.matches);
+    };
+
+    lightThemeQuery.addEventListener("change", updateLightThemeActive);
+
     setLanguageHook(getLanguage(window));
+    setLightThemeActive(lightThemeQuery.matches);
+
+    return () => {
+      lightThemeQuery.removeEventListener("change", updateLightThemeActive);
+    };
   }, []);
 
   return (
@@ -106,13 +120,16 @@ const SettingsLayout = () => {
         </Row>
         <Row>
           <ThemeSelector
+            className="col-12 col-md-6"
             themeType="day"
             themeTitleId="settings.day_theme"
-            // active={true}
+            active={lightThemeActive}
           />
           <ThemeSelector
+            className="col-12 col-md-6"
             themeType="night"
             themeTitleId="settings.night_theme"
+            active={!lightThemeActive}
           />
         </Row>
       </Container>

@@ -4,10 +4,16 @@
 
 .theme-selector {
   background-color: getColor("layout", "bg");
-  max-width: 335px;
-  border: 1px solid getColor("layout", "text");
-  margin: 0.5rem;
-  padding: 0;
+  max-width: 425px;
+  margin: 0.5rem 0;
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+
+  &--inner {
+    border: 1px solid getColor("layout", "text");
+    padding: 0;
+    transition: border-color 1s cubic-bezier(0.19, 1, 0.22, 1);
+  }
 }
 
 .theme-body {
@@ -17,6 +23,8 @@
 .theme-text {
   border-bottom: 1px solid getColor("layout", "text");
   margin-bottom: 1rem;
+  transition: background-color 1s cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 1s cubic-bezier(0.19, 1, 0.22, 1);
 
   &--active {
     background-color: getColorFromToken("surface", "secondary", "muted");
@@ -79,4 +87,8 @@
       transform: scale(0.75);
     }
   }
+}
+
+.border-active {
+  border-color: getColorFromToken("border", "secondary", "muted");
 }
