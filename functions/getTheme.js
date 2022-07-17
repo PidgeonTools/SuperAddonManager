@@ -5,7 +5,10 @@ export const THEMES = {
     id: "themes.colorblind_light",
   },
   dark: { class: "dark", id: "themes.dark" },
-  "colorblind-dark": { class: "colorblind-dark", id: "themes.colorblind_dark" },
+  "colorblind-dark": {
+    class: "colorblind-dark",
+    id: "themes.colorblind_dark",
+  },
 };
 
 export const getTheme = (window, themeType = "day") => {

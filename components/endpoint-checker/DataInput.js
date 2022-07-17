@@ -112,7 +112,7 @@ export const DataInput = ({ callbackFunction }) => {
         <Form
           noValidate
           onSubmit={handleSubmit}
-          className={validated ? "sam-validation" : ""}
+          className={classNames({ "sam-validation": validated })}
         >
           <Row>
             <Col lg={10} className="endpoint-checker-enter-url--first">

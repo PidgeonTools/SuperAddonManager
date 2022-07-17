@@ -23,6 +23,9 @@ import {
 // Translations
 import { FormattedMessage, useIntl } from "react-intl";
 
+// Classnames
+var classNames = require("classnames");
+
 import { ERROR_CODES } from "./ErrorCodes";
 
 export const NoData = ({
@@ -111,11 +114,11 @@ export const NoData = ({
       </section>
 
       {/* REQUEST SUPPORT */}
-      <section className="form" style={{ marginBottom: "50vh" }}>
+      <section className="form">
         <Form
           noValidate
           onSubmit={handleSubmit}
-          className={validated ? "sam-validation" : ""}
+          className={classNames({ "sam-validation": validated })}
         >
           <Container>
             <Row>

@@ -32,6 +32,9 @@ import {
 // Translations
 import IntlWrapper from "../../../components/IntlWrapper";
 
+// Classnames
+var classNames = require("classnames");
+
 const CodeRender = ({ children }) => {
   let className = children.props.className;
   children = children.props.children;
@@ -49,7 +52,7 @@ const CodeRender = ({ children }) => {
       <CopyButton text={children} />
       <pre>
         <code
-          className={`hljs ${language} round-border-large`}
+          className={classNames("hljs", language, "round-border-large")}
           dangerouslySetInnerHTML={{ __html: html_content }}
         ></code>
       </pre>
@@ -80,9 +83,10 @@ const Page = ({
                   pageData["category-index"] ? (
                   <h1
                     id={pageData.category}
-                    className={
-                      "docs-navbar--heading " + pageData.categoryClassName
-                    }
+                    className={classNames(
+                      "docs-navbar--heading",
+                      pageData.categoryClassName
+                    )}
                   >
                     {pageData.category}
                   </h1>
@@ -93,10 +97,9 @@ const Page = ({
                   <li id={pageData.title}>
                     <Link passHref href={"/docs/" + lang + "/" + pageData.file}>
                       <a
-                        className={
-                          "docs-navbar--links " +
-                          (pageData.isActive ? "docs-navbar--active" : "")
-                        }
+                        className={classNames("docs-navbar--links", {
+                          "docs-navbar--active": pageData.isActive,
+                        })}
                       >
                         {pageData.isActive && "» "}
                         {pageData.title}

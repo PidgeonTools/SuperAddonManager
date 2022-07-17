@@ -18,6 +18,9 @@ import { padAddonVersion, padBlenderVersion } from "../../functions";
 import { FormattedMessage } from "react-intl";
 import { getI18nLink } from "../../lib/i18n/I18nFormatters";
 
+// Classnames
+var classNames = require("classnames");
+
 export const FixEndpoint = ({
   inputData,
   callbackFunction,
@@ -366,7 +369,7 @@ export const FixEndpoint = ({
         <Form
           noValidate
           onSubmit={fixError}
-          className={validated ? "sam-validation" : ""}
+          className={classNames({ "sam-validation": validated })}
         >
           <Row>
             <Col className="mb-3 mt-2">{showComponent}</Col>

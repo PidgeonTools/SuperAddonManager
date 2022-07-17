@@ -29,6 +29,9 @@ import IntlWrapper from "../IntlWrapper";
 import { FormattedMessage, useIntl } from "react-intl";
 import { padAddonVersion, padBlenderVersion } from "../../functions";
 
+// Classnames
+var classNames = require("classnames");
+
 const InputsLayout = ({
   latestSPMVersion,
   exampleBlenderLTSVersion,
@@ -146,7 +149,7 @@ const InputsLayout = ({
           <Form
             noValidate
             onSubmit={handleSubmit}
-            className={validated ? "sam-validation" : ""}
+            className={classNames({ "sam-validation": validated })}
           >
             {/* ALLOW AUTOMATIC DOWNLOAD */}
             <Row>
