@@ -48,27 +48,6 @@ const SettingsLayout = () => {
           />
         </p>
       </Container>
-      <>
-        {/* THEME */}
-        {/* <Form.Select
-          className="sam-form-select"
-          onChange={({ target }) => {
-            document.documentElement.className = target.value;
-            setTheme(target.value, window);
-            setThemeHook(target.value);
-          }}
-          value={theme}
-        >
-          {Object.keys(THEMES).map((key) => {
-            let theme = THEMES[key];
-            return (
-              <option key={theme} value={theme.class}>
-                {intl.formatMessage({ id: theme.id })}
-              </option>
-            );
-          })}
-        </Form.Select> */}
-      </>
 
       {/* LANGUAGE */}
       <Container className="mb-4">
@@ -108,53 +87,6 @@ const SettingsLayout = () => {
           </Col>
         </Row>
       </Container>
-
-      <>
-        {
-          /////* <Dropdown className="theme-switcher">
-          ////<Dropdown.Toggle as={CustomToggle}>
-          ////        <span>asdf</span>
-          ////      </Dropdown.Toggle>
-          ////      <Dropdown.Menu aria-labelledby="dropdownMenuButton1">
-          ////        {Object.keys(THEMES).map((key) => {
-          ////          let theme = THEMES[key];
-          ////          return (
-          ////            <Dropdown.Item
-          ////              key={theme}
-          ////              onClick={(e) => {
-          ////                document.documentElement.className = theme.class;
-          ////                setTheme(theme.class, window);
-          ////              }}
-          ////            >
-          ////              <FormattedMessage id={theme.id} />
-          ////            </Dropdown.Item>
-          ////          );
-          ////        })}
-          ////      </Dropdown.Menu>
-          ////    </Dropdown>
-          ////    <Dropdown className="language-switcher">
-          ////      <Dropdown.Toggle as={CustomToggle}>
-          ////        <span>{locales[language].flag}</span>
-          ////      </Dropdown.Toggle>
-          ////      <Dropdown.Menu aria-labelledby="dropdownMenuButton1">
-          ////        {Object.keys(locales).map((key) => {
-          ////          let locale = locales[key];
-          ////          return (
-          ////            <Dropdown.Item
-          ////              key={locale}
-          ////              onClick={(e) => {
-          ////                setLanguage(locale.locale, window);
-          ////                location.reload();
-          ////              }}
-          ////            >
-          ////              {locale.flag} <FormattedMessage id={locale.id} />
-          ////            </Dropdown.Item>
-          ////          );
-          ////        })}
-          ////      </Dropdown.Menu>
-          ////    </Dropdown> */
-        }
-      </>
 
       {/* THEME */}
       <Container className="mb-4">
