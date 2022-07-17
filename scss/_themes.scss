@@ -82,7 +82,12 @@ $base-theme: (
         base: #ffffff,
       ),
     ),
-    text: (),
+    text: (
+      primary: (
+        base: #ffffff,
+        background: #212529,
+      ),
+    ),
     border: (
       secondary: (
         base: $secondary,
@@ -164,6 +169,12 @@ $theme-modifications-dark: (
     background: (
       primary: (
         base: #201f1d,
+      ),
+    ),
+    text: (
+      primary: (
+        base: #ffffff,
+        background: #ffffffab,
       ),
     ),
     border: (

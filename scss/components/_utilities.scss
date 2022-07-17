@@ -32,6 +32,28 @@
   @return "%23" + str-slice("#{$color}", 2, -1);
 }
 
+@function processColor($col) {
+  @if type-of($col) == "color" {
+    @return $col;
+  }
+
+  @if type-of($col) == "map" {
+    $c: map.get($col, "color");
+
+    @if map.get($map: $col, $key: "operation") == "shade" {
+      @return mix(black, $c, map.get($col, "percentage"));
+    }
+
+    @if map.get($map: $col, $key: "operation") == "tint" {
+      @return mix(white, $c, map.get($col, "percentage"));
+    }
+
+    @return $c;
+  }
+
+  @return #ff0000;
+}
+
 // Convert a color to RGB
 @function toRGB($color) {
   @return red($color) + ", " + green($color) + ", " + blue($color);

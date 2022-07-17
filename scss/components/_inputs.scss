@@ -23,6 +23,7 @@
   border-color: getColor("layout", "text");
   color: getColor("layout", "text");
   background-color: getColor("layout", "bg");
+  background-image: var(--sam-form-select-indicator);
 
   &:focus {
     border-color: getColor("layout", "text");

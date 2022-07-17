@@ -41,25 +41,17 @@
     @each $role, $val in map.get($colors, $element) {
       // Iterate through each status in the current color role.
       @each $status, $color in $val {
-        @if type-of($color) == "color" {
-          --a-sam-#{$element}-#{$role}-#{$status}: #{$color};
-        }
-
-        @if type-of($value: $color) == "map" {
-          $col: map.get($color, "color");
-          @if map-get($map: $color, $key: "operation") == "shade" {
-            $col: mix(black, $col, map.get($color, "percentage"));
-          }
-
-          @if map-get($map: $color, $key: "operation") == "tint" {
-            $col: mix(white, $col, map.get($color, "percentage"));
-          }
-
-          --a-sam-#{$element}-#{$role}-#{$status}: #{$col};
-        }
+        --a-sam-#{$element}-#{$role}-#{$status}: #{processColor($color)};
       }
     }
   }
+
+  $bg-primary: map.get(
+    map.get(map.get($colors, "text"), "primary"),
+    "background"
+  );
+
+  --sam-form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{escapeColor(processColor($bg-primary))}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/></svg>");
 }
 
 @mixin styleVariables($colors, $settings: ()) {
