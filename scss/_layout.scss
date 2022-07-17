@@ -1,6 +1,13 @@
 @use "./custom" as *;
 @use "components/utilities" as *;
 
+:root {
+  /* Set the position to relative and the min-height to 100%,
+     so the footer always sticks to the bottom of the page. */
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   // background: getColor("layout", "bg");
   background: getColorFromToken("background", "primary");
@@ -8,6 +15,12 @@ body {
   background-attachment: fixed;
   max-width: 100%;
   overflow-x: hidden;
+
+  // Set the bottom margin, so the footer has enough space at the bottom of the page.
+  margin: 0 0 6rem;
+  @include media-breakpoint-down(md) {
+    margin: 0 0 20rem;
+  }
 }
 
 a {

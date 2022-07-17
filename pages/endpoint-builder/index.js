@@ -50,7 +50,7 @@ const EndpointBuilderPage = ({
       </Container>
 
       {/* ENDPOINT BUILDER */}
-      <section className="form" style={{ marginBottom: "50vh" }}>
+      <section className="form">
         <Container>
           <InputsLayout
             latestSPMVersion={latestSPMVersion}
