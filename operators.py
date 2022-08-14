@@ -52,10 +52,8 @@ import urllib.parse
 
 import random
 
+import traceback
 from inspect import currentframe
-
-from .objects.experimental_update_check import ExperimentalUpdateCheck
-
 
 from . import prefs
 
@@ -72,6 +70,7 @@ from .issue_types import (
 from .objects.update_check import (
     UpdateCheck_v1_0_0
 )
+from .objects.experimental_update_check import ExperimentalUpdateCheck
 from .objects.updater import Updater
 
 from .functions.main_functions import get_line_and_file
@@ -210,7 +209,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                              "traceback_location": get_line_and_file(currentframe()),
                              "addon_name": self.addon_name,
                              "bl_info": sys.modules[p.basename(addon_path)].bl_info,
-                             "error_message": str(e)})
+                             "error_message": traceback.format_exc()})
 
                     self._redraw()
 
@@ -283,7 +282,6 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                     self.check_experimental_update(
                         addon_path, addon_bl_info, auto_reload=auto_reload)
                 except Exception as e:
-                    import traceback
                     print(traceback.format_exc())
                     print(f"Error with the experimental update check: {e}")
 
@@ -497,7 +495,7 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
-            updater.error_data["error_message"] = str(e)
+            updater.error_data["error_message"] = traceback.format_exc()
             updater.error_data["exception_type"] = str(
                 e.__class__).split("'")[1]
             updater.error_data["traceback_location"] = get_line_and_file(
@@ -550,7 +548,7 @@ class SUPERADDONMANAGER_OT_manual_update(Operator, ImportHelper):
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
-            updater.error_data["error_message"] = str(e)
+            updater.error_data["error_message"] = traceback.format_exc()
             updater.error_data["exception_type"] = str(
                 e.__class__).split("'")[1]
             updater.error_data["traceback_location"] = get_line_and_file(
