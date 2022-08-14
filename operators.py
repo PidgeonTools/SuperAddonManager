@@ -546,7 +546,6 @@ class SUPERADDONMANAGER_OT_manual_update(Operator, ImportHelper):
 
             self.report(
                 {"INFO"}, f"{updater.addon_name} has been updated sucessfully!")
-            prefs.updates.pop(self.index)
 
         except Exception as e:
             updater.error = True
