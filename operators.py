@@ -656,14 +656,6 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
         for key, value in data.items():
             url_params[key] = value
-        # # if issue_type in [SAM_NOT_SUPPORTED]:
-        # #     url_params["addon_count"] = data["addon_count"]
-
-        # # if issue_type in [ENDPOINT_URL_INVALID, INVALID_ENDPOINT, ENDPOINT_INVALID_SCHEMA, ENDPOINT_OFFLINE]:
-        # #     url_params["endpoint_url"] = data["endpoint_url"]
-
-        # # if issue_type in [ENDPOINT_OFFLINE, DOWNLOAD_URL_OFFLINE, UNKNOWN_ERROR]:
-        # #     url_params["error_message"] = data["error_message"]
 
         # # if issue_type == NOT_AN_ADDON:
         # #     url_params["file_list"] = data["file_list"]
