@@ -54,6 +54,8 @@ import random
 
 from inspect import currentframe
 
+from .objects.experimental_update_check import ExperimentalUpdateCheck
+
 
 from . import prefs
 
@@ -270,12 +272,22 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             return  # Unknown Error
 
         addon_bl_info: dict = sys.modules[p.basename(addon_path)].bl_info
+        self.bl_info: dict = addon_bl_info
 
         if not "endpoint_url" in addon_bl_info.keys():
             self._handle_error(reset_updating=False, issue_type=SAM_NOT_SUPPORTED,
                                addon_count=len(self.all_addons))
 
-            self.is_updating = False  # Open the latch
+            if bpy.context.preferences.addons[__package__].preferences.check_experimental_updates:
+                try:
+                    self.check_experimental_update(
+                        addon_path, addon_bl_info, auto_reload=auto_reload)
+                except Exception as e:
+                    import traceback
+                    print(traceback.format_exc())
+                    print(f"Error with the experimental update check: {e}")
+
+            self.is_updating = False
             return  # Special Error
 
         endpoint_url = addon_bl_info["endpoint_url"]
@@ -327,6 +339,33 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         if update_check.update:
             self._append_update(update_check, addon_path,
                                 addon_bl_info, auto_reload)
+
+        self.is_updating = False  # Open the latch
+
+    def check_experimental_update(self, addon_path: str, bl_info: dict, auto_reload=True) -> None:
+        experimental_check = ExperimentalUpdateCheck(bl_info)
+        endpoint_data = experimental_check.get_data()
+
+        if not endpoint_data:
+            return  # ! Critical Error
+
+        endpoint_url = experimental_check.api + " API"
+
+        # Check the schema of the endpoint data.
+        if endpoint_data["schema_version"] == "super-addon-manager-version-info-1.0.0":
+            update_check = UpdateCheck_v1_0_0(
+                endpoint_data, self.addon_name, bl_info, endpoint_url)
+        else:
+            return  # ! Critical Error
+
+        # Handle any error that occured inside the update check.
+        if update_check.error:
+            return  # ! Critical Error
+
+        # Add the Addon to one of the Update Arrays.
+        if update_check.update:
+            self._append_update(update_check, addon_path,
+                                bl_info, auto_reload, is_experimental=True)
 
         self.is_updating = False  # Open the latch
 

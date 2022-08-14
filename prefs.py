@@ -150,6 +150,17 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         update=expand_all,
     )
 
+    check_experimental_updates: BoolProperty(
+        name="Check Experimental Updates",
+        description="Check for addon updates using the GitHub and GitLab API, if Super Addon Manager isn't supported. This might drastically increase the number of addons that you can check for updates. This is experimental. Super Addon Manager can't guarantee, that the new addon versions are compatible with the current Blender Version.",
+        default=True
+    )
+    use_experimental_installer: BoolProperty(
+        name="Automatically install experimental updates",
+        description="When an experimental update is found, it will be installed without manually downloading the files. This may cause issues, when a downloaded version is incompatible with the current Blender version.",
+        default=False
+    )
+
     dev_icon: IntProperty(max=3, min=0)
 
     def draw(self, context: Context):
@@ -185,6 +196,11 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
             row = layout.row()
             row.label(text=addon["addon_name"])
+
+            if addon["is_experimental"]:
+                row.label(
+                    text="Experimental update. Be careful!", icon="ERROR")
+
             # Check, if the Addon supports Auto-Update.
             new_row = layout.row()
             if updater.update_context == UPDATE_CONTEXTS["DOWNLOAD"]:
@@ -289,6 +305,11 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
         props = layout.box()
         props.label(text="Super Addon Manager Settings:")
+
+        props.label(text="Experimental Updates:")
+        props.row().prop(self, "check_experimental_updates")
+        props.row().prop(self, "use_experimental_installer")
+
         props.row().prop(self, "download_directory")
         props.row(align=True).prop(self, "auto_check_for_updates")
 
