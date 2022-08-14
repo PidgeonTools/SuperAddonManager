@@ -59,11 +59,9 @@ from . import prefs
 
 from .issue_types import (
     BL_INFO_VERSION_PROBLEMS,
-    DOWNLOAD_URL_OFFLINE,
     ENDPOINT_INVALID_SCHEMA,
     ENDPOINT_OFFLINE,
     INVALID_ENDPOINT,
-    NOT_AN_ADDON,
     SAM_NOT_SUPPORTED,
     ENDPOINT_URL_INVALID,
     UNKNOWN_ERROR
@@ -261,7 +259,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # is available, a get request is sent to the Endpoint. If "endpoint_url"
     # is unavailable or some information in "bl_info" is corrupt, the addon
     # is added to self.unavailable_addons (Addons that can't be updated)
-    def check_update(self, addon_path, auto_reload=True):
+    def check_update(self, addon_path, auto_reload=True) -> None:
         self.is_updating = True  # Lock the latch
 
         # Handle the case, that the current addon is not in sys.modules.
@@ -271,14 +269,11 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             self.is_updating = False  # Open the latch
             return  # Unknown Error
 
-        addon_bl_info = sys.modules[p.basename(addon_path)].bl_info
+        addon_bl_info: dict = sys.modules[p.basename(addon_path)].bl_info
 
         if not "endpoint_url" in addon_bl_info.keys():
-            self.unavailable_addons.append(
-                {"issue_type": SAM_NOT_SUPPORTED,
-                 "addon_name": self.addon_name,
-                 "bl_info": addon_bl_info,
-                 "addon_count": len(self.all_addons)})
+            self._handle_error(reset_updating=False, issue_type=SAM_NOT_SUPPORTED,
+                               addon_count=len(self.all_addons))
 
             self.is_updating = False  # Open the latch
             return  # Special Error
@@ -289,48 +284,27 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         try:
             endpoint_data = requests.get(endpoint_url).text
         except MissingSchema:  # The URL is invalid.
-            self.unavailable_addons.append(
-                {"issue_type": ENDPOINT_URL_INVALID,
-                 "addon_name": self.addon_name,
-                 "bl_info": addon_bl_info,
-                 "endpoint_url": endpoint_url})
-
-            self.is_updating = False  # Open the latch
+            self._handle_error(
+                issue_type=ENDPOINT_URL_INVALID, endpoint_url=endpoint_url)
             return  # ! Critical Error
 
         # Any other exception. Most likely, there's no Internet connection or the endpoint doesn't respond.
         except Exception as e:
-            self.unavailable_addons.append(
-                {"issue_type": ENDPOINT_OFFLINE,
-                 "addon_name": self.addon_name,
-                 "bl_info": addon_bl_info,
-                 "error_message": str(e),
-                 "endpoint_url": endpoint_url})
-
-            self.is_updating = False  # Open the latch
+            self._handle_error(issue_type=ENDPOINT_OFFLINE,
+                               error_message=str(e), endpoint_url=endpoint_url)
             return  # ! Critical Error
 
         # Try to convert the data to be helpful for the program.
         try:
             endpoint_data = json.loads(endpoint_data)
         except json.decoder.JSONDecodeError:
-            self.unavailable_addons.append(
-                {"issue_type": INVALID_ENDPOINT,
-                 "addon_name": self.addon_name,
-                 "bl_info": addon_bl_info,
-                 "endpoint_url": endpoint_url})
-
-            self.is_updating = False  # Open the latch
+            self._handle_error(
+                issue_type=INVALID_ENDPOINT, endpoint_url=endpoint_url)
             return  # ! Critical Error
 
         if not "schema_version" in endpoint_data.keys():
-            self.unavailable_addons.append(
-                {"issue_type": ENDPOINT_INVALID_SCHEMA,
-                 "addon_name": self.addon_name,
-                 "bl_info": addon_bl_info,
-                 "endpoint_url": endpoint_url})
-
-            self.is_updating = False  # Open the latch
+            self._handle_error(
+                issue_type=ENDPOINT_INVALID_SCHEMA, endpoint_url=endpoint_url)
             return  # ! Critical Error
 
         # Check the schema of the endpoint data.
@@ -338,13 +312,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             update_check = UpdateCheck_v1_0_0(
                 endpoint_data, self.addon_name, addon_bl_info, endpoint_url)
         else:
-            self.unavailable_addons.append(
-                {"issue_type": ENDPOINT_INVALID_SCHEMA,
-                 "addon_name": self.addon_name,
-                 "bl_info": addon_bl_info,
-                 "endpoint_url": endpoint_url})
-
-            self.is_updating = False  # Open the latch
+            self._handle_error(
+                issue_type=ENDPOINT_INVALID_SCHEMA, endpoint_url=endpoint_url)
             return  # ! Critical Error
 
         # Handle any error that occured inside the update check.
@@ -372,10 +341,23 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                      addon_version=update_check.version,
                      auto_reload=auto_reload
                  )
-                 }
-            )
 
-        self.is_updating = False  # Open the latch
+    def _handle_error(self, reset_updating=True, **kwargs):
+        """Handle an error and append the addon to the list of unavailable addons."""
+        error_data = {
+            "addon_name": self.addon_name,
+            "bl_info": self.bl_info,
+        }
+
+        for key, value in kwargs.items():
+            error_data[key] = value
+
+        self.unavailable_addons.append(error_data)
+
+        if reset_updating:
+            self.is_updating = False  # Open the latch
+
+        return
 
 
 class SUPERADDONMANAGER_OT_update_info(Operator):
