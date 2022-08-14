@@ -194,11 +194,16 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 row.label(
                     text="Experimental update. Be careful!", icon="ERROR")
 
-            # Check, if the Addon supports Auto-Update.
             new_row = layout.row()
+            new_row.label(
+                text=f"Update to: {'.'.join(map(str, updater.addon_version))}")
+
+            # Display the automatic update operator, when the addon needs to be downloaded.
+            # The operator will run for automatic and manual downloads.
             if updater.update_context == UPDATE_CONTEXTS["DOWNLOAD"]:
                 op = new_row.operator("superaddonmanager.automatic_update")
             else:
+                # If the update was downloaded, display the manual update operator.
                 op = new_row.operator("superaddonmanager.manual_update",
                                       text="Update from local file.")
 
