@@ -325,22 +325,32 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
         # Add the Addon to one of the Update Arrays.
         if update_check.update:
-            self.updates.append(
-                {"addon_path": addon_path,
-                 "allow_automatic_download": update_check.automatic_download,
-                 "download_url": update_check.download_url,
-                 "addon_name": self.addon_name,
-                 "updater": Updater(
-                     addon_name=self.addon_name,
-                     bl_info=addon_bl_info,
-                     allow_automatic_download=update_check.automatic_download,
-                     addon_path=addon_path,
-                     download_directory=bpy.context.preferences.addons[
-                         __package__].preferences.download_directory,
-                     download_url=update_check.download_url,
-                     addon_version=update_check.version,
-                     auto_reload=auto_reload
-                 )
+            self._append_update(update_check, addon_path,
+                                addon_bl_info, auto_reload)
+
+        self.is_updating = False  # Open the latch
+
+    def _append_update(self, update_check: UpdateCheck_v1_0_0, addon_path: str, bl_info: dict, auto_reload: bool = True, is_experimental: bool = False):
+        self.updates.append(
+            {"addon_path": addon_path,
+                "allow_automatic_download": update_check.automatic_download,
+                "download_url": update_check.download_url,
+                "addon_name": self.addon_name,
+                "updater": Updater(
+                    addon_name=self.addon_name,
+                    release_description=update_check.release_description,
+                    bl_info=bl_info,
+                    allow_automatic_download=update_check.automatic_download,
+                    addon_path=addon_path,
+                    download_directory=bpy.context.preferences.addons[
+                        __package__].preferences.download_directory,
+                    download_url=update_check.download_url,
+                    addon_version=update_check.version,
+                    auto_reload=auto_reload
+                ),
+                "is_experimental": is_experimental
+             }
+        )
 
     def _handle_error(self, reset_updating=True, **kwargs):
         """Handle an error and append the addon to the list of unavailable addons."""
