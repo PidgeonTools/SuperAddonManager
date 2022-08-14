@@ -36,6 +36,8 @@ import time
 
 from os import path as p
 
+import textwrap
+
 from .objects.updater import UPDATE_CONTEXTS, Updater
 
 from .functions.json_functions import (
@@ -195,12 +197,42 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
             # TODO: Exchange the operator after Updating --> Maybe with another list - Updated_Addons
 
+            if updater.release_description:
+                self.layout_release_description(
+                    context, layout, updater.release_description)
+
         # Show a warning, that some addons couldn't be properly updated,
         # if at least one addon ran into any kind of issue.
         if len(unavailable_addons) > 0:
             self.layout_issues(context, layout)
 
         self.draw_settings(layout)
+
+    def layout_release_description(self, context: Context, layout: UILayout, release_description: str):
+        box = layout.box()
+        box_row = box.row()
+        box_row.label(text="Release Notes")
+
+        release_description_lines: list = release_description.strip().split("\n")
+
+        width = context.region.width
+        ui_scale = context.preferences.view.ui_scale
+        font_size = context.preferences.ui_styles[0].widget_label.points
+
+        line_length = (width * 2) / (ui_scale * font_size)
+
+        for line in release_description_lines:
+            wrapp = textwrap.TextWrapper(int(line_length))
+            # wrapp = textwrap.TextWrapper(self.dev_line_length)
+            wrapp_lines = wrapp.wrap(line)
+
+            for wline in wrapp_lines:
+                box_row = box.row(align=True)
+                box_row.alignment = "EXPAND"
+                box_row.scale_y = 0.6
+                box_row.label(text=wline)
+
+            layout.separator()
 
     # Layout all issues.
     def layout_issues(self, context: Context, layout: UILayout):

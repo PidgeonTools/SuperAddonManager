@@ -32,7 +32,7 @@ UPDATE_CONTEXTS = {
 
 
 class Updater:
-    def __init__(self, addon_name="", bl_info={"version": (0, 0, 0)}, allow_automatic_download=False, download_url="", addon_path="", download_directory=p.join(p.expanduser('~'), 'downloads'), addon_version=(0, 0, 0), auto_reload=False) -> None:
+    def __init__(self, addon_name="", bl_info={"version": (0, 0, 0)}, allow_automatic_download=False, download_url="", addon_path="", download_directory=p.join(p.expanduser('~'), 'downloads'), addon_version=(0, 0, 0), auto_reload=False, release_description="") -> None:
         self.error = False  # Set to True, if an error occured.
         self.error_data = {
             "addon_name": addon_name,
@@ -56,6 +56,8 @@ class Updater:
         self.download_directory: str = p.join(
             download_directory, "Super Addon Manager Downloads")
         self.downloaded_file_path: typing.Union[str, None] = None
+
+        self.release_description = release_description
 
     # Download the ZIP file for updating.
     def download_update(self):
