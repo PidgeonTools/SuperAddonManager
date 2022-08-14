@@ -179,16 +179,9 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
             layout.label(
                 text=f"Checking for updates: {addon_index}/{addons_total}", icon='INFO')
             layout.prop(self, "update_check_progress_bar")
-        else:
-            row = layout.row()
-            row.scale_y = 2
-            # Check for Updates Operator.
-            op = row.operator("superaddonmanager.check_for_updates")
-            op.is_background_check = False
 
-        # Layout the "Update All"-Operator when at least two addons have updates.
-        if len(updates) > 1:
-            layout.operator("superaddonmanager.update_all")
+        if not checking_for_updates and not updating_all:
+            self.layout_featured_button(context, layout, updates)
 
         # Layout all Addons that can be Updated one by one.
         for index, addon in enumerate(updates):
@@ -223,6 +216,28 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
             self.layout_issues(context, layout)
 
         self.draw_settings(layout)
+
+    def layout_featured_button(self, context: Context, layout: UILayout, updates: list):
+        # Layout the "Update All"-Operator when at least two addons have updates.
+        if len(updates) > 1:
+            row = layout.row()
+            row.scale_y = 2
+            flow = row.grid_flow(row_major=True, align=True)
+
+            # Check for Updates Operator.
+            flow.operator("superaddonmanager.update_all")
+
+            op = flow.operator("superaddonmanager.check_for_updates",
+                               text="", icon="FILE_REFRESH")
+            op.is_background_check = False
+        else:
+            row = layout.row()
+            row.scale_y = 2
+            flow = row.grid_flow(row_major=True, align=True)
+
+            # Check for Updates Operator.
+            op = flow.operator("superaddonmanager.check_for_updates")
+            op.is_background_check = False
 
     def layout_release_description(self, context: Context, layout: UILayout, release_description: str):
         box = layout.box()
