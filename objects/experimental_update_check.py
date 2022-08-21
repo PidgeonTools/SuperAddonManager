@@ -196,7 +196,7 @@ class ExperimentalUpdateCheck:
             endpoint_data["versions"].append({
                 "version": list(version_array),
                 "download_url": download_url,
-                "allow_automatic_download": False,
+                "allow_automatic_download": allow_automatic_download,
                 "minimum_blender_version": list(self.pad_tuple(bpy.app.version)),
                 "release_description": d.get("description", ""),
             })
