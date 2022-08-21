@@ -206,16 +206,18 @@ class ExperimentalUpdateCheck:
     def get_version_array(self, version_string) -> list:
         """Extract a version number array from a tag name."""
         # Search for a number with one to three parts, e.g. v1, 2.4 or version1.36.0
-        version_number = re.search("((?:\d+\.){0,2}\d+)", version_string)
+        version_number = re.search("((?:\d+[\._-]){0,2}\d+)", version_string)
 
         # Return an empty array, if no version number can be found.
         if not version_number:
             return []
 
         try:
+            version_number = re.sub("[\._-]+", ".", version_number.group(0))
+
             # Try to convert the version number to a list of length 3.
             version_array = self.pad_tuple(
-                version_number.group(0).split("."))
+                version_number.split("."))
             return list(version_array)
         except ValueError:
             return []
