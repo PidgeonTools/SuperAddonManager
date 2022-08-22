@@ -21,14 +21,14 @@
 
 import bpy
 from bpy.props import (
-    StringProperty,
+    BoolProperty,
     IntProperty,
-    BoolProperty
+    StringProperty,
 )
 from bpy.types import (
-    Operator,
     Context,
-    Event
+    Event,
+    Operator,
 )
 
 from bpy_extras.io_utils import ImportHelper
@@ -78,6 +78,13 @@ from .functions.json_functions import (
     encode_json,
     decode_json
 )
+
+
+def remove_update(index):
+    prefs.updates.pop(index)
+
+    addon_prefs = bpy.context.preferences.addons[__package__].preferences
+    addon_prefs.addon_updates.remove(index)
 
 
 class SUPERADDONMANAGER_OT_check_for_updates(Operator):
@@ -389,6 +396,9 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
              }
         )
 
+        addon_prefs = bpy.context.preferences.addons[__package__].preferences
+        addon_prefs.addon_updates.add()
+
     def _handle_error(self, reset_updating=True, **kwargs):
         """Handle an error and append the addon to the list of unavailable addons."""
         error_data = {
@@ -414,6 +424,7 @@ class SUPERADDONMANAGER_OT_update_info(Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     def execute(self, context: Context):
+        context.preferences.addons[__package__].preferences.layout_tab = "updater"
         bpy.ops.preferences.addon_show(module=__package__)
         return {"FINISHED"}
 
@@ -448,19 +459,19 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             downloaded_file_path = "C:/Users/NotAdmin/Downloads/Super Addon Manager Downloads/test-automatic-download-main-0.0.1.zip"
 
             if updater.error:
-                prefs.updates.pop(self.index)
+                remove_update(self.index)
                 prefs.unavailable_addons.append(updater.error_data)
                 return {'CANCELLED'}  # ! Critical Error
         except Exception as e:
             updater.error = True
             updater.error_data["issue_type"] = UNKNOWN_ERROR
-            updater.error_data["error_message"] = str(e)
+            updater.error_data["error_message"] = traceback.format_exc()
             updater.error_data["exception_type"] = str(
                 e.__class__).split("'")[1]
             updater.error_data["traceback_location"] = get_line_and_file(
                 currentframe())
 
-            prefs.updates.pop(self.index)
+            remove_update(self.index)
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 
@@ -474,13 +485,13 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
 
             # Handle update errors.
             if updater.error:
-                prefs.updates.pop(self.index)
+                remove_update(self.index)
                 prefs.unavailable_addons.append(updater.error_data)
                 return {'CANCELLED'}  # ! Critical Error
 
             if updater.success:
                 # Remove the addon from the list of updates to avoid confusion.
-                prefs.updates.pop(self.index)
+                remove_update(self.index)
 
             if update_status != None:
                 self.report({"WARNING"}, update_status)
@@ -501,7 +512,7 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
             updater.error_data["traceback_location"] = get_line_and_file(
                 currentframe())
 
-            prefs.updates.pop(self.index)
+            remove_update(self.index)
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 
@@ -528,13 +539,13 @@ class SUPERADDONMANAGER_OT_manual_update(Operator, ImportHelper):
             update_status = updater.update_addon(self.filepath)
 
             if updater.error:
-                prefs.updates.pop(self.index)
+                remove_update(self.index)
                 prefs.unavailable_addons.append(updater.error_data)
                 return {'CANCELLED'}  # ! Critical Error
 
             if updater.success:
                 # Remove the addon from the list of updates to avoid confusion.
-                prefs.updates.pop(self.index)
+                remove_update(self.index)
 
             if update_status != None:
                 self.report({"WARNING"}, update_status)
@@ -554,7 +565,7 @@ class SUPERADDONMANAGER_OT_manual_update(Operator, ImportHelper):
             updater.error_data["traceback_location"] = get_line_and_file(
                 currentframe())
 
-            prefs.updates.pop(self.index)
+            remove_update(self.index)
             prefs.unavailable_addons.append(updater.error_data)
             return {'CANCELLED'}  # ! Critical Error
 

@@ -22,11 +22,14 @@
 import bpy
 from bpy.types import (
     AddonPreferences,
+    Context,
+    PropertyGroup,
     UILayout,
-    Context
 )
 from bpy.props import (
     BoolProperty,
+    CollectionProperty,
+    EnumProperty,
     FloatProperty,
     IntProperty,
     StringProperty
@@ -54,9 +57,14 @@ from .issue_types import (
     all_issue_types
 )
 
-HEADING_DISTANCE = 40
-DISTANCE_LEFT = 280
-ITEMS_DISTANCE = 45
+# Variables for the UI.
+TABS_HEIGHT = 130
+ISSUE_HEADING_INSET = 40
+ISSUE_ITEM_INSET = 300
+ISSUE_ITEMS_DISTANCE = 45
+UPDATE_DETAILS_INSET = 350
+RELEASE_DESCRIPTION_LINE_DISTANCE = 60
+RELEASE_DESCRIPTION_LINE_LENGTH_ADJUSTMENT = 300
 
 # These variables are necessary for the update checking progress bar.
 addons_total = 0
@@ -76,9 +84,22 @@ expanded_categories = {issue_type: True for issue_type in all_issue_types}
 filtered_categories = {issue_type: False for issue_type in all_issue_types}
 
 
+class ExpandUI(PropertyGroup):
+    expand: BoolProperty(
+        name="Expand", description="Expand to see more detail on this update.", default=False)
+
+
 class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
     """Preferences of Super Addon Manager."""
     bl_idname = __package__
+
+    layout_tab: EnumProperty(items=[
+        ("updater", "Updater", "Check for updates and install them."),
+        ("manager", "Manager", "Manage your installed addons."),
+        ("settings", "Settings", "Change the settings of Super Addon Manager.")],
+        name="UI Section",
+        description="Display the different UI Elements of Super Addon Manager.",
+        default="settings")
 
     update_check_progress_bar: FloatProperty(
         name="%",
@@ -161,70 +182,106 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
         default=False
     )
 
+    update_details_expand: CollectionProperty(type=ExpandUI)
+
     dev_icon: IntProperty(max=3, min=0)
 
     def draw(self, context: Context):
         layout: UILayout = self.layout
 
+        # Layout Tabs to switch between Updater, Manager and Settings.
+        row = layout.row(align=True)
+        row.scale_y = TABS_HEIGHT / 100
+        row.prop(self, "layout_tab", expand=True)
+
         # layout.prop(self, "dev_icon")  # TODO: #46 Decide on an icon.
 
+        if self.layout_tab == "updater":
+            self.draw_updater(context, layout)
+
+        if self.layout_tab == "manager":
+            self.draw_manager(context, layout)
+
+        if self.layout_tab == "settings":
+            self.draw_preferences(context, layout)
+
+    def draw_updater(self, context: Context, layout: UILayout):
+        """Layout the Updater with update check, found updates and found problems."""
+        path = p.join(p.dirname(__file__), "updater_status.json")
+
+        # Updating all progress bar.
         if updating_all:
-            # Checking for updates progress bar.
             layout.label(
                 text=f"Updating: {updated_addons}/{updatable_addons}", icon='INFO')
             layout.prop(self, "update_all_progress_bar")
 
+        # Checking for updates progress bar.
         if checking_for_updates:
-            # Checking for updates progress bar.
             layout.label(
                 text=f"Checking for updates: {addon_index}/{addons_total}", icon='INFO')
             layout.prop(self, "update_check_progress_bar")
 
+        # Featured button.
         if not checking_for_updates and not updating_all:
             self.layout_featured_button(context, layout, updates)
 
-        # Layout all Addons that can be Updated one by one.
-        for index, addon in enumerate(updates):
-            updater: Updater = addon["updater"]
-
-            row = layout.row()
-            row.label(text=addon["addon_name"])
-
-            if addon["is_experimental"]:
-                row.label(
-                    text="Experimental update. Be careful!", icon="ERROR")
-
-            new_row = layout.row()
-            new_row.label(
-                text=f"Update to: {'.'.join(map(str, updater.addon_version))}")
-
-            # Display the automatic update operator, when the addon needs to be downloaded.
-            # The operator will run for automatic and manual downloads.
-            if updater.update_context == UPDATE_CONTEXTS["DOWNLOAD"]:
-                op = new_row.operator("superaddonmanager.automatic_update")
-            else:
-                # If the update was downloaded, display the manual update operator.
-                op = new_row.operator("superaddonmanager.manual_update",
-                                      text="Update from local file.")
-
-            op.index = index
-
-            # TODO: Exchange the operator after Updating --> Maybe with another list - Updated_Addons
-
-            if updater.release_description:
-                self.layout_release_description(
-                    context, layout, updater.release_description)
+        # Display a list of updates, if there are any.
+        if len(updates) > 0:
+            layout.separator(factor=0)
+            self.layout_updates(context, layout)
 
         # Show a warning, that some addons couldn't be properly updated,
         # if at least one addon ran into any kind of issue.
         if len(unavailable_addons) > 0:
+            layout.separator()
             self.layout_issues(context, layout)
 
-        self.draw_settings(layout)
+        # Display when the last update check was.
+        d = decode_json(path)
+        if d is not None:
+            last_check = time.localtime(d['last_check'])
+            layout.separator(factor=0.5)
+            row = layout.row()
+            row.label(
+                text=f"Last update check: {time.strftime('%A, %d/%m/%Y %H:%M', last_check)}", icon="INFO")
+
+    def draw_manager(self, context: Context, layout: UILayout):
+        """Layout the addon manager."""
+        ...
+
+    def draw_preferences(self, context: Context, layout: UILayout):
+        """Layout the Super Addon Manager Preferences."""
+
+        # # props = layout.box()
+        # # props.label(text="Super Addon Manager Settings:")
+
+        # Layout the setting for the Download directory.
+        layout.row().prop(self, "download_directory")
+        layout.separator(factor=1)
+
+        # Layout automatic update check related properties.
+        layout.row(align=True).prop(self, "auto_check_for_updates")
+
+        time_props = layout.grid_flow(row_major=True, align=True)
+        time_props.enabled = self.auto_check_for_updates
+
+        time_props.prop(self, "check_interval_months")
+        time_props.prop(self, "check_interval_days")
+        time_props.prop(self, "check_interval_hours")
+        time_props.prop(self, "check_interval_minutes")
+        layout.separator(factor=1)
+
+        # Layout experimental updates related properties.
+        layout.label(text="Experimental Updates:", icon="ERROR")
+        layout.row().prop(self, "check_experimental_updates")
+
+        exp_row = layout.row()
+        exp_row.enabled = self.check_experimental_updates
+        exp_row.prop(self, "use_experimental_installer")
 
     def layout_featured_button(self, context: Context, layout: UILayout, updates: list):
         # Layout the "Update All"-Operator when at least two addons have updates.
-        if len(updates) > 1:
+        if len(updates) > 0:
             row = layout.row()
             row.scale_y = 2
             flow = row.grid_flow(row_major=True, align=True)
@@ -244,38 +301,91 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
             op = flow.operator("superaddonmanager.check_for_updates")
             op.is_background_check = False
 
-    def layout_release_description(self, context: Context, layout: UILayout, release_description: str):
-        box = layout.box()
-        box_row = box.row()
-        box_row.label(text="Release Notes")
+    def layout_updates(self, context: Context, layout: UILayout):
+        """Layout all Addons that can be Updated one by one."""
 
+        layout.label(
+            text=f"Super Addon Manager has found {len(updates)} Updates:")
+
+        for index, addon in enumerate(updates):
+            updater: Updater = addon["updater"]
+            expand_details: ExpandUI = self.update_details_expand[index]
+
+            row = layout.row()
+
+            icon = "TRIA_DOWN" if expand_details.expand else "TRIA_RIGHT"
+            row.prop(expand_details, "expand",
+                     text="", icon=icon, emboss=False, toggle=True,)
+
+            # Start a new subrow, where the addon name and the update button will be placed.
+            subrow = row.row()
+            subrow.label(text=addon["addon_name"])
+
+            # Display the automatic update operator, when the addon needs to be downloaded.
+            # The operator will run for automatic and manual downloads.
+            if updater.update_context == UPDATE_CONTEXTS["DOWNLOAD"]:
+                icon = "ERROR" if addon["is_experimental"] else "NONE"
+                op = subrow.operator(
+                    "superaddonmanager.automatic_update", icon=icon)
+            else:
+                # If the update was downloaded, display the manual update operator.
+                op = subrow.operator("superaddonmanager.manual_update",
+                                     text="Update from local file.")
+
+            op.index = index
+
+            # Layout Update details.
+            if expand_details.expand:
+                new_row = layout.row()
+                new_row.separator(factor=UPDATE_DETAILS_INSET / 100)
+                new_row.label(
+                    text=f"New Version: {'.'.join(map(str, updater.addon_version))}")
+
+                if updater.release_description:
+                    self.layout_release_description(
+                        context, layout, updater.release_description)
+
+    def layout_release_description(self, context: Context, layout: UILayout, release_description: str):
+        row = layout.row()
+        row.separator(factor=UPDATE_DETAILS_INSET / 100)
+
+        box = row.box()
+        box_row = box.row()
+        box_row.label(text="Release Notes:")
+
+        # Break up lines along line breaks.
         release_description_lines: list = release_description.strip().split("\n")
 
         width = context.region.width
         ui_scale = context.preferences.view.ui_scale
         font_size = context.preferences.ui_styles[0].widget_label.points
 
-        line_length = (width * 2) / (ui_scale * font_size)
+        # Calculate a line length that should work with the given Blender settings.
+        line_length = (width * 2) / (ui_scale * font_size) - \
+            (RELEASE_DESCRIPTION_LINE_LENGTH_ADJUSTMENT / 100)
 
+        # Layout the text, line by line.
         for line in release_description_lines:
             wrapp = textwrap.TextWrapper(int(line_length))
-            # wrapp = textwrap.TextWrapper(self.dev_line_length)
             wrapp_lines = wrapp.wrap(line)
 
             for wline in wrapp_lines:
                 box_row = box.row(align=True)
                 box_row.alignment = "EXPAND"
-                box_row.scale_y = 0.6
+                box_row.scale_y = RELEASE_DESCRIPTION_LINE_DISTANCE / 100
                 box_row.label(text=wline)
 
             layout.separator()
 
-    # Layout all issues.
     def layout_issues(self, context: Context, layout: UILayout):
+        """Layout all issues."""
+
         path = p.join(p.dirname(__file__), "updater_status.json")
         d = decode_json(path)
 
-        info_row = layout.row()
+        box = layout.box()
+
+        info_row = box.row()
         # Distribute the label and the search box properly.
         info_row.alignment = "LEFT"
         info_row.scale_x = 5
@@ -295,19 +405,19 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                                               prev_error) else "TRIA_RIGHT"
 
                 # Start a new section for a new error code.
-                container = layout.column()
+                container = box.column()
                 expand = container.row(align=True)
                 expand.emboss = "NONE"
                 expand.alignment = "LEFT"
                 expand.prop(self, prev_error,
                             text=self.convert_error_message(prev_error), icon=icon)
 
-                container.separator(factor=HEADING_DISTANCE / 100)
+                container.separator(factor=ISSUE_HEADING_INSET / 100)
 
             # Display the error codes, if the area is expanded.
             if getattr(self, prev_error):
                 row = container.row()
-                row.separator(factor=DISTANCE_LEFT / 100)
+                row.separator(factor=ISSUE_ITEM_INSET / 100)
                 row.label(text=addon["addon_name"])
 
                 icons = ["URL", "INFO", "HELP",
@@ -318,33 +428,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 op = row.operator(
                     "superaddonmanager.generate_issue_report", text="Request Support", icon=icon)
                 op.addon_index = index
-                container.separator(factor=ITEMS_DISTANCE / 100)
-
-    def draw_settings(self, layout: UILayout):
-        path = p.join(p.dirname(__file__), "updater_status.json")
-
-        props = layout.box()
-        props.label(text="Super Addon Manager Settings:")
-
-        props.label(text="Experimental Updates:")
-        props.row().prop(self, "check_experimental_updates")
-        props.row().prop(self, "use_experimental_installer")
-
-        props.row().prop(self, "download_directory")
-        props.row(align=True).prop(self, "auto_check_for_updates")
-
-        if self.auto_check_for_updates:
-            time_props = props.grid_flow(row_major=True, align=True)
-            time_props.prop(self, "check_interval_months")
-            time_props.prop(self, "check_interval_days")
-            time_props.prop(self, "check_interval_hours")
-            time_props.prop(self, "check_interval_minutes")
-
-        d = decode_json(path)
-        if d is not None:
-            last_check = time.localtime(d['last_check'])
-            props.label(
-                text=f"Last update check: {time.strftime('%A, %d/%m/%Y %H:%M', last_check)}")
+                container.separator(factor=ISSUE_ITEMS_DISTANCE / 100)
 
     def convert_error_message(self, msg):
         error_code_labels = {
@@ -362,6 +446,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
 
 classes = (
+    ExpandUI,
     SUPERADDONMANAGER_APT_preferences,
 )
 
