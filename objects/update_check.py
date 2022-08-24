@@ -67,6 +67,12 @@ class UpdateCheck_v1_0_0:
             filter(self._is_compatible_version, self.versions))
         candidate_versions.sort(reverse=True, key=lambda v: v["version"])
 
+        has_duplicate_urls = self.check_duplicate_urls(candidate_versions)
+
+        if has_duplicate_urls:
+            self._set_error(issue_type=ENDPOINT_INVALID_SCHEMA,
+                            endpoint_url=endpoint_url)
+
         # Get the latest compatible version and check, if an update is available.
         latest_compatible_version: dict = candidate_versions[0] if candidate_versions else None
         self.update = latest_compatible_version and latest_compatible_version[
@@ -84,14 +90,30 @@ class UpdateCheck_v1_0_0:
                 "allow_automatic_download", False)
             self.release_description = latest_compatible_version.get(
                 "release_description", None)
-            ## self.automatic_download = False
-            # #if "allow_automatic_download" in latest_compatible_version.keys():
-            ##     self.automatic_download = latest_compatible_version["allow_automatic_download"]
 
             self.download_url = latest_compatible_version["download_url"]
 
-    # Format all version lists inside self.versions to be a tuple of three integers.
+    def check_duplicate_urls(self, versions):
+        """Check, whether download URLs for automatic downloads are the same across multiple versions."""
+
+        download_urls = []
+        for v in versions:
+            v: dict
+            if not v.get("allow_automatic_download", False):
+                continue
+
+            download_url = v.get("download_url", None)
+
+            if download_url in download_urls:
+                return True
+
+            if download_url:
+                download_urls.append(download_url)
+
+        return False
+
     def pad_version_list(self):
+        """Format all version lists inside self.versions to be a tuple of three integers."""
         for version in self.versions:
             version["version"] = self.pad_tuple(version["version"])
 
@@ -102,8 +124,8 @@ class UpdateCheck_v1_0_0:
                 version["api_breaking_blender_version"] = self.pad_tuple(
                     version["api_breaking_blender_version"])
 
-    # Check, if a given version is compatible with the current version of Blender.
     def _is_compatible_version(self, v: dict):
+        """Check, if a given version is compatible with the current version of Blender."""
         is_minimum_compatible = self.blender_version >= v["minimum_blender_version"]
 
         if "api_breaking_blender_version" in v.keys():
@@ -124,8 +146,9 @@ class UpdateCheck_v1_0_0:
         for key, value in kwargs.items():
             self.error_data[key] = value
 
-    # Convert a list into a tuple of three integers.
     def pad_tuple(self, t):
+        """Convert a list into a tuple of three integers."""
+
         # Convert all raw values to integers, to avoid issues, when comparing versions
         def type_convert(x):
             allowed_types = [int, float, str]
