@@ -84,7 +84,7 @@ def remove_update(index):
     prefs.updates.pop(index)
 
     addon_prefs = bpy.context.preferences.addons[__package__].preferences
-    addon_prefs.addon_updates.remove(index)
+    addon_prefs.update_details_expand.remove(index)
 
 
 class SUPERADDONMANAGER_OT_check_for_updates(Operator):
@@ -397,7 +397,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         )
 
         addon_prefs = bpy.context.preferences.addons[__package__].preferences
-        addon_prefs.addon_updates.add()
+        addon_prefs.update_details_expand.add()
 
     def _handle_error(self, reset_updating=True, **kwargs):
         """Handle an error and append the addon to the list of unavailable addons."""
