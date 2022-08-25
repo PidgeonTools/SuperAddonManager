@@ -216,8 +216,11 @@ class Updater:
         except Exception as e:
             return f"Reloading {self.addon_name} automatically failed. Please restart Blender after all Updates have completed."
 
-    def _create_backup(self, install_directory):
+    def _create_backup(self, install_directory, override_version=[]):
         """Create a backup of the install directory."""
+        if override_version != []:
+            self.old_version = version
+
         # Get the backup directory.
         version = ".".join([str(i) for i in self.old_version])
         backup_directory = p.join(
