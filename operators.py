@@ -33,6 +33,8 @@ from bpy.types import (
 
 from bpy_extras.io_utils import ImportHelper
 
+import addon_utils
+
 import os
 from os import path as p
 
@@ -71,9 +73,9 @@ from .objects.update_check import (
     UpdateCheck_v1_0_0
 )
 from .objects.experimental_update_check import ExperimentalUpdateCheck
-from .objects.updater import Updater
+from .objects.updater import UPDATE_CONTEXTS, Updater
 
-from .functions.main_functions import get_line_and_file
+from .functions.main_functions import get_addons_filtered, get_line_and_file
 from .functions.json_functions import (
     encode_json,
     decode_json
@@ -575,6 +577,56 @@ class SUPERADDONMANAGER_OT_manual_update(Operator, ImportHelper):
         return
 
 
+class SUPERADDONMANAGER_OT_select_addon_to_manage(Operator):
+    """Select this addon to manage it."""
+    bl_idname = "superaddonmanager.select_addon_to_manage"
+    bl_label = "Manage"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    index: IntProperty()
+
+    def execute(self, context: Context):
+        addon_prefs = context.preferences.addons[__package__].preferences
+        prefs.managed_addon = get_addons_filtered(
+            addon_prefs.manager_search_term)[self.index]
+        addon_prefs.manager_search_term = ""
+
+        return {'FINISHED'}
+
+
+class SUPERADDONMANAGER_OT_install_unsupported_update(Operator, ImportHelper):
+    """Update any activated addon."""
+    bl_idname = "superaddonmanager.install_unsupported_update"
+    bl_label = "Update"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    filter_glob: StringProperty(
+        default='*.zip',
+        options={'HIDDEN'}
+    )
+
+    def execute(self, context: Context):
+        try:
+            bl_info: dict = addon_utils.module_bl_info(
+                prefs.managed_addon["module"])
+
+            updater = Updater(addon_name=prefs.managed_addon["name"],
+                              addon_path=prefs.managed_addon["install_path"],
+                              bl_info=bl_info,
+                              auto_reload=True)
+
+            updater.update_context = UPDATE_CONTEXTS["UPDATE"]
+
+            updater.update_addon(self.filepath)
+        except Exception as e:
+            ...
+
+        return {'FINISHED'}
+
+    def draw(self, context: Context):
+        return
+
+
 class SUPERADDONMANAGER_OT_update_all(Operator):
     """Update all addons, that can be updated automatically."""
     bl_idname = "superaddonmanager.update_all"
@@ -677,6 +729,8 @@ classes = (
     SUPERADDONMANAGER_OT_automatic_update,
     SUPERADDONMANAGER_OT_manual_update,
     SUPERADDONMANAGER_OT_update_all,
+    SUPERADDONMANAGER_OT_select_addon_to_manage,
+    SUPERADDONMANAGER_OT_install_unsupported_update,
     SUPERADDONMANAGER_OT_generate_issue_report
 )
 

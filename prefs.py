@@ -35,6 +35,8 @@ from bpy.props import (
     StringProperty
 )
 
+import addon_utils
+
 import time
 
 from os import path as p
@@ -48,7 +50,8 @@ from .functions.json_functions import (
 )
 from .functions.main_functions import (
     expand_all,
-    filter_search
+    filter_search,
+    get_addons_filtered
 )
 from .issue_types import (
     BL_INFO_VERSION_PROBLEMS,
@@ -82,6 +85,9 @@ updates = []
 unavailable_addons = []
 expanded_categories = {issue_type: True for issue_type in all_issue_types}
 filtered_categories = {issue_type: False for issue_type in all_issue_types}
+
+# Create an empty object for an addon that will appear in the manager.
+managed_addon = {}
 
 
 class ExpandUI(PropertyGroup):
@@ -184,6 +190,13 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
     update_details_expand: CollectionProperty(type=ExpandUI)
 
+    manager_search_term: StringProperty(
+        name="Search addon",
+        description="Search for installed addons.",
+        options={"TEXTEDIT_UPDATE"},
+        # update=get_addons_filtered,
+    )
+
     dev_icon: IntProperty(max=3, min=0)
 
     def draw(self, context: Context):
@@ -247,7 +260,44 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
     def draw_manager(self, context: Context, layout: UILayout):
         """Layout the addon manager."""
-        ...
+        enabled_addons = {addon.module for addon in context.preferences.addons}
+
+        info_row = layout.row()
+        # Distribute the label and the search box properly.
+        info_row.alignment = "LEFT"
+        info_row.scale_x = 5
+
+        # Display a message, that there were issues while checking for updates.
+        info_row.label(
+            text="Manage your installed addons.")
+
+        info_row.prop(self, "manager_search_term", icon="VIEWZOOM", text="")
+
+        if self.manager_search_term != "":
+
+            for index, addon in enumerate(get_addons_filtered(self.manager_search_term)):
+                row = layout.row()
+                row.label(text=addon["name"])
+                row.operator(
+                    "superaddonmanager.select_addon_to_manage").index = index
+
+        if self.manager_search_term == "" and managed_addon:
+            bl_info: dict = addon_utils.module_bl_info(managed_addon["module"])
+
+            module_name = managed_addon["module"].__name__
+
+            is_enabled = module_name in enabled_addons
+
+            row = layout.row()
+            row.operator("preferences.addon_disable" if is_enabled else "preferences.addon_enable",
+                         icon="CHECKBOX_HLT" if is_enabled else "CHECKBOX_DEHLT",
+                         emboss=False,
+                         text=""
+                         ).module = module_name
+            row.label(text=bl_info.get("name", ""))
+
+            if managed_addon["is_folder_addon"] and managed_addon["is_user_addon"]:
+                row.operator("superaddonmanager.install_unsupported_update")
 
     def draw_preferences(self, context: Context, layout: UILayout):
         """Layout the Super Addon Manager Preferences."""

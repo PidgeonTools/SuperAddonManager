@@ -22,6 +22,8 @@
 import bpy
 from bpy.types import Context
 
+import addon_utils
+
 from os import path as p
 
 from inspect import getframeinfo
@@ -58,3 +60,33 @@ def get_line_and_file(frame):
         return f"{p.basename(f.filename)}, line {f.lineno}"
     except Exception:
         return ""
+
+
+def get_addons_filtered(search_term):
+    """Get a filtered list of installed Blender Addons, filtered by search term."""
+
+    def filter_func(el): return el["name"].startswith(search_term)
+
+    blender_prefs = bpy.context.preferences
+
+    # Get all directories, where user installed addons can be found.
+    user_dirs = tuple([p for p in [p.join(
+        blender_prefs.filepaths.script_directory, "addons"), bpy.utils.user_resource("SCRIPTS", "addons")] if p])
+
+    addons = []
+    for mod in addon_utils.modules():
+        bl_info: dict = addon_utils.module_bl_info(mod)
+
+        is_folder_addon = mod.__file__.endswith("__init__.py")
+        is_user_addon = mod.__file__.startswith(user_dirs)
+        install_path = p.dirname(mod.__file__)
+
+        addons.append({
+            "module": mod,
+            "install_path": install_path,
+            "name": bl_info.get("name", ""),
+            "is_folder_addon": is_folder_addon,
+            "is_user_addon": is_user_addon
+        })
+
+    return list(filter(filter_func, addons))
