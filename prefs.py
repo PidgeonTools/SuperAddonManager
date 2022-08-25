@@ -377,6 +377,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 icon = "ERROR" if addon["is_experimental"] else "NONE"
                 op = subrow.operator(
                     "superaddonmanager.automatic_update", icon=icon)
+                op.is_experimental = addon["is_experimental"]
             else:
                 # If the update was downloaded, display the manual update operator.
                 op = subrow.operator("superaddonmanager.manual_update",

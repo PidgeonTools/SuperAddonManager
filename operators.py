@@ -29,6 +29,7 @@ from bpy.types import (
     Context,
     Event,
     Operator,
+    OperatorProperties
 )
 
 from bpy_extras.io_utils import ImportHelper
@@ -451,6 +452,14 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
     bl_options = {'REGISTER', 'UNDO'}
 
     index: IntProperty()
+    is_experimental: BoolProperty(default=False)
+
+    @classmethod
+    def description(cls, context: Context, properties: OperatorProperties) -> str:
+        if properties.is_experimental:
+            return "Update experimentally"
+
+        return "Update"
 
     def execute(self, context: Context):
         updater: Updater = prefs.updates[self.index]["updater"]
