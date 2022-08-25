@@ -22,6 +22,7 @@
 import bpy
 from bpy.props import (
     BoolProperty,
+    EnumProperty,
     IntProperty,
     StringProperty,
 )
@@ -29,7 +30,8 @@ from bpy.types import (
     Context,
     Event,
     Operator,
-    OperatorProperties
+    OperatorProperties,
+    UILayout
 )
 
 from bpy_extras.io_utils import ImportHelper
@@ -76,7 +78,11 @@ from .objects.update_check import (
 from .objects.experimental_update_check import ExperimentalUpdateCheck
 from .objects.updater import UPDATE_CONTEXTS, Updater
 
-from .functions.main_functions import get_addons_filtered, get_line_and_file
+from .functions.main_functions import (
+    get_addons_filtered,
+    get_line_and_file,
+    get_restorable_versions
+)
 from .functions.json_functions import (
     encode_json,
     decode_json
@@ -586,6 +592,47 @@ class SUPERADDONMANAGER_OT_manual_update(Operator, ImportHelper):
         return
 
 
+class SUPERADDONMANAGER_OT_update_all(Operator):
+    """Update all addons, that can be updated automatically."""
+    bl_idname = "superaddonmanager.update_all"
+    bl_label = "Update All"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    def execute(self, context: Context):
+        prefs.updating_all = True
+        prefs.updated_addons = 0
+        prefs.updatable_addons = len(
+            [a for a in prefs.updates if a["allow_automatic_download"]])
+
+        i = 0
+
+        while i < len(prefs.updates):
+            addon = prefs.updates[i]
+            if addon["allow_automatic_download"]:
+                bpy.ops.superaddonmanager.automatic_update(
+                    index=i)
+                prefs.updated_addons += 1
+
+            else:
+                i += 1
+
+            # # bpy.ops.superaddonmanager.manual_update("INVOKE_DEFAULT")
+            # # download_url=addon["download_url"])
+
+            self._redraw()  # Update the progress bar.
+
+        prefs.updating_all = False
+        return {'FINISHED'}
+
+    def _redraw(self):
+        # ATTENTION: This is not officially supported! See: https://docs.blender.org/api/current/info_gotcha.html
+        try:
+            bpy.ops.wm.redraw_timer(
+                type='DRAW_WIN_SWAP', iterations=1)
+        except Exception:
+            pass
+
+
 class SUPERADDONMANAGER_OT_select_addon_to_manage(Operator):
     """Select this addon to manage it."""
     bl_idname = "superaddonmanager.select_addon_to_manage"
@@ -636,45 +683,38 @@ class SUPERADDONMANAGER_OT_install_unsupported_update(Operator, ImportHelper):
         return
 
 
-class SUPERADDONMANAGER_OT_update_all(Operator):
-    """Update all addons, that can be updated automatically."""
-    bl_idname = "superaddonmanager.update_all"
-    bl_label = "Update All"
+class SUPERADDONMANAGER_OT_restore_backup(Operator):
+    """Restore old version from backup"""
+    bl_idname = "superaddonmanager.restore_backup"
+    bl_label = "Restore Backup"
     bl_options = {'REGISTER', 'UNDO'}
 
+    restore_version: EnumProperty(items=get_restorable_versions)
+
     def execute(self, context: Context):
-        prefs.updating_all = True
-        prefs.updated_addons = 0
-        prefs.updatable_addons = len(
-            [a for a in prefs.updates if a["allow_automatic_download"]])
+        bl_info: dict = addon_utils.module_bl_info(
+            prefs.managed_addon["module"])
+        install_path = prefs.managed_addon["install_path"]
+        updater = Updater(addon_name=prefs.managed_addon["name"],
+                          addon_path=install_path, auto_reload=True)
 
-        i = 0
-
-        while i < len(prefs.updates):
-            addon = prefs.updates[i]
-            if addon["allow_automatic_download"]:
-                bpy.ops.superaddonmanager.automatic_update(
-                    index=i)
-                prefs.updated_addons += 1
-
-            else:
-                i += 1
-
-            # # bpy.ops.superaddonmanager.manual_update("INVOKE_DEFAULT")
-            # # download_url=addon["download_url"])
-
-            self._redraw()  # Update the progress bar.
-
-        prefs.updating_all = False
+        try:
+            updater._create_backup(
+                install_path, bl_info.get("version", ["unknown"]))
+            updater._install_files(
+                p.join(install_path, "superaddonmanager-backups", self.restore_version), install_path)
+            updater._reload_addon()
+        except Exception as e:
+            print("Error in restore_backups")
         return {'FINISHED'}
 
-    def _redraw(self):
-        # ATTENTION: This is not officially supported! See: https://docs.blender.org/api/current/info_gotcha.html
-        try:
-            bpy.ops.wm.redraw_timer(
-                type='DRAW_WIN_SWAP', iterations=1)
-        except Exception:
-            pass
+    def invoke(self, context: Context, event: Event):
+        return context.window_manager.invoke_props_dialog(self)
+
+    def draw(self, context: Context):
+        layout: UILayout = self.layout
+
+        layout.prop(self, "restore_version")
 
 
 class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
@@ -740,6 +780,7 @@ classes = (
     SUPERADDONMANAGER_OT_update_all,
     SUPERADDONMANAGER_OT_select_addon_to_manage,
     SUPERADDONMANAGER_OT_install_unsupported_update,
+    SUPERADDONMANAGER_OT_restore_backup,
     SUPERADDONMANAGER_OT_generate_issue_report
 )
 

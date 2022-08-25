@@ -24,6 +24,7 @@ from bpy.types import Context
 
 import addon_utils
 
+import os
 from os import path as p
 
 from inspect import getframeinfo
@@ -90,3 +91,14 @@ def get_addons_filtered(search_term):
         })
 
     return list(filter(filter_func, addons))
+
+
+def get_restorable_versions(self, context: Context):
+    items = []
+    try:
+        for file in os.listdir(p.join(prefs.managed_addon["install_path"], "superaddonmanager-backups")):
+            items.append((file, file, "Old Version that can be restored."))
+    except Exception as e:
+        print(e)
+
+    return items

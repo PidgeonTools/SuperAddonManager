@@ -298,6 +298,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
             if managed_addon["is_folder_addon"] and managed_addon["is_user_addon"]:
                 row.operator("superaddonmanager.install_unsupported_update")
+                row.operator("superaddonmanager.restore_backup")
 
     def draw_preferences(self, context: Context, layout: UILayout):
         """Layout the Super Addon Manager Preferences."""
