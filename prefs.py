@@ -201,6 +201,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
 
     def draw(self, context: Context):
         layout: UILayout = self.layout
+        layout.enabled = not checking_for_updates
 
         # Layout Tabs to switch between Updater, Manager and Settings.
         row = layout.row(align=True)

@@ -60,6 +60,8 @@ import random
 import traceback
 from inspect import currentframe
 
+import threading
+
 from . import prefs
 
 from .issue_types import (
@@ -109,6 +111,26 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     is_updating: bool = False
 
     def execute(self, context: Context):
+        self.show_popup = False
+        self._timer = context.window_manager.event_timer_add(
+            0.01, window=context.window)
+
+        # Setup the modal operation.
+        self.finished = False
+        threading.Thread(target=self.execute_thread, daemon=True,
+                         args=[context]).start()
+
+        context.window_manager.modal_handler_add(self)
+
+        return {'RUNNING_MODAL'}
+
+    def execute_thread(self, context: Context):
+        """Iterate through all directories and files in the Addons Folders.
+        Add single files to the list of addons that can't be updated by SAM.
+        Folders are sent to self.check_update() for the actual update check."""
+
+        prefs.checking_for_updates = True
+
         self.report({"INFO"}, "SAM is checking for updates!")
 
         self.updates = []
@@ -152,91 +174,89 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
             prefs.unavailable_addons = self.unavailable_addons
 
             if self.is_background_check:
-                bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
-            return {'FINISHED'}
+                self.show_popup = True
+            #     bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
+            self.finished = True
+            return
 
         # Reset list of unavailable Addons to avoid duplicate issues (with SAM)
         self.unavailable_addons = []
 
-        # Setup the modal operation.
         prefs.addons_total = len(self.enabled_addons)
-        prefs.checking_for_updates = True
-        self._timer = context.window_manager.event_timer_add(
-            0.01, window=context.window)
-        context.window_manager.modal_handler_add(self)
 
-        return {'RUNNING_MODAL'}
+        for addon_path in self.enabled_addons:
+            prefs.addon_index += 1
 
-    # Iterate through all directories and files in the Addons Folders.
-    # Add single files to the list of addons that can't be updated by SAM.
-    # Folders are sent to self.check_update() for the actual update check.
-    def modal(self, context: Context, event: Event):
-        if event.type == "TIMER":
-            if not self.is_updating:
-                if prefs.addon_index >= prefs.addons_total:
-                    # Sort the lists of updates and unavailable addons to be ordered less random.
-                    self.updates.sort(
-                        key=lambda x: x["allow_automatic_download"], reverse=True)
-                    self.unavailable_addons.sort(
-                        key=lambda x: x["issue_type"], reverse=True)
+            self._get_addon_name(addon_path)
 
-                    # Send both lists to the preferences.
-                    prefs.updates = self.updates
-                    prefs.unavailable_addons = self.unavailable_addons
-
-                    context.window_manager.event_timer_remove(self._timer)
-                    prefs.checking_for_updates = False
-
-                    self._redraw()
-
-                    path = p.join(p.dirname(__file__), "updater_status.json")
-                    d = decode_json(path)
-                    d = {} if d is None else d
-                    if not "tests" in d.keys():
-                        d["tests"] = {}
-
-                    d["last_check"] = int(time.time())
-
-                    # ! Test: Which icon is the best for the error buttons.
-                    if not "icons" in d["tests"].keys():
-                        d["tests"]["icons"] = random.randint(0, 4)
-                    encode_json(d, path)
-
-                    something_happened = bool(
-                        self.unavailable_addons) or bool(self.updates)
-                    is_background_check = self.is_background_check
-                    if is_background_check and something_happened:
-                        bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
-
-                    return {'FINISHED'}
-
-                addon_path = self.enabled_addons[prefs.addon_index]
-                prefs.addon_index += 1
-
-                self._get_addon_name(addon_path)
-
-                if p.isdir(addon_path):
-                    try:
-                        self.check_update(addon_path)
-                    except Exception as e:  # Unknown error that needs to be investigated.
-                        self.unavailable_addons.append(
-                            {"issue_type": UNKNOWN_ERROR,
-                             "exception_type": str(e.__class__).split("'")[1],
-                             "traceback_location": get_line_and_file(currentframe()),
-                             "addon_name": self.addon_name,
-                             "bl_info": sys.modules[p.basename(addon_path)].bl_info,
-                             "error_message": traceback.format_exc()})
-
-                    self._redraw()
-
-                else:
+            if p.isdir(addon_path):
+                try:
+                    self.check_update(addon_path)
+                except Exception as e:  # Unknown error that needs to be investigated.
                     self.unavailable_addons.append(
-                        {"issue_type": SAM_NOT_SUPPORTED,
+                        {"issue_type": UNKNOWN_ERROR,
+                            "exception_type": str(e.__class__).split("'")[1],
+                            "traceback_location": get_line_and_file(currentframe()),
                             "addon_name": self.addon_name,
                             "bl_info": sys.modules[p.basename(addon_path)].bl_info,
-                            "addon_count": len(self.all_addons)})
+                            "error_message": traceback.format_exc()})
 
-        return {"RUNNING_MODAL"}
+                self._redraw()
+
+            else:
+                self.unavailable_addons.append(
+                    {"issue_type": SAM_NOT_SUPPORTED,
+                        "addon_name": self.addon_name,
+                        "bl_info": sys.modules[p.basename(addon_path)].bl_info,
+                        "addon_count": len(self.all_addons)})
+
+        # Sort the lists of updates and unavailable addons to be ordered less random.
+        self.updates.sort(
+            key=lambda x: x["allow_automatic_download"], reverse=True)
+        self.unavailable_addons.sort(
+            key=lambda x: x["issue_type"], reverse=True)
+
+        # Send both lists to the preferences.
+        prefs.updates = self.updates
+        prefs.unavailable_addons = self.unavailable_addons
+
+        context.window_manager.event_timer_remove(self._timer)
+        prefs.checking_for_updates = False
+
+        self._redraw()
+
+        path = p.join(p.dirname(__file__), "updater_status.json")
+        d = decode_json(path)
+        d = {} if d is None else d
+        if not "tests" in d.keys():
+            d["tests"] = {}
+
+        d["last_check"] = int(time.time())
+
+        # ! Test: Which icon is the best for the error buttons.
+        if not "icons" in d["tests"].keys():
+            d["tests"]["icons"] = random.randint(0, 4)
+        encode_json(d, path)
+
+        something_happened = bool(
+            self.unavailable_addons) or bool(self.updates)
+        is_background_check = self.is_background_check
+        if is_background_check and something_happened:
+            # bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
+            self.show_popup = True
+
+        self._redraw()
+        self.finished = True
+
+    def modal(self, context: Context, event: Event):
+        print("SAM modal operator.")
+        if self.finished:
+            if self.show_popup:
+                bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")
+            print("Finished\n----------------------")
+            return {"FINISHED"}
+
+        return {"PASS_THROUGH"}
 
     def _redraw(self):
         # ATTENTION: This is not officially supported! See: https://docs.blender.org/api/current/info_gotcha.html
