@@ -117,8 +117,9 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
         # Setup the modal operation.
         self.finished = False
-        threading.Thread(target=self.execute_thread, daemon=True,
-                         args=[context]).start()
+        self.thread = threading.Thread(target=self.execute_thread, daemon=True,
+                         args=[context])
+        self.thread.start()
 
         context.window_manager.modal_handler_add(self)
 
@@ -250,6 +251,11 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
     def modal(self, context: Context, event: Event):
         print("SAM modal operator.")
+        if not self.finished and not self.thread.is_alive():
+            self.finished = True
+            prefs.checking_for_updates = False
+            self.report({"ERROR"}, "Somthing went wrong with the update check. Please report an issue.")
+
         if self.finished:
             if self.show_popup:
                 bpy.ops.superaddonmanager.update_info("INVOKE_DEFAULT")

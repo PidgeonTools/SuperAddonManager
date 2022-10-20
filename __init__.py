@@ -47,6 +47,7 @@ modules = (
 
 
 def register():
+    prefs.checking_for_updates = False
     for mod in modules:
         mod.register()
 
