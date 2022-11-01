@@ -10,14 +10,25 @@ class RecursiveDirs:
             self.directory_structure, search_file)
 
     def _make_recursive_dirs(self, dirlist, dirname="") -> list:
-        dirlist = dirlist[:]
+        dirlist: list = dirlist[:]
 
         dirs = {}
 
         while dirlist:
-            dir = dirlist.pop(0)
+            dir: str = dirlist.pop(0)
 
-            if dir.endswith("/"):
+            # Determine, whether the current file or directory belongs to a directory, that hasn't been added yet.
+            dirname_missing: bool = len(
+                dir.replace(dirname, "").split("/")) > 1 and not dir.endswith("/")
+
+            if dirname_missing:
+                dirlist.append(dir)
+
+                # Set dir to the path of the topmost directory that hasn't been added yet.
+                # Example: dirname = ""; dir = "a/s/d.py" will result in dir being set to "a/"
+                dir = dirname + dir.replace(dirname, "").split("/")[0] + "/"
+
+            if dir.endswith("/") or dirname_missing:
                 new_dirlist = []
                 index = 0
                 while index < len(dirlist):
@@ -35,7 +46,11 @@ class RecursiveDirs:
 
     def _get_recursive_dirs(self, input_object: dict, search_file: str, greatest_common_subpath=""):
         if search_file in input_object.keys():
-            return greatest_common_subpath, self._flatten_list(input_object)
+            # Make sure the greatest common subpath doesn't appear in the addon list.
+            # This might happen sometimes, if the original dirlist looks like this: ["a/__init__.py", "a/"] (directory after file)
+            addon_list = [p for p in self._flatten_list(
+                input_object) if p != greatest_common_subpath]
+            return greatest_common_subpath, addon_list
 
         for key, value in input_object.items():
             if type(value) == dict:
