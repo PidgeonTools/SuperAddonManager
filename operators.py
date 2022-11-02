@@ -83,7 +83,8 @@ from .objects.updater import UPDATE_CONTEXTS, Updater
 from .functions.main_functions import (
     get_addons_filtered,
     get_line_and_file,
-    get_restorable_versions
+    get_restorable_versions,
+    get_bl_info
 )
 from .functions.json_functions import (
     encode_json,
@@ -194,22 +195,30 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                 try:
                     self.check_update(addon_path)
                 except Exception as e:  # Unknown error that needs to be investigated.
-                    self.unavailable_addons.append(
-                        {"issue_type": UNKNOWN_ERROR,
-                            "exception_type": str(e.__class__).split("'")[1],
-                            "traceback_location": get_line_and_file(currentframe()),
-                            "addon_name": self.addon_name,
-                            "bl_info": sys.modules[p.basename(addon_path)].bl_info,
-                            "error_message": traceback.format_exc()})
+                    _, bl_info = get_bl_info(
+                        p.basename(addon_path), sys.modules)
+
+                    self.unavailable_addons.append({
+                        "issue_type": UNKNOWN_ERROR,
+                        "exception_type": str(e.__class__).split("'")[1],
+                        "traceback_location": get_line_and_file(currentframe()),
+                        "addon_name": self.addon_name,
+                        "bl_info": bl_info,
+                        "error_message": traceback.format_exc()
+                    })
 
                 self._redraw()
 
             else:
-                self.unavailable_addons.append(
-                    {"issue_type": SAM_NOT_SUPPORTED,
-                        "addon_name": self.addon_name,
-                        "bl_info": sys.modules[p.basename(addon_path)].bl_info,
-                        "addon_count": len(self.all_addons)})
+                _, bl_info = get_bl_info(
+                    p.basename(addon_path), sys.modules)
+
+                self.unavailable_addons.append({
+                    "issue_type": SAM_NOT_SUPPORTED,
+                    "addon_name": self.addon_name,
+                    "bl_info": bl_info,
+                    "addon_count": len(self.all_addons)
+                })
 
         # Sort the lists of updates and unavailable addons to be ordered less random.
         self.updates.sort(

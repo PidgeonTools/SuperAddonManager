@@ -102,3 +102,26 @@ def get_restorable_versions(self, context: Context):
         print(e)
 
     return items
+
+
+def get_bl_info(addon: str, modules: dict) -> tuple:
+    """Safely get the bl_info dictionary from sys.modules
+
+    Args:
+        addon (str): The key of the addon, whose bl_info should be retrieved.
+        modules (dict): A dictionary of modules.
+
+    Returns:
+        tuple: (success: bool, bl_info: dict)
+        success: Whether bl_info could be successfully retrieved from modules
+        bl_info: Dictionary containing addon information. Empty dictionary, if success is False
+    """
+
+    # Safely get the addon module from sys.modules
+    addon_module = modules.get(addon, None)
+
+    # Safely get the bl_info from the addon module.
+    if not addon_module:
+        return (False, {})
+
+    return (True, getattr(addon_module, "bl_info", {}))
