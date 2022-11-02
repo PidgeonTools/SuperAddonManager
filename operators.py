@@ -317,14 +317,17 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     def check_update(self, addon_path, auto_reload=True) -> None:
         self.is_updating = True  # Lock the latch
 
+        success, addon_bl_info = get_bl_info(
+            p.basename(addon_path), sys.modules)
+
         # Handle the case, that the current addon is not in sys.modules.
-        if not p.basename(addon_path) in sys.modules:
+        if not success:
             print(
                 f"WARNING: Unknown error with {addon_path}: Addon not in sys.modules")
             self.is_updating = False  # Open the latch
             return  # Unknown Error
 
-        addon_bl_info: dict = sys.modules[p.basename(addon_path)].bl_info
+        addon_bl_info: dict
         self.bl_info: dict = addon_bl_info
 
         if not "endpoint_url" in addon_bl_info.keys():
@@ -360,19 +363,14 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
 
         # Try to convert the data to be helpful for the program.
         try:
-            endpoint_data = json.loads(endpoint_data)
+            endpoint_data: dict = json.loads(endpoint_data)
         except json.decoder.JSONDecodeError:
             self._handle_error(
                 issue_type=INVALID_ENDPOINT, endpoint_url=endpoint_url)
             return  # ! Critical Error
 
-        if not "schema_version" in endpoint_data.keys():
-            self._handle_error(
-                issue_type=ENDPOINT_INVALID_SCHEMA, endpoint_url=endpoint_url)
-            return  # ! Critical Error
-
         # Check the schema of the endpoint data.
-        if endpoint_data["schema_version"] == "super-addon-manager-version-info-1.0.0":
+        if endpoint_data.get("schema_version", "") == "super-addon-manager-version-info-1.0.0":
             update_check = UpdateCheck_v1_0_0(
                 endpoint_data, self.addon_name, addon_bl_info, endpoint_url)
         else:
