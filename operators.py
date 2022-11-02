@@ -285,16 +285,18 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
     # Get the name of the addon, that is beeing checked currently.
     def _get_addon_name(self, addon_path):
         # Handle the case that the addon is not in sys.modules
-        if not p.basename(addon_path) in sys.modules:
+        success, bl_info = get_bl_info(p.basename(addon_path), sys.modules)
+        bl_info: dict
+
+        if not success:
             print(
                 f"WARNING: Unknown error with {addon_path}: Addon not in sys.modules")
-            self.addon_name = ""
-            return  # Unknown Error
+            # # self.addon_name = ""
+            # # return  # Unknown Error
 
         # Try to get the addon name from bl_info.
-        if "name" in sys.modules[p.basename(addon_path)].bl_info:
-            self.addon_name = sys.modules[p.basename(
-                addon_path)].bl_info["name"]
+        if bl_info.get("name", False):
+            self.addon_name = bl_info["name"]
         else:  # Extract the addon name from the folder name.
             replace = (("-master", ""),
                        ("-main", ""),
@@ -302,7 +304,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                        ("_", " "))
 
             # Extract a good looking addon name from a folder name.
-            addon_name = p.basename(addon_path)
+            addon_name: str = p.basename(addon_path)
             for replace_obj, replace_with in replace:
                 addon_name = addon_name.replace(replace_obj, replace_with)
             self.addon_name = addon_name.capitalize()
