@@ -254,7 +254,8 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         if not self.finished and not self.thread.is_alive():
             self.finished = True
             prefs.checking_for_updates = False
-            self.report({"ERROR"}, "Somthing went wrong with the update check. Please report an issue.")
+            self.report(
+                {"ERROR"}, "Something went wrong with the update check. Please report an issue.")
 
         if self.finished:
             if self.show_popup:
