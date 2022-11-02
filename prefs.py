@@ -37,11 +37,19 @@ from bpy.props import (
 
 import addon_utils
 
+import json
+
 import time
 
 from os import path as p
 
 import textwrap
+
+import requests
+
+import threading
+
+import locale
 
 from .objects.updater import UPDATE_CONTEXTS, Updater
 
@@ -88,6 +96,10 @@ filtered_categories = {issue_type: False for issue_type in all_issue_types}
 
 # Create an empty object for an addon that will appear in the manager.
 managed_addon = {}
+
+# Store the results of the marketplace in a global variable, to avoid unnecessary reloads.
+is_loading_addons = False
+marketplace_addons = []
 
 
 class ExpandUI(PropertyGroup):
@@ -301,6 +313,8 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 row.operator("superaddonmanager.install_unsupported_update")
                 row.operator("superaddonmanager.restore_backup")
 
+        self.layout_marketplace(context, layout)
+
     def draw_preferences(self, context: Context, layout: UILayout):
         """Layout the Super Addon Manager Preferences."""
 
@@ -397,6 +411,62 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 if updater.release_description:
                     self.layout_release_description(
                         context, layout, updater.release_description)
+
+    def layout_marketplace(self, context: Context, layout: UILayout):
+        layout = layout.box()
+        global marketplace_addons
+
+        if marketplace_addons == [] and not is_loading_addons:
+            def load_marketplace_addons():
+                global is_loading_addons
+                global marketplace_addons
+
+                is_loading_addons = True
+
+                res_data = requests.get(
+                    "https://super-addon-manager.netlify.app/api/addon-browser").text
+                res_data: dict = json.loads(res_data)
+                if not res_data.get("success", False):
+                    print("Error with the request")
+
+                marketplace_addons = res_data.get("addons", [])
+
+                is_loading_addons = False
+
+            threading.Thread(target=load_marketplace_addons,
+                             daemon=True).start()
+
+        row = layout.row()
+        row.label(text="Discover")
+
+        if is_loading_addons:
+            row = layout.row()
+            row.label(text="Loading addons...")
+
+        for addon in marketplace_addons:
+            addon: dict
+
+            row = layout.row()
+            row.label(text=addon.get("name", "Unknown"))
+
+            addon_price = addon.get("price", 0)  # ! For testing purposes: 5
+
+            if addon_price == 0:
+                op = row.operator(
+                    "superaddonmanager.install_new_addon", text="Install (Free)")
+                op.addon_name = addon.get("name", "Unknown")
+                op.addon_id = addon.get("id")
+                op.endpoint_url = addon.get("endpoint_url")
+            else:
+                locale.setlocale(locale.LC_MONETARY, "EN")
+                op = row.operator(
+                    "wm.url_open", text=f"Install ({locale.currency(addon_price, grouping=True)})")
+                op.url = addon.get("doc_url")
+
+            row = layout.row()
+            row.label(text=addon.get("description"))
+
+            layout.separator(factor=2)
 
     def layout_release_description(self, context: Context, layout: UILayout, release_description: str):
         row = layout.row()

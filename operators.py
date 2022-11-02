@@ -48,6 +48,8 @@ from requests.models import MissingSchema
 
 import sys
 
+import shutil
+
 import time
 
 import platform
@@ -509,7 +511,9 @@ class SUPERADDONMANAGER_OT_automatic_update(Operator):
         # Download the update.
         try:
             updater.download_update()  # Disabled for testing
-            downloaded_file_path = "C:/Users/NotAdmin/Downloads/Super Addon Manager Downloads/test-automatic-download-main-0.0.1.zip"
+
+            # ! Testing Only
+            # downloaded_file_path = "C:/Users/NotAdmin/Downloads/Super Addon Manager Downloads/test-automatic-download-main-0.0.1.zip"
 
             if updater.error:
                 remove_update(self.index)
@@ -753,6 +757,54 @@ class SUPERADDONMANAGER_OT_restore_backup(Operator):
         layout.prop(self, "restore_version")
 
 
+class SUPERADDONMANAGER_OT_install_new_addon(Operator):
+    """Install an addon to the directory, where Super Addon Manager is installed"""
+    bl_idname = "superaddonmanager.install_new_addon"
+    bl_label = "Install"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    addon_id: StringProperty(name="Addon ID")
+    addon_name: StringProperty(name="Addon Name")
+    endpoint_url: StringProperty(name="Endpoint URL")
+
+    def execute(self, context: Context):
+        install_path = p.join(p.dirname(p.dirname(__file__)), self.addon_id)
+
+        if p.isdir(install_path):
+            self.report(
+                {"INFO"}, f"{self.addon_name} has already been installed.")
+            return {"FINISHED"}
+
+        try:
+            endpoint_data = requests.get(self.endpoint_url).text
+            endpoint_data = json.loads(endpoint_data)
+
+            update_check = UpdateCheck_v1_0_0(
+                endpoint_data, self.addon_name, {"version": (-1, 0, 0)}, self.endpoint_url)
+
+            if not update_check.update:
+                self.report(
+                    {"INFO"}, f"{self.addon_name} has no available version that's compatible with the current Blender version.")
+                return {"FINISHED"}
+        except:
+            return {"FINISHED"}
+
+        os.makedirs(install_path)
+
+        try:
+            installer = Updater(addon_name=self.addon_name, allow_automatic_download=True, download_url=update_check.download_url, addon_path=install_path, download_directory=context.preferences.addons[
+                __package__].preferences.download_directory, addon_version=update_check.version, auto_reload=True)
+
+            installer.download_update()
+            installer.update_addon()
+
+            shutil.rmtree(p.join(install_path, "superaddonmanager-backups"))
+        except:
+            pass
+
+        return {'FINISHED'}
+
+
 class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
     """Generate an issue report or feature request."""
     bl_idname = "superaddonmanager.generate_issue_report"
@@ -821,6 +873,7 @@ classes = (
     SUPERADDONMANAGER_OT_select_addon_to_manage,
     SUPERADDONMANAGER_OT_install_unsupported_update,
     SUPERADDONMANAGER_OT_restore_backup,
+    SUPERADDONMANAGER_OT_install_new_addon,
     SUPERADDONMANAGER_OT_generate_issue_report
 )
 
