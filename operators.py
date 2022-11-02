@@ -119,7 +119,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
         # Setup the modal operation.
         self.finished = False
         self.thread = threading.Thread(target=self.execute_thread, daemon=True,
-                         args=[context])
+                                       args=[context])
         self.thread.start()
 
         context.window_manager.modal_handler_add(self)
@@ -773,7 +773,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         return {'FINISHED'}
 
     def generate_report(self, data: dict):
-        BASE_URL = "http://localhost:3000/request-support?"
+        BASE_URL = "http://super-addon-manager.netlify.app/request-support?"
 
         path = p.join(p.dirname(__file__), "updater_status.json")
         d = decode_json(path)
@@ -795,15 +795,19 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
         if "tracker_url" in bl_info.keys():
             url_params["tracker_url"] = bl_info["tracker_url"]
 
-        if "new_version" in data.keys():
-            url_params["new_version"] = ".".join(
-                map(str, data.pop("new_version")))
+        # Version, that Super Addon Manager tried to install.
+        if "new_addon_version" in data.keys():
+            url_params["new_addon_version"] = ".".join(
+                map(str, data.pop("new_addon_version")))
 
         for key, value in data.items():
             url_params[key] = value
 
-        # # if issue_type == NOT_AN_ADDON:
-        # #     url_params["file_list"] = data["file_list"]
+        url_params["utm_source"] = "Addon"
+        url_params["utm_medium"] = "Direct"
+        url_params["utm_campaign"] = "Addon Support"
+        url_params["utm_content"] = str(
+            d["tests"]["icons"]) + "Request Support"
 
         return BASE_URL + urllib.parse.urlencode(url_params)
 
