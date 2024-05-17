@@ -119,7 +119,7 @@ class Updater:
             # the file is not a zip archive
             if not (header_correct and first_bytes == b"\x50\x4b\x03\x04"):
                 self._set_error(issue_type=INVALID_FILE_TYPE,
-                                new_version=self.addon_version)
+                                new_addon_version=self.addon_version)
                 return  # ! Critical Error
 
             # Download the file
@@ -165,10 +165,11 @@ class Updater:
             # ! Critical Error
             return f"Update of '{self.addon_name}' failed: Please select a .zip file."
 
-        file_list = zfile.namelist()
         # remove_subpath: Subpath to remove when the addon is stored in a subdirectory.
         # filtered_files: Filtered List of files that should be extracted.
-        remove_subpath, filtered_files = RecursiveDirs(file_list).extract_files
+        zip_content = RecursiveDirs(zfile.namelist())
+        filtered_files = zip_content.extract_files
+        remove_subpath = zip_content.remove_subpath
 
         if not filtered_files:
             # Return a warning in case of manual download, because the error is likely due to a users mistake.

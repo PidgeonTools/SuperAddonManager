@@ -2,7 +2,7 @@ import typing
 
 
 class VersionNumber:
-    def __init__(self, version_number: typing.Union[list, tuple, str, int, float]) -> None:
+    def __init__(self, version_number: typing.Union[list, tuple, str, int, float, 'VersionNumber']) -> None:
         if type(version_number) == VersionNumber:
             version_number = version_number.version_number
 
@@ -12,7 +12,17 @@ class VersionNumber:
         if type(version_number) == int or type(version_number) == float:
             version_number = [int(version_number)]
 
-        self.version_number: tuple = tuple(map(self.to_int, version_number))
+        version_number = list(map(self.to_int, version_number))
+        self.version_number: tuple = tuple(
+            self._ensure_positive_numbers(version_number))
+
+    def _ensure_positive_numbers(self, num_list: list) -> list:
+        for i, num in enumerate(num_list):
+            if num < 0:
+                num_list[i] = 0
+                return num_list[:i + 1]
+
+        return num_list
 
     def __eq__(self, __other: object) -> bool:
         if __other == None:
@@ -101,3 +111,14 @@ class VersionNumber:
             return int(x)
 
         raise ValueError
+
+
+def main():
+    v = VersionNumber("2.83.2")
+    v2 = VersionNumber(v)
+
+    pass
+
+
+if __name__ == "__main__":
+    main()

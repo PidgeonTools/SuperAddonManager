@@ -19,74 +19,146 @@
 #
 # ##### END GPL LICENSE BLOCK #####
 
+import typing
+
+
 class RecursiveDirs:
     """This class brings a flat list into a nested structure.
     With get_recursive_dirs, the list is filtered to only contain
     the files of an addon. This class is used for getting all files
     that need to be extracted to the temporary directory"""
 
-    def __init__(self, dirlist, search_file="__init__.py") -> None:
-        self.directory_structure = self._make_recursive_dirs(dirlist)
-        self.extract_files = self._get_recursive_dirs(
-            self.directory_structure, search_file)
+    def __init__(self, dirlist: list, search_file: str = "__init__.py") -> None:
+        self.extract_files = None
+        self.remove_subpath = None
 
-    def _make_recursive_dirs(self, dirlist, dirname="") -> list:
-        dirlist: list = dirlist[:]
+        self.directory_structure = self._make_recursive_dirs(dirlist)
+
+        self._search_addon_files(self.directory_structure, search_file)
+
+    def _make_recursive_dirs(self, dirlist: typing.List[str], dirname="") -> list:
+        dirlist: typing.List[str] = dirlist[:]
 
         dirs = {}
 
-        while dirlist:
-            dir: str = dirlist.pop(0)
+        for d in dirlist:
+            keys = d.split("/")
 
-            # Determine, whether the current file or directory belongs to a directory, that hasn't been added yet.
-            dirname_missing: bool = len(
-                dir.replace(dirname, "").split("/")) > 1 and not dir.endswith("/")
+            if not d.endswith("/"):
+                file = keys[-1]
+                dirs = self._set_recursive_item(dirs, file, keys)
+                continue
 
-            if dirname_missing:
-                dirlist.append(dir)
+            keys = keys[:-1]
 
-                # Set dir to the path of the topmost directory that hasn't been added yet.
-                # Example: dirname = ""; dir = "a/s/d.py" will result in dir being set to "a/"
-                dir = dirname + dir.replace(dirname, "").split("/")[0] + "/"
-
-            if dir.endswith("/") or dirname_missing:
-                new_dirlist = []
-                index = 0
-                while index < len(dirlist):
-                    if dirlist[index].startswith(dir):
-                        new_dirlist.append(dirlist.pop(index))
-                    else:
-                        index += 1
-                dirs[dir] = dir
-                dirs[dir.replace(dirname, "")] = self._make_recursive_dirs(
-                    new_dirlist, dir)
-            else:
-                dirs[dir.replace(dirname, "")] = dir
-
+            if not type(self._get_recursive_item(dirs, keys)) == dict:
+                self._set_recursive_item(dirs, {}, keys)
         return dirs
 
-    def _get_recursive_dirs(self, input_object: dict, search_file: str, greatest_common_subpath=""):
-        if search_file in input_object.keys():
-            # Make sure the greatest common subpath doesn't appear in the addon list.
-            # This might happen sometimes, if the original dirlist looks like this: ["a/__init__.py", "a/"] (directory after file)
-            addon_list = [p for p in self._flatten_list(
-                input_object) if p != greatest_common_subpath]
-            return greatest_common_subpath, addon_list
+    def _search_addon_files(self, directory: dict, search_file: str, greatest_common_subpath=""):
+        if search_file in directory.keys():
+            self.remove_subpath = greatest_common_subpath
+            self.extract_files = self._flatten_dir_list(
+                directory, greatest_common_subpath)
+            return
 
-        for key, value in input_object.items():
+        for key, value in directory.items():
             if type(value) == dict:
-                new_try = self._get_recursive_dirs(
-                    value, search_file, greatest_common_subpath + key)
-                if new_try[1] != []:
-                    return new_try
+                self._search_addon_files(
+                    value, search_file, greatest_common_subpath + key + "/")
 
-        return "", []
+                if self.remove_subpath != None:
+                    return
 
-    def _flatten_list(self, input_object: dict):
-        final_list = []
-        for el in input_object.values():
-            if type(el) == dict:
-                final_list.extend(self._flatten_list(el))
-            else:
-                final_list.append(el)
+    def _flatten_dir_list(self, directory: dict, sub_path_prefix: str = "") -> typing.List[str]:
+        """Convert a folder structure object into a flat list with a sub-path prefix added to every item.
+
+        Args:
+            directory (dict): The folder structure object
+            sub_path_prefix (str, optional): The sub-path prefix added to every item in the list. Defaults to "".
+
+        Raises:
+            TypeError: Error, if the dictionary is not a valid folder structure object.
+
+        Returns:
+            typing.List[str]: The list with folder- and file-paths.
+        """
+
+        final_list: typing.List[str] = []
+
+        if sub_path_prefix != "" and not sub_path_prefix.endswith("/"):
+            sub_path_prefix += "/"
+
+        for key, value in directory.items():
+            if type(value) not in (str, dict):
+                raise TypeError(
+                    "Only type 'str' and 'dict' allowed when converting a directory dict to a flat list.")
+
+            if type(value) == str:
+                final_list.append(sub_path_prefix + value)
+                continue
+
+            dir_path = sub_path_prefix + key + "/"
+
+            final_list.append(dir_path)
+            final_list.extend(self._flatten_dir_list(
+                value, dir_path))
+
         return final_list
+
+    def _set_recursive_item(self, dictionary: dict, value, keys: typing.List[str]) -> dict:
+        """Set an item in a dictionary (and any dictionary inside) recursively.
+
+        Args:
+            dictionary (dict): The dictionary in which the value is to be set
+            value (any): The value that the dictionary item should be set to.
+            keys (typing.List[str]): The key path where the value should be set.
+
+        Returns:
+            dict: The updated dictionary.
+        """
+
+        k = keys[:]
+        key = k.pop(0)
+
+        if len(k) == 0:
+            dictionary[key] = value
+            return dictionary
+
+        if not type(dictionary.get(key, None)) == dict:
+            dictionary[key] = {}
+
+        dictionary[key] = self._set_recursive_item(
+            dictionary[key], value, k)
+        return dictionary
+
+    def _get_recursive_item(self, dictionary: dict, keys: typing.List[str], default=None):
+        """Get an item from a dictionary and any dictionary inside recursively.
+
+        Args:
+            dictionary (dict): The dictionary the item should be retreived from.
+            keys (typing.List[str]): A list of keys that lead to item
+            default (any, optional): The default value that should be returned, if the item cannot be found in the dictionary. Defaults to None.
+
+        Returns:
+            any: The item at the specified key path.
+        """
+
+        k = keys[:]
+        key = k.pop(0)
+
+        if type(dictionary) != dict:
+            return default
+
+        if len(k) == 0:
+            return dictionary.get(key, default)
+
+        return self._get_recursive_item(dictionary.get(key, {}), k, default)
+
+
+def main():
+    ...
+
+
+if __name__ == "__main__":
+    main()
