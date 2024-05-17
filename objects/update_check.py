@@ -20,10 +20,15 @@
 # ##### END GPL LICENSE BLOCK #####
 
 import bpy
+
+import typing
+
 from ..issue_types import (
     BL_INFO_VERSION_PROBLEMS,
     ENDPOINT_INVALID_SCHEMA
 )
+
+from .version_number import VersionNumber
 
 
 class UpdateCheck_v1_0_0:
@@ -36,11 +41,11 @@ class UpdateCheck_v1_0_0:
         }
 
         # The current Blender version.
-        self.blender_version = self.pad_tuple(bpy.app.version)
+        self.blender_version = VersionNumber(bpy.app.version)
 
         # The current addon version.
         try:
-            self.current_version = self.pad_tuple(bl_info["version"])
+            self.current_version = VersionNumber(bl_info["version"])
         except (KeyError, ValueError, TypeError):
             self._set_error(issue_type=BL_INFO_VERSION_PROBLEMS)
             return  # ! Critical Error
@@ -51,12 +56,12 @@ class UpdateCheck_v1_0_0:
                             endpoint_url=endpoint_url)
             return  # ! Critical Error
 
-        # The list of addon versions.
-        self.versions = data["versions"][:]  # Create a local copy.
+        # Create a local copy of the list of addon versions.
+        self.versions: typing.List[dict] = data["versions"][:]
 
-        # Format all version lists inside self.versions to be a tuple of three integers.
+        # Format all version lists inside self.versions to be a VersionNumber object.
         try:
-            self.pad_version_list()
+            self.format_version_list()
         except (KeyError, ValueError, TypeError):
             self._set_error(issue_type=ENDPOINT_INVALID_SCHEMA,
                             endpoint_url=endpoint_url)
@@ -112,16 +117,16 @@ class UpdateCheck_v1_0_0:
 
         return False
 
-    def pad_version_list(self):
-        """Format all version lists inside self.versions to be a tuple of three integers."""
-        for version in self.versions:
-            version["version"] = self.pad_tuple(version["version"])
+    def format_version_list(self):
 
-            version["minimum_blender_version"] = self.pad_tuple(
+        for version in self.versions:
+            version["version"] = VersionNumber(version["version"])
+
+            version["minimum_blender_version"] = VersionNumber(
                 version["minimum_blender_version"])
 
             if "api_breaking_blender_version" in version.keys():
-                version["api_breaking_blender_version"] = self.pad_tuple(
+                version["api_breaking_blender_version"] = VersionNumber(
                     version["api_breaking_blender_version"])
 
     def _is_compatible_version(self, v: dict):
@@ -145,16 +150,3 @@ class UpdateCheck_v1_0_0:
         self.error = True
         for key, value in kwargs.items():
             self.error_data[key] = value
-
-    def pad_tuple(self, t):
-        """Convert a list into a tuple of three integers."""
-
-        # Convert all raw values to integers, to avoid issues, when comparing versions
-        def type_convert(x):
-            allowed_types = [int, float, str]
-            if type(x) in allowed_types:
-                return int(x)
-            raise ValueError
-
-        t = map(type_convert, t)
-        return (tuple(t) + (0, 0, 0))[:3]

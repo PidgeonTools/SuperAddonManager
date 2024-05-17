@@ -406,7 +406,7 @@ class SUPERADDONMANAGER_APT_preferences(AddonPreferences):
                 new_row = layout.row()
                 new_row.separator(factor=UPDATE_DETAILS_INSET / 100)
                 new_row.label(
-                    text=f"New Version: {'.'.join(map(str, updater.addon_version))}")
+                    text=f"New Version: {str(updater.addon_version)}")
 
                 if updater.release_description:
                     self.layout_release_description(

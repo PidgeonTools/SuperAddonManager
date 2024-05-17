@@ -38,6 +38,7 @@ import zipfile
 import typing
 
 from .recursive_dirs import RecursiveDirs
+from .version_number import VersionNumber
 
 from ..issue_types import (
     DOWNLOAD_URL_OFFLINE,
@@ -53,7 +54,7 @@ UPDATE_CONTEXTS = {
 
 
 class Updater:
-    def __init__(self, addon_name="", bl_info={"version": (0, 0, 0)}, allow_automatic_download=False, download_url="", addon_path="", download_directory=p.join(p.expanduser('~'), 'downloads'), addon_version=(0, 0, 0), auto_reload=False, release_description="") -> None:
+    def __init__(self, addon_name="", bl_info={"version": (0, 0, 0)}, allow_automatic_download=False, download_url="", addon_path="", download_directory=p.join(p.expanduser('~'), 'downloads'), addon_version=VersionNumber("0.0.0"), auto_reload=False, release_description="") -> None:
         self.error = False  # Set to True, if an error occured.
         self.error_data = {
             "addon_name": addon_name,
@@ -70,8 +71,8 @@ class Updater:
 
         self.addon_name: str = addon_name
         self.addon_path: str = addon_path
-        self.addon_version: tuple = addon_version
-        self.old_version: tuple = bl_info["version"]
+        self.addon_version: VersionNumber = addon_version
+        self.old_version: VersionNumber = VersionNumber(bl_info["version"])
 
         self.download_url: str = download_url
         self.download_directory: str = p.join(
@@ -94,7 +95,7 @@ class Updater:
         # Set the filename to the name of the directory where it is installed,
         # combined with the version number.
         addon_dirname = p.basename(self.addon_path)
-        addon_version = '.'.join([str(v) for v in self.addon_version])
+        addon_version = str(self.addon_version)
         filename = f"{addon_dirname}-{addon_version}.zip"
 
         # Set the filepath of the downloaded file to the Download Directory + Filename.
@@ -180,7 +181,7 @@ class Updater:
 
         # Create a temporary folder for extracting the ZIP file:
         timestring = time.strftime('%Y%m%d%H%M%S') + \
-            str(random.randint(10**5, 10**6-1))
+            str(random.randint(10**5, 10**6 - 1))
         unique_name = hashlib.sha1(timestring.encode("UTF-8")).hexdigest()
         extract_path = p.join(self.download_directory,
                               f"temp-{unique_name}")
@@ -237,13 +238,13 @@ class Updater:
         except Exception as e:
             return f"Reloading {self.addon_name} automatically failed. Please restart Blender after all Updates have completed."
 
-    def _create_backup(self, install_directory, override_version=[]):
+    def _create_backup(self, install_directory, override_version=None):
         """Create a backup of the install directory."""
-        if override_version != []:
-            self.old_version = version
+        if override_version != None:
+            self.old_version = override_version
 
         # Get the backup directory.
-        version = ".".join([str(i) for i in self.old_version])
+        version = str(self.old_version)
         backup_directory = p.join(
             install_directory, "superaddonmanager-backups", version)
 

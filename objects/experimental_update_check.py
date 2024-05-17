@@ -27,6 +27,8 @@ import re
 
 import requests
 
+from .version_number import VersionNumber
+
 
 class ExperimentalUpdateCheck:
     """Get release information over an API and convert it into data that can be used by Super Addon Manager."""
@@ -109,25 +111,23 @@ class ExperimentalUpdateCheck:
                 continue
 
             # Get the version number and the download url.
-            version_string = d.get("tag_name", "")
+            tag_name = d.get("tag_name", "")
             download_url = d.get("html_url", "")
             if allow_automatic_download:
-                download_url = f"https://github.com/{self.user_name}/{self.repo_name}/archive/refs/tags/{version_string}.zip"
+                download_url = f"https://github.com/{self.user_name}/{self.repo_name}/archive/refs/tags/{tag_name}.zip"
 
             # Skip versions without version number or download url.
-            if version_string == "" or download_url == "":
+            if tag_name == "" or download_url == "":
                 continue
 
-            version_array = self.get_version_array(version_string)
-            if len(version_array) != 3:
-                return  # ! Critical error
+            version_number: VersionNumber = self.get_version_number(tag_name)
 
             # Add version to the endpoint data.
             endpoint_data["versions"].append({
-                "version": list(version_array),
+                "version": version_number,
                 "download_url": download_url,
                 "allow_automatic_download": allow_automatic_download,
-                "minimum_blender_version": list(self.pad_tuple(bpy.app.version)),
+                "minimum_blender_version": VersionNumber(bpy.app.version),
                 "release_description": d.get("body", ""),
             })
 
@@ -173,7 +173,7 @@ class ExperimentalUpdateCheck:
                 continue
 
             # Get the version number and the download url.
-            version_string = d.get("tag_name", "")
+            tag_name = d.get("tag_name", "")
             download_url = d.get("_links", {"self": ""}).get("self", "")
             if allow_automatic_download:
                 assets = d.get("assets", {"sources": []}).get("sources", [])
@@ -185,42 +185,37 @@ class ExperimentalUpdateCheck:
                             download_url = a.get("url", "")
 
             # Skip versions without version number or download url.
-            if version_string == "" or download_url == "":
+            if tag_name == "" or download_url == "":
                 continue
 
-            version_array = self.get_version_array(version_string)
-            if len(version_array) != 3:
-                return  # ! Critical Error
+            version_number: VersionNumber = self.get_version_number(tag_name)
 
             # Add version to the endpoint data.
             endpoint_data["versions"].append({
-                "version": list(version_array),
+                "version": version_number,
                 "download_url": download_url,
                 "allow_automatic_download": allow_automatic_download,
-                "minimum_blender_version": list(self.pad_tuple(bpy.app.version)),
+                "minimum_blender_version": VersionNumber(bpy.app.version),
                 "release_description": d.get("description", ""),
             })
 
         return endpoint_data
 
-    def get_version_array(self, version_string) -> list:
+    def get_version_number(self, tag_name: str) -> VersionNumber:
         """Extract a version number array from a tag name."""
         # Search for a number with one to three parts, e.g. v1, 2.4 or version1.36.0
-        version_number = re.search("((?:\d+[\._-]){0,2}\d+)", version_string)
+        version_number = re.search("((?:\d+[\._-])*\d+)", tag_name)
 
-        # Return an empty array, if no version number can be found.
+        # Return version number 0, if no version number can be found.
         if not version_number:
-            return []
+            return VersionNumber(0)
 
         try:
             version_number = re.sub("[\._-]+", ".", version_number.group(0))
 
-            # Try to convert the version number to a list of length 3.
-            version_array = self.pad_tuple(
-                version_number.split("."))
-            return list(version_array)
+            return VersionNumber(version_number)
         except ValueError:
-            return []
+            return VersionNumber(0)
 
     def pad_tuple(self, t) -> tuple:
         """Convert a list into a tuple of three integers."""

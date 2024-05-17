@@ -81,6 +81,7 @@ from .objects.update_check import (
 )
 from .objects.experimental_update_check import ExperimentalUpdateCheck
 from .objects.updater import UPDATE_CONTEXTS, Updater
+from .objects.version_number import VersionNumber
 
 from .functions.main_functions import (
     get_addons_filtered,
@@ -436,7 +437,7 @@ class SUPERADDONMANAGER_OT_check_for_updates(Operator):
                     download_directory=bpy.context.preferences.addons[
                         __package__].preferences.download_directory,
                     download_url=update_check.download_url,
-                    addon_version=update_check.version,
+                    addon_version=VersionNumber(update_check.version),
                     auto_reload=auto_reload
                 ),
                 "is_experimental": is_experimental
@@ -740,7 +741,7 @@ class SUPERADDONMANAGER_OT_restore_backup(Operator):
 
         try:
             updater._create_backup(
-                install_path, bl_info.get("version", ["unknown"]))
+                install_path, VersionNumber(bl_info.get("version", "0.0.0")))
             updater._install_files(
                 p.join(install_path, "superaddonmanager-backups", self.restore_version), install_path)
             updater._reload_addon()
@@ -793,7 +794,7 @@ class SUPERADDONMANAGER_OT_install_new_addon(Operator):
 
         try:
             installer = Updater(addon_name=self.addon_name, allow_automatic_download=True, download_url=update_check.download_url, addon_path=install_path, download_directory=context.preferences.addons[
-                __package__].preferences.download_directory, addon_version=update_check.version, auto_reload=True)
+                __package__].preferences.download_directory, addon_version=VersionNumber(update_check.version), auto_reload=True)
 
             installer.download_update()
             installer.update_addon()
@@ -835,7 +836,7 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
         addon_version = "Unknown"
         if issue_type != BL_INFO_VERSION_PROBLEMS and "version" in bl_info.keys():
-            addon_version = ".".join(map(str, bl_info["version"]))
+            addon_version = str(VersionNumber(bl_info["version"]))
 
         url_params = {"issue_type": issue_type,
                       "addon_name": data.pop("addon_name"),
@@ -849,8 +850,8 @@ class SUPERADDONMANAGER_OT_generate_issue_report(Operator):
 
         # Version, that Super Addon Manager tried to install.
         if "new_addon_version" in data.keys():
-            url_params["new_addon_version"] = ".".join(
-                map(str, data.pop("new_addon_version")))
+            url_params["new_addon_version"] = str(
+                VersionNumber(data.pop("new_addon_version")))
 
         for key, value in data.items():
             url_params[key] = value
